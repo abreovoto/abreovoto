@@ -1,2 +1,6 @@
 .DS_Store
 *.tmp
+node_modules/
+dist/
+.astro/
+tmp/
