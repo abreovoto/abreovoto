@@ -10,6 +10,7 @@ import {
   sourceHost,
   sourceTypeLabel,
   statusLabel,
+  tieShortWords,
 } from "../src/lib/text";
 
 const d = loadData();
@@ -66,4 +67,13 @@ test("source types in words", () => {
   expect(sourceTypeLabel("materia")).toBe("matéria com citação direta");
   expect(sourceTypeLabel("nota")).toBe("nota oficial");
   expect(sourceTypeLabel("email_institucional")).toBe("e-mail institucional");
+});
+
+test("short words are tied to the next one in text, never inside a tag", () => {
+  expect(tieShortWords("Para que em 2029 isso não precise de campanha")).toBe("Para que em\u00a02029 isso não precise de\u00a0campanha");
+  expect(tieShortWords("vence a eleição e o voto")).toBe("vence a\u00a0eleição e\u00a0o\u00a0voto");
+  expect(tieShortWords('<a href="/a b/" title="de x">de fato</a> desde')).toBe('<a href="/a b/" title="de x">de\u00a0fato</a> desde');
+  expect(tieShortWords("O site")).toBe("O\u00a0site");
+  expect(tieShortWords('ficam em um <a href="/r/">repositório</a>')).toBe('ficam em\u00a0um\u00a0<a href="/r/">repositório</a>');
+  expect(tieShortWords("fica de\n  fora")).toBe("fica de\u00a0fora");
 });

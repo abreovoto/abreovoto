@@ -218,3 +218,16 @@ test("the three candidate pages are the same page with different data", () => {
   expect(shape(pages[1]!)).toBe(shape(pages[0]!));
   expect(shape(pages[2]!)).toBe(shape(pages[0]!));
 });
+
+test("the three text pages carry their sections and the contact anchor", () => {
+  // Short words are tied to the next with a no-break space; read the text with plain spaces.
+  const text = (p: string) => html(p).replace(/\u00a0|&nbsp;/g, " ");
+  const cf = text("como-funciona/index.html");
+  for (const s of ["É um site anônimo?", "É um site de um lado só?", "Esse dado está errado", 'id="contato"', "mailto:abreovoto@gmail.com", "Candidatos até agora"]) expect(cf).toContain(s);
+  expect(cf).toContain("Candidatos até agora: Davi Alcolumbre, Rogério Marinho e Tereza Cristina.");
+  const m = text("metodologia/index.html");
+  for (const s of ["O que conta como fonte", "Correções", "CC BY 4.0", 'href="/dados.json"']) expect(m).toContain(s);
+  const p = text("privacidade/index.html");
+  for (const s of ["Web Analytics", "localStorage", "GitHub", "Change.org"]) expect(p).toContain(s);
+  for (const h of [cf, m, p]) expect(h.match(/<h1[ >]/g)).toHaveLength(1);
+});

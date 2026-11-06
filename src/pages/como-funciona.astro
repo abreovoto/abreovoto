@@ -1,0 +1,130 @@
+---
+import SectionHead from "../components/SectionHead.astro";
+import { loadData } from "../data/load";
+import { placar } from "../data/placar";
+import TextPage from "../layouts/TextPage.astro";
+
+const d = loadData();
+const { site } = d;
+// The only place the candidates are named on this page: the published order, from the data.
+const candidates = new Intl.ListFormat("pt-BR", { type: "conjunction" }).format(placar(d).porCandidato.map((c) => c.nome));
+const profiles = [
+  { label: "Instagram", href: site.redes.instagram },
+  { label: "X", href: site.redes.x },
+  { label: "TikTok", href: site.redes.tiktok },
+  { label: "YouTube", href: site.redes.youtube },
+].filter((p): p is { label: string; href: string } => p.href !== null);
+const link = "text-accent underline";
+---
+
+<TextPage title="Como funciona" description="O que é a eleição para a Presidência do Senado, o que o Abre o Voto faz e não faz, e quem o mantém.">
+  <section aria-labelledby="a-eleicao">
+    <SectionHead id="a-eleicao" title="A eleição" />
+    <div class="mt-6 space-y-4">
+      <p>
+        Em 1º de fevereiro de 2027, os 81 senadores elegem o presidente do Senado para 2027 e 2028. A votação é secreta, em
+        cédula de papel, como manda o Regimento Interno do Senado. São 81 votos; 41 são a maioria.
+      </p>
+      <p>
+        Como o voto é secreto, ninguém fica sabendo oficialmente em quem cada senador votou. Este site mostra o que cada um
+        disse em público antes da votação. O placar mostra só totais: quantos declararam o voto e quantos não declararam.
+      </p>
+      <p>Candidatos até agora: {candidates}.</p>
+    </div>
+  </section>
+
+  <section aria-labelledby="o-que-faz">
+    <SectionHead id="o-que-faz" title="O que o site faz" />
+    <div class="mt-6 space-y-4">
+      <p>
+        Registra quais senadores disseram em público em quem vão votar, sempre com a fonte, e conta essas declarações. Mais
+        nada. O que vale como fonte está na <a href="/metodologia/" class={link}>Metodologia</a>.
+      </p>
+    </div>
+  </section>
+
+  <section aria-labelledby="o-que-nao-faz">
+    <SectionHead id="o-que-nao-faz" title="O que o site não faz" />
+    <ul class="mt-6 list-disc space-y-2 pl-5">
+      <li>Não diz em quem votar nem recomenda candidato.</li>
+      <li>Não julga senadores nem candidatos.</li>
+      <li>Não faz projeção nem estimativa de resultado.</li>
+      <li>Não coleta dados de quem visita. Os detalhes estão em <a href="/privacidade/" class={link}>Privacidade</a>.</li>
+      <li>Não recolhe assinaturas.</li>
+    </ul>
+  </section>
+
+  <section aria-labelledby="quem-mantem">
+    <SectionHead id="quem-mantem" title="Quem mantém" />
+    <div class="mt-6 space-y-4">
+      <p>
+        O site é mantido pela iniciativa Abre o Voto, sem nome de pessoa. O que sustenta cada informação é a fonte pública
+        ligada a ela, não quem a publicou.
+      </p>
+      <p>
+        O código, os dados e cada alteração ficam em um <a href={site.repositorio} rel="noopener" class={link}>repositório
+        público</a>, com data e descrição. Todos os dias, as fontes recebidas são conferidas pela regra da Metodologia e o
+        placar é atualizado.
+      </p>
+    </div>
+  </section>
+
+  <section aria-labelledby="perguntas">
+    <SectionHead id="perguntas" title="Perguntas que já esperamos" />
+    <h3 class="mt-6 text-lg font-semibold">É um site anônimo?</h3>
+    <p class="mt-2">
+      O site não traz o nome de quem o mantém. Tudo o que ele afirma pode ser conferido sem esse nome: a metodologia é
+      pública, os dados estão abertos em <a href="/dados.json" class={link}>dados.json</a>, o histórico de cada alteração
+      está no repositório e o endereço de contato responde. Um nome de pessoa não mudaria nada do que o leitor pode
+      verificar.
+    </p>
+    <h3 class="mt-6 text-lg font-semibold">É um site de um lado só?</h3>
+    <p class="mt-2">
+      Todo candidato aparece no mesmo componente, com a mesma cor e a mesma regra de ordem, publicada na Metodologia. O mesmo
+      vale para os 81 senadores. Uma diferença de tratamento é um erro: escreva para o contato e ela será corrigida.
+    </p>
+    <h3 class="mt-6 text-lg font-semibold">Esse dado está errado</h3>
+    <p class="mt-2">
+      Uma declaração só entra com uma fonte que cumpre a regra da Metodologia. Se um dado está errado ou falta uma fonte,
+      escreva para <a href={`mailto:${site.contato}`} class={link}>{site.contato}</a> com o link. A resposta vem em até 24
+      horas. A correção fica registrada no histórico da página do senador; nada é apagado.
+    </p>
+  </section>
+
+  {
+    site.ecidadania_url && (
+      <section aria-labelledby="depois-de-2027">
+        <SectionHead id="depois-de-2027" title="Depois de 2027" />
+        <div class="mt-6 space-y-4">
+          <p>
+            Para que em 2029 isso não precise de campanha, há no e-Cidadania, o portal de participação do Senado, uma
+            proposta de voto aberto na eleição da Mesa.{" "}
+            <a href={site.ecidadania_url} rel="noopener" class={link}>Apoie no e-Cidadania</a>.
+          </p>
+        </div>
+      </section>
+    )
+  }
+
+  <section aria-labelledby="contato">
+    <SectionHead id="contato" title="Contato" />
+    <div class="mt-6 space-y-4">
+      <p>E-mail: <a href={`mailto:${site.contato}`} class={link}>{site.contato}</a></p>
+      {
+        profiles.length > 0 && (
+          <p>
+            Perfis:{" "}
+            {profiles.map((p, i) => (
+              <>
+                {i > 0 && ", "}
+                <a href={p.href} rel="noopener" class={link}>
+                  {p.label}
+                </a>
+              </>
+            ))}
+          </p>
+        )
+      }
+    </div>
+  </section>
+</TextPage>
