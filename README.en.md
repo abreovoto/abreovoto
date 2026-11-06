@@ -13,11 +13,14 @@ The site takes no side. It never says whom to vote for, treats every candidate
 identically, and publishes nothing about a senator without a public source. The
 data lives in this repository, so every change is a commit anyone can audit.
 
-**Status:** the data on the 81 senators and its validation are in this
-repository; the site's pages are not yet. The site goes live quietly at the end
-of November 2026 and is promoted from January 2027.
+**Status:** the site is live at `https://abreovoto.com`, with the scoreboard,
+the candidates, each state's three senators, the list of 81 with filters, one
+page per senator, per state and per candidate, the "Como funciona",
+"Metodologia" and "Privacidade" pages, and open data at `/dados.json`. The card
+to share does not exist yet. Promotion starts when the site is ready for it; no
+date is set.
 
-- Site: `https://abreovoto.com` (not yet live)
+- Site: `https://abreovoto.com`
 - Contact: abreovoto@gmail.com
 - Sources and corrections: open an issue with the "Fonte ou correção" template
 - License: MIT (code); scoreboard data CC BY 4.0
@@ -47,5 +50,14 @@ recorded before taking the seat.
 - `npm run fotos`: downloads and normalises any missing portraits (an existing
   file is never fetched again: when `foto_origem` changes, delete the old file)
 - `npm run check`: validation, tests, type checking and build
+
+## Site
+
+The site is static (Astro) and is served by a single Cloudflare Worker, which
+delivers the build and answers under `/api/`. To run it locally:
+
+- `npm run dev`: the site in development mode
+- `npm run build`, then `npx wrangler dev`: the build served by the Worker, with
+  the API, as in production
 
 The data is published under CC BY 4.0.
