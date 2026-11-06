@@ -6,10 +6,12 @@ import Portrait from "./Portrait.astro";
 interface Props {
   candidato: PlacarCandidato;
   foto: ImageMetadata;
+  /** The candidate's own page makes the name its h1; on the home it is an h3. */
+  heading?: "h1" | "h3";
 }
 
 // Identical for every candidate: the number is the only variable.
-const { candidato, foto } = Astro.props;
+const { candidato, foto, heading: Heading = "h3" } = Astro.props;
 const label = candidato.total === 1 ? "declaração" : "declarações";
 ---
 
@@ -17,7 +19,7 @@ const label = candidato.total === 1 ? "declaração" : "declarações";
   <div class="flex items-start gap-3">
     <Portrait src={foto} alt={`Foto oficial de ${candidato.nome}`} size="state" />
     <div class="min-w-0">
-      <h3 class="text-lg font-semibold leading-tight text-fg group-hover:underline">{candidato.nome}</h3>
+      <Heading class="text-lg font-semibold leading-tight text-fg group-hover:underline">{candidato.nome}</Heading>
       <p class="mt-0.5 text-sm text-fg-muted">{partyState(candidato)}</p>
     </div>
   </div>
