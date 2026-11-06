@@ -32,3 +32,26 @@ export const UF_NAMES: Record<UF, string> = {
 };
 
 export const ufName = (uf: UF): string => UF_NAMES[uf];
+
+/** States whose name takes the article: "do Ceará", "da Bahia". The others take a bare "de". */
+const ARTICLE: Partial<Record<UF, "do" | "da">> = {
+  AC: "do",
+  AP: "do",
+  AM: "do",
+  BA: "da",
+  CE: "do",
+  DF: "do",
+  ES: "do",
+  MA: "do",
+  PA: "do",
+  PB: "da",
+  PR: "do",
+  PI: "do",
+  RJ: "do",
+  RN: "do",
+  RS: "do",
+  TO: "do",
+};
+
+/** "de São Paulo", "do Rio Grande do Norte", "da Bahia". */
+export const ufWithDe = (uf: UF): string => `${ARTICLE[uf] ?? "de"} ${UF_NAMES[uf]}`;

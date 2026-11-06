@@ -1,0 +1,50 @@
+---
+import Button from "../../components/Button.astro";
+import SenatorCard from "../../components/SenatorCard.astro";
+import { emExercicio, loadData } from "../../data/load";
+import { UF, type UF as UFType } from "../../data/schema";
+import Base from "../../layouts/Base.astro";
+import { senatorPath } from "../../lib/routes";
+import { ufWithDe } from "../../lib/uf";
+
+export function getStaticPaths() {
+  return UF.options.map((uf) => ({ params: { uf: uf.toLowerCase() }, props: { uf } }));
+}
+
+interface Props {
+  uf: UFType;
+}
+
+const { uf } = Astro.props;
+const d = loadData();
+const senadores = emExercicio(d)
+  .filter((s) => s.uf === uf)
+  .sort((a, b) => a.vaga - b.vaga);
+const ofState = ufWithDe(uf);
+---
+
+<Base
+  title={`Senadores ${ofState} · Abre o Voto`}
+  description={`Os três senadores ${ofState} e o que cada um declarou sobre o voto na eleição para a Presidência do Senado.`}
+>
+  <h1 class="text-3xl font-semibold leading-tight sm:text-4xl">Senadores {ofState}</h1>
+  <section class="mt-6" aria-labelledby="em-exercicio">
+    <h2 id="em-exercicio" class="sr-only">Em exercício</h2>
+    <div class="grid max-w-2xl grid-cols-1 gap-4">
+      {
+        senadores.map((s) => (
+          <SenatorCard senador={s} candidatos={d.candidatos} variant="page">
+            <Fragment slot="actions">
+              <Button kind="secondary" href={senatorPath(s.id)}>
+                Ver página
+              </Button>
+            </Fragment>
+          </SenatorCard>
+        ))
+      }
+    </div>
+  </section>
+  <p class="mt-8 text-sm">
+    <a href="/#lista" class="text-accent underline">Todos os 81 senadores</a>
+  </p>
+</Base>

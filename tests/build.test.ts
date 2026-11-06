@@ -3,6 +3,9 @@ import { existsSync, mkdtempSync, readdirSync, readFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { beforeAll, expect, test } from "vitest";
+import { emExercicio, loadData } from "../src/data/load";
+import { UF } from "../src/data/schema";
+import { ufWithDe } from "../src/lib/uf";
 
 let out: string;
 beforeAll(() => {
@@ -100,4 +103,25 @@ test("the home opens with the headline, the scoreboard and the three candidates 
   expect(order).toEqual([...order].sort((a, b) => a - b));
   expect(h).toContain('href="/candidato/alcolumbre/"');
   expect(h).toContain("41 votos elegem o presidente do Senado.");
+});
+
+test("the home carries the 27 state groups with three senators each, hidden until chosen", () => {
+  const h = html("index.html");
+  const groups = h.match(/<div[^>]*data-uf="[A-Z]{2}"[^>]*hidden/g) ?? [];
+  expect(groups).toHaveLength(27);
+  expect(h).toContain('href="/estado/sp/"');
+  // The bundler may print the key with backticks.
+  expect(h).toMatch(/localStorage\.(getItem|setItem)\(["'`]uf["'`]/);
+});
+
+test("every state page has exactly three senators in office and the state's name", () => {
+  const d = loadData();
+  for (const uf of UF.options) {
+    const h = html(`estado/${uf.toLowerCase()}/index.html`);
+    expect(h).toContain(`Senadores ${ufWithDe(uf)}`);
+    const names = emExercicio(d).filter((s) => s.uf === uf).map((s) => s.nome);
+    expect(names).toHaveLength(3);
+    for (const n of names) expect(h, uf).toContain(n);
+    expect(h).not.toContain("Flávio Dino");
+  }
 });

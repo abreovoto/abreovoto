@@ -1,0 +1,93 @@
+---
+import type { Candidato, Senador } from "../data/schema";
+import { UF } from "../data/schema";
+import { senatorPath, statePath } from "../lib/routes";
+import { ufName, ufWithDe } from "../lib/uf";
+import Button from "./Button.astro";
+import SenatorCard from "./SenatorCard.astro";
+import StateSelector from "./StateSelector.astro";
+
+interface Props {
+  senadores: Senador[];
+  candidatos: Candidato[];
+}
+
+const { senadores, candidatos } = Astro.props;
+const byState = UF.options.map((uf) => ({
+  uf,
+  senadores: senadores.filter((s) => s.uf === uf).sort((a, b) => a.vaga - b.vaga),
+}));
+---
+
+<section class="mt-10" aria-labelledby="seus-senadores" data-seus-senadores>
+  <h2 id="seus-senadores" class="text-2xl font-semibold">Seus senadores</h2>
+  <div class="mt-4" data-escolha hidden>
+    <StateSelector />
+  </div>
+  <div data-no-js class="mt-4 max-w-3xl">
+    <p class="text-fg">Escolha o estado acima, ou abra a página do seu estado:</p>
+    <ul class="mt-3 flex flex-wrap gap-x-4 gap-y-2 text-sm" role="list">
+      {
+        UF.options.map((uf) => (
+          <li>
+            <a href={statePath(uf)} class="text-accent underline">
+              {ufName(uf)}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+  {
+    byState.map((g) => (
+      <div data-uf={g.uf} hidden class="mt-4">
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+          {g.senadores.map((s) => (
+            <SenatorCard senador={s} candidatos={candidatos} variant="state">
+              <Fragment slot="actions">
+                <Button kind="secondary" href={senatorPath(s.id)}>
+                  Ver página
+                </Button>
+              </Fragment>
+            </SenatorCard>
+          ))}
+        </div>
+        <p class="mt-3 text-sm">
+          <a href={statePath(g.uf)} class="text-accent underline">
+            Página {ufWithDe(g.uf)}
+          </a>
+        </p>
+      </div>
+    ))
+  }
+</section>
+
+<script>
+  // Without JavaScript the 27 state links stand in; with it, the selector shows one state and remembers it.
+  document.querySelector("[data-no-js]")?.setAttribute("hidden", "");
+  const root = document.querySelector<HTMLElement>("[data-seus-senadores]");
+  const select = root?.querySelector<HTMLSelectElement>('select[name="uf"]');
+  if (root && select) {
+    root.querySelector("[data-escolha]")?.removeAttribute("hidden");
+    const groups = [...root.querySelectorAll<HTMLElement>("[data-uf]")];
+    const valid = new Set(groups.map((g) => g.dataset.uf));
+    const show = (uf: string) => {
+      for (const g of groups) g.hidden = g.dataset.uf !== uf;
+    };
+    let saved: string | null = null;
+    try {
+      saved = localStorage.getItem("uf");
+    } catch {}
+    if (saved && valid.has(saved)) {
+      select.value = saved;
+      show(saved);
+    }
+    select.addEventListener("change", () => {
+      show(select.value);
+      try {
+        if (valid.has(select.value)) localStorage.setItem("uf", select.value);
+        else localStorage.removeItem("uf");
+      } catch {}
+    });
+  }
+</script>
