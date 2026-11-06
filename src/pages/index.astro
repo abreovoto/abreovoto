@@ -27,18 +27,17 @@ const p = placar(d);
     <Scoreboard placar={p} />
   </div>
 
-  <section class="mt-10" aria-labelledby="candidatos">
-    <h2 id="candidatos" class="text-2xl font-semibold">Candidatos</h2>
-    <div class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-3">
+  <section aria-labelledby="candidatos">
+    <SectionHead id="candidatos" title="Candidatos" note="41 votos elegem o presidente do Senado" />
+    <div class="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
       {
         p.porCandidato.map((c) => (
-          <a href={candidatePath(c.id)} class="block no-underline">
+          <a href={candidatePath(c.id)} class="group block h-full no-underline">
             <CandidateCard candidato={c} foto={candidatePhoto(c.id)} />
           </a>
         ))
       }
     </div>
-    <p class="mt-3 text-sm text-fg-muted">41 votos elegem o presidente do Senado.</p>
   </section>
 
   <YourSenators senadores={emExercicio(d)} candidatos={d.candidatos} />

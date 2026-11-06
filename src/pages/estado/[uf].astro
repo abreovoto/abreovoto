@@ -1,5 +1,6 @@
 ---
 import Button from "../../components/Button.astro";
+import SectionHead from "../../components/SectionHead.astro";
 import SenatorCard from "../../components/SenatorCard.astro";
 import { emExercicio, loadData } from "../../data/load";
 import { UF, type UF as UFType } from "../../data/schema";
@@ -28,14 +29,14 @@ const ofState = ufWithDe(uf);
   description={`Os três senadores ${ofState} e o que cada um declarou sobre o voto na eleição para a Presidência do Senado.`}
 >
   <h1 class="text-3xl font-semibold leading-tight sm:text-4xl">Senadores {ofState}</h1>
-  <section class="mt-6" aria-labelledby="em-exercicio">
-    <h2 id="em-exercicio" class="sr-only">Em exercício</h2>
-    <div class="grid max-w-2xl grid-cols-1 gap-4">
+  <section aria-labelledby="em-exercicio">
+    <SectionHead id="em-exercicio" title="Em exercício" note="três por estado" />
+    <div class="mt-6 grid max-w-2xl grid-cols-1 gap-4">
       {
         senadores.map((s) => (
           <SenatorCard senador={s} candidatos={d.candidatos} variant="page">
             <Fragment slot="actions">
-              <Button kind="secondary" href={senatorPath(s.id)}>
+              <Button kind="secondary" size="sm" href={senatorPath(s.id)}>
                 Ver página
               </Button>
             </Fragment>

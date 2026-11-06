@@ -145,3 +145,12 @@ test("the home's scoreboard carries the hemicycle and the e-Cidadania line close
   expect(idx("Para 2029")).toBeGreaterThan(idx("Os 81 senadores"));
   expect(h).toContain("de&nbsp;voto&nbsp;aberto");
 });
+
+test("the home's sections open with the same head: rule, title, note", () => {
+  const h = html("index.html");
+  for (const note of ["41 votos elegem o presidente do Senado", "três por estado", "em ordem alfabética"]) {
+    expect(h).toMatch(new RegExp(`<h2 id="[a-z-]+"[^>]*>[^<]+</h2>\\s*<p[^>]*>${note}</p>`));
+  }
+  expect(h).not.toContain("41 votos elegem o presidente do Senado.");
+  expect(html("estado/sp/index.html")).toMatch(/border-t border-line[^"]*"[^>]*>\s*<h2 id="em-exercicio"/);
+});

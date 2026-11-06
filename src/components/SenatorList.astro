@@ -4,6 +4,7 @@ import { UF } from "../data/schema";
 import { senatorPath } from "../lib/routes";
 import { ufName } from "../lib/uf";
 import ListItem from "./ListItem.astro";
+import SectionHead from "./SectionHead.astro";
 
 interface Props {
   senadores: Senador[];
@@ -18,8 +19,8 @@ const parties = [...new Set(senadores.map((s) => s.partido))].sort(byName);
 const control = "mt-1 block w-full rounded border-2 border-line bg-surface px-3 py-2 text-base text-fg sm:w-56";
 ---
 
-<section id="lista" class="mt-10" aria-labelledby="lista-titulo">
-  <h2 id="lista-titulo" class="text-2xl font-semibold">Os {rows.length} senadores</h2>
+<section id="lista" aria-labelledby="lista-titulo">
+  <SectionHead id="lista-titulo" title={`Os ${rows.length} senadores`} note="em ordem alfabética" />
   <form data-filtros hidden class="mt-4 flex flex-wrap items-end gap-4" role="search" aria-label="Filtrar a lista">
     <fieldset class="w-full">
       <legend class="text-sm font-semibold text-fg">Mostrar</legend>
