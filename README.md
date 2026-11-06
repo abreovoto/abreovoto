@@ -13,11 +13,14 @@ O site não toma lado. Nunca diz em quem votar, trata todos os candidatos da mes
 forma e não publica nada sobre um senador sem fonte pública. Os dados vivem neste
 repositório, então cada alteração é um commit que qualquer pessoa pode auditar.
 
-**Situação:** os dados dos 81 senadores e a validação deles já estão neste
-repositório; as páginas do site ainda não. O site entra no ar discretamente no
-fim de novembro de 2026 e passa a ser divulgado a partir de janeiro de 2027.
+**Situação:** o site está no ar em `https://abreovoto.com`, com o placar, os
+candidatos, os três senadores de cada estado, a lista dos 81 com filtros, uma
+página por senador, por estado e por candidato, as páginas "Como funciona",
+"Metodologia" e "Privacidade" e os dados abertos em `/dados.json`. O card para
+compartilhar ainda não existe. A divulgação começa quando o site estiver pronto
+para isso, sem data marcada.
 
-- Site: `https://abreovoto.com` (ainda não está no ar)
+- Site: `https://abreovoto.com`
 - Contato: abreovoto@gmail.com
 - Fontes e correções: abra uma issue com o modelo "Fonte ou correção"
 - Licença: MIT (código); dados do placar em CC BY 4.0
@@ -45,5 +48,14 @@ titular, e pode ter a sua declaração registrada antes de assumir.
 - `npm run fotos`: baixa e normaliza as fotos que ainda faltam (uma foto que já
   existe não é baixada de novo: ao trocar o `foto_origem`, apague o arquivo antigo)
 - `npm run check`: validação, testes, verificação de tipos e build
+
+## Site
+
+O site é estático (Astro) e é servido por um único Worker do Cloudflare, que
+entrega o build e responde em `/api/`. Para rodar localmente:
+
+- `npm run dev`: o site em modo de desenvolvimento
+- `npm run build` e depois `npx wrangler dev`: o build servido pelo Worker, com
+  a API, como em produção
 
 Os dados são publicados sob a licença CC BY 4.0.

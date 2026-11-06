@@ -15,3 +15,4 @@ lançamento.
 
 - Dados dos 81 senadores, dos candidatos e validação do schema.
 - Identidade visual do site: paleta clara e escura, tipografia, marca e os componentes do placar.
+- Site no ar em abreovoto.com: home com o placar, os candidatos, os três senadores do seu estado e a lista dos 81 com filtros; página de cada senador com a declaração e o histórico; páginas por estado e por candidato; como funciona, metodologia, privacidade e dados abertos em `/dados.json`.
