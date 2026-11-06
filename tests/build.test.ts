@@ -12,6 +12,15 @@ beforeAll(() => {
 
 const html = (path: string) => readFileSync(join(out, path), "utf8");
 
+/** Every page under the build output, as paths relative to it. */
+function allHtml(dir: string, prefix = ""): string[] {
+  return readdirSync(join(dir, prefix), { withFileTypes: true }).flatMap((e) => {
+    const rel = prefix ? `${prefix}/${e.name}` : e.name;
+    if (e.isDirectory()) return allHtml(dir, rel);
+    return e.name === "index.html" ? [rel] : [];
+  });
+}
+
 test("the home applies a saved theme before paint and otherwise follows the system", () => {
   const h = html("index.html");
   expect(h).toMatch(/<html lang="pt-BR">/);
@@ -43,4 +52,37 @@ test("the styleguide renders every component with real data and is not indexed",
 test("the favicons exist and are referenced", () => {
   for (const f of ["favicon.svg", "favicon.ico", "apple-touch-icon.png"]) expect(existsSync(join(out, f)), f).toBe(true);
   expect(html("index.html")).toMatch(/rel="icon" href="\/favicon\.svg"/);
+});
+
+test("every page has a canonical URL, the shell and no third party", () => {
+  const pages = allHtml(out);
+  expect(pages.length).toBeGreaterThanOrEqual(2);
+  for (const p of pages) {
+    const h = html(p);
+    expect(h, p).toMatch(/<link rel="canonical" href="https:\/\/abreovoto\.com\/[^"]*\/?">/);
+    expect(h, p).toContain('href="/como-funciona/"');
+    expect(h, p).toContain("Toda informação tem fonte pública.");
+    expect(h, p).not.toMatch(/https?:\/\/(?!abreovoto\.com|github\.com|www\.senado\.leg\.br|www25\.senado\.leg\.br|www12\.senado\.leg\.br|www\.instagram\.com|x\.com|www\.youtube\.com|www\.change\.org|creativecommons\.org)[a-z0-9.-]+\/[^"]*\.(js|css|woff2?)/);
+  }
+});
+
+test("the footer's sentences and links are separated by whitespace", () => {
+  const h = html("index.html");
+  expect(h).not.toMatch(/pública\.<a|correção\.<a/);
+  expect(h).toMatch(/aria-label="Código no GitHub"/);
+  expect(h).toContain('href="/dados.json"');
+  expect(h).toContain('href="/privacidade/"');
+});
+
+test("the sitemap lists the pages and not the styleguide; robots points at it; 404 exists", () => {
+  const index = readFileSync(join(out, "sitemap-index.xml"), "utf8");
+  expect(index).toContain("sitemap-0.xml");
+  const map = readFileSync(join(out, "sitemap-0.xml"), "utf8");
+  expect(map).toContain("https://abreovoto.com/");
+  expect(map).not.toContain("/estilo/");
+  expect(map).not.toContain("/404");
+  expect(readFileSync(join(out, "robots.txt"), "utf8")).toContain("Sitemap: https://abreovoto.com/sitemap-index.xml");
+  expect(html("404.html")).toContain("Página não encontrada");
+  expect(html("404.html")).toMatch(/<meta name="robots" content="noindex">/);
+  expect(html("404.html")).not.toContain('rel="canonical"');
 });

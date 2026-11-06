@@ -1,0 +1,28 @@
+---
+import ThemeToggle from "./ThemeToggle.astro";
+import Wordmark from "./Wordmark.astro";
+
+const links = [
+  { href: "/como-funciona/", label: "Como funciona" },
+  { href: "/metodologia/", label: "Metodologia" },
+  { href: "/como-funciona/#contato", label: "Contato" },
+];
+---
+
+<header class="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-x-6 gap-y-3 px-4 py-4 sm:px-6">
+  <Wordmark />
+  <nav aria-label="Principal" class="flex flex-wrap items-center gap-x-5 gap-y-2">
+    <ul class="flex flex-wrap items-center gap-x-5 gap-y-2" role="list">
+      {
+        links.map((l) => (
+          <li>
+            <a href={l.href} class="text-sm font-semibold text-fg no-underline">
+              {l.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+    <ThemeToggle />
+  </nav>
+</header>
