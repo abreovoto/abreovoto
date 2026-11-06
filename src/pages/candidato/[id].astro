@@ -1,0 +1,57 @@
+---
+import CandidateCard from "../../components/CandidateCard.astro";
+import ListItem from "../../components/ListItem.astro";
+import SectionHead from "../../components/SectionHead.astro";
+import { emExercicio, loadData } from "../../data/load";
+import { type PlacarCandidato, placar } from "../../data/placar";
+import Base from "../../layouts/Base.astro";
+import { candidatePhoto } from "../../lib/photos";
+import { senatorPath } from "../../lib/routes";
+
+export function getStaticPaths() {
+  return placar(loadData()).porCandidato.map((c) => ({ params: { id: c.id }, props: { candidato: c } }));
+}
+
+interface Props {
+  candidato: PlacarCandidato;
+}
+
+// The same page for every candidate: the name and the number are the only variables.
+const { candidato } = Astro.props;
+const d = loadData();
+const senador = d.candidatos.find((c) => c.id === candidato.id)!.senador;
+const declared = emExercicio(d)
+  .filter((s) => s.declaracao.status !== "nao_declarou" && s.declaracao.candidato === candidato.id)
+  .sort((a, b) => a.nome.localeCompare(b.nome, "pt-BR"));
+---
+
+<Base
+  title={`Declarações de voto em ${candidato.nome} — Abre o Voto`}
+  description={`Os senadores que declararam voto em ${candidato.nome} na eleição para a Presidência do Senado, com fonte.`}
+>
+  <div class="max-w-2xl">
+    <div class="max-w-sm">
+      <CandidateCard candidato={candidato} foto={candidatePhoto(candidato.id)} heading="h1" />
+    </div>
+
+    <section aria-labelledby="declararam">
+      <SectionHead id="declararam" title={`Senadores que declararam voto em ${candidato.nome}`} />
+      {
+        declared.length > 0 ? (
+          <ul class="mt-6">
+            {declared.map((s) => (
+              <ListItem senador={s} candidatos={d.candidatos} href={senatorPath(s.id)} />
+            ))}
+          </ul>
+        ) : (
+          <p class="mt-6 text-base text-fg-muted">Nenhum senador declarou voto em {candidato.nome} até agora.</p>
+        )
+      }
+    </section>
+
+    <p class="mt-16 flex flex-wrap gap-x-6 gap-y-2 text-sm">
+      <a href={senatorPath(senador)} class="text-accent underline">Página de {candidato.nome} como senador(a)</a>
+      <a href="/#lista" class="text-accent underline">Todos os 81 senadores</a>
+    </p>
+  </div>
+</Base>

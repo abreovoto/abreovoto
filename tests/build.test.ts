@@ -204,3 +204,17 @@ test("a successor's page carries the forecast note, identical for the three", ()
 test("every entry of the data has a page", () => {
   for (const s of loadData().senadores) expect(existsSync(join(out, `senador/${s.id}/index.html`)), s.id).toBe(true);
 });
+
+test("the three candidate pages are the same page with different data", () => {
+  const pages = ["alcolumbre", "marinho", "tereza-cristina"].map((id) => html(`candidato/${id}/index.html`));
+  for (const h of pages) expect(h).toContain("até agora."); // zero declarations today
+  for (const h of pages) expect(h.match(/<h1[ >]/g)).toHaveLength(1);
+  expect(pages[0]).toContain('href="/senador/davi-alcolumbre/"');
+  expect(pages[0]).toContain('href="/#lista"');
+  const shape = (h: string) =>
+    h
+      .replace(/Davi Alcolumbre|Rogério Marinho|Tereza Cristina|UNIÃO-AP|PL-RN|PP-MS|davi-alcolumbre|rogerio-marinho|tereza-cristina|alcolumbre|marinho/g, "X")
+      .replace(/\/_astro\/[^"]+/g, "ASSET");
+  expect(shape(pages[1]!)).toBe(shape(pages[0]!));
+  expect(shape(pages[2]!)).toBe(shape(pages[0]!));
+});
