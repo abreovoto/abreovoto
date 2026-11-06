@@ -1,0 +1,29 @@
+---
+import { Image } from "astro:assets";
+import { PORTRAIT_SIZES, type PortraitSize, portraitHeight, requestedWidths } from "../lib/portrait";
+
+interface Props {
+  src: ImageMetadata;
+  alt: string;
+  size: PortraitSize;
+}
+
+const { src, alt, size } = Astro.props;
+const width = PORTRAIT_SIZES[size];
+const height = portraitHeight(size);
+---
+
+<Image
+  src={src}
+  alt={alt}
+  width={width}
+  height={height}
+  widths={requestedWidths(size, src.width)}
+  sizes={`${width}px`}
+  format="webp"
+  fit="cover"
+  position="top"
+  loading={size === "page" ? "eager" : "lazy"}
+  class="block shrink-0 rounded bg-surface object-cover object-top"
+  style={`width:${width}px;height:${height}px`}
+/>
