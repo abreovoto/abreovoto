@@ -9,9 +9,11 @@ interface Props {
   senador: Senador;
   candidatos: Candidato[];
   variant: "state" | "page";
+  /** The senator's own page makes the name its h1; everywhere else it is an h3. */
+  heading?: "h1" | "h3";
 }
 
-const { senador, candidatos, variant } = Astro.props;
+const { senador, candidatos, variant, heading: Heading = "h3" } = Astro.props;
 const departed = departureNote(senador);
 const forecast = assumeEmNote(senador);
 const decl = senador.declaracao;
@@ -23,7 +25,7 @@ const nameSize = variant === "page" ? "text-xl" : "text-lg";
   <div class="flex items-start gap-4">
     <Portrait src={senatorPhoto(senador.id)} alt={`Foto oficial de ${senador.nome}`} size={variant} />
     <div class="min-w-0 flex-1">
-      <h3 class={`${nameSize} font-semibold leading-tight text-fg`}>{senador.nome}</h3>
+      <Heading class={`${nameSize} font-semibold leading-tight text-fg`}>{senador.nome}</Heading>
       <p class="mt-0.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-fg-muted">
         <span>{partyState(senador)}</span>
         {isCandidate(senador, candidatos) && <span class="rounded-full border border-fg px-2 text-xs text-fg">candidato</span>}
