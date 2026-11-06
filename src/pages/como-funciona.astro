@@ -55,32 +55,25 @@ const link = "text-accent underline";
   </section>
 
   <section aria-labelledby="quem-mantem">
-    <SectionHead id="quem-mantem" title="Quem mantém" />
+    <SectionHead id="quem-mantem" title="Quem mantém este site?" />
     <div class="mt-6 space-y-4">
       <p>
-        O site é mantido pela iniciativa Abre o Voto, sem nome de pessoa. O que sustenta cada informação é a fonte pública
-        ligada a ela, não quem a publicou.
+        O site é mantido pela iniciativa Abre o Voto. Tudo o que ele afirma pode ser conferido: a metodologia é pública,
+        os dados estão abertos em <a href="/dados.json" class={link}>dados.json</a> e cada alteração fica registrada em
+        um <a href={site.repositorio} rel="noopener" class={link}>repositório público</a>, com data e descrição.
       </p>
       <p>
-        O código, os dados e cada alteração ficam em um <a href={site.repositorio} rel="noopener" class={link}>repositório
-        público</a>, com data e descrição. Todos os dias, as fontes recebidas são conferidas pela regra da Metodologia e o
-        placar é atualizado.
+        Todos os dias, as fontes recebidas são conferidas pela regra da Metodologia e o placar é atualizado. O endereço de
+        contato responde em até 24 horas.
       </p>
     </div>
   </section>
 
   <section aria-labelledby="perguntas">
     <SectionHead id="perguntas" title="Perguntas que já esperamos" />
-    <h3 class="mt-6 text-lg font-semibold">É um site anônimo?</h3>
+    <h3 class="mt-6 text-lg font-semibold">Este site apoia algum candidato?</h3>
     <p class="mt-2">
-      O site não traz o nome de quem o mantém. Tudo o que ele afirma pode ser conferido sem esse nome: a metodologia é
-      pública, os dados estão abertos em <a href="/dados.json" class={link}>dados.json</a>, o histórico de cada alteração
-      está no repositório e o endereço de contato responde. Um nome de pessoa não mudaria nada do que o leitor pode
-      verificar.
-    </p>
-    <h3 class="mt-6 text-lg font-semibold">É um site de um lado só?</h3>
-    <p class="mt-2">
-      Todo candidato aparece no mesmo componente, com a mesma cor e a mesma regra de ordem, publicada na Metodologia. O mesmo
+      Não. Todo candidato aparece no mesmo componente, com a mesma cor e a mesma regra de ordem, publicada na Metodologia. O mesmo
       vale para os 81 senadores. Uma diferença de tratamento é um erro: escreva para o contato e ela será corrigida.
     </p>
     <h3 class="mt-6 text-lg font-semibold">Esse dado está errado</h3>
