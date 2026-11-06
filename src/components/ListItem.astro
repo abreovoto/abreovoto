@@ -9,7 +9,7 @@ import StatusBadge from "./StatusBadge.astro";
 interface Props extends HTMLAttributes<"li"> {
   senador: Senador;
   candidatos: Candidato[];
-  /** When set, the name links here. */
+  /** When set, the name links here, and the link covers the whole row. */
   href?: string;
 }
 
@@ -19,13 +19,25 @@ const candidate = decl.status === "nao_declarou" ? null : candidatos.find((c) =>
 const forecast = assumeEmNote(senador);
 ---
 
-<!-- Stripes count only the rows a filter leaves visible. -->
-<li class="flex items-center gap-4 rounded-lg px-3 py-2.5 [&:nth-child(odd_of_:not([hidden]))]:bg-surface" {...rest}>
+<!-- Stripes count only the rows a filter leaves visible. With a link, its ::after
+     covers the row, so a click anywhere opens the page while the row stays one link. -->
+<li
+  class:list={[
+    "flex items-center gap-4 rounded-lg px-3 py-2.5 [&:nth-child(odd_of_:not([hidden]))]:bg-surface",
+    href && "group relative",
+  ]}
+  {...rest}
+>
   <Portrait src={senatorPhoto(senador.id)} alt={`Foto oficial de ${senador.nome}`} size="list" />
   <div class="min-w-0 flex-1 sm:flex sm:items-center sm:gap-4">
     <div class="min-w-0 sm:flex-1">
       <p class="text-base font-semibold leading-tight text-fg">
-        {href ? <a href={href} class="text-fg underline-offset-2 hover:underline">{senador.nome}</a> : senador.nome}
+        {href ? <a
+              href={href}
+              class="text-fg no-underline underline-offset-2 group-hover:underline after:absolute after:inset-0 after:rounded-lg after:content-[''] focus-visible:outline-none focus-visible:after:outline-2 focus-visible:after:outline-offset-2 focus-visible:after:outline-focus"
+            >
+              {senador.nome}
+            </a> : senador.nome}
       </p>
       <p class="text-sm text-fg-muted">
         {partyState(senador)}
