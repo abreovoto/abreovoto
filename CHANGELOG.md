@@ -10,3 +10,7 @@ em "Não lançado". `0.x` é o site antes do lançamento público; `1.0.0` é o
 lançamento.
 
 ## [Não lançado]
+
+### Adicionado
+
+- Dados dos 81 senadores, dos candidatos e validação do schema.
