@@ -1,0 +1,77 @@
+---
+/**
+ * The 1200×630 card, laid out with inline styles and flexbox only — no classes,
+ * no CSS variables, no grid — so the same markup can be rasterised unchanged.
+ */
+import { getImage } from "astro:assets";
+import { PORTRAIT_SIZES, portraitHeight, requestedWidths } from "../lib/portrait";
+import type { ShareCardModel } from "../lib/share-card";
+import { fonts, palette } from "../styles/tokens";
+
+interface Props {
+  model: ShareCardModel;
+  foto?: ImageMetadata;
+}
+
+const { model, foto } = Astro.props;
+const p = palette.light;
+const display = `font-family:${fonts.display};font-stretch:125%;font-weight:800`;
+const text = `font-family:${fonts.text};font-weight:400`;
+const portraitWidth = PORTRAIT_SIZES.share;
+const portraitH = portraitHeight("share");
+// The asset is requested at 1× (the card is rasterised at 1×) and never above the source width.
+const assetWidth = foto ? requestedWidths("share", foto.width)[0]! : portraitWidth;
+const portrait = foto
+  ? await getImage({ src: foto, width: assetWidth, height: Math.round(assetWidth / 0.8), format: "png", fit: "cover", position: "top" })
+  : null;
+const statusColour = model.status === "não declarou" ? p.undeclared : p.declared;
+const numberColour = model.kind === "home" ? p.undeclared : p.fg;
+---
+
+<div
+  style={`display:flex;flex-direction:column;justify-content:space-between;width:1200px;height:630px;padding:56px;box-sizing:border-box;background:${p.bg};color:${p.fg};${text}`}
+>
+  <div style="display:flex;align-items:center;gap:12px">
+    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 64 64"><path d="M54.1 18.3A26 26 0 1 1 45.7 9.9" fill="none" stroke={p.fg} stroke-width="12"></path></svg>
+    <span style={`${display};font-size:40px;letter-spacing:-0.02em`}>Abre o Voto</span>
+  </div>
+
+  <div style="display:flex;align-items:center;gap:40px">
+    {
+      portrait && (
+        <img
+          src={portrait.src}
+          alt=""
+          width={portraitWidth}
+          height={portraitH}
+          style={`width:${portraitWidth}px;height:${portraitH}px;object-fit:cover;object-position:top;border-radius:6px;background:${p.surface};flex-shrink:0`}
+        />
+      )
+    }
+    <div style="display:flex;flex-direction:column;flex:1;min-width:0">
+      <span style={`${display};font-size:72px;line-height:1.05;letter-spacing:-0.02em`}>{model.title}</span>
+      <span style={`${text};font-size:36px;line-height:1.2;color:${p.fgMuted};margin-top:8px`}>{model.subtitle}</span>
+      {
+        model.status && (
+          <span style={`display:flex;align-items:center;gap:16px;margin-top:28px;${display};font-size:48px;line-height:1;color:${statusColour}`}>
+            <span style={`display:block;width:22px;height:22px;background:${statusColour}`} />
+            <span>{model.status}</span>
+          </span>
+        )
+      }
+    </div>
+    {
+      model.number !== null && (
+        <div style="display:flex;flex-direction:column;align-items:flex-end;flex-shrink:0">
+          <span style={`${display};font-size:200px;line-height:1;color:${numberColour}`}>{model.number}</span>
+          <span style={`${text};font-size:32px;line-height:1.2;color:${p.fgMuted}`}>{model.numberLabel}</span>
+        </div>
+      )
+    }
+  </div>
+
+  <div style={`display:flex;justify-content:space-between;align-items:baseline;font-size:32px;color:${p.fgMuted};${text};font-weight:600`}>
+    <span>{model.hashtag}</span>
+    <span>{model.kind === "home" ? `${model.date}, ${model.domain}` : model.domain}</span>
+  </div>
+</div>
