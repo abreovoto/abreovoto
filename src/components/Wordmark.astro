@@ -1,0 +1,24 @@
+---
+import mark from "../assets/mark.svg?raw";
+
+interface Props {
+  size?: "header" | "card";
+}
+
+const { size = "header" } = Astro.props;
+const markSize = size === "header" ? "size-7" : "size-5";
+const textSize = size === "header" ? "text-lg" : "text-sm";
+---
+
+<a href="/" class={`inline-flex items-center gap-2 text-fg no-underline ${textSize}`}>
+  <span class={`inline-block ${markSize}`} set:html={mark} />
+  <span class="font-display tracking-tight">Abre o Voto</span>
+</a>
+
+<style>
+  span :global(svg) {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+</style>

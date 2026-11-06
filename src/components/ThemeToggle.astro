@@ -1,0 +1,30 @@
+---
+/**
+ * Progressive enhancement: without JavaScript the theme follows the system
+ * (see the inline script in Base.astro); with it, the button overrides and
+ * remembers the choice in localStorage.tema.
+ */
+---
+
+<button type="button" aria-pressed="false" data-theme-toggle class="rounded border-2 border-fg px-3 py-1 text-sm font-semibold text-fg">
+  Tema escuro
+</button>
+
+<script>
+  const button = document.querySelector<HTMLButtonElement>("[data-theme-toggle]");
+  if (button) {
+    const root = document.documentElement;
+    const sync = () => button.setAttribute("aria-pressed", String(root.dataset.theme === "dark"));
+    sync();
+    button.addEventListener("click", () => {
+      const next = root.dataset.theme === "dark" ? "light" : "dark";
+      root.dataset.theme = next;
+      try {
+        localStorage.setItem("tema", next);
+      } catch {
+        // Storage can be unavailable (private mode, blocked); the toggle still works for this page.
+      }
+      sync();
+    });
+  }
+</script>
