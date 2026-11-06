@@ -26,7 +26,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: mara-rocha
   nome: Mara Rocha
@@ -56,7 +56,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: alan-rick
   nome: Alan Rick
@@ -86,7 +86,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: arthur-lira
   nome: Arthur Lira
@@ -116,7 +116,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: marina-jhc
   nome: Marina JHC
@@ -146,7 +146,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: renan-filho
   nome: Renan Filho
@@ -176,7 +176,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: eduardo-braga
   nome: Eduardo Braga
@@ -206,7 +206,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: plinio-valerio
   nome: Plínio Valério
@@ -236,7 +236,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: omar-aziz
   nome: Omar Aziz
@@ -269,10 +269,10 @@
       fonte_url: https://dadosabertos.tse.jus.br/dataset/candidatos-2026
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
     - data: 2026-11-06
-      evento: deixa o mandato em 2027-01-06 para tomar posse como governador; a primeira suplente passa a ocupar a vaga na lista desde já
+      evento: deixa o mandato em 6 de janeiro de 2027 para tomar posse como governador; a primeira suplente passa a ocupar a vaga na lista desde já
       issue: null
 - id: cheila-moreira
   nome: Cheila Moreira
@@ -305,7 +305,7 @@
       fonte_url: https://www.oliberal.com/politica/pt-ganha-mais-uma-cadeira-no-senado-federal-entenda-1.1187194
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: rayssa-furlan
   nome: Rayssa Furlan
@@ -335,7 +335,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: lucas-barreto
   nome: Lucas Barreto
@@ -365,7 +365,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: davi-alcolumbre
   nome: Davi Alcolumbre
@@ -395,7 +395,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: rui-costa
   nome: Rui Costa
@@ -425,7 +425,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: jaques-wagner
   nome: Jaques Wagner
@@ -455,7 +455,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: otto-alencar
   nome: Otto Alencar
@@ -485,7 +485,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: cid-gomes
   nome: Cid Gomes
@@ -515,7 +515,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: luizianne-lins
   nome: Luizianne Lins
@@ -545,7 +545,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: camilo-santana
   nome: Camilo Santana
@@ -575,7 +575,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: michelle-bolsonaro
   nome: Michelle Bolsonaro
@@ -605,7 +605,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: bia-kicis
   nome: Bia Kicis
@@ -635,7 +635,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: damares-alves
   nome: Damares Alves
@@ -665,7 +665,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: renato-casagrande
   nome: Renato Casagrande
@@ -695,7 +695,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: evair-de-melo
   nome: Evair de Melo
@@ -725,7 +725,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: magno-malta
   nome: Magno Malta
@@ -755,7 +755,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: gustavo-gayer
   nome: Gustavo Gayer
@@ -785,7 +785,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: gracinha-caiado
   nome: Gracinha Caiado
@@ -815,7 +815,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: wilder-morais
   nome: Wilder Morais
@@ -845,7 +845,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: andre-fufuca
   nome: André Fufuca
@@ -875,7 +875,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: lahesio-bonfim
   nome: Lahesio Bonfim
@@ -905,7 +905,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: flavio-dino
   nome: Flávio Dino
@@ -935,10 +935,10 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
     - data: 2026-11-06
-      evento: renunciou ao mandato em 2024-02-20 para assumir cargo no STF; substituído pela primeira suplente
+      evento: renunciou ao mandato em 20 de fevereiro de 2024 para assumir cargo no STF; substituído pela primeira suplente
       issue: null
 - id: ana-paula-lobato
   nome: Ana Paula Lobato
@@ -968,7 +968,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: domingos-savio
   nome: Domingos Sávio
@@ -998,7 +998,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: marilia-campos
   nome: Marília Campos
@@ -1028,7 +1028,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: cleitinho
   nome: Cleitinho
@@ -1061,10 +1061,10 @@
       fonte_url: https://dadosabertos.tse.jus.br/dataset/candidatos-2026
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
     - data: 2026-11-06
-      evento: deixa o mandato em 2027-01-06 para tomar posse como governador; o primeiro suplente passa a ocupar a vaga na lista desde já
+      evento: deixa o mandato em 6 de janeiro de 2027 para tomar posse como governador; o primeiro suplente passa a ocupar a vaga na lista desde já
       issue: null
 - id: alex-diniz
   nome: Alex Diniz
@@ -1097,7 +1097,7 @@
       fonte_url: https://www.congressoemfoco.com.br/noticia/122921/suplentes-de-cleitinho-e-moro-herdarao-quatro-anos-de-senado
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: reinaldo-azambuja
   nome: Reinaldo Azambuja
@@ -1127,7 +1127,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: capitao-contar
   nome: Capitão Contar
@@ -1157,7 +1157,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: tereza-cristina
   nome: Tereza Cristina
@@ -1187,7 +1187,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: mauro-mendes
   nome: Mauro Mendes
@@ -1217,7 +1217,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: jose-medeiros
   nome: José Medeiros
@@ -1247,7 +1247,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: wellington-fagundes
   nome: Wellington Fagundes
@@ -1277,7 +1277,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: helder
   nome: Helder
@@ -1307,7 +1307,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: chicao
   nome: Chicão
@@ -1337,7 +1337,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: beto-faro
   nome: Beto Faro
@@ -1367,7 +1367,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: joao-azevedo
   nome: João Azevêdo
@@ -1397,7 +1397,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: veneziano-vital-do-rego
   nome: Veneziano Vital do Rêgo
@@ -1427,7 +1427,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: efraim-filho
   nome: Efraim Filho
@@ -1457,7 +1457,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: humberto-costa
   nome: Humberto Costa
@@ -1487,7 +1487,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: marilia-arraes
   nome: Marília Arraes
@@ -1517,7 +1517,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: teresa-leitao
   nome: Teresa Leitão
@@ -1547,7 +1547,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: marcelo-castro
   nome: Marcelo Castro
@@ -1577,7 +1577,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: julio-cesar
   nome: Júlio Cesar
@@ -1607,7 +1607,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: wellington-dias
   nome: Wellington Dias
@@ -1636,11 +1636,11 @@
     fonte: null
   observacoes:
     - data: 2026-11-06
-      texto: Afastado do exercício para ocupar cargo de ministro. A primeira suplente, Jussara Lima (PSD), está em exercício desde 2026-05-06.
+      texto: Afastado do exercício para ocupar cargo de ministro. A primeira suplente, Jussara Lima (PSD), está em exercício desde 6 de maio de 2026.
       fonte_url: https://www25.senado.leg.br/web/senadores/senador/-/perfil/5016
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: filipe-barros
   nome: Filipe Barros
@@ -1670,7 +1670,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: deltan-dallagnol
   nome: Deltan Dallagnol
@@ -1700,7 +1700,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: sergio-moro
   nome: Sergio Moro
@@ -1733,10 +1733,10 @@
       fonte_url: https://dadosabertos.tse.jus.br/dataset/candidatos-2026
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
     - data: 2026-11-06
-      evento: deixa o mandato em 2027-01-06 para tomar posse como governador; o primeiro suplente passa a ocupar a vaga na lista desde já
+      evento: deixa o mandato em 6 de janeiro de 2027 para tomar posse como governador; o primeiro suplente passa a ocupar a vaga na lista desde já
       issue: null
 - id: luis-felipe-cunha
   nome: Luis Felipe Cunha
@@ -1769,7 +1769,7 @@
       fonte_url: https://www.congressoemfoco.com.br/noticia/122921/suplentes-de-cleitinho-e-moro-herdarao-quatro-anos-de-senado
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: carlos-portinho
   nome: Carlos Portinho
@@ -1799,7 +1799,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: carlos-jordy
   nome: Carlos Jordy
@@ -1829,7 +1829,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: romario
   nome: Romário
@@ -1859,7 +1859,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: styvenson-valentim
   nome: Styvenson Valentim
@@ -1889,7 +1889,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: samanda-de-lula
   nome: Samanda de Lula
@@ -1919,7 +1919,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: rogerio-marinho
   nome: Rogerio Marinho
@@ -1949,7 +1949,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: dr-fernando-maximo
   nome: Dr. Fernando Máximo
@@ -1979,7 +1979,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: bruno-scheid
   nome: Bruno Scheid
@@ -2009,7 +2009,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: jaime-bagattoli
   nome: Jaime Bagattoli
@@ -2039,7 +2039,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: nicoletti
   nome: Nicoletti
@@ -2069,7 +2069,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: teresa-surita
   nome: Teresa Surita
@@ -2099,7 +2099,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: dr-hiran
   nome: Dr. Hiran
@@ -2129,7 +2129,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: sanderson
   nome: Sanderson
@@ -2159,7 +2159,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: marcel-van-hattem
   nome: Marcel van Hattem
@@ -2189,7 +2189,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: hamilton-mourao
   nome: Hamilton Mourão
@@ -2219,7 +2219,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: caroline-de-toni
   nome: Caroline de Toni
@@ -2249,7 +2249,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: carlos-bolsonaro
   nome: Carlos Bolsonaro
@@ -2279,7 +2279,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: jorge-seif
   nome: Jorge Seif
@@ -2309,7 +2309,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: rogerio-carvalho
   nome: Rogério Carvalho
@@ -2339,7 +2339,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: alessandro-vieira
   nome: Alessandro Vieira
@@ -2369,7 +2369,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: laercio-oliveira
   nome: Laércio Oliveira
@@ -2399,7 +2399,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: guilherme-derrite
   nome: Guilherme Derrite
@@ -2429,7 +2429,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: andre-do-prado
   nome: André do Prado
@@ -2459,7 +2459,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: astronauta-marcos-pontes
   nome: Astronauta Marcos Pontes
@@ -2489,7 +2489,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: eduardo-gomes
   nome: Eduardo Gomes
@@ -2519,7 +2519,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: alexandre-guimaraes
   nome: Alexandre Guimarães
@@ -2549,7 +2549,7 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
 - id: professora-dorinha-seabra
   nome: Professora Dorinha Seabra
@@ -2579,5 +2579,5 @@
   observacoes: []
   historico:
     - data: 2026-11-06
-      evento: criado como nao_declarou
+      evento: entrou na lista como não declarou
       issue: null
