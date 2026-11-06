@@ -41,7 +41,8 @@ the 81 in office.
 - `npm run validate`: checks the data against the rules above
 - `npm run seed`: writes the initial `senadores.yaml` from the Senate's open
   data (never overwrites an existing file)
-- `npm run fotos`: downloads and normalises any missing portraits
+- `npm run fotos`: downloads and normalises any missing portraits (an existing
+  file is never fetched again: when `foto_origem` changes, delete the old file)
 - `npm run check`: validation, tests, type checking and build
 
 The data is published under CC BY 4.0.

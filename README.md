@@ -39,7 +39,8 @@ apontando para quem assumiu, e o placar conta só os 81 em exercício.
 - `npm run validate`: confere os dados contra as regras acima
 - `npm run seed`: gera o `senadores.yaml` inicial a partir dos dados abertos do
   Senado (não sobrescreve um arquivo existente)
-- `npm run fotos`: baixa e normaliza as fotos que ainda faltam
+- `npm run fotos`: baixa e normaliza as fotos que ainda faltam (uma foto que já
+  existe não é baixada de novo: ao trocar o `foto_origem`, apague o arquivo antigo)
 - `npm run check`: validação, testes, verificação de tipos e build
 
 Os dados são publicados sob a licença CC BY 4.0.
