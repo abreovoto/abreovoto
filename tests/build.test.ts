@@ -244,3 +244,13 @@ test("on the senator page a date shares its baseline with the text beside it", (
   expect(rows.length).toBeGreaterThan(0);
   for (const r of rows) expect(r).toContain("items-baseline");
 });
+
+test("the senator's links: a label with its icon, and only the value is the link", () => {
+  const h = html("senador/marcio-bittar/index.html");
+  expect(h).toMatch(/<a href="mailto:sen\.marciobittar@senado\.leg\.br"[^>]*>sen\.marciobittar@senado\.leg\.br<\/a>/);
+  expect(h).toMatch(/<a href="https:\/\/www\.instagram\.com\/marciobittar_"[^>]*>@marciobittar_<\/a>/);
+  expect(h).toMatch(/<a href="https:\/\/www25\.senado\.leg\.br[^"]*"[^>]*>Perfil oficial<\/a>/);
+  const from = h.indexOf('id="links"');
+  const section = h.slice(from, h.indexOf("</section>", from));
+  expect(section.match(/<svg[^>]*aria-hidden="true"/g)?.length).toBe(3); // Senado, e-mail, Instagram; no X today
+});

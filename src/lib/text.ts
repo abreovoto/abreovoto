@@ -91,3 +91,8 @@ export function tieShortWords(html: string): string {
     .map((part) => (part.startsWith("<") ? part : part.replace(SHORT_WORD, "$1\u00a0")))
     .join("");
 }
+
+/** `https://www.instagram.com/marciobittar_` → `@marciobittar_` */
+export function profileHandle(url: string): string {
+  return `@${new URL(url).pathname.split("/").filter(Boolean)[0]}`;
+}
