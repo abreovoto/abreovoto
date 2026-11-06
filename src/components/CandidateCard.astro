@@ -13,16 +13,17 @@ const { candidato, foto } = Astro.props;
 const label = candidato.total === 1 ? "declaração" : "declarações";
 ---
 
-<article class="rounded-lg bg-surface p-4 sm:p-5">
+<article class="flex h-full flex-col rounded-lg bg-surface p-5 sm:p-6">
   <div class="flex items-start gap-3">
     <Portrait src={foto} alt={`Foto oficial de ${candidato.nome}`} size="state" />
     <div class="min-w-0">
-      <h3 class="text-lg font-semibold leading-tight text-fg">{candidato.nome}</h3>
+      <h3 class="text-lg font-semibold leading-tight text-fg group-hover:underline">{candidato.nome}</h3>
       <p class="mt-0.5 text-sm text-fg-muted">{partyState(candidato)}</p>
     </div>
   </div>
-  <p class="mt-4">
-    <span class="font-display block text-5xl tabular-nums text-fg">{candidato.total}</span>
-    <span class="block text-sm text-fg-muted">{label}</span>
+  <!-- Pushed to the bottom so the three counts share a line whatever the names' length. -->
+  <p class="mt-auto flex items-baseline gap-2.5 pt-6">
+    <span class="font-display text-5xl tabular-nums text-fg">{candidato.total}</span>
+    <span class="text-sm text-fg-muted">{label}</span>
   </p>
 </article>
