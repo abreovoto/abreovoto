@@ -5,7 +5,8 @@ import { z } from "zod";
 const BLOCKED_HOSTS = ["wa.me", "chat.whatsapp.com", "api.whatsapp.com"];
 
 function isBlockedHost(hostname: string): boolean {
-  const host = hostname.toLowerCase();
+  // A fully qualified name ("wa.me.") reaches the same host; compare without the root dot.
+  const host = hostname.toLowerCase().replace(/\.$/, "");
   return BLOCKED_HOSTS.some((blocked) => host === blocked || host.endsWith(`.${blocked}`));
 }
 
