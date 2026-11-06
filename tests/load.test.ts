@@ -42,6 +42,23 @@ test("rejects a former occupant without a valid replacement", () => {
   expect(issuesOf({ senador: { "ac-1": { deixou_em: "2026-10-01" } } }).join("\n")).toMatch(/\[ac-1\].*deixou_em/);
 });
 
+test("accepts a seat that changed hands twice", () => {
+  const first = { ...senadorEntry("ac-1-primeiro", "AC", 1), situacao: "deixou_mandato", deixou_em: "2026-09-01", substituido_por: "ac-1-segundo" };
+  const second = { ...senadorEntry("ac-1-segundo", "AC", 1), situacao: "deixou_mandato", deixou_em: "2026-10-01", substituido_por: "ac-1" };
+  expect(() => loadData(makeDataset({ extraSenadores: [first, second] }))).not.toThrow();
+});
+
+test("rejects a replacement on another seat", () => {
+  const former = { ...senadorEntry("ac-1-antigo", "AC", 1), situacao: "deixou_mandato", deixou_em: "2026-10-01", substituido_por: "ac-2" };
+  expect(issuesOf({ extraSenadores: [former] }).join("\n")).toMatch(/\[ac-1-antigo\].*AC vaga 2/);
+});
+
+test("rejects a chain of replacements that never reaches someone in office", () => {
+  const a = { ...senadorEntry("ac-1-a", "AC", 1), situacao: "deixou_mandato", deixou_em: "2026-09-01", substituido_por: "ac-1-b" };
+  const b = { ...senadorEntry("ac-1-b", "AC", 1), situacao: "deixou_mandato", deixou_em: "2026-10-01", substituido_por: "ac-1-a" };
+  expect(issuesOf({ extraSenadores: [a, b] }).join("\n")).toMatch(/\[ac-1-a\].*não termina/);
+});
+
 test("rejects a declaration for a withdrawn candidate", () => {
   expect(() => loadData(makeDataset({ withdraw: "tereza-cristina", declareFor: ["ac-1", "tereza-cristina"] }))).toThrow(/desistiu/);
 });
