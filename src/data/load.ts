@@ -124,6 +124,18 @@ function mandatoMatchesVaga(senadores: Senador[]): string[] {
   });
 }
 
+/** Follow `substituido_por` from `start` (a seat can change hands more than once) until someone in office. */
+function reachesOffice(start: Senador, byId: Map<string, Senador>): boolean {
+  const seen = new Set<string>();
+  let current: Senador | undefined = start;
+  while (current && !seen.has(current.id)) {
+    if (current.situacao === "em_exercicio") return true;
+    seen.add(current.id);
+    current = current.substituido_por === null ? undefined : byId.get(current.substituido_por);
+  }
+  return false;
+}
+
 function departures(senadores: Senador[]): string[] {
   const byId = new Map(senadores.map((s) => [s.id, s]));
   return senadores.flatMap((s) => {
@@ -140,8 +152,12 @@ function departures(senadores: Senador[]): string[] {
       const successor = byId.get(s.substituido_por);
       if (!successor) {
         issues.push(line(SENADORES, s.id, `substituido_por "${s.substituido_por}" não está em ${SENADORES}`));
-      } else if (successor.situacao !== "em_exercicio") {
-        issues.push(line(SENADORES, s.id, `substituido_por "${s.substituido_por}" não está em exercício`));
+      } else if (successor.uf !== s.uf || successor.vaga !== s.vaga) {
+        issues.push(
+          line(SENADORES, s.id, `substituido_por "${successor.id}" ocupa ${successor.uf} vaga ${successor.vaga}, não ${s.uf} vaga ${s.vaga}`),
+        );
+      } else if (!reachesOffice(successor, byId)) {
+        issues.push(line(SENADORES, s.id, `a cadeia de substituido_por a partir de "${successor.id}" não termina em alguém em exercício`));
       }
     }
     return issues;
