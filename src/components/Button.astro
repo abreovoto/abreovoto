@@ -3,9 +3,10 @@ interface Props {
   href?: string;
   kind: "primary" | "secondary";
   type?: "button" | "submit";
+  rel?: string;
 }
 
-const { href, kind, type = "button" } = Astro.props;
+const { href, kind, type = "button", rel } = Astro.props;
 const base = "inline-flex items-center justify-center rounded border-2 px-4 py-2 text-sm font-semibold no-underline";
 const look = kind === "primary" ? "border-accent bg-accent text-on-accent" : "border-fg bg-transparent text-fg";
 const classes = `${base} ${look}`;
@@ -13,7 +14,7 @@ const classes = `${base} ${look}`;
 
 {
   href ? (
-    <a href={href} class={classes}>
+    <a href={href} rel={rel} class={classes}>
       <slot />
     </a>
   ) : (
