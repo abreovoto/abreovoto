@@ -88,7 +88,7 @@ export function senadorEntry(id: string, uf: string, vaga: 1 | 2 | 3, nome = `Se
     email_institucional: null,
     declaracao: { status: "nao_declarou", candidato: null, data: null, fonte: null },
     observacoes: [],
-    historico: [{ data: FIXTURE_DATE, evento: "criado como nao_declarou", issue: null }],
+    historico: [{ data: FIXTURE_DATE, evento: "entrou na lista como não declarou", issue: null }],
   };
 }
 

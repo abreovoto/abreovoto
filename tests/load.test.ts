@@ -136,3 +136,23 @@ test("collects every issue instead of stopping at the first", () => {
 test("rejects an unknown key in the YAML", () => {
   expect(() => loadData(makeDataset({ extraKey: true }))).toThrow(/unrecognized|desconhecid/i);
 });
+
+test("history events and observations are sentences, not log lines", () => {
+  const d = loadData();
+  for (const s of d.senadores) {
+    for (const h of s.historico) expect(h.evento, `${s.id} historico`).not.toMatch(/_|\d{4}-\d{2}-\d{2}/);
+    for (const o of s.observacoes) expect(o.texto, `${s.id} observação`).not.toMatch(/_|\d{4}-\d{2}-\d{2}/);
+  }
+  expect(d.senadores.every((s) => s.historico[0]?.evento === "entrou na lista como não declarou")).toBe(true);
+});
+
+test("the loader refuses a raw history event or an ISO date in an observation", () => {
+  const raw = { historico: [{ data: "2026-11-05", evento: "criado como nao_declarou", issue: null }] };
+  expect(issuesOf({ senador: { "ac-1": raw } }).join("\n")).toMatch(/\[ac-1\].*texto não legível em historico\.0\.evento: "criado como nao_declarou"/);
+  const iso = { observacoes: [{ data: "2026-11-05", texto: "Em exercício desde 2026-05-06.", fonte_url: "https://example.org/x" }] };
+  expect(issuesOf({ senador: { "ac-2": iso } }).join("\n")).toMatch(/\[ac-2\].*texto não legível em observacoes\.0\.texto/);
+});
+
+test("the fixture's history reads as a sentence", () => {
+  expect(() => loadData(makeDataset({}))).not.toThrow();
+});

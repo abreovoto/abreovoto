@@ -241,6 +241,21 @@ function historyPresent(senadores: Senador[]): string[] {
   );
 }
 
+const RAW_TEXT = /_|\d{4}-\d{2}-\d{2}/;
+
+/** Pages print history events and observations verbatim, so they must read as Portuguese, not as data. */
+export function readableText(senadores: Senador[]): string[] {
+  return senadores.flatMap((s) => {
+    const fields: [string, string][] = [
+      ...s.historico.map((h, i): [string, string] => [`historico.${i}.evento`, h.evento]),
+      ...s.observacoes.map((o, i): [string, string] => [`observacoes.${i}.texto`, o.texto]),
+    ];
+    return fields
+      .filter(([, value]) => RAW_TEXT.test(value))
+      .map(([field, value]) => line(SENADORES, s.id, `texto não legível em ${field}: "${value.slice(0, 40)}"`));
+  });
+}
+
 function electionDate(site: Site): string[] {
   return site.eleicao === ELECTION_DATE ? [] : [line(SITE, null, `eleicao precisa ser ${ELECTION_DATE} (encontrado ${site.eleicao})`)];
 }
@@ -307,7 +322,7 @@ export function loadData(opts: LoadOptions = {}): Dataset {
     issues.push(...photos(SENADORES, join(assetsDir, "senadores"), senadores, (id) => active.has(id)));
   }
   if (candidatos) issues.push(...photos(CANDIDATOS, join(assetsDir, "candidatos"), candidatos, () => true));
-  if (senadores) issues.push(...historyPresent(senadores));
+  if (senadores) issues.push(...historyPresent(senadores), ...readableText(senadores));
   // contagem_manual >= 0 is enforced by PeticaoSchema itself.
   if (site) issues.push(...electionDate(site));
   issues.push(...datesNotAfterToday(today, senadores, candidatos));
