@@ -246,10 +246,10 @@
   uf: AM
   vaga: 3
   mandato: 2023-2031
-  situacao: em_exercicio
+  situacao: deixou_mandato
   assume_em: null
-  deixou_em: null
-  substituido_por: null
+  deixou_em: 2027-01-06
+  substituido_por: cheila-moreira
   codigo_senado: "5525"
   codigo_camara: null
   foto_origem: https://www.senado.leg.br/senadores/img/fotos-oficiais/senador5525.jpg
@@ -265,8 +265,44 @@
     fonte: null
   observacoes:
     - data: 2026-11-06
-      texto: Eleito governador do Amazonas em 2026. Ao tomar posse, em janeiro de 2027, deixa o mandato no Senado e a primeira suplente, Cheila Moreira, assume a cadeira.
+      texto: Eleito governador do Amazonas em 2026. Deixa o mandato no Senado ao tomar posse como governador, em 6 de janeiro de 2027; a primeira suplente, Cheila Moreira, assume a cadeira.
       fonte_url: https://dadosabertos.tse.jus.br/dataset/candidatos-2026
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+    - data: 2026-11-06
+      evento: deixa o mandato em 2027-01-06 para tomar posse como governador; a primeira suplente passa a ocupar a vaga na lista desde já
+      issue: null
+- id: cheila-moreira
+  nome: Cheila Moreira
+  nome_completo: Cheila Vieira Moreira
+  apelido: null
+  partido: PT
+  uf: AM
+  vaga: 3
+  mandato: 2023-2031
+  situacao: em_exercicio
+  assume_em: 2027-01-06
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "6334"
+  codigo_camara: null
+  foto_origem: https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2022/fotos/foto_cand2022_AM_div.zip#FAM40001618515_div.jpeg
+  foto_credito: TSE
+  redes:
+    x: null
+    instagram: null
+  email_institucional: null
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes:
+    - data: 2026-11-06
+      texto: Primeira suplente de Omar Aziz, eleito governador do estado em 2026. Assume a vaga quando o titular tomar posse como governador, em 6 de janeiro de 2027 (Emenda Constitucional 111/2021).
+      fonte_url: https://www.oliberal.com/politica/pt-ganha-mais-uma-cadeira-no-senado-federal-entenda-1.1187194
   historico:
     - data: 2026-11-06
       evento: criado como nao_declarou
@@ -1002,10 +1038,10 @@
   uf: MG
   vaga: 3
   mandato: 2023-2031
-  situacao: em_exercicio
+  situacao: deixou_mandato
   assume_em: null
-  deixou_em: null
-  substituido_por: null
+  deixou_em: 2027-01-06
+  substituido_por: alex-diniz
   codigo_senado: "6337"
   codigo_camara: null
   foto_origem: https://www.senado.leg.br/senadores/img/fotos-oficiais/senador6337.jpg
@@ -1021,8 +1057,44 @@
     fonte: null
   observacoes:
     - data: 2026-11-06
-      texto: Eleito governador de Minas Gerais em 2026. Ao tomar posse, em janeiro de 2027, deixa o mandato no Senado e o primeiro suplente, Alex Diniz, assume a cadeira.
+      texto: Eleito governador de Minas Gerais em 2026. Deixa o mandato no Senado ao tomar posse como governador, em 6 de janeiro de 2027; o primeiro suplente, Alex Diniz, assume a cadeira.
       fonte_url: https://dadosabertos.tse.jus.br/dataset/candidatos-2026
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+    - data: 2026-11-06
+      evento: deixa o mandato em 2027-01-06 para tomar posse como governador; o primeiro suplente passa a ocupar a vaga na lista desde já
+      issue: null
+- id: alex-diniz
+  nome: Alex Diniz
+  nome_completo: Alex Sandro Coelho Diniz
+  apelido: null
+  partido: PL
+  uf: MG
+  vaga: 3
+  mandato: 2023-2031
+  situacao: em_exercicio
+  assume_em: 2027-01-06
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "6360"
+  codigo_camara: null
+  foto_origem: https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2022/fotos/foto_cand2022_MG_div.zip#FMG130001671679_div.jpg
+  foto_credito: TSE
+  redes:
+    x: null
+    instagram: null
+  email_institucional: null
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes:
+    - data: 2026-11-06
+      texto: Primeiro suplente de Cleitinho, eleito governador do estado em 2026. Assume a vaga quando o titular tomar posse como governador, em 6 de janeiro de 2027 (Emenda Constitucional 111/2021).
+      fonte_url: https://www.congressoemfoco.com.br/noticia/122921/suplentes-de-cleitinho-e-moro-herdarao-quatro-anos-de-senado
   historico:
     - data: 2026-11-06
       evento: criado como nao_declarou
@@ -1638,10 +1710,10 @@
   uf: PR
   vaga: 3
   mandato: 2023-2031
-  situacao: em_exercicio
+  situacao: deixou_mandato
   assume_em: null
-  deixou_em: null
-  substituido_por: null
+  deixou_em: 2027-01-06
+  substituido_por: luis-felipe-cunha
   codigo_senado: "6331"
   codigo_camara: null
   foto_origem: https://www.senado.leg.br/senadores/img/fotos-oficiais/senador6331.jpg
@@ -1657,8 +1729,44 @@
     fonte: null
   observacoes:
     - data: 2026-11-06
-      texto: Eleito governador do Paraná em 2026. Ao tomar posse, em janeiro de 2027, deixa o mandato no Senado e o primeiro suplente, Luis Felipe Cunha, assume a cadeira.
+      texto: Eleito governador do Paraná em 2026. Deixa o mandato no Senado ao tomar posse como governador, em 6 de janeiro de 2027; o primeiro suplente, Luis Felipe Cunha, assume a cadeira.
       fonte_url: https://dadosabertos.tse.jus.br/dataset/candidatos-2026
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+    - data: 2026-11-06
+      evento: deixa o mandato em 2027-01-06 para tomar posse como governador; o primeiro suplente passa a ocupar a vaga na lista desde já
+      issue: null
+- id: luis-felipe-cunha
+  nome: Luis Felipe Cunha
+  nome_completo: Luis Felipe Cunha
+  apelido: null
+  partido: PL
+  uf: PR
+  vaga: 3
+  mandato: 2023-2031
+  situacao: em_exercicio
+  assume_em: 2027-01-06
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "6370"
+  codigo_camara: null
+  foto_origem: https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2022/fotos/foto_cand2022_PR_div.zip#FPR160001621845_div.jpg
+  foto_credito: TSE
+  redes:
+    x: null
+    instagram: null
+  email_institucional: null
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes:
+    - data: 2026-11-06
+      texto: Primeiro suplente de Sergio Moro, eleito governador do estado em 2026. Assume a vaga quando o titular tomar posse como governador, em 6 de janeiro de 2027 (Emenda Constitucional 111/2021).
+      fonte_url: https://www.congressoemfoco.com.br/noticia/122921/suplentes-de-cleitinho-e-moro-herdarao-quatro-anos-de-senado
   historico:
     - data: 2026-11-06
       evento: criado como nao_declarou
