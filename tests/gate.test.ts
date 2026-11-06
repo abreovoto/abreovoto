@@ -11,7 +11,7 @@ test("the real dataset loads and the scoreboard is consistent", () => {
   expect(p.porCandidato.reduce((n, c) => n + c.total, 0)).toBe(p.declararam);
 });
 
-test("the real dataset has no duplicate names and every photo", () => {
+test("the real dataset has no duplicate names among those in office", () => {
   const d = loadData();
   const names = emExercicio(d).map((s) => s.nome);
   expect(new Set(names).size).toBe(81);
