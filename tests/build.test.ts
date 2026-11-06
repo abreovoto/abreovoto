@@ -1,5 +1,5 @@
 import { execFileSync } from "node:child_process";
-import { existsSync, mkdtempSync, readFileSync } from "node:fs";
+import { existsSync, mkdtempSync, readdirSync, readFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { beforeAll, expect, test } from "vitest";
@@ -12,16 +12,19 @@ beforeAll(() => {
 
 const html = (path: string) => readFileSync(join(out, path), "utf8");
 
-test("the home sets the theme before paint and falls back to the system", () => {
+test("the home applies a saved theme before paint and otherwise follows the system", () => {
   const h = html("index.html");
-  expect(h).toMatch(/<html lang="pt-BR" data-theme="light">/);
+  expect(h).toMatch(/<html lang="pt-BR">/);
   expect(h).toMatch(/localStorage\.getItem\("tema"\)/);
-  expect(h).toMatch(/prefers-color-scheme: dark/);
+  const css = readdirSync(join(out, "_astro"))
+    .filter((f) => f.endsWith(".css"))
+    .map((f) => readFileSync(join(out, "_astro", f), "utf8"))
+    .join("\n");
+  expect(css).toMatch(/prefers-color-scheme:\s*dark/);
 });
 
-test("no page requests a third party", () => {
-  const h = html("index.html");
-  expect(h).not.toMatch(/https?:\/\/(fonts\.googleapis|fonts\.gstatic|cdn\.|unpkg|jsdelivr)/);
+test.each(["index.html", "estilo/index.html"])("%s requests no third party", (page) => {
+  expect(html(page)).not.toMatch(/https?:\/\/(fonts\.googleapis|fonts\.gstatic|cdn\.|unpkg|jsdelivr)/);
 });
 
 test("the styleguide renders every component with real data and is not indexed", () => {

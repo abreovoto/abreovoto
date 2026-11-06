@@ -1,12 +1,12 @@
 ---
 /**
- * Progressive enhancement: without JavaScript the theme follows the system
- * (see the inline script in Base.astro); with it, the button overrides and
- * remembers the choice in localStorage.tema.
+ * Progressive enhancement. Without JavaScript the page has no `data-theme` and the
+ * stylesheet follows the system preference; this button stays hidden. With it, the
+ * button overrides the preference and remembers the choice in localStorage.tema.
  */
 ---
 
-<button type="button" aria-pressed="false" data-theme-toggle class="rounded border-2 border-fg px-3 py-1 text-sm font-semibold text-fg">
+<button type="button" aria-pressed="false" data-theme-toggle hidden class="rounded border-2 border-fg px-3 py-1 text-sm font-semibold text-fg">
   Tema escuro
 </button>
 
@@ -14,10 +14,14 @@
   const button = document.querySelector<HTMLButtonElement>("[data-theme-toggle]");
   if (button) {
     const root = document.documentElement;
-    const sync = () => button.setAttribute("aria-pressed", String(root.dataset.theme === "dark"));
+    const system = window.matchMedia("(prefers-color-scheme: dark)");
+    const current = () => root.dataset.theme ?? (system.matches ? "dark" : "light");
+    const sync = () => button.setAttribute("aria-pressed", String(current() === "dark"));
+    button.hidden = false;
     sync();
+    system.addEventListener("change", sync);
     button.addEventListener("click", () => {
-      const next = root.dataset.theme === "dark" ? "light" : "dark";
+      const next = current() === "dark" ? "light" : "dark";
       root.dataset.theme = next;
       try {
         localStorage.setItem("tema", next);
