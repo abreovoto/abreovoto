@@ -83,6 +83,11 @@ test("rejects a candidate whose senador is not a known senator", () => {
   expect(issuesOf({ candidato: { marinho: { senador: "nao-existe" } } }).join("\n")).toMatch(/\[marinho\].*nao-existe/);
 });
 
+test("rejects a candidate whose party or UF differs from their senator entry", () => {
+  expect(issuesOf({ candidato: { marinho: { partido: "PT" } } }).join("\n")).toMatch(/\[marinho\].*partido/);
+  expect(issuesOf({ candidato: { marinho: { uf: "SP" } } }).join("\n")).toMatch(/\[marinho\].*uf/);
+});
+
 test("rejects a missing photo and names the id", () => {
   expect(() => loadData(makeDataset({ dropPhoto: "ac-1" }))).toThrow(/ac-1.*foto/);
 });
