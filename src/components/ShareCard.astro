@@ -24,7 +24,8 @@ const assetWidth = foto ? requestedWidths("share", foto.width)[0]! : portraitWid
 const portrait = foto
   ? await getImage({ src: foto, width: assetWidth, height: Math.round(assetWidth / 0.8), format: "png", fit: "cover", position: "top" })
   : null;
-const statusColour = model.status === "não declarou" ? p.undeclared : p.declared;
+const statusColour =
+  model.status === "não declarou" ? p.undeclared : /^(declarou|mostrou)/.test(model.status ?? "") ? p.declared : p.fgMuted;
 const numberColour = model.kind === "home" ? p.undeclared : p.fg;
 ---
 

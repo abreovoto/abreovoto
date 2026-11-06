@@ -31,3 +31,8 @@ test("candidate cards are identical in shape and differ only in name and number"
   expect(new Set(cards.map((c) => c.numberLabel)).size).toBe(1);
   expect(new Set(cards.map((c) => c.subtitle.length > 0)).size).toBe(1);
 });
+
+test("a departed senator's card carries the departure note instead of a status", () => {
+  const s = d.senadores.find((x) => x.id === "cleitinho")!;
+  expect(senatorCard(s, d, today).status).toBe("deixa o mandato em 6/1/2027");
+});
