@@ -98,7 +98,10 @@ function baseSenadores(): Entry[] {
       const id = `${uf.toLowerCase()}-${vaga}`;
       const candidate = CANDIDATES.find((c) => c.senador === id);
       const entry = senadorEntry(id, uf, vaga, candidate?.nome);
-      if (candidate) entry.declaracao = declarou(candidate.id);
+      if (candidate) {
+        entry.partido = candidate.partido;
+        entry.declaracao = declarou(candidate.id);
+      }
       entries.push(entry);
     }
   }

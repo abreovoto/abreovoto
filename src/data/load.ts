@@ -185,10 +185,20 @@ function declaredCandidates(senadores: Senador[], candidatos: Candidato[]): stri
 }
 
 function candidateSenators(senadores: Senador[], candidatos: Candidato[]): string[] {
-  const ids = new Set(senadores.map((s) => s.id));
-  return candidatos.flatMap((c) =>
-    ids.has(c.senador) ? [] : [line(CANDIDATOS, c.id, `senador "${c.senador}" não está em ${SENADORES}`)],
-  );
+  const byId = new Map(senadores.map((s) => [s.id, s]));
+  return candidatos.flatMap((c) => {
+    const senator = byId.get(c.senador);
+    if (!senator) return [line(CANDIDATOS, c.id, `senador "${c.senador}" não está em ${SENADORES}`)];
+    // The candidate repeats the senator's party and UF; the two files must not drift apart.
+    const issues: string[] = [];
+    if (c.partido !== senator.partido) {
+      issues.push(line(CANDIDATOS, c.id, `partido ${c.partido} difere do registro do senador ${senator.id} (${senator.partido})`));
+    }
+    if (c.uf !== senator.uf) {
+      issues.push(line(CANDIDATOS, c.id, `uf ${c.uf} difere do registro do senador ${senator.id} (${senator.uf})`));
+    }
+    return issues;
+  });
 }
 
 function withdrawals(candidatos: Candidato[]): string[] {
