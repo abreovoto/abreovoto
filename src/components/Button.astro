@@ -2,7 +2,7 @@
 interface Props {
   href?: string;
   kind: "primary" | "secondary";
-  /** Height: `sm` 36 px, default 40 px, `lg` 48 px. */
+  /** Height in px (the root is 17 px, so rem steps would miss): `sm` 36, default 40, `lg` 48. */
   size?: "sm" | "md" | "lg";
   type?: "button" | "submit";
   rel?: string;
@@ -10,7 +10,7 @@ interface Props {
 
 const { href, kind, size = "md", type = "button", rel } = Astro.props;
 const base = "inline-flex items-center justify-center rounded border-2 text-sm font-semibold leading-none no-underline";
-const height = size === "sm" ? "h-9 px-3" : size === "lg" ? "h-12 px-5" : "h-10 px-4";
+const height = size === "sm" ? "h-[36px] px-3" : size === "lg" ? "h-[48px] px-5" : "h-[40px] px-4";
 const look = kind === "primary" ? "border-accent bg-accent text-on-accent" : "border-fg bg-transparent text-fg";
 const classes = `${base} ${height} ${look}`;
 ---

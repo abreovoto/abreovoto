@@ -1,6 +1,7 @@
 ---
 import type { Candidato, Senador } from "../data/schema";
 import { UF } from "../data/schema";
+import { CONTROL, FIELD, SELECT } from "../lib/controls";
 import { senatorPath } from "../lib/routes";
 import { ufName } from "../lib/uf";
 import ListItem from "./ListItem.astro";
@@ -16,41 +17,52 @@ const byName = (a: string, b: string) => a.localeCompare(b, "pt-BR");
 const rows = [...senadores].sort((a, b) => byName(a.nome, b.nome));
 const states = [...UF.options].sort((a, b) => byName(ufName(a), ufName(b)));
 const parties = [...new Set(senadores.map((s) => s.partido))].sort(byName);
-const control = "mt-1 block w-full rounded border-2 border-line bg-surface px-3 py-2 text-base text-fg sm:w-56";
 ---
 
 <section id="lista" aria-labelledby="lista-titulo">
   <SectionHead id="lista-titulo" title={`Os ${rows.length} senadores`} note="em ordem alfabética" />
-  <form data-filtros hidden class="mt-4 flex flex-wrap items-end gap-4" role="search" aria-label="Filtrar a lista">
-    <fieldset class="w-full">
-      <legend class="text-sm font-semibold text-fg">Mostrar</legend>
-      <div class="mt-1 flex flex-wrap gap-x-5 gap-y-2 text-base">
-        <label class="inline-flex items-center gap-2"><input type="radio" name="status" value="todos" checked class="accent-accent" /> Todos</label>
-        <label class="inline-flex items-center gap-2"><input type="radio" name="status" value="nao_declarou" class="accent-accent" /> Não declararam</label>
-        <label class="inline-flex items-center gap-2"><input type="radio" name="status" value="declarou" class="accent-accent" /> Declararam</label>
+  <form data-filtros hidden class="mt-6 grid gap-4 rounded-lg bg-surface p-4 sm:p-5" role="search" aria-label="Filtrar a lista">
+    <fieldset>
+      <legend class="text-sm font-semibold leading-tight text-fg">Mostrar</legend>
+      <!-- Segmented buttons over visually hidden radios; the script still listens to the form's input events. -->
+      <div class="mt-1.5 flex flex-wrap gap-2">
+        {
+          [
+            ["todos", "Todos"],
+            ["nao_declarou", "Não declararam"],
+            ["declarou", "Declararam"],
+          ].map(([value, label], i) => (
+            <label class="inline-flex h-[36px] cursor-pointer items-center rounded border-2 border-line px-3.5 text-sm font-semibold text-fg has-checked:border-fg has-checked:bg-fg has-checked:text-bg has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-focus">
+              <input type="radio" name="status" value={value} checked={i === 0} class="sr-only" />
+              {label}
+            </label>
+          ))
+        }
       </div>
     </fieldset>
-    <label class="block w-full text-sm font-semibold text-fg sm:w-auto">
-      Estado
-      <select name="uf" class={control}>
-        <option value="">Todos os estados</option>
-        {states.map((uf) => <option value={uf}>{ufName(uf)}</option>)}
-      </select>
-    </label>
-    <label class="block w-full text-sm font-semibold text-fg sm:w-auto">
-      Partido
-      <select name="partido" class={control}>
-        <option value="">Todos os partidos</option>
-        {parties.map((p) => <option value={p}>{p}</option>)}
-      </select>
-    </label>
-    <label class="block w-full text-sm font-semibold text-fg sm:w-auto">
-      Buscar por nome
-      <input type="search" name="q" autocomplete="off" class={control} />
-    </label>
+    <div class="grid grid-cols-1 gap-4 sm:grid-cols-[1fr_1fr_1.4fr]">
+      <label class={FIELD}>
+        Estado
+        <select name="uf" class={SELECT}>
+          <option value="">Todos os estados</option>
+          {states.map((uf) => <option value={uf}>{ufName(uf)}</option>)}
+        </select>
+      </label>
+      <label class={FIELD}>
+        Partido
+        <select name="partido" class={SELECT}>
+          <option value="">Todos os partidos</option>
+          {parties.map((p) => <option value={p}>{p}</option>)}
+        </select>
+      </label>
+      <label class={FIELD}>
+        Buscar por nome
+        <input type="search" name="q" autocomplete="off" class={CONTROL} />
+      </label>
+    </div>
   </form>
-  <p aria-live="polite" data-contagem class="mt-4 text-sm text-fg-muted">{rows.length} senadores</p>
-  <ul class="mt-2 max-w-3xl" role="list" data-lista>
+  <p aria-live="polite" data-contagem class="mt-5 text-sm text-fg-muted">{rows.length} senadores</p>
+  <ul class="mt-4" role="list" data-lista>
     {
       rows.map((s) => (
         <ListItem

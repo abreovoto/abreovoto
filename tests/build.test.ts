@@ -154,3 +154,19 @@ test("the home's sections open with the same head: rule, title, note", () => {
   expect(h).not.toContain("41 votos elegem o presidente do Senado.");
   expect(html("estado/sp/index.html")).toMatch(/border-t border-line[^"]*"[^>]*>\s*<h2 id="em-exercicio"/);
 });
+
+test("the selects and the search share one 44 px construction; the selects draw their own chevron", () => {
+  const h = html("index.html");
+  const selects = h.match(/<select[^>]*>/g) ?? [];
+  expect(selects).toHaveLength(3); // state selector, state filter, party filter
+  const search = h.match(/<input type="search"[^>]*>/)?.[0] ?? "";
+  const cls = (tag: string) => tag.match(/class="([^"]*)"/)?.[1] ?? "";
+  for (const s of selects) {
+    expect(cls(s)).toContain("select-chevron");
+    expect(cls(s).replace(" select-chevron pr-11", "")).toBe(cls(search));
+  }
+  expect(cls(search)).toContain("h-[44px]");
+  const radios = h.match(/<input type="radio" name="status"[^>]*>/g) ?? [];
+  expect(radios).toHaveLength(3);
+  for (const r of radios) expect(cls(r)).toContain("sr-only");
+});
