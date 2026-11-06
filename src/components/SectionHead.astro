@@ -1,0 +1,16 @@
+---
+interface Props {
+  id: string;
+  title: string;
+  note?: string;
+}
+
+// The same head on every page: a rule, the title left, a short note right (under it on a phone).
+// The caller's <section> carries aria-labelledby={id} and starts its body with mt-6.
+const { id, title, note } = Astro.props;
+---
+
+<div class="mt-16 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 border-t border-line pt-6">
+  <h2 id={id} class="text-2xl font-semibold">{title}</h2>
+  {note && <p class="text-sm text-fg-muted">{note}</p>}
+</div>

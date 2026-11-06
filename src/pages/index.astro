@@ -1,6 +1,7 @@
 ---
 import CandidateCard from "../components/CandidateCard.astro";
 import PetitionArea from "../components/PetitionArea.astro";
+import SectionHead from "../components/SectionHead.astro";
 import Scoreboard from "../components/Scoreboard.astro";
 import SenatorList from "../components/SenatorList.astro";
 import YourSenators from "../components/YourSenators.astro";
@@ -15,13 +16,16 @@ const p = placar(d);
 ---
 
 <Base title="Abre o Voto" description="Placar público da eleição para a Presidência do Senado Federal.">
-  <h1 class="max-w-3xl text-3xl font-semibold leading-tight sm:text-4xl">
-    Em 1º de fevereiro, seus senadores escolhem quem comanda o Senado. Em voto secreto.
-  </h1>
-  <p class="mt-4 max-w-prose text-lg text-fg">Você tem o direito de saber em quem cada um vota. Cobre que declarem antes.</p>
-  <PetitionArea peticao={d.peticao} ecidadania={d.site.ecidadania_url} />
-
-  <div class="mt-10 max-w-md"><Scoreboard placar={p} /></div>
+  <div class="grid grid-cols-1 items-start gap-8 min-[900px]:grid-cols-[7fr_5fr] min-[900px]:gap-12">
+    <div>
+      <h1 class="max-w-[19ch] text-3xl font-semibold leading-tight sm:text-4xl">
+        Em 1º de fevereiro, seus senadores escolhem quem comanda o Senado. Em voto secreto.
+      </h1>
+      <p class="mt-5 max-w-[34ch] text-lg text-fg">Você tem o direito de saber em quem cada um vota. Cobre que declarem antes.</p>
+      <PetitionArea peticao={d.peticao} />
+    </div>
+    <Scoreboard placar={p} />
+  </div>
 
   <section class="mt-10" aria-labelledby="candidatos">
     <h2 id="candidatos" class="text-2xl font-semibold">Candidatos</h2>
@@ -39,4 +43,16 @@ const p = placar(d);
 
   <YourSenators senadores={emExercicio(d)} candidatos={d.candidatos} />
   <SenatorList senadores={emExercicio(d)} candidatos={d.candidatos} />
+
+  {
+    d.site.ecidadania_url && (
+      <section aria-labelledby="para-2029">
+        <SectionHead id="para-2029" title="Para 2029" />
+        <p class="mt-6 max-w-xl text-base text-fg-muted">
+          Para que na próxima eleição isso não precise de campanha, há uma proposta de&nbsp;voto&nbsp;aberto na eleição
+          da&nbsp;Mesa. <a href={d.site.ecidadania_url} rel="noopener" class="text-accent underline">Apoie no e-Cidadania</a>.
+        </p>
+      </section>
+    )
+  }
 </Base>

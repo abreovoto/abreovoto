@@ -96,13 +96,13 @@ test("the home opens with the headline, the scoreboard and the three candidates 
   const h = html("index.html");
   expect(h).toContain("seus senadores escolhem quem comanda o Senado");
   expect(h).not.toContain("Assinar"); // peticao.url is null today
-  expect(h).toContain("apoie no e-Cidadania");
+  expect(h).toContain("Apoie no e-Cidadania");
   expect(h).toContain("não declararam");
   const order = ["Davi Alcolumbre", "Rogério Marinho", "Tereza Cristina"].map((n) => h.indexOf(n));
   expect(order.every((i) => i > 0)).toBe(true);
   expect(order).toEqual([...order].sort((a, b) => a - b));
   expect(h).toContain('href="/candidato/alcolumbre/"');
-  expect(h).toContain("41 votos elegem o presidente do Senado.");
+  expect(h).toContain("41 votos elegem o presidente do Senado");
 });
 
 test("the home carries the 27 state groups with three senators each, hidden until chosen", () => {
@@ -137,8 +137,11 @@ test("the list has the 81 in office, alphabetical, with hidden filter controls",
   expect(h).toContain('href="/senador/marcio-bittar/"');
 });
 
-test("the home's scoreboard carries the hemicycle", () => {
+test("the home's scoreboard carries the hemicycle and the e-Cidadania line closes the page", () => {
   const h = html("index.html");
   expect(h.match(/<circle /g)?.length).toBe(81);
   expect(h).toMatch(/aria-label="81 cadeiras do Senado: \d+ não declararam, \d+ declararam"/);
+  const idx = (t: string) => h.indexOf(t);
+  expect(idx("Para 2029")).toBeGreaterThan(idx("Os 81 senadores"));
+  expect(h).toContain("de&nbsp;voto&nbsp;aberto");
 });
