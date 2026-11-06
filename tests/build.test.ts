@@ -237,3 +237,10 @@ test("/dados.json is built and carries the scoreboard", () => {
   expect(o.placar.total).toBe(81);
   expect(o.licenca).toBe("CC BY 4.0");
 });
+
+test("on the senator page a date shares its baseline with the text beside it", () => {
+  const h = html("senador/marcio-bittar/index.html");
+  const rows = h.match(/<li class="[^"]*sm:grid-cols-\[6\.5rem_1fr\][^"]*"/g) ?? [];
+  expect(rows.length).toBeGreaterThan(0);
+  for (const r of rows) expect(r).toContain("items-baseline");
+});
