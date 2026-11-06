@@ -1,0 +1,413 @@
+{
+  "ListaParlamentarLegislatura": {
+    "noNamespaceSchemaLocation": "https://legis.senado.leg.br/dadosabertos/dados/ListaParlamentarLegislaturav4.xsd",
+    "Metadados": {
+      "Versao": "05/11/2026 21:29:53",
+      "VersaoServico": "4",
+      "DataVersaoServico": "2021-09-09",
+      "DescricaoDataSet": "Retorna a lista de Senadores de uma Legislatura."
+    },
+    "Parlamentares": {
+      "Parlamentar": [
+        {
+          "IdentificacaoParlamentar": {
+            "CodigoParlamentar": "5672",
+            "CodigoPublicoNaLegAtual": "800",
+            "NomeParlamentar": "Alan Rick",
+            "NomeCompletoParlamentar": "Alan Rick Miranda",
+            "SexoParlamentar": "Masculino",
+            "FormaTratamento": "Senador ",
+            "UrlFotoParlamentar": "http://www.senado.leg.br/senadores/img/fotos-oficiais/senador5672.jpg",
+            "UrlPaginaParlamentar": "http://www25.senado.leg.br/web/senadores/senador/-/perfil/5672",
+            "EmailParlamentar": "sen.alanrick@senado.leg.br",
+            "SiglaPartidoParlamentar": "REPUBLICANOS",
+            "UfParlamentar": "AC"
+          },
+          "Mandatos": {
+            "Mandato": [
+              {
+                "CodigoMandato": "596",
+                "UfParlamentar": "AC",
+                "PrimeiraLegislaturaDoMandato": {
+                  "NumeroLegislatura": "57",
+                  "DataInicio": "2023-02-01",
+                  "DataFim": "2027-01-31"
+                },
+                "SegundaLegislaturaDoMandato": {
+                  "NumeroLegislatura": "58",
+                  "DataInicio": "2027-02-01",
+                  "DataFim": "2031-01-31"
+                },
+                "DescricaoParticipacao": "Titular",
+                "Suplentes": {
+                  "Suplente": [
+                    {
+                      "DescricaoParticipacao": "1º Suplente",
+                      "CodigoParlamentar": "6343",
+                      "NomeParlamentar": "Gemil Junior"
+                    },
+                    {
+                      "DescricaoParticipacao": "2º Suplente",
+                      "CodigoParlamentar": "6344",
+                      "NomeParlamentar": "Coronel Casagrande"
+                    }
+                  ]
+                },
+                "Exercicios": {
+                  "Exercicio": [
+                    {
+                      "CodigoExercicio": "3028",
+                      "DataInicio": "2023-02-01"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "IdentificacaoParlamentar": {
+            "CodigoParlamentar": "5205",
+            "CodigoPublicoNaLegAtual": "162",
+            "NomeParlamentar": "Arthur Lira",
+            "NomeCompletoParlamentar": "Arthur César Pereira de Lira",
+            "SexoParlamentar": "Masculino",
+            "FormaTratamento": "Senador ",
+            "EmailParlamentar": "dep.arthurlira@camara.leg.br",
+            "SiglaPartidoParlamentar": "PP",
+            "UfParlamentar": "AL"
+          },
+          "Mandatos": {
+            "Mandato": [
+              {
+                "CodigoMandato": "623",
+                "UfParlamentar": "AL",
+                "PrimeiraLegislaturaDoMandato": {
+                  "NumeroLegislatura": "58",
+                  "DataInicio": "2027-02-01",
+                  "DataFim": "2031-01-31"
+                },
+                "SegundaLegislaturaDoMandato": {
+                  "NumeroLegislatura": "59",
+                  "DataInicio": "2031-02-01",
+                  "DataFim": "2035-01-31"
+                },
+                "DescricaoParticipacao": "Titular",
+                "Suplentes": {
+                  "Suplente": [
+                    {
+                      "DescricaoParticipacao": "1º Suplente",
+                      "CodigoParlamentar": "6682",
+                      "NomeParlamentar": "Luiz Romero"
+                    },
+                    {
+                      "DescricaoParticipacao": "2º Suplente",
+                      "CodigoParlamentar": "6685",
+                      "NomeParlamentar": "Gustavo Feijó"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "IdentificacaoParlamentar": {
+            "CodigoParlamentar": "6686",
+            "NomeParlamentar": "Marina JHC",
+            "NomeCompletoParlamentar": "Marina Antunes Candia e Figueiredo",
+            "SexoParlamentar": "Feminino",
+            "FormaTratamento": "Senadora ",
+            "SiglaPartidoParlamentar": "PSDB"
+          },
+          "Mandatos": {
+            "Mandato": [
+              {
+                "CodigoMandato": "625",
+                "UfParlamentar": "AL",
+                "PrimeiraLegislaturaDoMandato": {
+                  "NumeroLegislatura": "58",
+                  "DataInicio": "2027-02-01",
+                  "DataFim": "2031-01-31"
+                },
+                "SegundaLegislaturaDoMandato": {
+                  "NumeroLegislatura": "59",
+                  "DataInicio": "2031-02-01",
+                  "DataFim": "2035-01-31"
+                },
+                "DescricaoParticipacao": "Titular",
+                "Suplentes": {
+                  "Suplente": [
+                    {
+                      "DescricaoParticipacao": "2º Suplente",
+                      "CodigoParlamentar": "4192",
+                      "NomeParlamentar": "Jurandir Boia"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "IdentificacaoParlamentar": {
+            "CodigoParlamentar": "6133",
+            "NomeParlamentar": "Marília Arraes",
+            "NomeCompletoParlamentar": "Marília Valença Rocha Arraes de Alencar",
+            "SexoParlamentar": "Feminino",
+            "FormaTratamento": "Senadora ",
+            "SiglaPartidoParlamentar": "PDT"
+          },
+          "Mandatos": {
+            "Mandato": [
+              {
+                "CodigoMandato": "655",
+                "UfParlamentar": "PE",
+                "PrimeiraLegislaturaDoMandato": {
+                  "NumeroLegislatura": "58",
+                  "DataInicio": "2027-02-01",
+                  "DataFim": "2031-01-31"
+                },
+                "SegundaLegislaturaDoMandato": {
+                  "NumeroLegislatura": "59",
+                  "DataInicio": "2031-02-01",
+                  "DataFim": "2035-01-31"
+                },
+                "DescricaoParticipacao": "Titular",
+                "Suplentes": {
+                  "Suplente": [
+                    {
+                      "DescricaoParticipacao": "1º Suplente",
+                      "CodigoParlamentar": "6758",
+                      "NomeParlamentar": "Abel Neto"
+                    },
+                    {
+                      "DescricaoParticipacao": "2º Suplente",
+                      "CodigoParlamentar": "6759",
+                      "NomeParlamentar": "Edjane Figueiredo"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "IdentificacaoParlamentar": {
+            "CodigoParlamentar": "999001",
+            "NomeParlamentar": "Pessoa Exemplo",
+            "NomeCompletoParlamentar": "Pessoa Exemplo da Silva",
+            "SexoParlamentar": "Feminino",
+            "FormaTratamento": "Senadora ",
+            "SiglaPartidoParlamentar": "OUTRO PARTIDO"
+          },
+          "Mandatos": {
+            "Mandato": [
+              {
+                "CodigoMandato": "999902",
+                "UfParlamentar": "PE",
+                "PrimeiraLegislaturaDoMandato": {
+                  "NumeroLegislatura": "58",
+                  "DataInicio": "2027-02-01",
+                  "DataFim": "2031-01-31"
+                },
+                "SegundaLegislaturaDoMandato": {
+                  "NumeroLegislatura": "59",
+                  "DataInicio": "2031-02-01",
+                  "DataFim": "2035-01-31"
+                },
+                "DescricaoParticipacao": "Titular",
+                "Suplentes": {
+                  "Suplente": [
+                    {
+                      "DescricaoParticipacao": "1º Suplente",
+                      "CodigoParlamentar": "999004",
+                      "NomeParlamentar": "Suplente Exemplo"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "IdentificacaoParlamentar": {
+            "CodigoParlamentar": "6358",
+            "CodigoPublicoNaLegAtual": "920",
+            "NomeParlamentar": "Ana Paula Lobato",
+            "NomeCompletoParlamentar": "Ana Paula Dias Lobato Nova Alves",
+            "SexoParlamentar": "Feminino",
+            "FormaTratamento": "Senadora ",
+            "UrlFotoParlamentar": "http://www.senado.leg.br/senadores/img/fotos-oficiais/senador6358.jpg",
+            "UrlPaginaParlamentar": "http://www25.senado.leg.br/web/senadores/senador/-/perfil/6358",
+            "EmailParlamentar": "sen.anapaulalobato@senado.leg.br",
+            "SiglaPartidoParlamentar": "PSB",
+            "UfParlamentar": "MA"
+          },
+          "Mandatos": {
+            "Mandato": [
+              {
+                "CodigoMandato": "602",
+                "UfParlamentar": "MA",
+                "PrimeiraLegislaturaDoMandato": {
+                  "NumeroLegislatura": "57",
+                  "DataInicio": "2023-02-01",
+                  "DataFim": "2027-01-31"
+                },
+                "SegundaLegislaturaDoMandato": {
+                  "NumeroLegislatura": "58",
+                  "DataInicio": "2027-02-01",
+                  "DataFim": "2031-01-31"
+                },
+                "DescricaoParticipacao": "1º Suplente",
+                "Titular": {
+                  "DescricaoParticipacao": "Titular",
+                  "CodigoParlamentar": "4605",
+                  "NomeParlamentar": "Flávio Dino"
+                },
+                "Suplentes": {
+                  "Suplente": [
+                    {
+                      "DescricaoParticipacao": "2º Suplente",
+                      "CodigoParlamentar": "6359",
+                      "NomeParlamentar": "Lourdinha Pereira"
+                    }
+                  ]
+                },
+                "Exercicios": {
+                  "Exercicio": [
+                    {
+                      "CodigoExercicio": "3111",
+                      "DataInicio": "2026-10-06"
+                    },
+                    {
+                      "CodigoExercicio": "3057",
+                      "DataInicio": "2024-02-21",
+                      "DataFim": "2026-07-30",
+                      "SiglaCausaAfastamento": "LCS",
+                      "DescricaoCausaAfastamento": "Licença com convocação de suplente (sup 120 dias)"
+                    },
+                    {
+                      "CodigoExercicio": "3038",
+                      "DataInicio": "2023-02-02",
+                      "DataFim": "2024-01-31",
+                      "SiglaCausaAfastamento": "RET",
+                      "DescricaoCausaAfastamento": "Retorno do titular"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "IdentificacaoParlamentar": {
+            "CodigoParlamentar": "4605",
+            "CodigoPublicoNaLegAtual": "871",
+            "NomeParlamentar": "Flávio Dino",
+            "NomeCompletoParlamentar": "Flávio Dino de Castro e Costa",
+            "SexoParlamentar": "Masculino",
+            "FormaTratamento": "Senador ",
+            "UrlFotoParlamentar": "http://www.senado.leg.br/senadores/img/fotos-oficiais/senador4605.jpg",
+            "UrlPaginaParlamentar": "http://www25.senado.leg.br/web/senadores/senador/-/perfil/4605",
+            "EmailParlamentar": "sen.flaviodino@senado.leg.br",
+            "SiglaPartidoParlamentar": "PSB"
+          },
+          "Mandatos": {
+            "Mandato": [
+              {
+                "CodigoMandato": "602",
+                "UfParlamentar": "MA",
+                "PrimeiraLegislaturaDoMandato": {
+                  "NumeroLegislatura": "57",
+                  "DataInicio": "2023-02-01",
+                  "DataFim": "2027-01-31"
+                },
+                "SegundaLegislaturaDoMandato": {
+                  "NumeroLegislatura": "58",
+                  "DataInicio": "2027-02-01",
+                  "DataFim": "2031-01-31"
+                },
+                "DescricaoParticipacao": "Titular",
+                "Suplentes": {
+                  "Suplente": [
+                    {
+                      "DescricaoParticipacao": "1º Suplente",
+                      "CodigoParlamentar": "6358",
+                      "NomeParlamentar": "Ana Paula Lobato"
+                    },
+                    {
+                      "DescricaoParticipacao": "2º Suplente",
+                      "CodigoParlamentar": "6359",
+                      "NomeParlamentar": "Lourdinha Pereira"
+                    }
+                  ]
+                },
+                "Exercicios": {
+                  "Exercicio": [
+                    {
+                      "CodigoExercicio": "3056",
+                      "DataInicio": "2024-02-01",
+                      "DataFim": "2024-02-20",
+                      "SiglaCausaAfastamento": "REN",
+                      "DescricaoCausaAfastamento": "Renúncia"
+                    },
+                    {
+                      "CodigoExercicio": "3013",
+                      "DataInicio": "2023-02-01",
+                      "DataFim": "2023-02-02",
+                      "SiglaCausaAfastamento": "AFO",
+                      "DescricaoCausaAfastamento": "Afastamento do exercício"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "IdentificacaoParlamentar": {
+            "CodigoParlamentar": "6360",
+            "NomeParlamentar": "Alex Diniz",
+            "NomeCompletoParlamentar": "Alex Sandro Coelho Diniz",
+            "SexoParlamentar": "Masculino",
+            "FormaTratamento": "Senador "
+          },
+          "Mandatos": {
+            "Mandato": [
+              {
+                "CodigoMandato": "603",
+                "UfParlamentar": "MG",
+                "PrimeiraLegislaturaDoMandato": {
+                  "NumeroLegislatura": "57",
+                  "DataInicio": "2023-02-01",
+                  "DataFim": "2027-01-31"
+                },
+                "SegundaLegislaturaDoMandato": {
+                  "NumeroLegislatura": "58",
+                  "DataInicio": "2027-02-01",
+                  "DataFim": "2031-01-31"
+                },
+                "DescricaoParticipacao": "1º Suplente",
+                "Titular": {
+                  "DescricaoParticipacao": "Titular",
+                  "CodigoParlamentar": "6337",
+                  "NomeParlamentar": "Cleitinho"
+                },
+                "Suplentes": {
+                  "Suplente": [
+                    {
+                      "DescricaoParticipacao": "2º Suplente",
+                      "CodigoParlamentar": "6361",
+                      "NomeParlamentar": "Wander de Souza"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}
