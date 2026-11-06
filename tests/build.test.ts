@@ -274,3 +274,15 @@ test("every page title is the site's name or ends with ' — Abre o Voto'", () =
   const off = titles.filter(([, t]) => t !== "Abre o Voto" && !t?.endsWith(" — Abre o Voto"));
   expect(off).toEqual([]);
 });
+
+test("each row of the list is clickable as a whole, through the one link it holds", () => {
+  const rows = [...html("index.html").matchAll(/<li[^>]*data-nome="[^"]*"[^>]*>([\s\S]*?)<\/li>/g)];
+  expect(rows).toHaveLength(81);
+  for (const [li, inner] of rows) {
+    expect(li).toMatch(/<li[^>]*class="[^"]*\brelative\b/);
+    const links = [...inner!.matchAll(/<a [^>]*>/g)];
+    expect(links).toHaveLength(1);
+    expect(links[0]![0]).toMatch(/after:absolute/);
+    expect(links[0]![0]).toMatch(/after:inset-0/);
+  }
+});
