@@ -137,7 +137,7 @@ describe("buildSeed", () => {
       email_institucional: "sen.alanrick@senado.leg.br",
       declaracao: { status: "nao_declarou", candidato: null, data: null, fonte: null },
       observacoes: [],
-      historico: [{ data: "2026-11-01", evento: "criado como nao_declarou", issue: null }],
+      historico: [{ data: "2026-11-01", evento: "entrou na lista como não declarou", issue: null }],
     });
   });
 

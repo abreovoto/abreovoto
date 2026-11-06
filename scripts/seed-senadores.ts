@@ -69,7 +69,7 @@ export function buildSeed(rows: ApiSenador[], today: string): Senador[] {
       email_institucional: r.email,
       declaracao: { status: "nao_declarou", candidato: null, data: null, fonte: null },
       observacoes: [],
-      historico: [{ data: today, evento: "criado como nao_declarou", issue: null }],
+      historico: [{ data: today, evento: "entrou na lista como não declarou", issue: null }],
     });
   }
   return entries;
