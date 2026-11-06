@@ -2,10 +2,11 @@
 import SectionHead from "../../components/SectionHead.astro";
 import SenatorCard from "../../components/SenatorCard.astro";
 import SenatorHistory from "../../components/SenatorHistory.astro";
+import SenatorLinks from "../../components/SenatorLinks.astro";
 import { loadData } from "../../data/load";
 import { type Senador, todayUtc } from "../../data/schema";
 import Base from "../../layouts/Base.astro";
-import { senateProfileUrl, senatorPath, statePath } from "../../lib/routes";
+import { senatorPath, statePath } from "../../lib/routes";
 import { departureNote, formatDate, partyState, sourceHost, sourceTypeLabel, statusLabel } from "../../lib/text";
 import { ufWithDe } from "../../lib/uf";
 
@@ -25,16 +26,6 @@ const successor = senador.substituido_por ? d.senadores.find((s) => s.id === sen
 const successorVerb = senador.deixou_em && todayUtc() < senador.deixou_em ? "Quem assume a vaga" : "Quem assumiu a vaga";
 const description = `${senador.nome} (${partyState(senador)}) ${departed ?? statusLabel(senador, d.candidatos)}.`;
 
-const links = [
-  senador.codigo_senado && { href: senateProfileUrl(senador.codigo_senado), text: "Perfil no site do Senado", outbound: true },
-  senador.email_institucional && {
-    href: `mailto:${senador.email_institucional}`,
-    text: `E-mail institucional: ${senador.email_institucional}`,
-    outbound: false,
-  },
-  senador.redes.x && { href: senador.redes.x, text: "X", outbound: true },
-  senador.redes.instagram && { href: senador.redes.instagram, text: "Instagram", outbound: true },
-].filter((l): l is { href: string; text: string; outbound: boolean } => Boolean(l));
 ---
 
 <Base title={`${senador.nome} — Abre o Voto`} description={description}>
@@ -75,22 +66,7 @@ const links = [
 
     <SenatorHistory senador={senador} repositorio={d.site.repositorio} />
 
-    {
-      links.length > 0 && (
-        <section aria-labelledby="links">
-          <SectionHead id="links" title="Links" />
-          <ul class="mt-6 space-y-2 text-base">
-            {links.map((l) => (
-              <li class="break-words">
-                <a href={l.href} rel={l.outbound ? "noopener noreferrer" : undefined} class="text-accent underline">
-                  {l.text}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </section>
-      )
-    }
+    <SenatorLinks senador={senador} />
 
     <p class="mt-16 flex flex-wrap gap-x-6 gap-y-2 text-sm">
       <a href={statePath(senador.uf)} class="text-accent underline">Senadores {ufWithDe(senador.uf)}</a>

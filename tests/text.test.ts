@@ -11,6 +11,7 @@ import {
   sourceTypeLabel,
   statusLabel,
   tieShortWords,
+  profileHandle,
 } from "../src/lib/text";
 
 const d = loadData();
@@ -76,4 +77,9 @@ test("short words are tied to the next one in text, never inside a tag", () => {
   expect(tieShortWords("O site")).toBe("O\u00a0site");
   expect(tieShortWords('ficam em um <a href="/r/">repositório</a>')).toBe('ficam em\u00a0um\u00a0<a href="/r/">repositório</a>');
   expect(tieShortWords("fica de\n  fora")).toBe("fica de\u00a0fora");
+});
+
+test("a profile link shows as its handle", () => {
+  expect(profileHandle("https://www.instagram.com/marciobittar_")).toBe("@marciobittar_");
+  expect(profileHandle("https://x.com/davialcolumbre/")).toBe("@davialcolumbre");
 });
