@@ -136,3 +136,9 @@ test("the list has the 81 in office, alphabetical, with hidden filter controls",
   expect(h).toContain('aria-live="polite"');
   expect(h).toContain('href="/senador/marcio-bittar/"');
 });
+
+test("the home's scoreboard carries the hemicycle", () => {
+  const h = html("index.html");
+  expect(h.match(/<circle /g)?.length).toBe(81);
+  expect(h).toMatch(/aria-label="81 cadeiras do Senado: \d+ não declararam, \d+ declararam"/);
+});
