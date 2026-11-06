@@ -1,0 +1,57 @@
+---
+import "../styles/global.css";
+import ThemeToggle from "../components/ThemeToggle.astro";
+import Wordmark from "../components/Wordmark.astro";
+import { loadData } from "../data/load";
+
+interface Props {
+  title: string;
+  description: string;
+  noindex?: boolean;
+}
+
+const { title, description, noindex = false } = Astro.props;
+const { site } = loadData();
+---
+
+<!doctype html>
+<html lang="pt-BR" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <script is:inline>
+      // Runs before paint: a saved choice wins, otherwise the system preference.
+      (function () {
+        var tema = null;
+        try {
+          tema = localStorage.getItem("tema");
+        } catch (e) {}
+        if (tema !== "light" && tema !== "dark") {
+          tema = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        }
+        document.documentElement.dataset.theme = tema;
+      })();
+    </script>
+  </head>
+  <body class="min-h-dvh bg-bg font-text text-fg">
+    <header class="mx-auto flex max-w-5xl items-center justify-between gap-4 px-4 py-4 sm:px-6">
+      <Wordmark />
+      <ThemeToggle />
+    </header>
+    <main class="mx-auto max-w-5xl px-4 py-6 sm:px-6">
+      <slot />
+    </main>
+    <footer class="mx-auto max-w-5xl px-4 py-8 text-sm text-fg-muted sm:px-6">
+      <p>
+        Toda informação tem fonte pública.
+        <a href={site.repositorio} class="text-accent underline" rel="noopener">dados abertos no GitHub</a>
+      </p>
+    </footer>
+  </body>
+</html>
