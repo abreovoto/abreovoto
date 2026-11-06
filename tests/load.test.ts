@@ -51,14 +51,19 @@ test("requires desistiu_em exactly when the candidate withdrew", () => {
   expect(issuesOf({ candidato: { marinho: { desistiu_em: "2026-10-15" } } }).join("\n")).toMatch(/\[marinho\].*desistiu_em/);
 });
 
-test("rejects a candidate whose own seat does not declare for them", () => {
+test("accepts a candidate's own seat that has not declared", () => {
   const nao = { status: "nao_declarou", candidato: null, data: null, fonte: null };
-  expect(issuesOf({ senador: { "ms-3": { declaracao: nao } } }).join("\n")).toMatch(/\[tereza-cristina\].*ms-3/);
+  const d = loadData(makeDataset({ senador: { "ms-3": { declaracao: nao } } }));
+  expect(d.senadores.find((s) => s.id === "ms-3")?.declaracao.status).toBe("nao_declarou");
 });
 
-test("accepts a candidate's own seat that showed the vote for them in the session", () => {
-  const d = loadData(makeDataset({ shown: ["rn-3", "marinho"] }));
-  expect(d.senadores.find((s) => s.id === "rn-3")?.declaracao.status).toBe("mostrou_na_sessao");
+test("accepts a candidate's own seat that declared for another candidate", () => {
+  const d = loadData(makeDataset({ declareFor: ["rn-3", "alcolumbre"] }));
+  expect(d.senadores.find((s) => s.id === "rn-3")?.declaracao.candidato).toBe("alcolumbre");
+});
+
+test("rejects a candidate whose senador is not a known senator", () => {
+  expect(issuesOf({ candidato: { marinho: { senador: "nao-existe" } } }).join("\n")).toMatch(/\[marinho\].*nao-existe/);
 });
 
 test("rejects a missing photo and names the id", () => {
