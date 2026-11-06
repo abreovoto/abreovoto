@@ -1,7 +1,40 @@
 ---
+import CandidateCard from "../components/CandidateCard.astro";
+import PetitionArea from "../components/PetitionArea.astro";
+import Scoreboard from "../components/Scoreboard.astro";
+import { loadData } from "../data/load";
+import { placar } from "../data/placar";
 import Base from "../layouts/Base.astro";
+import { candidatePhoto } from "../lib/photos";
+import { candidatePath } from "../lib/routes";
+
+const d = loadData();
+const p = placar(d);
 ---
 
 <Base title="Abre o Voto" description="Placar público da eleição para a Presidência do Senado Federal.">
-  <p>Em breve.</p>
+  <h1 class="max-w-3xl text-3xl font-semibold leading-tight sm:text-4xl">
+    Em 1º de fevereiro, seus senadores escolhem quem comanda o Senado. Em voto secreto.
+  </h1>
+  <p class="mt-4 max-w-prose text-lg text-fg">Você tem o direito de saber em quem cada um vota. Cobre que declarem antes.</p>
+  <PetitionArea peticao={d.peticao} ecidadania={d.site.ecidadania_url} />
+
+  <section class="mt-10" aria-labelledby="placar">
+    <h2 id="placar" class="text-2xl font-semibold">Placar</h2>
+    <div class="mt-4"><Scoreboard placar={p} /></div>
+  </section>
+
+  <section class="mt-10" aria-labelledby="candidatos">
+    <h2 id="candidatos" class="text-2xl font-semibold">Candidatos</h2>
+    <div class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-3">
+      {
+        p.porCandidato.map((c) => (
+          <a href={candidatePath(c.id)} class="block no-underline">
+            <CandidateCard candidato={c} foto={candidatePhoto(c.id)} />
+          </a>
+        ))
+      }
+    </div>
+    <p class="mt-3 text-sm text-fg-muted">41 votos elegem o presidente do Senado.</p>
+  </section>
 </Base>

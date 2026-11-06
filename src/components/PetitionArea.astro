@@ -1,0 +1,44 @@
+---
+import type { Peticao } from "../data/schema";
+import { petitionView } from "../lib/petition";
+import Button from "./Button.astro";
+
+interface Props {
+  peticao: Peticao;
+  ecidadania: string | null;
+}
+
+const { peticao, ecidadania } = Astro.props;
+// The live count arrives later; until then the manual figure decides.
+const view = petitionView(peticao, null);
+const count = view ? new Intl.NumberFormat("pt-BR").format(view.count) : "";
+---
+
+{
+  (view || ecidadania) && (
+    <div class="mt-6 max-w-prose space-y-4">
+      {view && (
+        <div class="space-y-3">
+          {view.showCount && (
+            <p>
+              <span class="font-display block text-5xl tabular-nums text-fg">{count}</span>
+              <span class="block text-base text-fg">pessoas já pedem que os senadores declarem o voto antes da eleição</span>
+            </p>
+          )}
+          <Button kind="primary" href={view.url} rel="noopener">
+            Assinar
+          </Button>
+        </div>
+      )}
+      {ecidadania && (
+        <p class="text-sm text-fg-muted">
+          Para que em 2029 isso não precise de campanha:{" "}
+          <a href={ecidadania} rel="noopener" class="text-accent underline">
+            apoie no e-Cidadania
+          </a>{" "}
+          a proposta de voto aberto na eleição da Mesa.
+        </p>
+      )}
+    </div>
+  )
+}

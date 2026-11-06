@@ -88,3 +88,16 @@ test("the sitemap lists the pages and not the styleguide; robots points at it; 4
   expect(html("404.html")).toMatch(/<meta name="robots" content="noindex">/);
   expect(html("404.html")).not.toContain('rel="canonical"');
 });
+
+test("the home opens with the headline, the scoreboard and the three candidates in order", () => {
+  const h = html("index.html");
+  expect(h).toContain("seus senadores escolhem quem comanda o Senado");
+  expect(h).not.toContain("Assinar"); // peticao.url is null today
+  expect(h).toContain("apoie no e-Cidadania");
+  expect(h).toContain("não declararam");
+  const order = ["Davi Alcolumbre", "Rogério Marinho", "Tereza Cristina"].map((n) => h.indexOf(n));
+  expect(order.every((i) => i > 0)).toBe(true);
+  expect(order).toEqual([...order].sort((a, b) => a - b));
+  expect(h).toContain('href="/candidato/alcolumbre/"');
+  expect(h).toContain("41 votos elegem o presidente do Senado.");
+});
