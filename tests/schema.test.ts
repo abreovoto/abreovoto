@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { DeclaracaoSchema, SenadorSchema, httpsUrl } from "../src/data/schema";
+import { DeclaracaoSchema, SenadorSchema, SiteSchema, httpsUrl } from "../src/data/schema";
 
 const fonte = { tipo: "materia", url: "https://x.com/a", titulo: null, trecho: "voto em X" };
 
@@ -32,4 +32,12 @@ test("senator vaga and mandato are constrained", () => {
   expect(SenadorSchema.safeParse({ ...base, vaga: 4 }).success).toBe(false);
   expect(SenadorSchema.safeParse({ ...base, uf: "XX" }).success).toBe(false);
   expect(SenadorSchema.safeParse({ ...base, mandato: "2025-2033" }).success).toBe(false);
+});
+
+test("site lists the initiative's own profiles as https links or null", () => {
+  const site = { dominio: "abreovoto.com", eleicao: "2027-02-01", hashtag: "#AbreOVotoSenador", contato: "abreovoto@gmail.com", repositorio: "https://github.com/abreovoto/abreovoto", ecidadania_url: null };
+  const redes = { instagram: "https://www.instagram.com/abreovoto", x: null, tiktok: null, youtube: null };
+  expect(SiteSchema.safeParse({ ...site, redes }).success).toBe(true);
+  expect(SiteSchema.safeParse(site).success).toBe(false);
+  expect(SiteSchema.safeParse({ ...site, redes: { ...redes, x: "@abreovoto" } }).success).toBe(false);
 });

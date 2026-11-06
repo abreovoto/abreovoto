@@ -153,6 +153,13 @@ export const SiteSchema = z.strictObject({
   contato: email,
   repositorio: httpsUrl,
   ecidadania_url: httpsUrl.nullable(),
+  /** The initiative's own profiles (not the senators'). */
+  redes: z.strictObject({
+    instagram: httpsUrl.nullable(),
+    x: httpsUrl.nullable(),
+    tiktok: httpsUrl.nullable(),
+    youtube: httpsUrl.nullable(),
+  }),
 });
 
 export type UF = z.infer<typeof UF>;

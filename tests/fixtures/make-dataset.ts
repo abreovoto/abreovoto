@@ -135,6 +135,7 @@ export function makeDataset(overrides: DatasetOverrides = {}): { dir: string; as
     contato: "abreovoto@gmail.com",
     repositorio: "https://github.com/abreovoto/abreovoto",
     ecidadania_url: null,
+    redes: { instagram: null, x: null, tiktok: null, youtube: null },
   };
 
   if (overrides.duplicateVaga) byId(senadores, `${overrides.duplicateVaga.toLowerCase()}-2`).vaga = 1;
