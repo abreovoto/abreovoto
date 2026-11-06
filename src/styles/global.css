@@ -1,1 +1,95 @@
+/* Self-hosted fonts: Archivo with its weight and width axes, woff2 only, latin subset requested on a Portuguese page. */
+@import "@fontsource-variable/archivo/wdth.css";
+
 @import "tailwindcss";
+
+/* Unquoted on purpose: the quoted form below marks where the dark values start. */
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+/* Values mirror src/styles/tokens.ts; a test keeps them equal. */
+@theme {
+  --color-*: initial;
+  --color-bg: #ffffff;
+  --color-surface: #eef0ea;
+  --color-fg: #12284b;
+  --color-fg-muted: #4f5b72;
+  --color-line: #c9cfd9;
+  --color-undeclared: #b8291f;
+  --color-declared: #17753a;
+  --color-accent: #1d4fd7;
+  --color-on-accent: #ffffff;
+  --color-focus: #1d4fd7;
+
+  --font-display: "Archivo Variable", "Archivo", Arial, sans-serif;
+  --font-text: "Archivo Variable", "Archivo", Arial, sans-serif;
+
+  --text-xs: 0.8125rem;
+  --text-xs--line-height: 1.5;
+  --text-sm: 0.9375rem;
+  --text-sm--line-height: 1.5;
+  --text-base: 1.0625rem;
+  --text-base--line-height: 1.5;
+  --text-lg: 1.25rem;
+  --text-lg--line-height: 1.3;
+  --text-xl: 1.5rem;
+  --text-xl--line-height: 1.2;
+  --text-2xl: 1.875rem;
+  --text-2xl--line-height: 1.15;
+  --text-3xl: 2.375rem;
+  --text-3xl--line-height: 1.1;
+  --text-4xl: 3rem;
+  --text-4xl--line-height: 1.1;
+  --text-5xl: 4rem;
+  --text-5xl--line-height: 1;
+  --text-num: 6rem;
+  --text-num--line-height: 1;
+}
+
+:root[data-theme="dark"] {
+  --color-bg: #0e1a33;
+  --color-surface: #182845;
+  --color-fg: #f2f3ee;
+  --color-fg-muted: #aab4c7;
+  --color-line: #30415f;
+  --color-undeclared: #ff9486;
+  --color-declared: #55cc82;
+  --color-accent: #8fb0ff;
+  --color-on-accent: #0e1a33;
+  --color-focus: #8fb0ff;
+}
+
+@layer base {
+  html {
+    background: var(--color-bg);
+    color: var(--color-fg);
+    font-family: var(--font-text);
+    font-size: 1.0625rem;
+    line-height: 1.5;
+    color-scheme: light;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+}
+
+@utility font-display {
+  font-family: var(--font-display);
+  font-stretch: 125%;
+  font-weight: 800;
+}
