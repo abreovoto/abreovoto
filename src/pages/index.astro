@@ -21,10 +21,7 @@ const p = placar(d);
   <p class="mt-4 max-w-prose text-lg text-fg">Você tem o direito de saber em quem cada um vota. Cobre que declarem antes.</p>
   <PetitionArea peticao={d.peticao} ecidadania={d.site.ecidadania_url} />
 
-  <section class="mt-10" aria-labelledby="placar">
-    <h2 id="placar" class="text-2xl font-semibold">Placar</h2>
-    <div class="mt-4"><Scoreboard placar={p} /></div>
-  </section>
+  <div class="mt-10 max-w-md"><Scoreboard placar={p} /></div>
 
   <section class="mt-10" aria-labelledby="candidatos">
     <h2 id="candidatos" class="text-2xl font-semibold">Candidatos</h2>

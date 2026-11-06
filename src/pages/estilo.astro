@@ -4,6 +4,7 @@
  * Unlinked and not indexed; it ships so components can be reviewed in place.
  */
 import Button from "../components/Button.astro";
+import Hemicycle from "../components/Hemicycle.astro";
 import CandidateCard from "../components/CandidateCard.astro";
 import ListItem from "../components/ListItem.astro";
 import Scoreboard from "../components/Scoreboard.astro";
@@ -126,9 +127,13 @@ const scale = [
     </div>
   </section>
 
-  <section class="mt-10" aria-labelledby="placar">
-    <h2 id="placar" class="text-2xl font-semibold">Placar</h2>
-    <div class="mt-4"><Scoreboard placar={p} /></div>
+  <section class="mt-10" aria-labelledby="painel-placar">
+    <h2 id="painel-placar" class="text-2xl font-semibold">Painel do placar</h2>
+    <p class="mt-2 max-w-prose text-fg-muted">O hemiciclo com as 81 cadeiras, com os dados de hoje e com 23 declarações, para ver o preenchimento a partir do centro.</p>
+    <div class="mt-4 grid grid-cols-1 items-start gap-6 sm:grid-cols-2">
+      <Scoreboard placar={p} />
+      <div class="rounded-lg bg-surface p-5 sm:p-6"><Hemicycle declararam={23} total={81} /></div>
+    </div>
   </section>
 
   <section class="mt-10" aria-labelledby="candidatos">
