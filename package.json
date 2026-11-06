@@ -10,6 +10,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "validate": "tsx scripts/validate.ts",
+    "seed": "tsx scripts/seed-senadores.ts",
     "test": "vitest run --passWithNoTests",
     "check": "npm run validate && npm run test && astro check && astro build"
   },
