@@ -19,7 +19,7 @@ test("formatDate is day/month/year without zero padding", () => {
   expect(formatDate("2024-12-25")).toBe("25/12/2024");
 });
 
-test("statusLabel uses the spec's exact labels", () => {
+test("statusLabel uses the site's exact labels", () => {
   expect(statusLabel(by("marcio-bittar"), d.candidatos)).toBe("não declarou");
   const declared = {
     ...by("marcio-bittar"),
@@ -42,6 +42,13 @@ test("the three substitutes carry the same forecast note", () => {
 test("a departed senator gets a departure note and no status", () => {
   expect(departureNote(by("flavio-dino"))).toBe("deixou o mandato em 20/2/2024");
   expect(departureNote(by("marcio-bittar"))).toBeNull();
+});
+
+test("a departure or arrival still ahead is written in the present tense", () => {
+  expect(departureNote(by("cleitinho"), "2026-11-07")).toBe("deixa o mandato em 6/1/2027");
+  expect(departureNote(by("cleitinho"), "2027-01-06")).toBe("deixou o mandato em 6/1/2027");
+  expect(assumeEmNote(by("alex-diniz"), "2026-11-07")).toBe("assume a vaga em 6/1/2027");
+  expect(assumeEmNote(by("alex-diniz"), "2027-01-06")).toBe("assumiu a vaga em 6/1/2027");
 });
 
 test("partyState, isCandidate, sourceHost, longestName", () => {

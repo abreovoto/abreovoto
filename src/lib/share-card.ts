@@ -5,7 +5,7 @@
 import type { Dataset } from "../data/load";
 import { type PlacarCandidato, placar } from "../data/placar";
 import type { Senador } from "../data/schema";
-import { formatDate, partyState, statusLabel } from "./text";
+import { departureNote, formatDate, partyState, statusLabel } from "./text";
 
 export type ShareCardModel = {
   kind: "senator" | "candidate" | "home";
@@ -28,7 +28,8 @@ export function senatorCard(s: Senador, d: Dataset, today: string): ShareCardMod
     kind: "senator",
     title: s.nome,
     subtitle: partyState(s),
-    status: statusLabel(s, d.candidatos),
+    // A former occupant's card says when they left, never a vote that no longer counts.
+    status: departureNote(s, today) ?? statusLabel(s, d.candidatos),
     number: null,
     numberLabel: null,
     ...common(d, today),
