@@ -1,7 +1,7 @@
 ---
 import "../styles/global.css";
-import ThemeToggle from "../components/ThemeToggle.astro";
-import Wordmark from "../components/Wordmark.astro";
+import Footer from "../components/Footer.astro";
+import Nav from "../components/Nav.astro";
 import { loadData } from "../data/load";
 
 interface Props {
@@ -12,6 +12,9 @@ interface Props {
 
 const { title, description, noindex = false } = Astro.props;
 const { site } = loadData();
+// The 404 page answers for addresses that do not exist, so it names no canonical address of its own.
+const notFound = Astro.url.pathname.replace(/\/$/, "") === "/404";
+const canonical = notFound ? null : new URL(Astro.url.pathname, Astro.site).toString();
 ---
 
 <!doctype html>
@@ -22,6 +25,7 @@ const { site } = loadData();
     <title>{title}</title>
     <meta name="description" content={description} />
     {noindex && <meta name="robots" content="noindex" />}
+    {canonical && <link rel="canonical" href={canonical} />}
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/favicon.ico" sizes="32x32" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -37,18 +41,10 @@ const { site } = loadData();
     </script>
   </head>
   <body class="min-h-dvh bg-bg font-text text-fg">
-    <header class="mx-auto flex max-w-5xl items-center justify-between gap-4 px-4 py-4 sm:px-6">
-      <Wordmark />
-      <ThemeToggle />
-    </header>
+    <Nav />
     <main class="mx-auto max-w-5xl px-4 py-6 sm:px-6">
       <slot />
     </main>
-    <footer class="mx-auto max-w-5xl px-4 py-8 text-sm text-fg-muted sm:px-6">
-      <p>
-        Toda informação tem fonte pública.
-        <a href={site.repositorio} class="text-accent underline" rel="noopener">dados abertos no GitHub</a>
-      </p>
-    </footer>
+    <Footer repositorio={site.repositorio} />
   </body>
 </html>
