@@ -14,3 +14,4 @@ lançamento.
 ### Adicionado
 
 - Dados dos 81 senadores, dos candidatos e validação do schema.
+- Identidade visual do site: paleta clara e escura, tipografia, marca e os componentes do placar.
