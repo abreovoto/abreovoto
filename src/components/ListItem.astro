@@ -1,26 +1,32 @@
 ---
+import type { HTMLAttributes } from "astro/types";
 import type { Candidato, Senador } from "../data/schema";
 import { senatorPhoto } from "../lib/photos";
 import { assumeEmNote, partyState } from "../lib/text";
 import Portrait from "./Portrait.astro";
 import StatusBadge from "./StatusBadge.astro";
 
-interface Props {
+interface Props extends HTMLAttributes<"li"> {
   senador: Senador;
   candidatos: Candidato[];
+  /** When set, the name links here. */
+  href?: string;
 }
 
-const { senador, candidatos } = Astro.props;
+const { senador, candidatos, href, ...rest } = Astro.props;
 const decl = senador.declaracao;
 const candidate = decl.status === "nao_declarou" ? null : candidatos.find((c) => c.id === decl.candidato);
 const forecast = assumeEmNote(senador);
 ---
 
-<li class="flex items-center gap-3 px-3 py-2 odd:bg-surface">
+<!-- Stripes count only the rows a filter leaves visible. -->
+<li class="flex items-center gap-3 px-3 py-2 [&:nth-child(odd_of_:not([hidden]))]:bg-surface" {...rest}>
   <Portrait src={senatorPhoto(senador.id)} alt={`Foto oficial de ${senador.nome}`} size="list" />
   <div class="min-w-0 flex-1 sm:flex sm:items-center sm:gap-4">
     <div class="min-w-0 sm:flex-1">
-      <p class="text-base font-semibold leading-tight text-fg">{senador.nome}</p>
+      <p class="text-base font-semibold leading-tight text-fg">
+        {href ? <a href={href} class="text-fg underline-offset-2 hover:underline">{senador.nome}</a> : senador.nome}
+      </p>
       <p class="text-sm text-fg-muted">
         {partyState(senador)}
         {forecast && <span>, {forecast}</span>}

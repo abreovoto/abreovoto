@@ -2,6 +2,7 @@
 import CandidateCard from "../components/CandidateCard.astro";
 import PetitionArea from "../components/PetitionArea.astro";
 import Scoreboard from "../components/Scoreboard.astro";
+import SenatorList from "../components/SenatorList.astro";
 import YourSenators from "../components/YourSenators.astro";
 import { emExercicio, loadData } from "../data/load";
 import { placar } from "../data/placar";
@@ -40,4 +41,5 @@ const p = placar(d);
   </section>
 
   <YourSenators senadores={emExercicio(d)} candidatos={d.candidatos} />
+  <SenatorList senadores={emExercicio(d)} candidatos={d.candidatos} />
 </Base>

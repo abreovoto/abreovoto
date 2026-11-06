@@ -125,3 +125,14 @@ test("every state page has exactly three senators in office and the state's name
     expect(h).not.toContain("Flávio Dino");
   }
 });
+
+test("the list has the 81 in office, alphabetical, with hidden filter controls", () => {
+  const h = html("index.html");
+  const names = emExercicio(loadData()).map((s) => s.nome).sort((a, b) => a.localeCompare(b, "pt-BR"));
+  const positions = names.map((n) => h.indexOf(`data-nome="${n}"`));
+  expect(positions.every((i) => i > 0)).toBe(true);
+  expect(positions).toEqual([...positions].sort((a, b) => a - b));
+  expect(h).toMatch(/<form[^>]*data-filtros[^>]*hidden/);
+  expect(h).toContain('aria-live="polite"');
+  expect(h).toContain('href="/senador/marcio-bittar/"');
+});
