@@ -1,5 +1,5 @@
 import { execFileSync } from "node:child_process";
-import { existsSync, mkdtempSync, readdirSync, readFileSync } from "node:fs";
+import { existsSync, mkdtempSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { beforeAll, expect, test } from "vitest";
@@ -255,4 +255,11 @@ test("the senator's links: a label with its icon, and only the value is the link
   const from = h.indexOf('id="links"');
   const section = h.slice(from, h.indexOf("</section>", from));
   expect(section.match(/<svg[^>]*aria-hidden="true"/g)?.length).toBe(3); // Senado, e-mail, Instagram; no X today
+});
+
+test("the home's HTML, CSS and JS stay under 300 KB", () => {
+  const h = html("index.html");
+  const refs = [...new Set([...h.matchAll(/\/_astro\/[^"']+\.(css|js)/g)].map((m) => m[0]))];
+  const bytes = Buffer.byteLength(h) + refs.reduce((n, r) => n + statSync(join(out, r)).size, 0);
+  expect(bytes).toBeLessThan(300 * 1024);
 });
