@@ -1,13 +1,8 @@
 // Validates the data directory. Paths resolve against the working directory,
 // which is the repository root under `npm run validate`.
-import { existsSync } from "node:fs";
 import { DataError, emExercicio, loadData } from "../src/data/load";
 
 function main(): number {
-  if (!existsSync("data")) {
-    console.log("validate: no data yet");
-    return 0;
-  }
   try {
     const d = loadData();
     const active = emExercicio(d);

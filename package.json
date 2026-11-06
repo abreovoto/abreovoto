@@ -11,6 +11,7 @@
     "preview": "astro preview",
     "validate": "tsx scripts/validate.ts",
     "seed": "tsx scripts/seed-senadores.ts",
+    "fotos": "tsx scripts/fetch-fotos.ts",
     "test": "vitest run --passWithNoTests",
     "check": "npm run validate && npm run test && astro check && astro build"
   },
@@ -23,6 +24,7 @@
   "devDependencies": {
     "@astrojs/check": "^0.9.12",
     "@types/node": "^26.6.6",
+    "fflate": "^0.8.3",
     "sharp": "^0.35.5",
     "tsx": "^4.23.15",
     "typescript": "^6.0.3",
