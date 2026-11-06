@@ -1,0 +1,16 @@
+{
+  "name": "abreovoto",
+  "main": "worker/index.ts",
+  "compatibility_date": "2026-11-06",
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    // Only the API reaches the Worker; every other path is served from dist/ directly.
+    "run_worker_first": ["/api/*"],
+    "not_found_handling": "404-page"
+  },
+  "observability": { "enabled": true },
+  // The site lives on the custom domain only; no *.workers.dev address.
+  "workers_dev": false,
+  "preview_urls": true
+}
