@@ -225,6 +225,8 @@ test("the three text pages carry their sections and the contact anchor", () => {
   const cf = text("como-funciona/index.html");
   for (const s of ["Quem mantém este site?", "Este site apoia algum candidato?", "Esse dado está errado", 'id="contato"', "mailto:abreovoto@gmail.com", "Candidatos até agora"]) expect(cf).toContain(s);
   for (const s of ["anônim", "nome de pessoa", "lado só"]) expect(cf).not.toContain(s);
+  // Every mention of the methodology in the prose links to it.
+  expect(cf.match(/(?<!>)Metodologia(?!<\/a>)/g) ?? []).toEqual([]);
   expect(cf).toContain("Candidatos até agora: Davi Alcolumbre, Rogério Marinho e Tereza Cristina.");
   const m = text("metodologia/index.html");
   for (const s of ["O que conta como fonte", "Correções", "CC BY 4.0", 'href="/dados.json"']) expect(m).toContain(s);
