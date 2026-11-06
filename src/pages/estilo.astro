@@ -1,0 +1,218 @@
+---
+/**
+ * The styleguide: every token and component with the real data, in both modes.
+ * Unlinked and not indexed; it ships so components can be reviewed in place.
+ */
+import Button from "../components/Button.astro";
+import CandidateCard from "../components/CandidateCard.astro";
+import ListItem from "../components/ListItem.astro";
+import Scoreboard from "../components/Scoreboard.astro";
+import SenatorCard from "../components/SenatorCard.astro";
+import ShareCard from "../components/ShareCard.astro";
+import StateSelector from "../components/StateSelector.astro";
+import Wordmark from "../components/Wordmark.astro";
+import mark from "../assets/mark.svg?raw";
+import { emExercicio, loadData } from "../data/load";
+import { placar } from "../data/placar";
+import { todayUtc } from "../data/schema";
+import Base from "../layouts/Base.astro";
+import { candidatePhoto, senatorPhoto } from "../lib/photos";
+import { candidateCard, homeCard, senatorCard } from "../lib/share-card";
+import { longestName } from "../lib/text";
+import { palette } from "../styles/tokens";
+
+const d = loadData();
+const p = placar(d);
+const today = todayUtc();
+const inOffice = emExercicio(d);
+const rn = inOffice.filter((s) => s.uf === "RN");
+const longest = longestName(d);
+const substitute = inOffice.find((s) => s.assume_em !== null)!;
+const firstFive = [...inOffice].sort((a, b) => a.nome.localeCompare(b.nome, "pt-BR")).slice(0, 5);
+const firstCandidate = p.porCandidato[0]!;
+
+const colours = [
+  ["bg", "fundo"],
+  ["surface", "superfície"],
+  ["fg", "texto"],
+  ["fgMuted", "texto secundário"],
+  ["line", "linha"],
+  ["undeclared", "não declarou"],
+  ["declared", "declarou"],
+  ["accent", "destaque"],
+  ["onAccent", "sobre o destaque"],
+  ["focus", "foco"],
+] as const;
+const cssName = (key: string) => key.replace(/[A-Z]/g, (c) => `-${c.toLowerCase()}`);
+
+// Class names written out so Tailwind sees each one.
+const scale = [
+  ["xs", "13", "text-xs"],
+  ["sm", "15", "text-sm"],
+  ["base", "17", "text-base"],
+  ["lg", "20", "text-lg"],
+  ["xl", "24", "text-xl"],
+  ["2xl", "30", "text-2xl"],
+  ["3xl", "38", "text-3xl"],
+  ["4xl", "48", "text-4xl"],
+  ["5xl", "64", "text-5xl"],
+  ["num", "96", "text-num"],
+] as const;
+---
+
+<Base title="Estilo" description="Tokens e componentes do site, com os dados reais." noindex>
+  <h1 class="text-3xl font-semibold leading-tight sm:text-4xl">Estilo</h1>
+  <p class="mt-2 max-w-prose text-fg-muted">Cada cor, tipo e componente do site, com os dados de hoje. Alterne o tema no cabeçalho para ver os dois modos.</p>
+
+  <section class="mt-10" aria-labelledby="cores">
+    <h2 id="cores" class="text-2xl font-semibold">Cores</h2>
+    <ul class="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-5">
+      {
+        colours.map(([key, label]) => (
+          <li class="text-sm">
+            <div class="h-16 rounded border border-line" style={`background:var(--color-${cssName(key)})`} />
+            <p class="mt-1 font-semibold">{label}</p>
+            <p class="text-xs text-fg-muted">
+              claro {palette.light[key]}
+              <br />
+              escuro {palette.dark[key]}
+            </p>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section class="mt-10" aria-labelledby="tipografia">
+    <h2 id="tipografia" class="text-2xl font-semibold">Tipografia</h2>
+    <p class="mt-2 max-w-prose text-fg-muted">Archivo, uma família em duas larguras: expandida para os números, normal para o texto.</p>
+    <ul class="mt-4 space-y-3">
+      {
+        scale.map(([step, px, cls]) => (
+          <li class="flex items-baseline gap-4">
+            <span class="w-20 shrink-0 text-xs text-fg-muted">
+              {step} · {px} px
+            </span>
+            <span class={`${cls} leading-none`}>Abre o Voto</span>
+          </li>
+        ))
+      }
+      <li class="flex items-baseline gap-4">
+        <span class="w-20 shrink-0 text-xs text-fg-muted">display</span>
+        <span class="font-display text-5xl leading-none tabular-nums">81 de 81</span>
+      </li>
+    </ul>
+  </section>
+
+  <section class="mt-10" aria-labelledby="marca">
+    <h2 id="marca" class="text-2xl font-semibold">Marca</h2>
+    <div class="mt-4 flex flex-wrap items-end gap-8">
+      <span class="block size-8" set:html={mark} />
+      <span class="block size-16" set:html={mark} />
+      <span class="block size-32" set:html={mark} />
+      <Wordmark />
+      <Wordmark size="card" />
+    </div>
+  </section>
+
+  <section class="mt-10" aria-labelledby="botoes">
+    <h2 id="botoes" class="text-2xl font-semibold">Botões</h2>
+    <p class="mt-2 max-w-prose text-fg-muted">Sem mudança ao passar o mouse; o foco pelo teclado mostra o anel de foco.</p>
+    <div class="mt-4 flex flex-wrap gap-3">
+      <Button kind="primary">Cobrar no X</Button>
+      <Button kind="secondary">Compartilhar</Button>
+      <Button kind="primary" href="/">Primário como link</Button>
+      <Button kind="secondary" href="/">Secundário como link</Button>
+    </div>
+  </section>
+
+  <section class="mt-10" aria-labelledby="placar">
+    <h2 id="placar" class="text-2xl font-semibold">Placar</h2>
+    <div class="mt-4"><Scoreboard placar={p} /></div>
+  </section>
+
+  <section class="mt-10" aria-labelledby="candidatos">
+    <h2 id="candidatos" class="text-2xl font-semibold">Candidatos</h2>
+    <div class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-3">
+      {p.porCandidato.map((c) => <CandidateCard candidato={c} foto={candidatePhoto(c.id)} />)}
+    </div>
+  </section>
+
+  <section class="mt-10" aria-labelledby="estado">
+    <h2 id="estado" class="text-2xl font-semibold">Seu estado</h2>
+    <div class="mt-4"><StateSelector selected="RN" /></div>
+  </section>
+
+  <section class="mt-10" aria-labelledby="senador">
+    <h2 id="senador" class="text-2xl font-semibold">Senador</h2>
+    <p class="mt-2 max-w-prose text-fg-muted">Os três do estado escolhido, como cards de "seus senadores".</p>
+    <div class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-3">
+      {rn.map((s) => <SenatorCard senador={s} candidatos={d.candidatos} variant="state" />)}
+    </div>
+    <p class="mt-6 max-w-prose text-fg-muted">O card da página do senador, com o nome mais longo em exercício e com um suplente que assume em data marcada.</p>
+    <div class="mt-4 grid max-w-2xl grid-cols-1 gap-4">
+      <SenatorCard senador={longest} candidatos={d.candidatos} variant="page">
+        <Fragment slot="actions">
+          <Button kind="primary">Cobrar no X</Button>
+          <Button kind="secondary">Compartilhar</Button>
+        </Fragment>
+      </SenatorCard>
+      <SenatorCard senador={substitute} candidatos={d.candidatos} variant="page" />
+    </div>
+  </section>
+
+  <section class="mt-10" aria-labelledby="lista">
+    <h2 id="lista" class="text-2xl font-semibold">Lista</h2>
+    <ul class="mt-4 max-w-2xl" role="list">
+      {firstFive.map((s) => <ListItem senador={s} candidatos={d.candidatos} />)}
+    </ul>
+  </section>
+
+  <section class="mt-10" aria-labelledby="cards">
+    <h2 id="cards" class="text-2xl font-semibold">Cards de compartilhamento</h2>
+    <p class="mt-2 max-w-prose text-fg-muted">1200 × 630, sempre no modo claro; reduzidos em telas estreitas.</p>
+    <div class="mt-4 space-y-6">
+      <div class="card-frame"><ShareCard model={senatorCard(longest, d, today)} foto={senatorPhoto(longest.id)} /></div>
+      <div class="card-frame"><ShareCard model={candidateCard(firstCandidate, d, today)} foto={candidatePhoto(firstCandidate.id)} /></div>
+      <div class="card-frame"><ShareCard model={homeCard(d, today)} /></div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* The 1200 × 630 card at 30% on a phone, 50% up to 1240 px, natural above that (breaking out of the container). */
+  .card-frame {
+    width: 360px;
+    height: 189px;
+    overflow: hidden;
+    border: 1px solid var(--color-line);
+  }
+  .card-frame > :global(div) {
+    transform: scale(0.3);
+    transform-origin: top left;
+  }
+  @media (min-width: 640px) {
+    .card-frame {
+      width: 600px;
+      height: 315px;
+    }
+    .card-frame > :global(div) {
+      transform: scale(0.5);
+    }
+  }
+  @media (min-width: 1240px) {
+    .card-frame {
+      width: 1200px;
+      height: 630px;
+      margin-left: calc((100% - 1200px) / 2);
+    }
+    .card-frame > :global(div) {
+      transform: none;
+    }
+  }
+  span :global(svg) {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+</style>

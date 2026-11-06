@@ -24,6 +24,19 @@ test("no page requests a third party", () => {
   expect(h).not.toMatch(/https?:\/\/(fonts\.googleapis|fonts\.gstatic|cdn\.|unpkg|jsdelivr)/);
 });
 
+test("the styleguide renders every component with real data and is not indexed", () => {
+  const h = html("estilo/index.html");
+  expect(h).toMatch(/<meta name="robots" content="noindex">/);
+  expect(h).toContain("não declararam");
+  expect(h).toContain("Davi Alcolumbre");
+  expect(h).toContain("assume a vaga em 6/1/2027");
+  expect(h).toContain("#AbreOVotoSenador");
+  expect(
+    (h.match(/width="1200" height="630"|width:1200px;height:630px|width: 1200px; height: 630px/g) ?? []).length,
+  ).toBeGreaterThanOrEqual(3);
+  expect(h).toContain("<select");
+});
+
 test("the favicons exist and are referenced", () => {
   for (const f of ["favicon.svg", "favicon.ico", "apple-touch-icon.png"]) expect(existsSync(join(out, f)), f).toBe(true);
   expect(html("index.html")).toMatch(/rel="icon" href="\/favicon\.svg"/);
