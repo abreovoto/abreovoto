@@ -1,0 +1,21 @@
+---
+import { tieShortWords } from "../lib/text";
+import Base from "./Base.astro";
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+// A page of the site's own prose: one h1, sections opened by SectionHead, paragraphs at body measure.
+// The rendered body goes through tieShortWords so no short word ends a line.
+const { title, description } = Astro.props;
+const body = tieShortWords(await Astro.slots.render("default"));
+---
+
+<Base title={`${title} — Abre o Voto`} description={description}>
+  <article class="max-w-prose">
+    <h1 class="text-3xl font-semibold leading-tight sm:text-4xl">{title}</h1>
+    <Fragment set:html={body} />
+  </article>
+</Base>

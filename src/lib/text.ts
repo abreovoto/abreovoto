@@ -77,3 +77,17 @@ const SOURCE_TYPES: Record<FonteTipo, string> = {
 
 /** The kind of source behind a declaration, in words. */
 export const sourceTypeLabel = (tipo: FonteTipo): string => SOURCE_TYPES[tipo];
+
+// The next word may start right after a tag ("em <a>um link</a>"), hence the end of a text run.
+const SHORT_WORD = /(?<=^|\s)(a|o|e|à|ao|aos|as|os|às|de|da|do|das|dos|em|no|na|nos|nas|um|uma)\s+(?=\S|$)/giu;
+
+/**
+ * Ties a short preposition, article or conjunction to the next word with a no-break space,
+ * so none ends a line. Works on rendered HTML: only text between tags is touched.
+ */
+export function tieShortWords(html: string): string {
+  return html
+    .split(/(<[^>]*>)/)
+    .map((part) => (part.startsWith("<") ? part : part.replace(SHORT_WORD, "$1\u00a0")))
+    .join("");
+}

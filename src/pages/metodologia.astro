@@ -1,0 +1,107 @@
+---
+import SectionHead from "../components/SectionHead.astro";
+import { loadData } from "../data/load";
+import TextPage from "../layouts/TextPage.astro";
+
+const { site } = loadData();
+const link = "text-accent underline";
+---
+
+<TextPage title="Metodologia" description="O que conta como fonte, como o placar é ordenado, como os erros são corrigidos e de onde vêm os dados do Abre o Voto.">
+  <section aria-labelledby="fonte">
+    <SectionHead id="fonte" title="O que conta como fonte" />
+    <div class="mt-6 space-y-4">
+      <p>
+        Um senador passa de “não declarou” para “declarou voto em” só com uma fonte pública que diga, com o nome do
+        candidato, em quem ele vota. Contam como fonte:
+      </p>
+      <ul class="list-disc space-y-2 pl-5">
+        <li>vídeo ou áudio público em que o senador diz em quem vota;</li>
+        <li>publicação no perfil oficial e verificado do senador;</li>
+        <li>matéria jornalística com citação direta, entre aspas, atribuída ao senador;</li>
+        <li>nota oficial do gabinete, do partido ou da liderança que nomeie o senador;</li>
+        <li>
+          e-mail enviado do endereço institucional do senador (@senado.leg.br) para o Abre o Voto, publicado na íntegra na
+          página do senador.
+        </li>
+      </ul>
+      <p>Não contam:</p>
+      <ul class="list-disc space-y-2 pl-5">
+        <li>capturas de tela de WhatsApp;</li>
+        <li>relatos de terceiros e “fontes do partido”;</li>
+        <li>declarações genéricas, sem o nome de um candidato (“voto com a oposição”);</li>
+        <li>apoio de partido sem declaração individual do senador.</li>
+      </ul>
+      <p>
+        Cada declaração registra o candidato, a data, o tipo de fonte, o link e o trecho literal. Se um senador muda de voto,
+        a nova declaração entra e a anterior fica no histórico.
+      </p>
+      <p>
+        Quem ainda não tomou posse, como o suplente que assume a vaga antes da eleição, pode declarar por e-mail do endereço
+        oficial do cargo que ocupa hoje (@camara.leg.br, o domínio de um governo estadual) ou por mensagem direta de um perfil
+        verificado. A mensagem é publicada na íntegra.
+      </p>
+      <p>
+        Lançar uma candidatura não é declarar voto: a vaga de um candidato segue a mesma regra das outras. A promessa de
+        abrir o voto, ou o voto declarado em quem não é candidato, entra como observação, com fonte, sem mudar a situação do
+        senador. Se um candidato desiste, quem tinha declarado voto nele volta a “não declarou”, e a declaração anterior fica
+        no histórico.
+      </p>
+    </div>
+  </section>
+
+  <section aria-labelledby="ordem">
+    <SectionHead id="ordem" title="Como o placar é ordenado" />
+    <ul class="mt-6 list-disc space-y-2 pl-5">
+      <li>Os candidatos aparecem do que tem mais declarações para o que tem menos; no empate, em ordem alfabética.</li>
+      <li>A lista dos 81 senadores é alfabética pelo nome.</li>
+      <li>Em cada estado, os três senadores aparecem na ordem das vagas.</li>
+      <li>
+        Quem deixou o mandato sai da conta e das listas. A página dele continua no ar, com a data da saída e o nome de quem
+        assumiu a vaga. O total é sempre 81.
+      </li>
+    </ul>
+  </section>
+
+  <section aria-labelledby="correcoes">
+    <SectionHead id="correcoes" title="Correções" />
+    <div class="mt-6 space-y-4">
+      <p>
+        Pedidos de correção recebem resposta em até 24 horas, pelo e-mail <a href={`mailto:${site.contato}`} class={link}
+          >{site.contato}</a
+        >. Cada correção fica registrada no histórico da página do senador e no histórico do repositório; nada é apagado em
+        silêncio. Quando a correção passa por uma issue pública no repositório, a issue é o registro do que foi pedido e do
+        que foi decidido.
+      </p>
+    </div>
+  </section>
+
+  <section aria-labelledby="dados">
+    <SectionHead id="dados" title="De onde vêm os dados" />
+    <div class="mt-6 space-y-4">
+      <p>
+        Nome, partido, estado e vaga de cada senador vêm dos dados abertos do Senado Federal, da Câmara dos Deputados e do
+        Tribunal Superior Eleitoral (TSE). As fotos são as oficiais dessas fontes, e o crédito de cada uma (Agência Senado,
+        Câmara dos Deputados ou TSE) está nos dados.
+      </p>
+      <p>
+        Tudo fica no diretório <a href={`${site.repositorio}/tree/main/data`} rel="noopener" class={link}>data</a> do
+        repositório, em arquivos de texto que qualquer pessoa pode ler. O placar inteiro também está em um arquivo só:{" "}
+        <a href="/dados.json" class={link}>dados.json</a>.
+      </p>
+    </div>
+  </section>
+
+  <section aria-labelledby="licenca">
+    <SectionHead id="licenca" title="Licença" />
+    <div class="mt-6 space-y-4">
+      <p>
+        Os dados são publicados sob a licença <a
+          href="https://creativecommons.org/licenses/by/4.0/deed.pt-br"
+          rel="noopener"
+          class={link}>CC BY 4.0</a
+        >: podem ser usados e republicados, com crédito ao Abre o Voto. O código é publicado sob a licença MIT.
+      </p>
+    </div>
+  </section>
+</TextPage>
