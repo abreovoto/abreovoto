@@ -77,6 +77,7 @@ export function senadorEntry(id: string, uf: string, vaga: 1 | 2 | 3, nome = `Se
     vaga,
     mandato: vaga === 3 ? "2023-2031" : "2027-2035",
     situacao: "em_exercicio",
+    assume_em: null,
     deixou_em: null,
     substituido_por: null,
     codigo_senado: null,

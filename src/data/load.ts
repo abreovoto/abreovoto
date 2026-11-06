@@ -164,6 +164,18 @@ function departures(senadores: Senador[]): string[] {
   });
 }
 
+/** `assume_em` belongs to someone in office whose predecessor leaves on that same date. */
+function scheduledSuccessions(senadores: Senador[]): string[] {
+  return senadores.flatMap((s) => {
+    if (s.assume_em === null) return [];
+    if (s.situacao !== "em_exercicio") return [line(SENADORES, s.id, "assume_em só vale para quem está em exercício")];
+    const predecessor = senadores.find((p) => p.substituido_por === s.id && p.deixou_em === s.assume_em);
+    return predecessor
+      ? []
+      : [line(SENADORES, s.id, `assume_em ${s.assume_em} sem um antecessor que deixe a vaga nessa data (deixou_em e substituido_por)`)];
+  });
+}
+
 function declaredCandidates(senadores: Senador[], candidatos: Candidato[]): string[] {
   const byId = new Map(candidatos.map((c) => [c.id, c]));
   return senadores.flatMap((s) => {
@@ -241,11 +253,14 @@ function notAfter(today: string, file: string, id: string, dates: [string, strin
 
 function datesNotAfterToday(today: string, senadores: Senador[] | null, candidatos: Candidato[] | null): string[] {
   const issues: string[] = [];
+  const byId = new Map((senadores ?? []).map((s) => [s.id, s]));
   for (const s of senadores ?? []) {
+    // A future departure is a scheduled one only when the successor takes the seat that same day.
+    const scheduled = s.deixou_em !== null && s.substituido_por !== null && byId.get(s.substituido_por)?.assume_em === s.deixou_em;
     issues.push(
       ...notAfter(today, SENADORES, s.id, [
         ["declaracao.data", s.declaracao.data],
-        ["deixou_em", s.deixou_em],
+        ["deixou_em", scheduled ? null : s.deixou_em],
         ...s.observacoes.map((o, i): [string, string] => [`observacoes.${i}.data`, o.data]),
         ...s.historico.map((h, i): [string, string] => [`historico.${i}.data`, h.data]),
       ]),
@@ -276,7 +291,12 @@ export function loadData(opts: LoadOptions = {}): Dataset {
   if (senadores) issues.push(...uniqueIds(SENADORES, senadores));
   if (candidatos) issues.push(...uniqueIds(CANDIDATOS, candidatos));
   if (senadores) {
-    issues.push(...seatsFilled(senadores), ...mandatoMatchesVaga(senadores), ...departures(senadores));
+    issues.push(
+      ...seatsFilled(senadores),
+      ...mandatoMatchesVaga(senadores),
+      ...departures(senadores),
+      ...scheduledSuccessions(senadores),
+    );
   }
   if (senadores && candidatos) {
     issues.push(...declaredCandidates(senadores, candidatos), ...candidateSenators(senadores, candidatos));

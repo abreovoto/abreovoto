@@ -59,6 +59,23 @@ test("rejects a chain of replacements that never reaches someone in office", () 
   expect(issuesOf({ extraSenadores: [a, b] }).join("\n")).toMatch(/\[ac-1-a\].*não termina/);
 });
 
+test("accepts a swap scheduled for a future date, the successor already listed", () => {
+  const d = loadData({
+    ...makeDataset({ replace: ["mg-3", "mg-3-suplente"], senador: { "mg-3": { deixou_em: "2027-01-06" }, "mg-3-suplente": { assume_em: "2027-01-06" } } }),
+    today: "2026-11-06",
+  });
+  expect(d.senadores.find((s) => s.id === "mg-3-suplente")?.assume_em).toBe("2027-01-06");
+});
+
+test("rejects a future departure the successor does not take up on the same date", () => {
+  const issues = issuesOf({ replace: ["mg-3", "mg-3-suplente"], senador: { "mg-3": { deixou_em: "2027-01-06" } } }, "2026-11-06");
+  expect(issues.join("\n")).toMatch(/\[mg-3\].*deixou_em 2027-01-06/);
+});
+
+test("rejects assume_em on someone who replaces nobody on that date", () => {
+  expect(issuesOf({ senador: { "ac-1": { assume_em: "2027-01-06" } } }, "2026-11-06").join("\n")).toMatch(/\[ac-1\].*assume_em/);
+});
+
 test("rejects a declaration for a withdrawn candidate", () => {
   expect(() => loadData(makeDataset({ withdraw: "tereza-cristina", declareFor: ["ac-1", "tereza-cristina"] }))).toThrow(/desistiu/);
 });

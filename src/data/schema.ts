@@ -111,7 +111,11 @@ export const SenadorSchema = z.strictObject({
   vaga: z.union([z.literal(1), z.literal(2), z.literal(3)]),
   mandato: z.enum(["2023-2031", "2027-2035"]),
   situacao: z.enum(["em_exercicio", "deixou_mandato"]),
-  deixou_em: isoDateNotFuture.nullable(),
+  // Set on a successor already listed for a seat whose holder leaves on a known future
+  // date (e.g. a senator elected governor); the predecessor's `deixou_em` is that date.
+  // The loader ties the two and allows that one future `deixou_em`.
+  assume_em: isoDate.nullable(),
+  deixou_em: isoDate.nullable(),
   substituido_por: id.nullable(),
   codigo_senado: text.nullable(),
   codigo_camara: text.nullable(),
