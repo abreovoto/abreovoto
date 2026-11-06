@@ -88,6 +88,10 @@ test("rejects a candidate whose party or UF differs from their senator entry", (
   expect(issuesOf({ candidato: { marinho: { uf: "SP" } } }).join("\n")).toMatch(/\[marinho\].*uf/);
 });
 
+test("rejects a photo without a credit", () => {
+  expect(issuesOf({ senador: { "ac-1": { foto_credito: null } } }).join("\n")).toMatch(/\[ac-1\].*foto_credito/);
+});
+
 test("rejects a missing photo and names the id", () => {
   expect(() => loadData(makeDataset({ dropPhoto: "ac-1" }))).toThrow(/ac-1.*foto/);
 });
