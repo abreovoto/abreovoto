@@ -3,20 +3,25 @@
  * Progressive enhancement. Without JavaScript the page has no `data-theme` and the
  * stylesheet follows the system preference; this button stays hidden. With it, the
  * button overrides the preference and remembers the choice in localStorage.tema.
+ * Its label names the theme a click switches to.
  */
 ---
 
-<button type="button" aria-pressed="false" data-theme-toggle hidden class="rounded border-2 border-fg px-3 py-1 text-sm font-semibold text-fg">
+<button type="button" data-theme-toggle hidden class="rounded border-2 border-fg px-3 py-1 text-sm font-semibold text-fg">
   Tema escuro
 </button>
 
 <script>
+  import { themeToggleLabel, type Theme } from "../lib/theme";
+
   const button = document.querySelector<HTMLButtonElement>("[data-theme-toggle]");
   if (button) {
     const root = document.documentElement;
     const system = window.matchMedia("(prefers-color-scheme: dark)");
-    const current = () => root.dataset.theme ?? (system.matches ? "dark" : "light");
-    const sync = () => button.setAttribute("aria-pressed", String(current() === "dark"));
+    const current = (): Theme => (root.dataset.theme as Theme | undefined) ?? (system.matches ? "dark" : "light");
+    const sync = () => {
+      button.textContent = themeToggleLabel(current());
+    };
     button.hidden = false;
     sync();
     system.addEventListener("change", sync);
