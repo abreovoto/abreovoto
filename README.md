@@ -34,7 +34,10 @@ link `https` e o trecho literal da declaração. Sem fonte, a validação recusa
 
 Cada estado tem três vagas: as vagas 1 e 2 têm mandato 2027–2035 e a vaga 3,
 2023–2031. Quem deixa o mandato continua no arquivo como `deixou_mandato`,
-apontando para quem assumiu, e o placar conta só os 81 em exercício.
+apontando para quem assumiu, e o placar conta só os 81 em exercício. Quando a
+saída já tem data marcada (um senador eleito governador, por exemplo), o
+suplente entra na lista desde já, com `assume_em` igual ao `deixou_em` do
+titular, e pode ter a sua declaração registrada antes de assumir.
 
 - `npm run validate`: confere os dados contra as regras acima
 - `npm run seed`: gera o `senadores.yaml` inicial a partir dos dados abertos do
