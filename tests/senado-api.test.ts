@@ -126,6 +126,7 @@ describe("buildSeed", () => {
       vaga: 3,
       mandato: "2023-2031",
       situacao: "em_exercicio",
+      assume_em: null,
       deixou_em: null,
       substituido_por: null,
       codigo_senado: "5672",

@@ -29,11 +29,13 @@ test("source url must be https and not WhatsApp", () => {
 });
 
 test("senator vaga and mandato are constrained", () => {
-  const base = { id: "a", nome: "A", nome_completo: null, apelido: null, partido: "PL", uf: "RN", vaga: 1, mandato: "2027-2035", situacao: "em_exercicio", deixou_em: null, substituido_por: null, codigo_senado: null, codigo_camara: null, foto_origem: null, foto_credito: null, redes: { x: null, instagram: null }, email_institucional: null, declaracao: { status: "nao_declarou", candidato: null, data: null, fonte: null }, observacoes: [], historico: [] };
+  const base = { id: "a", nome: "A", nome_completo: null, apelido: null, partido: "PL", uf: "RN", vaga: 1, mandato: "2027-2035", situacao: "em_exercicio", assume_em: null, deixou_em: null, substituido_por: null, codigo_senado: null, codigo_camara: null, foto_origem: null, foto_credito: null, redes: { x: null, instagram: null }, email_institucional: null, declaracao: { status: "nao_declarou", candidato: null, data: null, fonte: null }, observacoes: [], historico: [] };
   expect(SenadorSchema.safeParse(base).success).toBe(true);
   expect(SenadorSchema.safeParse({ ...base, vaga: 4 }).success).toBe(false);
   expect(SenadorSchema.safeParse({ ...base, uf: "XX" }).success).toBe(false);
   expect(SenadorSchema.safeParse({ ...base, mandato: "2025-2033" }).success).toBe(false);
+  expect(SenadorSchema.safeParse({ ...base, assume_em: "2027-01-06" }).success).toBe(true);
+  expect(SenadorSchema.safeParse({ ...base, assume_em: "06/01/2027" }).success).toBe(false);
 });
 
 test("site lists the initiative's own profiles as https links or null", () => {
