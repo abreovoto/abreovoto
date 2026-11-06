@@ -263,3 +263,11 @@ test("the home's HTML, CSS and JS stay under 300 KB", () => {
   const bytes = Buffer.byteLength(h) + refs.reduce((n, r) => n + statSync(join(out, r)).size, 0);
   expect(bytes).toBeLessThan(300 * 1024);
 });
+
+test("every page title is the site's name or ends with ' — Abre o Voto'", () => {
+  const titles = allHtml(out)
+    .filter((p) => !p.startsWith("estilo/"))
+    .map((p) => [p, html(p).match(/<title>([^<]*)<\/title>/)?.[1]] as const);
+  const off = titles.filter(([, t]) => t !== "Abre o Voto" && !t?.endsWith(" — Abre o Voto"));
+  expect(off).toEqual([]);
+});
