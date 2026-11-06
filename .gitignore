@@ -5,3 +5,8 @@ dist/
 .astro/
 tmp/
 .wrangler/
+
+# Editor swap and backup files
+*.swp
+.*.sw?
+*~
