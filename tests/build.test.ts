@@ -240,9 +240,11 @@ test("/dados.json is built and carries the scoreboard", () => {
 
 test("on the senator page a date shares its baseline with the text beside it", () => {
   const h = html("senador/marcio-bittar/index.html");
-  const rows = h.match(/<li class="[^"]*sm:grid-cols-\[6\.5rem_1fr\][^"]*"/g) ?? [];
+  const rows = h.match(/<li class="[^"]*sm:grid-cols-\[8rem_1fr\][^"]*"/g) ?? [];
   expect(rows.length).toBeGreaterThan(0);
   for (const r of rows) expect(r).toContain("items-baseline");
+  // Declaração, Histórico and Links share one label column, so their values line up.
+  expect(h).not.toContain("6.5rem");
 });
 
 test("the senator's links: a label with its icon, and only the value is the link", () => {
