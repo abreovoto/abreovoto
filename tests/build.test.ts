@@ -231,3 +231,9 @@ test("the three text pages carry their sections and the contact anchor", () => {
   for (const s of ["Web Analytics", "localStorage", "GitHub", "Change.org"]) expect(p).toContain(s);
   for (const h of [cf, m, p]) expect(h.match(/<h1[ >]/g)).toHaveLength(1);
 });
+
+test("/dados.json is built and carries the scoreboard", () => {
+  const o = JSON.parse(readFileSync(join(out, "dados.json"), "utf8"));
+  expect(o.placar.total).toBe(81);
+  expect(o.licenca).toBe("CC BY 4.0");
+});
