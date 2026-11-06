@@ -8,6 +8,7 @@ import {
   longestName,
   partyState,
   sourceHost,
+  sourceTypeLabel,
   statusLabel,
 } from "../src/lib/text";
 
@@ -57,4 +58,12 @@ test("partyState, isCandidate, sourceHost, longestName", () => {
   expect(isCandidate(by("marcio-bittar"), d.candidatos)).toBe(false);
   expect(sourceHost("https://www.gazetadopovo.com.br/republica/x")).toBe("gazetadopovo.com.br");
   expect(longestName(d).situacao).toBe("em_exercicio");
+});
+
+test("source types in words", () => {
+  expect(sourceTypeLabel("video")).toBe("vídeo");
+  expect(sourceTypeLabel("post")).toBe("publicação no perfil oficial");
+  expect(sourceTypeLabel("materia")).toBe("matéria com citação direta");
+  expect(sourceTypeLabel("nota")).toBe("nota oficial");
+  expect(sourceTypeLabel("email_institucional")).toBe("e-mail institucional");
 });

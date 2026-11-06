@@ -4,7 +4,7 @@
  * followed by the candidate's name.
  */
 import { type Dataset, emExercicio } from "../data/load";
-import { type Candidato, type Senador, todayUtc } from "../data/schema";
+import { type Candidato, type FonteTipo, type Senador, todayUtc } from "../data/schema";
 
 /** `2027-01-06` → `6/1/2027`: day and month without a leading zero, full year. */
 export function formatDate(iso: string): string {
@@ -66,3 +66,14 @@ export function sourceHost(url: string): string {
 export function longestName(d: Dataset): Senador {
   return emExercicio(d).reduce((a, b) => (b.nome.length > a.nome.length ? b : a));
 }
+
+const SOURCE_TYPES: Record<FonteTipo, string> = {
+  video: "vídeo",
+  post: "publicação no perfil oficial",
+  materia: "matéria com citação direta",
+  nota: "nota oficial",
+  email_institucional: "e-mail institucional",
+};
+
+/** The kind of source behind a declaration, in words. */
+export const sourceTypeLabel = (tipo: FonteTipo): string => SOURCE_TYPES[tipo];

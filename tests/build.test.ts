@@ -170,3 +170,37 @@ test("the selects and the search share one 44 px construction; the selects draw 
   expect(radios).toHaveLength(3);
   for (const r of radios) expect(cls(r)).toContain("sr-only");
 });
+
+test("a senator page carries the card, the history and the links, and sends nobody to GitHub", () => {
+  const h = html("senador/marcio-bittar/index.html");
+  expect(h).toContain("<title>Marcio Bittar — Abre o Voto</title>");
+  expect(h).toContain("não declarou");
+  expect(h).toContain("entrou na lista como não declarou");
+  expect(h).toContain("https://www25.senado.leg.br/web/senadores/senador/-/perfil/285");
+  expect(h).toContain("mailto:sen.marciobittar@senado.leg.br");
+  expect(h).toContain("https://www.instagram.com/marciobittar_");
+  expect(h).not.toContain('action="/api/fonte"');
+  expect(h).not.toContain("issues/new");
+  expect(h.match(/<h1[ >]/g)).toHaveLength(1);
+});
+
+test("a departed senator's page keeps the note, drops the status, and names the successor", () => {
+  const h = html("senador/flavio-dino/index.html");
+  expect(h).toContain("deixou o mandato em 20/2/2024");
+  // No status: no badge, no declaration, nothing in the description. The dated history still
+  // says when the senator entered the list ("entrou na lista como não declarou").
+  expect(h).not.toContain("text-undeclared");
+  expect(h).not.toContain('id="declaracao"');
+  expect(h).toContain('<meta name="description" content="Flávio Dino (PSB-MA) deixou o mandato em 20/2/2024.">');
+  expect(h).toContain("renunciou ao mandato");
+  expect(h).not.toContain('action="/api/fonte"');
+  expect(h).toContain('href="/senador/ana-paula-lobato/"');
+});
+
+test("a successor's page carries the forecast note, identical for the three", () => {
+  for (const id of ["alex-diniz", "luis-felipe-cunha", "cheila-moreira"]) expect(html(`senador/${id}/index.html`)).toContain("assume a vaga em 6/1/2027");
+});
+
+test("every entry of the data has a page", () => {
+  for (const s of loadData().senadores) expect(existsSync(join(out, `senador/${s.id}/index.html`)), s.id).toBe(true);
+});

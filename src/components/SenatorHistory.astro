@@ -1,0 +1,53 @@
+---
+import type { Senador } from "../data/schema";
+import { formatDate, sourceHost } from "../lib/text";
+import SectionHead from "./SectionHead.astro";
+
+interface Props {
+  senador: Senador;
+  repositorio: string;
+}
+
+const { senador, repositorio } = Astro.props;
+
+type Entry = { data: string; texto: string; link: { href: string; text: string } | null; order: number };
+
+// Observations and history events in one list, newest first; on the same day the later entry comes first.
+const entries: Entry[] = [
+  ...senador.historico.map((h, i) => ({
+    data: h.data,
+    texto: h.evento,
+    link: h.issue === null ? null : { href: `${repositorio}/issues/${h.issue}`, text: `issue #${h.issue}` },
+    order: i,
+  })),
+  ...senador.observacoes.map((o, i) => ({
+    data: o.data,
+    texto: o.texto,
+    link: { href: o.fonte_url, text: `fonte: ${sourceHost(o.fonte_url)}` },
+    order: senador.historico.length + i,
+  })),
+].sort((a, b) => b.data.localeCompare(a.data) || b.order - a.order);
+---
+
+<section aria-labelledby="historico">
+  <SectionHead id="historico" title="Histórico" note="do mais recente ao mais antigo" />
+  <ol class="mt-6 space-y-4">
+    {
+      entries.map((e) => (
+        <li class="grid gap-x-6 gap-y-0.5 sm:grid-cols-[6.5rem_1fr]">
+          <p class="text-sm tabular-nums text-fg-muted">{formatDate(e.data)}</p>
+          <div>
+            <p class="text-base text-fg">{e.texto}</p>
+            {e.link && (
+              <p class="mt-0.5 break-words text-xs">
+                <a href={e.link.href} rel="noopener noreferrer" class="text-accent underline">
+                  {e.link.text}
+                </a>
+              </p>
+            )}
+          </div>
+        </li>
+      ))
+    }
+  </ol>
+</section>
