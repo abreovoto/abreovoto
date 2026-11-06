@@ -69,6 +69,8 @@ test("every page has a canonical URL, the shell and no third party", () => {
 test("the footer's sentences and links are separated by whitespace", () => {
   const h = html("index.html");
   expect(h).not.toMatch(/pública\.<a|correção\.<a/);
+  // Visitors never land on GitHub to report an error; the site's own form handles it.
+  expect(h).not.toContain("issues/new");
   expect(h).toMatch(/aria-label="Código no GitHub"/);
   expect(h).toContain('href="/dados.json"');
   expect(h).toContain('href="/privacidade/"');
