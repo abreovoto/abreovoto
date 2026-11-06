@@ -56,7 +56,7 @@ const links = [
       !departed && decl.status !== "nao_declarou" && (
         <section aria-labelledby="declaracao">
           <SectionHead id="declaracao" title="Declaração" />
-          <dl class="mt-6 grid gap-x-6 gap-y-2 text-base sm:grid-cols-[6.5rem_1fr]">
+          <dl class="mt-6 grid items-baseline gap-x-6 gap-y-2 text-base sm:grid-cols-[6.5rem_1fr]">
             <dt class="text-sm text-fg-muted">Data</dt>
             <dd class="tabular-nums">{formatDate(decl.data)}</dd>
             <dt class="text-sm text-fg-muted">Tipo de fonte</dt>
