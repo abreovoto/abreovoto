@@ -168,18 +168,11 @@ function declaredCandidates(senadores: Senador[], candidatos: Candidato[]): stri
   });
 }
 
-function candidateSeats(senadores: Senador[], candidatos: Candidato[]): string[] {
-  const byId = new Map(senadores.map((s) => [s.id, s]));
-  return candidatos.flatMap((c) => {
-    const seat = byId.get(c.senador);
-    if (!seat) return [line(CANDIDATOS, c.id, `senador "${c.senador}" não está em ${SENADORES}`)];
-    // A candidate's own seat states its vote for them; showing it in session also counts.
-    const declares = seat.declaracao.status !== "nao_declarou" && seat.declaracao.candidato === c.id;
-    if (c.situacao === "candidato" && !declares) {
-      return [line(CANDIDATOS, c.id, `o senador ${c.senador} precisa ter declaração para ${c.id}`)];
-    }
-    return [];
-  });
+function candidateSenators(senadores: Senador[], candidatos: Candidato[]): string[] {
+  const ids = new Set(senadores.map((s) => s.id));
+  return candidatos.flatMap((c) =>
+    ids.has(c.senador) ? [] : [line(CANDIDATOS, c.id, `senador "${c.senador}" não está em ${SENADORES}`)],
+  );
 }
 
 function withdrawals(candidatos: Candidato[]): string[] {
@@ -260,7 +253,7 @@ export function loadData(opts: LoadOptions = {}): Dataset {
     issues.push(...seatsFilled(senadores), ...mandatoMatchesVaga(senadores), ...departures(senadores));
   }
   if (senadores && candidatos) {
-    issues.push(...declaredCandidates(senadores, candidatos), ...candidateSeats(senadores, candidatos));
+    issues.push(...declaredCandidates(senadores, candidatos), ...candidateSenators(senadores, candidatos));
   }
   if (candidatos) issues.push(...withdrawals(candidatos));
   if (senadores) {
