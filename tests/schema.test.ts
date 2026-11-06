@@ -23,6 +23,8 @@ test("source url must be https and not WhatsApp", () => {
   expect(httpsUrl.safeParse("x.com/a").success).toBe(false);
   expect(httpsUrl.safeParse("https://wa.me/5511999").success).toBe(false);
   expect(httpsUrl.safeParse("https://chat.whatsapp.com/abc").success).toBe(false);
+  expect(httpsUrl.safeParse("https://wa.me./5511999").success).toBe(false);
+  expect(httpsUrl.safeParse("https://chat.whatsapp.com./abc").success).toBe(false);
   expect(httpsUrl.safeParse("https://www12.senado.leg.br/noticias/x").success).toBe(true);
 });
 
