@@ -2,7 +2,7 @@ import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 import { expect, test } from "vitest";
 
-// The founding language rule: the site's own voice never carries these words.
+// The site's language rule: its own voice never carries these words.
 const FORBIDDEN = ["esconde", "covarde", "traidor", "se escondeu"];
 
 function files(dir: string): string[] {

@@ -38,7 +38,7 @@ const nameSize = variant === "page" ? "text-xl" : "text-lg";
               {candidate && <span class="font-semibold text-fg">{candidate.nome}</span>}
             </p>
             {decl.status !== "nao_declarou" && (
-              <p class="mt-1 text-xs text-fg-muted">
+              <p class="mt-1 break-words text-xs text-fg-muted">
                 fonte: <a href={decl.fonte.url} rel="noopener" class="text-accent underline">{sourceHost(decl.fonte.url)}</a>, {formatDate(decl.data)}
               </p>
             )}
