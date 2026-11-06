@@ -15,7 +15,7 @@ const { site } = loadData();
 ---
 
 <!doctype html>
-<html lang="pt-BR" data-theme="light">
+<html lang="pt-BR">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -26,16 +26,13 @@ const { site } = loadData();
     <link rel="icon" href="/favicon.ico" sizes="32x32" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <script is:inline>
-      // Runs before paint: a saved choice wins, otherwise the system preference.
+      // Runs before paint: a saved choice is applied; without one the stylesheet follows the system.
       (function () {
         var tema = null;
         try {
           tema = localStorage.getItem("tema");
         } catch (e) {}
-        if (tema !== "light" && tema !== "dark") {
-          tema = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-        }
-        document.documentElement.dataset.theme = tema;
+        if (tema === "light" || tema === "dark") document.documentElement.dataset.theme = tema;
       })();
     </script>
   </head>

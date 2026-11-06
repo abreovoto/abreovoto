@@ -3,9 +3,6 @@
 
 @import "tailwindcss";
 
-/* Unquoted on purpose: the quoted form below marks where the dark values start. */
-@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
-
 /* Values mirror src/styles/tokens.ts; a test keeps them equal. */
 @theme {
   --color-*: initial;
@@ -45,6 +42,11 @@
   --text-num--line-height: 1;
 }
 
+/*
+ * Dark values: chosen explicitly, or, when nothing is chosen, taken from the system.
+ * The same block twice on purpose: the first occurrence of the quoted selector marks
+ * where the dark values start for the test that mirrors tokens.ts.
+ */
 :root[data-theme="dark"] {
   --color-bg: #0e1a33;
   --color-surface: #182845;
@@ -56,6 +58,23 @@
   --color-accent: #8fb0ff;
   --color-on-accent: #0e1a33;
   --color-focus: #8fb0ff;
+  color-scheme: dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --color-bg: #0e1a33;
+    --color-surface: #182845;
+    --color-fg: #f2f3ee;
+    --color-fg-muted: #aab4c7;
+    --color-line: #30415f;
+    --color-undeclared: #ff9486;
+    --color-declared: #55cc82;
+    --color-accent: #8fb0ff;
+    --color-on-accent: #0e1a33;
+    --color-focus: #8fb0ff;
+    color-scheme: dark;
+  }
 }
 
 @layer base {
@@ -67,10 +86,6 @@
     line-height: 1.5;
     color-scheme: light;
     -webkit-text-size-adjust: 100%;
-  }
-
-  :root[data-theme="dark"] {
-    color-scheme: dark;
   }
 
   :focus-visible {
