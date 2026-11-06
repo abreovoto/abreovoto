@@ -1,0 +1,33 @@
+- id: alcolumbre
+  nome: Davi Alcolumbre
+  partido: UNIÃO
+  uf: AP
+  senador: davi-alcolumbre
+  foto_origem: https://www.senado.leg.br/senadores/img/fotos-oficiais/senador3830.jpg
+  foto_credito: Agência Senado
+  situacao: candidato
+  desde: 2026-10-27
+  desistiu_em: null
+  fonte: https://www.cnnbrasil.com.br/politica/uniao-pp-anuncia-apoio-a-reeleicao-de-alcolumbre-na-presidencia-do-senado/
+- id: marinho
+  nome: Rogério Marinho
+  partido: PL
+  uf: RN
+  senador: rogerio-marinho
+  foto_origem: https://www.senado.leg.br/senadores/img/fotos-oficiais/senador4694.jpg
+  foto_credito: Agência Senado
+  situacao: candidato
+  desde: 2026-11-04
+  desistiu_em: null
+  fonte: https://www.gazetadopovo.com.br/republica/pl-confirma-candidatura-de-rogerio-marinho-a-presidencia-do-senado/
+- id: tereza-cristina
+  nome: Tereza Cristina
+  partido: PP
+  uf: MS
+  senador: tereza-cristina
+  foto_origem: https://www.senado.leg.br/senadores/img/fotos-oficiais/senador5736.jpg
+  foto_credito: Agência Senado
+  situacao: candidato
+  desde: 2026-11-03
+  desistiu_em: null
+  fonte: https://www.poder360.com.br/poder-congresso/tereza-cristina-mantem-candidatura-a-presidencia-do-senado/

@@ -1,0 +1,2393 @@
+- id: marcio-bittar
+  nome: Marcio Bittar
+  nome_completo: Marcio Miguel Bittar
+  apelido: null
+  partido: PL
+  uf: AC
+  vaga: 1
+  mandato: 2027-2035
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "285"
+  codigo_camara: null
+  foto_origem: https://www.senado.leg.br/senadores/img/fotos-oficiais/senador285.jpg
+  foto_credito: Agência Senado
+  redes:
+    x: null
+    instagram: https://www.instagram.com/marciobittar_
+  email_institucional: sen.marciobittar@senado.leg.br
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: mara-rocha
+  nome: Mara Rocha
+  nome_completo: Cylmara Fernandes da Rocha Gripp
+  apelido: null
+  partido: REPUBLICANOS
+  uf: AC
+  vaga: 2
+  mandato: 2027-2035
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "6173"
+  codigo_camara: null
+  foto_origem: https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/fotos/foto_cand2026_AC_div.zip#FAC10002533895_div.jpg
+  foto_credito: TSE
+  redes:
+    x: null
+    instagram: https://www.instagram.com/mararochaacre
+  email_institucional: null
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: alan-rick
+  nome: Alan Rick
+  nome_completo: Alan Rick Miranda
+  apelido: null
+  partido: REPUBLICANOS
+  uf: AC
+  vaga: 3
+  mandato: 2023-2031
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "5672"
+  codigo_camara: null
+  foto_origem: https://www.senado.leg.br/senadores/img/fotos-oficiais/senador5672.jpg
+  foto_credito: Agência Senado
+  redes:
+    x: null
+    instagram: https://www.instagram.com/alanrickm
+  email_institucional: sen.alanrick@senado.leg.br
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: arthur-lira
+  nome: Arthur Lira
+  nome_completo: Arthur César Pereira de Lira
+  apelido: null
+  partido: PP
+  uf: AL
+  vaga: 1
+  mandato: 2027-2035
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "5205"
+  codigo_camara: "160541"
+  foto_origem: https://www.camara.leg.br/internet/deputado/bandep/160541.jpg
+  foto_credito: Câmara dos Deputados
+  redes:
+    x: https://x.com/arthurlira_
+    instagram: https://www.instagram.com/oficialarthurlira
+  email_institucional: dep.arthurlira@camara.leg.br
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: marina-jhc
+  nome: Marina JHC
+  nome_completo: Marina Antunes Candia e Figueiredo
+  apelido: null
+  partido: PSDB
+  uf: AL
+  vaga: 2
+  mandato: 2027-2035
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "6686"
+  codigo_camara: null
+  foto_origem: https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/fotos/foto_cand2026_AL_div.zip#FAL20002553711_div.jpg
+  foto_credito: TSE
+  redes:
+    x: null
+    instagram: https://www.instagram.com/marina.candia
+  email_institucional: null
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: renan-filho
+  nome: Renan Filho
+  nome_completo: José Renan Vasconcelos Calheiros Filho
+  apelido: null
+  partido: MDB
+  uf: AL
+  vaga: 3
+  mandato: 2023-2031
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "5207"
+  codigo_camara: null
+  foto_origem: https://www.senado.leg.br/senadores/img/fotos-oficiais/senador5207.jpg
+  foto_credito: Agência Senado
+  redes:
+    x: https://x.com/renanfilho_
+    instagram: https://www.instagram.com/renanfilho15
+  email_institucional: sen.renanfilho@senado.leg.br
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: eduardo-braga
+  nome: Eduardo Braga
+  nome_completo: Carlos Eduardo de Souza Braga
+  apelido: null
+  partido: MDB
+  uf: AM
+  vaga: 1
+  mandato: 2027-2035
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "4994"
+  codigo_camara: null
+  foto_origem: https://www.senado.leg.br/senadores/img/fotos-oficiais/senador4994.jpg
+  foto_credito: Agência Senado
+  redes:
+    x: https://x.com/eduardobraga_am
+    instagram: https://www.instagram.com/eduardobraga_am
+  email_institucional: sen.eduardobraga@senado.leg.br
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: plinio-valerio
+  nome: Plínio Valério
+  nome_completo: Francisco Plínio Valério Tomaz
+  apelido: null
+  partido: PSDB
+  uf: AM
+  vaga: 2
+  mandato: 2027-2035
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "5502"
+  codigo_camara: null
+  foto_origem: https://www.senado.leg.br/senadores/img/fotos-oficiais/senador5502.jpg
+  foto_credito: Agência Senado
+  redes:
+    x: https://x.com/pliniovalerio45
+    instagram: https://www.instagram.com/plinio.valerio
+  email_institucional: sen.pliniovalerio@senado.leg.br
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: omar-aziz
+  nome: Omar Aziz
+  nome_completo: Omar José Abdel Aziz
+  apelido: null
+  partido: PSD
+  uf: AM
+  vaga: 3
+  mandato: 2023-2031
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "5525"
+  codigo_camara: null
+  foto_origem: https://www.senado.leg.br/senadores/img/fotos-oficiais/senador5525.jpg
+  foto_credito: Agência Senado
+  redes:
+    x: null
+    instagram: https://www.instagram.com/omaraziz.senador
+  email_institucional: sen.omaraziz@senado.leg.br
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes:
+    - data: 2026-11-06
+      texto: Eleito governador do Amazonas em 2026. Ao tomar posse, em janeiro de 2027, deixa o mandato no Senado e a primeira suplente, Cheila Moreira, assume a cadeira.
+      fonte_url: https://dadosabertos.tse.jus.br/dataset/candidatos-2026
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: rayssa-furlan
+  nome: Rayssa Furlan
+  nome_completo: Rayssa Cadena Furlan
+  apelido: null
+  partido: PODE
+  uf: AP
+  vaga: 1
+  mandato: 2027-2035
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "6771"
+  codigo_camara: null
+  foto_origem: https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/fotos/foto_cand2026_AP_div.zip#FAP30002530071_div.jpg
+  foto_credito: TSE
+  redes:
+    x: null
+    instagram: https://www.instagram.com/rayssacfurlan
+  email_institucional: null
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: lucas-barreto
+  nome: Lucas Barreto
+  nome_completo: Luiz Cantuária Barreto
+  apelido: null
+  partido: PSD
+  uf: AP
+  vaga: 2
+  mandato: 2027-2035
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "5926"
+  codigo_camara: null
+  foto_origem: https://www.senado.leg.br/senadores/img/fotos-oficiais/senador5926.jpg
+  foto_credito: Agência Senado
+  redes:
+    x: null
+    instagram: https://www.instagram.com/lucasbarreto_ap
+  email_institucional: sen.lucasbarreto@senado.leg.br
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: davi-alcolumbre
+  nome: Davi Alcolumbre
+  nome_completo: David Samuel Alcolumbre Tobelem
+  apelido: null
+  partido: UNIÃO
+  uf: AP
+  vaga: 3
+  mandato: 2023-2031
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "3830"
+  codigo_camara: null
+  foto_origem: https://www.senado.leg.br/senadores/img/fotos-oficiais/senador3830.jpg
+  foto_credito: Agência Senado
+  redes:
+    x: null
+    instagram: https://www.instagram.com/davialcolumbre
+  email_institucional: sen.davialcolumbre@senado.leg.br
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: rui-costa
+  nome: Rui Costa
+  nome_completo: Rui Costa dos Santos
+  apelido: null
+  partido: PT
+  uf: BA
+  vaga: 1
+  mandato: 2027-2035
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "5220"
+  codigo_camara: null
+  foto_origem: https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/fotos/foto_cand2026_BA_div.zip#FBA50002536321_div.jpg
+  foto_credito: TSE
+  redes:
+    x: https://x.com/costa_rui
+    instagram: https://www.instagram.com/ruicostaoficial
+  email_institucional: null
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: jaques-wagner
+  nome: Jaques Wagner
+  nome_completo: Jaques Wagner
+  apelido: null
+  partido: PT
+  uf: BA
+  vaga: 2
+  mandato: 2027-2035
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "581"
+  codigo_camara: null
+  foto_origem: https://www.senado.leg.br/senadores/img/fotos-oficiais/senador581.jpg
+  foto_credito: Agência Senado
+  redes:
+    x: https://x.com/jaqueswagner
+    instagram: https://www.instagram.com/jaqueswagner
+  email_institucional: sen.jaqueswagner@senado.leg.br
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: otto-alencar
+  nome: Otto Alencar
+  nome_completo: Otto Roberto Mendonça de Alencar
+  apelido: null
+  partido: PSD
+  uf: BA
+  vaga: 3
+  mandato: 2023-2031
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "5523"
+  codigo_camara: null
+  foto_origem: https://www.senado.leg.br/senadores/img/fotos-oficiais/senador5523.jpg
+  foto_credito: Agência Senado
+  redes:
+    x: null
+    instagram: https://www.instagram.com/ottoalencar
+  email_institucional: sen.ottoalencar@senado.leg.br
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: cid-gomes
+  nome: Cid Gomes
+  nome_completo: Cid Ferreira Gomes
+  apelido: null
+  partido: PSB
+  uf: CE
+  vaga: 1
+  mandato: 2027-2035
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "5973"
+  codigo_camara: null
+  foto_origem: https://www.senado.leg.br/senadores/img/fotos-oficiais/senador5973.jpg
+  foto_credito: Agência Senado
+  redes:
+    x: https://x.com/senadorcidgomes
+    instagram: https://www.instagram.com/senadorcidgomes
+  email_institucional: sen.cidgomes@senado.leg.br
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: luizianne-lins
+  nome: Luizianne Lins
+  nome_completo: Luizianne de Oliveira Lins
+  apelido: null
+  partido: REDE
+  uf: CE
+  vaga: 2
+  mandato: 2027-2035
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "5701"
+  codigo_camara: "178866"
+  foto_origem: https://www.camara.leg.br/internet/deputado/bandep/178866.jpg
+  foto_credito: Câmara dos Deputados
+  redes:
+    x: https://x.com/luiziannelinsce
+    instagram: https://www.instagram.com/luiziannelinsce
+  email_institucional: dep.luiziannelins@camara.leg.br
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: camilo-santana
+  nome: Camilo Santana
+  nome_completo: Camilo Sobreira de Santana
+  apelido: null
+  partido: PT
+  uf: CE
+  vaga: 3
+  mandato: 2023-2031
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "6336"
+  codigo_camara: null
+  foto_origem: https://www.senado.leg.br/senadores/img/fotos-oficiais/senador6336.jpg
+  foto_credito: Agência Senado
+  redes:
+    x: https://x.com/camilosantanace
+    instagram: https://www.instagram.com/camilosantanaoficial
+  email_institucional: sen.camilosantana@senado.leg.br
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: michelle-bolsonaro
+  nome: Michelle Bolsonaro
+  nome_completo: Michelle de Paula Firmo Reinaldo Bolsonaro
+  apelido: null
+  partido: PL
+  uf: DF
+  vaga: 1
+  mandato: 2027-2035
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "6744"
+  codigo_camara: null
+  foto_origem: https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/fotos/foto_cand2026_DF_div.zip#FDF70002552936_div.jpg
+  foto_credito: TSE
+  redes:
+    x: null
+    instagram: https://www.instagram.com/michellebolsonaro
+  email_institucional: null
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: bia-kicis
+  nome: Bia Kicis
+  nome_completo: Beatriz Kicis Torrents de Sordi
+  apelido: null
+  partido: PL
+  uf: DF
+  vaga: 2
+  mandato: 2027-2035
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "6084"
+  codigo_camara: "204374"
+  foto_origem: https://www.camara.leg.br/internet/deputado/bandep/204374.jpg
+  foto_credito: Câmara dos Deputados
+  redes:
+    x: https://x.com/biakicis
+    instagram: https://www.instagram.com/biakicis
+  email_institucional: dep.biakicis@camara.leg.br
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: damares-alves
+  nome: Damares Alves
+  nome_completo: Damares Regina Alves
+  apelido: null
+  partido: REPUBLICANOS
+  uf: DF
+  vaga: 3
+  mandato: 2023-2031
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "6335"
+  codigo_camara: null
+  foto_origem: https://www.senado.leg.br/senadores/img/fotos-oficiais/senador6335.jpg
+  foto_credito: Agência Senado
+  redes:
+    x: https://x.com/damaresalves
+    instagram: https://www.instagram.com/damaresalvesoficial1
+  email_institucional: sen.damaresalves@senado.leg.br
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: renato-casagrande
+  nome: Renato Casagrande
+  nome_completo: José Renato Casagrande
+  apelido: null
+  partido: PSB
+  uf: ES
+  vaga: 1
+  mandato: 2027-2035
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "3868"
+  codigo_camara: null
+  foto_origem: https://www.senado.leg.br/senadores/img/fotos-oficiais/senador3868.jpg
+  foto_credito: Agência Senado
+  redes:
+    x: https://x.com/casagrande_es
+    instagram: https://www.instagram.com/renatocasagrande
+  email_institucional: null
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: evair-de-melo
+  nome: Evair de Melo
+  nome_completo: Evair Vieira de Melo
+  apelido: null
+  partido: REPUBLICANOS
+  uf: ES
+  vaga: 2
+  mandato: 2027-2035
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "6749"
+  codigo_camara: "178871"
+  foto_origem: https://www.camara.leg.br/internet/deputado/bandep/178871.jpg
+  foto_credito: Câmara dos Deputados
+  redes:
+    x: https://x.com/evairdemelo
+    instagram: https://www.instagram.com/evair_de_melo
+  email_institucional: null
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: magno-malta
+  nome: Magno Malta
+  nome_completo: Magno Pereira Malta
+  apelido: null
+  partido: PL
+  uf: ES
+  vaga: 3
+  mandato: 2023-2031
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "631"
+  codigo_camara: null
+  foto_origem: https://www.senado.leg.br/senadores/img/fotos-oficiais/senador631.jpg
+  foto_credito: Agência Senado
+  redes:
+    x: https://x.com/magnomalta
+    instagram: https://www.instagram.com/magnomalta
+  email_institucional: sen.magnomalta@senado.leg.br
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: gustavo-gayer
+  nome: Gustavo Gayer
+  nome_completo: Gustavo Gayer Machado de Araujo
+  apelido: null
+  partido: PL
+  uf: GO
+  vaga: 1
+  mandato: 2027-2035
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "6458"
+  codigo_camara: "220568"
+  foto_origem: https://www.camara.leg.br/internet/deputado/bandep/220568.jpg
+  foto_credito: Câmara dos Deputados
+  redes:
+    x: https://x.com/gayergus
+    instagram: https://www.instagram.com/gusgayer
+  email_institucional: dep.gustavogayer@camara.leg.br
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: gracinha-caiado
+  nome: Gracinha Caiado
+  nome_completo: Maria das Graças Landim de Carvalho Caiado
+  apelido: null
+  partido: UNIÃO
+  uf: GO
+  vaga: 2
+  mandato: 2027-2035
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "6756"
+  codigo_camara: null
+  foto_origem: https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/fotos/foto_cand2026_GO_div.zip#FGO90002540997_div.jpg
+  foto_credito: TSE
+  redes:
+    x: null
+    instagram: https://www.instagram.com/gracinhacaiado
+  email_institucional: null
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: wilder-morais
+  nome: Wilder Morais
+  nome_completo: Wilder Pedro de Morais
+  apelido: null
+  partido: PL
+  uf: GO
+  vaga: 3
+  mandato: 2023-2031
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "5070"
+  codigo_camara: null
+  foto_origem: https://www.senado.leg.br/senadores/img/fotos-oficiais/senador5070.jpg
+  foto_credito: Agência Senado
+  redes:
+    x: https://x.com/wildermorais
+    instagram: https://www.instagram.com/wildermorais
+  email_institucional: sen.wildermorais@senado.leg.br
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: andre-fufuca
+  nome: André Fufuca
+  nome_completo: Andre Luiz Carvalho Ribeiro
+  apelido: null
+  partido: PP
+  uf: MA
+  vaga: 1
+  mandato: 2027-2035
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "5717"
+  codigo_camara: "178882"
+  foto_origem: https://www.camara.leg.br/internet/deputado/bandep/178882.jpg
+  foto_credito: Câmara dos Deputados
+  redes:
+    x: https://x.com/andre_fufuca
+    instagram: https://www.instagram.com/andre_fufuca
+  email_institucional: dep.andrefufuca@camara.leg.br
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: lahesio-bonfim
+  nome: Lahesio Bonfim
+  nome_completo: Lahesio Rodrigues do Bonfim
+  apelido: null
+  partido: NOVO
+  uf: MA
+  vaga: 2
+  mandato: 2027-2035
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "6776"
+  codigo_camara: null
+  foto_origem: https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/fotos/foto_cand2026_MA_div.zip#FMA100002548011_div.jpg
+  foto_credito: TSE
+  redes:
+    x: null
+    instagram: https://www.instagram.com/lahesiobonfimoficial
+  email_institucional: null
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: flavio-dino
+  nome: Flávio Dino
+  nome_completo: Flávio Dino de Castro e Costa
+  apelido: null
+  partido: PSB
+  uf: MA
+  vaga: 3
+  mandato: 2023-2031
+  situacao: deixou_mandato
+  deixou_em: 2024-02-20
+  substituido_por: ana-paula-lobato
+  codigo_senado: "4605"
+  codigo_camara: null
+  foto_origem: https://www.senado.leg.br/senadores/img/fotos-oficiais/senador4605.jpg
+  foto_credito: Agência Senado
+  redes:
+    x: https://x.com/flaviodino
+    instagram: https://www.instagram.com/flaviodino
+  email_institucional: sen.flaviodino@senado.leg.br
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+    - data: 2026-11-06
+      evento: renunciou ao mandato em 2024-02-20 para assumir cargo no STF; substituído pela primeira suplente
+      issue: null
+- id: ana-paula-lobato
+  nome: Ana Paula Lobato
+  nome_completo: Ana Paula Dias Lobato Nova Alves
+  apelido: null
+  partido: PSB
+  uf: MA
+  vaga: 3
+  mandato: 2023-2031
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "6358"
+  codigo_camara: null
+  foto_origem: https://www.senado.leg.br/senadores/img/fotos-oficiais/senador6358.jpg
+  foto_credito: Agência Senado
+  redes:
+    x: null
+    instagram: https://www.instagram.com/ana_paulalobato
+  email_institucional: sen.anapaulalobato@senado.leg.br
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: domingos-savio
+  nome: Domingos Sávio
+  nome_completo: Domingos Sávio Campos Resende
+  apelido: null
+  partido: PL
+  uf: MG
+  vaga: 1
+  mandato: 2027-2035
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "5270"
+  codigo_camara: "160758"
+  foto_origem: https://www.camara.leg.br/internet/deputado/bandep/160758.jpg
+  foto_credito: Câmara dos Deputados
+  redes:
+    x: https://x.com/domingossaviomg
+    instagram: https://www.instagram.com/domingossaviomg
+  email_institucional: dep.domingossavio@camara.leg.br
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: marilia-campos
+  nome: Marília Campos
+  nome_completo: Marilia Aparecida Campos
+  apelido: null
+  partido: PT
+  uf: MG
+  vaga: 2
+  mandato: 2027-2035
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "6732"
+  codigo_camara: null
+  foto_origem: https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/fotos/foto_cand2026_MG_div.zip#FMG130002550560_div.jpg
+  foto_credito: TSE
+  redes:
+    x: https://x.com/mariliacamposmg
+    instagram: https://www.instagram.com/mariliacampos.mg
+  email_institucional: null
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: cleitinho
+  nome: Cleitinho
+  nome_completo: Cleiton Gontijo de Azevedo
+  apelido: null
+  partido: REPUBLICANOS
+  uf: MG
+  vaga: 3
+  mandato: 2023-2031
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "6337"
+  codigo_camara: null
+  foto_origem: https://www.senado.leg.br/senadores/img/fotos-oficiais/senador6337.jpg
+  foto_credito: Agência Senado
+  redes:
+    x: https://x.com/cleitinhotmj
+    instagram: https://www.instagram.com/cleitinhoazevedo
+  email_institucional: sen.cleitinho@senado.leg.br
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes:
+    - data: 2026-11-06
+      texto: Eleito governador de Minas Gerais em 2026. Ao tomar posse, em janeiro de 2027, deixa o mandato no Senado e o primeiro suplente, Alex Diniz, assume a cadeira.
+      fonte_url: https://dadosabertos.tse.jus.br/dataset/candidatos-2026
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: reinaldo-azambuja
+  nome: Reinaldo Azambuja
+  nome_completo: Reinaldo Azambuja Silva
+  apelido: null
+  partido: PL
+  uf: MS
+  vaga: 1
+  mandato: 2027-2035
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "5275"
+  codigo_camara: null
+  foto_origem: https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/fotos/foto_cand2026_MS_div.zip#FMS120002535764_div.jpg
+  foto_credito: TSE
+  redes:
+    x: https://x.com/azambujareinald
+    instagram: https://www.instagram.com/reinaldoazambuja
+  email_institucional: null
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: capitao-contar
+  nome: Capitão Contar
+  nome_completo: Renan Barbosa Contar
+  apelido: null
+  partido: PL
+  uf: MS
+  vaga: 2
+  mandato: 2027-2035
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "6784"
+  codigo_camara: null
+  foto_origem: https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/fotos/foto_cand2026_MS_div.zip#FMS120002535769_div.jpg
+  foto_credito: TSE
+  redes:
+    x: https://x.com/capitaocontar
+    instagram: https://www.instagram.com/capitaocontar
+  email_institucional: null
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: tereza-cristina
+  nome: Tereza Cristina
+  nome_completo: Tereza Cristina Correa da Costa Dias
+  apelido: null
+  partido: PP
+  uf: MS
+  vaga: 3
+  mandato: 2023-2031
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "5736"
+  codigo_camara: null
+  foto_origem: https://www.senado.leg.br/senadores/img/fotos-oficiais/senador5736.jpg
+  foto_credito: Agência Senado
+  redes:
+    x: null
+    instagram: https://www.instagram.com/terezacristinams
+  email_institucional: sen.terezacristina@senado.leg.br
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: mauro-mendes
+  nome: Mauro Mendes
+  nome_completo: Mauro Mendes Ferreira
+  apelido: null
+  partido: UNIÃO
+  uf: MT
+  vaga: 1
+  mandato: 2027-2035
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "6788"
+  codigo_camara: null
+  foto_origem: https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/fotos/foto_cand2026_MT_div.zip#FMT110002551966_div.jpg
+  foto_credito: TSE
+  redes:
+    x: null
+    instagram: https://www.instagram.com/mauromendesoficial
+  email_institucional: null
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: jose-medeiros
+  nome: José Medeiros
+  nome_completo: Jose Antonio dos Santos Medeiros
+  apelido: null
+  partido: PL
+  uf: MT
+  vaga: 2
+  mandato: 2027-2035
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "6174"
+  codigo_camara: "204472"
+  foto_origem: https://www.camara.leg.br/internet/deputado/bandep/204472.jpg
+  foto_credito: Câmara dos Deputados
+  redes:
+    x: https://x.com/josemedeirosmt
+    instagram: https://www.instagram.com/senadorzemedeiros222
+  email_institucional: dep.josemedeiros@camara.leg.br
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: wellington-fagundes
+  nome: Wellington Fagundes
+  nome_completo: Wellington Antonio Fagundes
+  apelido: null
+  partido: PL
+  uf: MT
+  vaga: 3
+  mandato: 2023-2031
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "1173"
+  codigo_camara: null
+  foto_origem: https://www.senado.leg.br/senadores/img/fotos-oficiais/senador1173.jpg
+  foto_credito: Agência Senado
+  redes:
+    x: null
+    instagram: https://www.instagram.com/wellingtonfagundesmt
+  email_institucional: sen.wellingtonfagundes@senado.leg.br
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: helder
+  nome: Helder
+  nome_completo: Helder Zahluth Barbalho
+  apelido: null
+  partido: MDB
+  uf: PA
+  vaga: 1
+  mandato: 2027-2035
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "6728"
+  codigo_camara: null
+  foto_origem: https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/fotos/foto_cand2026_PA_div.zip#FPA140002550779_div.jpg
+  foto_credito: TSE
+  redes:
+    x: https://x.com/helderbarbalho
+    instagram: https://www.instagram.com/helderbarbalho
+  email_institucional: null
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: chicao
+  nome: Chicão
+  nome_completo: Francisco das Chagas Silva Melo Filho
+  apelido: null
+  partido: UNIÃO
+  uf: PA
+  vaga: 2
+  mandato: 2027-2035
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "6730"
+  codigo_camara: null
+  foto_origem: https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/fotos/foto_cand2026_PA_div.zip#FPA140002550780_div.jpg
+  foto_credito: TSE
+  redes:
+    x: https://x.com/depchicao
+    instagram: https://www.instagram.com/chicaodopara
+  email_institucional: null
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: beto-faro
+  nome: Beto Faro
+  nome_completo: José Roberto Oliveira Faro
+  apelido: null
+  partido: PT
+  uf: PA
+  vaga: 3
+  mandato: 2023-2031
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "4639"
+  codigo_camara: null
+  foto_origem: https://www.senado.leg.br/senadores/img/fotos-oficiais/senador4639.jpg
+  foto_credito: Agência Senado
+  redes:
+    x: https://x.com/betofaropt
+    instagram: https://www.instagram.com/deputadobetofaro
+  email_institucional: sen.betofaro@senado.leg.br
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: joao-azevedo
+  nome: João Azevêdo
+  nome_completo: João Azevêdo Lins Filho
+  apelido: null
+  partido: PSB
+  uf: PB
+  vaga: 1
+  mandato: 2027-2035
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "6737"
+  codigo_camara: null
+  foto_origem: https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/fotos/foto_cand2026_PB_div.zip#FPB150002549793_div.jpg
+  foto_credito: TSE
+  redes:
+    x: https://x.com/joaoazevedolins
+    instagram: https://www.instagram.com/prafrentecomjoao
+  email_institucional: null
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: veneziano-vital-do-rego
+  nome: Veneziano Vital do Rêgo
+  nome_completo: Veneziano Vital do Rêgo Segundo Neto
+  apelido: null
+  partido: MDB
+  uf: PB
+  vaga: 2
+  mandato: 2027-2035
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "5748"
+  codigo_camara: null
+  foto_origem: https://www.senado.leg.br/senadores/img/fotos-oficiais/senador5748.jpg
+  foto_credito: Agência Senado
+  redes:
+    x: https://x.com/venezianovital
+    instagram: https://www.instagram.com/venezianovitalpb
+  email_institucional: sen.venezianovitaldorego@senado.leg.br
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: efraim-filho
+  nome: Efraim Filho
+  nome_completo: Efraim de Araújo Morais Filho
+  apelido: null
+  partido: PL
+  uf: PB
+  vaga: 3
+  mandato: 2023-2031
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "4642"
+  codigo_camara: null
+  foto_origem: https://www.senado.leg.br/senadores/img/fotos-oficiais/senador4642.jpg
+  foto_credito: Agência Senado
+  redes:
+    x: null
+    instagram: https://www.instagram.com/efraimfilhopb
+  email_institucional: sen.efraimfilho@senado.leg.br
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: humberto-costa
+  nome: Humberto Costa
+  nome_completo: Humberto Sérgio Costa Lima
+  apelido: null
+  partido: PT
+  uf: PE
+  vaga: 1
+  mandato: 2027-2035
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "5008"
+  codigo_camara: null
+  foto_origem: https://www.senado.leg.br/senadores/img/fotos-oficiais/senador5008.jpg
+  foto_credito: Agência Senado
+  redes:
+    x: https://x.com/senadorhumberto
+    instagram: https://www.instagram.com/senadorhumberto
+  email_institucional: sen.humbertocosta@senado.leg.br
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: marilia-arraes
+  nome: Marília Arraes
+  nome_completo: Marília Valença Rocha Arraes de Alencar
+  apelido: null
+  partido: PDT
+  uf: PE
+  vaga: 2
+  mandato: 2027-2035
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "6133"
+  codigo_camara: null
+  foto_origem: https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/fotos/foto_cand2026_PE_div.zip#FPE170002547771_div.jpg
+  foto_credito: TSE
+  redes:
+    x: https://x.com/mariliaarraes
+    instagram: https://www.instagram.com/mariliaarraes
+  email_institucional: null
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: teresa-leitao
+  nome: Teresa Leitão
+  nome_completo: Maria Teresa Leitão de Melo
+  apelido: null
+  partido: PT
+  uf: PE
+  vaga: 3
+  mandato: 2023-2031
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "6338"
+  codigo_camara: null
+  foto_origem: https://www.senado.leg.br/senadores/img/fotos-oficiais/senador6338.jpg
+  foto_credito: Agência Senado
+  redes:
+    x: https://x.com/teresaleitao_
+    instagram: https://www.instagram.com/deputadateresaleitao
+  email_institucional: sen.teresaleitao@senado.leg.br
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: marcelo-castro
+  nome: Marcelo Castro
+  nome_completo: Marcelo Costa e Castro
+  apelido: null
+  partido: MDB
+  uf: PI
+  vaga: 1
+  mandato: 2027-2035
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "742"
+  codigo_camara: null
+  foto_origem: https://www.senado.leg.br/senadores/img/fotos-oficiais/senador742.jpg
+  foto_credito: Agência Senado
+  redes:
+    x: https://x.com/marcelocastropi
+    instagram: https://www.instagram.com/marcelocastropi
+  email_institucional: sen.marcelocastro@senado.leg.br
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: julio-cesar
+  nome: Júlio Cesar
+  nome_completo: Júlio César de Carvalho Lima
+  apelido: Julim do Lula
+  partido: PSD
+  uf: PI
+  vaga: 2
+  mandato: 2027-2035
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "3679"
+  codigo_camara: "74317"
+  foto_origem: https://www.camara.leg.br/internet/deputado/bandep/74317.jpg
+  foto_credito: Câmara dos Deputados
+  redes:
+    x: https://x.com/julio_cesar_pi
+    instagram: https://www.instagram.com/juliocesardopiaui
+  email_institucional: dep.juliocesar@camara.leg.br
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: wellington-dias
+  nome: Wellington Dias
+  nome_completo: José Wellington Barroso de Araujo Dias
+  apelido: null
+  partido: PT
+  uf: PI
+  vaga: 3
+  mandato: 2023-2031
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "5016"
+  codigo_camara: null
+  foto_origem: https://www.senado.leg.br/senadores/img/fotos-oficiais/senador5016.jpg
+  foto_credito: Agência Senado
+  redes:
+    x: https://x.com/wdiaspi
+    instagram: https://www.instagram.com/wellingtondiasoficial
+  email_institucional: wellington.dias@senador.leg.br
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes:
+    - data: 2026-11-06
+      texto: Afastado do exercício para ocupar cargo de ministro. A primeira suplente, Jussara Lima (PSD), está em exercício desde 2026-05-06.
+      fonte_url: https://www25.senado.leg.br/web/senadores/senador/-/perfil/5016
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: filipe-barros
+  nome: Filipe Barros
+  nome_completo: Filipe Barros Baptista de Toledo Ribeiro
+  apelido: null
+  partido: PL
+  uf: PR
+  vaga: 1
+  mandato: 2027-2035
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "6118"
+  codigo_camara: "204411"
+  foto_origem: https://www.camara.leg.br/internet/deputado/bandep/204411.jpg
+  foto_credito: Câmara dos Deputados
+  redes:
+    x: https://x.com/filipebarrost
+    instagram: https://www.instagram.com/filipebarrosoficial
+  email_institucional: dep.filipebarros@camara.leg.br
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: deltan-dallagnol
+  nome: Deltan Dallagnol
+  nome_completo: Deltan Martinazzo Dallagnol
+  apelido: null
+  partido: NOVO
+  uf: PR
+  vaga: 2
+  mandato: 2027-2035
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "6587"
+  codigo_camara: null
+  foto_origem: https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/fotos/foto_cand2026_PR_div.zip#FPR160002547661_div.jpg
+  foto_credito: TSE
+  redes:
+    x: https://x.com/deltanmd
+    instagram: https://www.instagram.com/deltandallagnol
+  email_institucional: null
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: sergio-moro
+  nome: Sergio Moro
+  nome_completo: Sergio Fernando Moro
+  apelido: null
+  partido: PL
+  uf: PR
+  vaga: 3
+  mandato: 2023-2031
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "6331"
+  codigo_camara: null
+  foto_origem: https://www.senado.leg.br/senadores/img/fotos-oficiais/senador6331.jpg
+  foto_credito: Agência Senado
+  redes:
+    x: https://x.com/sf_moro
+    instagram: https://www.instagram.com/sf_moro
+  email_institucional: sen.sergiomoro@senado.leg.br
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes:
+    - data: 2026-11-06
+      texto: Eleito governador do Paraná em 2026. Ao tomar posse, em janeiro de 2027, deixa o mandato no Senado e o primeiro suplente, Luis Felipe Cunha, assume a cadeira.
+      fonte_url: https://dadosabertos.tse.jus.br/dataset/candidatos-2026
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: carlos-portinho
+  nome: Carlos Portinho
+  nome_completo: Carlos Francisco Portinho
+  apelido: null
+  partido: PL
+  uf: RJ
+  vaga: 1
+  mandato: 2027-2035
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "5936"
+  codigo_camara: null
+  foto_origem: https://www.senado.leg.br/senadores/img/fotos-oficiais/senador5936.jpg
+  foto_credito: Agência Senado
+  redes:
+    x: https://x.com/carlosfportinho
+    instagram: https://www.instagram.com/carlosportinho
+  email_institucional: sen.carlosportinho@senado.leg.br
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: carlos-jordy
+  nome: Carlos Jordy
+  nome_completo: Carlos Roberto Jordy Coelho de Mattos
+  apelido: null
+  partido: PL
+  uf: RJ
+  vaga: 2
+  mandato: 2027-2035
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "6163"
+  codigo_camara: "204460"
+  foto_origem: https://www.camara.leg.br/internet/deputado/bandep/204460.jpg
+  foto_credito: Câmara dos Deputados
+  redes:
+    x: https://x.com/carlosjordy
+    instagram: https://www.instagram.com/carlosjordy
+  email_institucional: dep.carlosjordy@camara.leg.br
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: romario
+  nome: Romário
+  nome_completo: Romario de Souza Faria
+  apelido: null
+  partido: S/Partido
+  uf: RJ
+  vaga: 3
+  mandato: 2023-2031
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "5322"
+  codigo_camara: null
+  foto_origem: https://www.senado.leg.br/senadores/img/fotos-oficiais/senador5322.jpg
+  foto_credito: Agência Senado
+  redes:
+    x: https://x.com/romarioonze
+    instagram: https://www.instagram.com/romariofaria
+  email_institucional: sen.romario@senado.leg.br
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: styvenson-valentim
+  nome: Styvenson Valentim
+  nome_completo: Eann Styvenson Valentim Mendes
+  apelido: null
+  partido: PODE
+  uf: RN
+  vaga: 1
+  mandato: 2027-2035
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "5959"
+  codigo_camara: null
+  foto_origem: https://www.senado.leg.br/senadores/img/fotos-oficiais/senador5959.jpg
+  foto_credito: Agência Senado
+  redes:
+    x: null
+    instagram: https://www.instagram.com/senadorstyvensonvalentim
+  email_institucional: sen.styvensonvalentim@senado.leg.br
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: samanda-de-lula
+  nome: Samanda de Lula
+  nome_completo: Samanda Alves de Freitas
+  apelido: null
+  partido: PT
+  uf: RN
+  vaga: 2
+  mandato: 2027-2035
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "6689"
+  codigo_camara: null
+  foto_origem: https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/fotos/foto_cand2026_RN_div.zip#FRN200002533841_div.jpg
+  foto_credito: TSE
+  redes:
+    x: null
+    instagram: https://www.instagram.com/samanda
+  email_institucional: null
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: rogerio-marinho
+  nome: Rogerio Marinho
+  nome_completo: Rogério Simonetti Marinho
+  apelido: null
+  partido: PL
+  uf: RN
+  vaga: 3
+  mandato: 2023-2031
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "4694"
+  codigo_camara: null
+  foto_origem: https://www.senado.leg.br/senadores/img/fotos-oficiais/senador4694.jpg
+  foto_credito: Agência Senado
+  redes:
+    x: https://x.com/rogeriosmarinho
+    instagram: https://www.instagram.com/rogerio.smarinho
+  email_institucional: sen.rogeriomarinho@senado.leg.br
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: dr-fernando-maximo
+  nome: Dr. Fernando Máximo
+  nome_completo: Fernando Rodrigues Máximo
+  apelido: null
+  partido: PL
+  uf: RO
+  vaga: 1
+  mandato: 2027-2035
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "6497"
+  codigo_camara: "220610"
+  foto_origem: https://www.camara.leg.br/internet/deputado/bandep/220610.jpg
+  foto_credito: Câmara dos Deputados
+  redes:
+    x: https://x.com/fernandomaximox
+    instagram: https://www.instagram.com/drfernandomaximo007
+  email_institucional: dep.dr.fernandomaximo@camara.leg.br
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: bruno-scheid
+  nome: Bruno Scheid
+  nome_completo: Bruno Scheid
+  apelido: null
+  partido: PL
+  uf: RO
+  vaga: 2
+  mandato: 2027-2035
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "6700"
+  codigo_camara: null
+  foto_origem: https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/fotos/foto_cand2026_RO_div.zip#FRO220002539995_div.jpg
+  foto_credito: TSE
+  redes:
+    x: https://x.com/brunoscheid222
+    instagram: https://www.instagram.com/brunoscheidreserva222
+  email_institucional: null
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: jaime-bagattoli
+  nome: Jaime Bagattoli
+  nome_completo: Jaime Maximino Bagattoli
+  apelido: null
+  partido: PL
+  uf: RO
+  vaga: 3
+  mandato: 2023-2031
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "6340"
+  codigo_camara: null
+  foto_origem: https://www.senado.leg.br/senadores/img/fotos-oficiais/senador6340.jpg
+  foto_credito: Agência Senado
+  redes:
+    x: https://x.com/jaimebagattoli
+    instagram: https://www.instagram.com/jaimebagattolioficial
+  email_institucional: sen.jaimebagattoli@senado.leg.br
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: nicoletti
+  nome: Nicoletti
+  nome_completo: Antonio Carlos Nicoletti
+  apelido: null
+  partido: PL
+  uf: RR
+  vaga: 1
+  mandato: 2027-2035
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "6181"
+  codigo_camara: "204479"
+  foto_origem: https://www.camara.leg.br/internet/deputado/bandep/204479.jpg
+  foto_credito: Câmara dos Deputados
+  redes:
+    x: null
+    instagram: https://www.instagram.com/deputadonicoletti
+  email_institucional: dep.nicoletti@camara.leg.br
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: teresa-surita
+  nome: Teresa Surita
+  nome_completo: Maria Teresa Saenz Surita Jucá
+  apelido: null
+  partido: MDB
+  uf: RR
+  vaga: 2
+  mandato: 2027-2035
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "5192"
+  codigo_camara: null
+  foto_origem: https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/fotos/foto_cand2026_RR_div.zip#FRR230002553006_div.jpg
+  foto_credito: TSE
+  redes:
+    x: null
+    instagram: https://www.instagram.com/teresasurita
+  email_institucional: null
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: dr-hiran
+  nome: Dr. Hiran
+  nome_completo: Hiran Manuel Gonçalves da Silva
+  apelido: null
+  partido: PP
+  uf: RR
+  vaga: 3
+  mandato: 2023-2031
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "5793"
+  codigo_camara: null
+  foto_origem: https://www.senado.leg.br/senadores/img/fotos-oficiais/senador5793.jpg
+  foto_credito: Agência Senado
+  redes:
+    x: https://x.com/drhiran_
+    instagram: https://www.instagram.com/dr.hiran
+  email_institucional: sen.drhiran@senado.leg.br
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: sanderson
+  nome: Sanderson
+  nome_completo: Ubiratan Antunes Sanderson
+  apelido: null
+  partido: PL
+  uf: RS
+  vaga: 1
+  mandato: 2027-2035
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "6123"
+  codigo_camara: "204416"
+  foto_origem: https://www.camara.leg.br/internet/deputado/bandep/204416.jpg
+  foto_credito: Câmara dos Deputados
+  redes:
+    x: https://x.com/depsanderson
+    instagram: https://www.instagram.com/sandersonrs
+  email_institucional: dep.sanderson@camara.leg.br
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: marcel-van-hattem
+  nome: Marcel van Hattem
+  nome_completo: Marcel van Hattem
+  apelido: null
+  partido: NOVO
+  uf: RS
+  vaga: 2
+  mandato: 2027-2035
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "6054"
+  codigo_camara: "156190"
+  foto_origem: https://www.camara.leg.br/internet/deputado/bandep/156190.jpg
+  foto_credito: Câmara dos Deputados
+  redes:
+    x: https://x.com/marcelvanhattem
+    instagram: https://www.instagram.com/marcelvanhattem
+  email_institucional: dep.marcelvanhattem@camara.leg.br
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: hamilton-mourao
+  nome: Hamilton Mourão
+  nome_completo: Antonio Hamilton Martins Mourão
+  apelido: null
+  partido: REPUBLICANOS
+  uf: RS
+  vaga: 3
+  mandato: 2023-2031
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "6341"
+  codigo_camara: null
+  foto_origem: https://www.senado.leg.br/senadores/img/fotos-oficiais/senador6341.jpg
+  foto_credito: Agência Senado
+  redes:
+    x: https://x.com/generalmourao
+    instagram: https://www.instagram.com/generalmourao
+  email_institucional: sen.hamiltonmourao@senado.leg.br
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: caroline-de-toni
+  nome: Caroline de Toni
+  nome_completo: Caroline Rodrigues de Toni
+  apelido: null
+  partido: PL
+  uf: SC
+  vaga: 1
+  mandato: 2027-2035
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "6079"
+  codigo_camara: "204369"
+  foto_origem: https://www.camara.leg.br/internet/deputado/bandep/204369.jpg
+  foto_credito: Câmara dos Deputados
+  redes:
+    x: https://x.com/caroldetoni
+    instagram: https://www.instagram.com/carolinedetoni
+  email_institucional: dep.carolinedetoni@camara.leg.br
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: carlos-bolsonaro
+  nome: Carlos Bolsonaro
+  nome_completo: Carlos Nantes Bolsonaro
+  apelido: null
+  partido: PL
+  uf: SC
+  vaga: 2
+  mandato: 2027-2035
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "6707"
+  codigo_camara: null
+  foto_origem: https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/fotos/foto_cand2026_SC_div.zip#FSC240002541935_div.jpg
+  foto_credito: TSE
+  redes:
+    x: https://x.com/carlosbolsonaro
+    instagram: https://www.instagram.com/carlosbolsonaro
+  email_institucional: null
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: jorge-seif
+  nome: Jorge Seif
+  nome_completo: Jorge Seif Júnior
+  apelido: null
+  partido: PL
+  uf: SC
+  vaga: 3
+  mandato: 2023-2031
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "6342"
+  codigo_camara: null
+  foto_origem: https://www.senado.leg.br/senadores/img/fotos-oficiais/senador6342.jpg
+  foto_credito: Agência Senado
+  redes:
+    x: https://x.com/jorgeseifjunior
+    instagram: https://www.instagram.com/jorgeseifjunior
+  email_institucional: sen.jorgeseif@senado.leg.br
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: rogerio-carvalho
+  nome: Rogério Carvalho
+  nome_completo: Rogério Carvalho Santos
+  apelido: null
+  partido: PT
+  uf: SE
+  vaga: 1
+  mandato: 2027-2035
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "5352"
+  codigo_camara: null
+  foto_origem: https://www.senado.leg.br/senadores/img/fotos-oficiais/senador5352.jpg
+  foto_credito: Agência Senado
+  redes:
+    x: null
+    instagram: null
+  email_institucional: sen.rogeriocarvalho@senado.leg.br
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: alessandro-vieira
+  nome: Alessandro Vieira
+  nome_completo: Alessandro Vieira
+  apelido: Delegado Alessandro
+  partido: MDB
+  uf: SE
+  vaga: 2
+  mandato: 2027-2035
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "5982"
+  codigo_camara: null
+  foto_origem: https://www.senado.leg.br/senadores/img/fotos-oficiais/senador5982.jpg
+  foto_credito: Agência Senado
+  redes:
+    x: https://x.com/_alessandrose
+    instagram: https://www.instagram.com/alessandrovieirase
+  email_institucional: sen.alessandrovieira@senado.leg.br
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: laercio-oliveira
+  nome: Laércio Oliveira
+  nome_completo: Laércio José de Oliveira
+  apelido: null
+  partido: PP
+  uf: SE
+  vaga: 3
+  mandato: 2023-2031
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "4811"
+  codigo_camara: null
+  foto_origem: https://www.senado.leg.br/senadores/img/fotos-oficiais/senador4811.jpg
+  foto_credito: Agência Senado
+  redes:
+    x: null
+    instagram: https://www.instagram.com/laerciosergipe
+  email_institucional: sen.laerciooliveira@senado.leg.br
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: guilherme-derrite
+  nome: Guilherme Derrite
+  nome_completo: Guilherme Muraro Derrite
+  apelido: null
+  partido: PP
+  uf: SP
+  vaga: 1
+  mandato: 2027-2035
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "6232"
+  codigo_camara: "204531"
+  foto_origem: https://www.camara.leg.br/internet/deputado/bandep/204531.jpg
+  foto_credito: Câmara dos Deputados
+  redes:
+    x: https://x.com/derritesp
+    instagram: https://www.instagram.com/guilhermederrite
+  email_institucional: dep.guilhermederrite@camara.leg.br
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: andre-do-prado
+  nome: André do Prado
+  nome_completo: Andre Luis do Prado
+  apelido: null
+  partido: PL
+  uf: SP
+  vaga: 2
+  mandato: 2027-2035
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "6718"
+  codigo_camara: null
+  foto_origem: https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/fotos/foto_cand2026_SP_div.zip#FSP250002541308_div.jpg
+  foto_credito: TSE
+  redes:
+    x: https://x.com/_andredoprado
+    instagram: https://www.instagram.com/andredopradosp
+  email_institucional: null
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: astronauta-marcos-pontes
+  nome: Astronauta Marcos Pontes
+  nome_completo: Marcos Cesar Pontes
+  apelido: null
+  partido: PL
+  uf: SP
+  vaga: 3
+  mandato: 2023-2031
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "6009"
+  codigo_camara: null
+  foto_origem: https://www.senado.leg.br/senadores/img/fotos-oficiais/senador6009.jpg
+  foto_credito: Agência Senado
+  redes:
+    x: null
+    instagram: https://www.instagram.com/astropontes
+  email_institucional: sen.astronautamarcospontes@senado.leg.br
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: eduardo-gomes
+  nome: Eduardo Gomes
+  nome_completo: Carlos Eduardo Torres Gomes
+  apelido: null
+  partido: PL
+  uf: TO
+  vaga: 1
+  mandato: 2027-2035
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "3777"
+  codigo_camara: null
+  foto_origem: https://www.senado.leg.br/senadores/img/fotos-oficiais/senador3777.jpg
+  foto_credito: Agência Senado
+  redes:
+    x: https://x.com/eduardogomesto
+    instagram: https://www.instagram.com/eduardogomestocantins
+  email_institucional: sen.eduardogomes@senado.leg.br
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: alexandre-guimaraes
+  nome: Alexandre Guimarães
+  nome_completo: José Alexandre Domingues Guimarães
+  apelido: null
+  partido: MDB
+  uf: TO
+  vaga: 2
+  mandato: 2027-2035
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "6434"
+  codigo_camara: "220542"
+  foto_origem: https://www.camara.leg.br/internet/deputado/bandep/220542.jpg
+  foto_credito: Câmara dos Deputados
+  redes:
+    x: null
+    instagram: https://www.instagram.com/alexandreguimaraes15
+  email_institucional: dep.alexandreguimaraes@camara.leg.br
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
+- id: professora-dorinha-seabra
+  nome: Professora Dorinha Seabra
+  nome_completo: Maria Auxiliadora Seabra Rezende
+  apelido: null
+  partido: UNIÃO
+  uf: TO
+  vaga: 3
+  mandato: 2023-2031
+  situacao: em_exercicio
+  deixou_em: null
+  substituido_por: null
+  codigo_senado: "5386"
+  codigo_camara: null
+  foto_origem: https://www.senado.leg.br/senadores/img/fotos-oficiais/senador5386.jpg
+  foto_credito: Agência Senado
+  redes:
+    x: https://x.com/profdorinha
+    instagram: https://www.instagram.com/profdorinha
+  email_institucional: sen.professoradorinhaseabra@senado.leg.br
+  declaracao:
+    status: nao_declarou
+    candidato: null
+    data: null
+    fonte: null
+  observacoes: []
+  historico:
+    - data: 2026-11-06
+      evento: criado como nao_declarou
+      issue: null
