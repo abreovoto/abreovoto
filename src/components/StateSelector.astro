@@ -1,0 +1,21 @@
+---
+import { UF, type UF as UFType } from "../data/schema";
+
+interface Props {
+  selected?: UFType;
+}
+
+// A native select, no script: later pages remember the choice and react to it.
+const { selected } = Astro.props;
+---
+
+<label class="block text-sm font-semibold text-fg">
+  Seu estado
+  <select
+    name="uf"
+    class="mt-1 block w-full rounded border-2 border-line bg-surface px-3 py-2 text-base text-fg sm:w-64"
+  >
+    <option value="" selected={selected === undefined}>Escolha o estado</option>
+    {UF.options.map((uf) => <option value={uf} selected={uf === selected}>{uf}</option>)}
+  </select>
+</label>

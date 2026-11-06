@@ -1,0 +1,28 @@
+---
+import type { PlacarCandidato } from "../data/placar";
+import { partyState } from "../lib/text";
+import Portrait from "./Portrait.astro";
+
+interface Props {
+  candidato: PlacarCandidato;
+  foto: ImageMetadata;
+}
+
+// Identical for every candidate: the number is the only variable.
+const { candidato, foto } = Astro.props;
+const label = candidato.total === 1 ? "declaração" : "declarações";
+---
+
+<article class="rounded-lg bg-surface p-4 sm:p-5">
+  <div class="flex items-start gap-3">
+    <Portrait src={foto} alt={`Foto oficial de ${candidato.nome}`} size="state" />
+    <div class="min-w-0">
+      <h3 class="text-lg font-semibold leading-tight text-fg">{candidato.nome}</h3>
+      <p class="mt-0.5 text-sm text-fg-muted">{partyState(candidato)}</p>
+    </div>
+  </div>
+  <p class="mt-4">
+    <span class="font-display block text-5xl tabular-nums text-fg">{candidato.total}</span>
+    <span class="block text-sm text-fg-muted">{label}</span>
+  </p>
+</article>

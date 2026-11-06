@@ -1,0 +1,21 @@
+---
+import type { Placar } from "../data/placar";
+
+interface Props {
+  placar: Placar;
+}
+
+const { placar } = Astro.props;
+---
+
+<div class="flex flex-wrap items-end gap-x-10 gap-y-4">
+  <p>
+    <span class="font-display block text-5xl tabular-nums text-undeclared sm:text-num">{placar.naoDeclararam}</span>
+    <span class="block text-base font-semibold text-fg">não declararam</span>
+  </p>
+  <p>
+    <span class="font-display block text-5xl tabular-nums text-declared sm:text-num">{placar.declararam}</span>
+    <span class="block text-base font-semibold text-fg">declararam</span>
+  </p>
+  <p class="pb-1 text-base text-fg-muted">de {placar.total}</p>
+</div>

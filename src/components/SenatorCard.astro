@@ -1,0 +1,57 @@
+---
+import type { Candidato, Senador } from "../data/schema";
+import { senatorPhoto } from "../lib/photos";
+import { assumeEmNote, departureNote, formatDate, isCandidate, partyState, sourceHost } from "../lib/text";
+import Portrait from "./Portrait.astro";
+import StatusBadge from "./StatusBadge.astro";
+
+interface Props {
+  senador: Senador;
+  candidatos: Candidato[];
+  variant: "state" | "page";
+}
+
+const { senador, candidatos, variant } = Astro.props;
+const departed = departureNote(senador);
+const forecast = assumeEmNote(senador);
+const decl = senador.declaracao;
+const candidate = decl.status === "nao_declarou" ? null : candidatos.find((c) => c.id === decl.candidato);
+const nameSize = variant === "page" ? "text-xl" : "text-lg";
+---
+
+<article class="rounded-lg bg-surface p-4 sm:p-5">
+  <div class="flex items-start gap-4">
+    <Portrait src={senatorPhoto(senador.id)} alt={`Foto oficial de ${senador.nome}`} size={variant} />
+    <div class="min-w-0 flex-1">
+      <h3 class={`${nameSize} font-semibold leading-tight text-fg`}>{senador.nome}</h3>
+      <p class="mt-0.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-fg-muted">
+        <span>{partyState(senador)}</span>
+        {isCandidate(senador, candidatos) && <span class="rounded-full border border-fg px-2 text-xs text-fg">candidato</span>}
+      </p>
+      {forecast && <p class="mt-0.5 text-sm text-fg-muted">{forecast}</p>}
+      {departed && <p class="mt-0.5 text-sm text-fg-muted">{departed}</p>}
+      {
+        !departed && (
+          <div class="mt-3">
+            <p class="flex flex-wrap items-baseline gap-x-2 text-sm">
+              <StatusBadge status={decl.status} />
+              {candidate && <span class="font-semibold text-fg">{candidate.nome}</span>}
+            </p>
+            {decl.status !== "nao_declarou" && (
+              <p class="mt-1 text-xs text-fg-muted">
+                fonte: <a href={decl.fonte.url} rel="noopener" class="text-accent underline">{sourceHost(decl.fonte.url)}</a>, {formatDate(decl.data)}
+              </p>
+            )}
+          </div>
+        )
+      }
+    </div>
+  </div>
+  {
+    Astro.slots.has("actions") && (
+      <div class="mt-4 flex flex-wrap gap-2">
+        <slot name="actions" />
+      </div>
+    )
+  }
+</article>

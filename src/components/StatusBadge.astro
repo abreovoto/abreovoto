@@ -1,0 +1,17 @@
+---
+import type { Status } from "../data/schema";
+
+interface Props {
+  status: Status;
+}
+
+const { status } = Astro.props;
+// The two states share one construction — a square marker and the label — and differ only in colour and text.
+const label = status === "nao_declarou" ? "não declarou" : status === "declarou" ? "declarou voto em" : "mostrou o voto na sessão:";
+const colour = status === "nao_declarou" ? "text-undeclared" : "text-declared";
+---
+
+<span class={`inline-flex items-center gap-2 text-sm font-semibold ${colour}`}>
+  <span class="size-2.5 shrink-0 bg-current" aria-hidden="true"></span>
+  {label}
+</span>
