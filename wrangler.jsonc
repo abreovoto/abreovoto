@@ -12,5 +12,7 @@
   "observability": { "enabled": true },
   // The site lives on the custom domain only; no *.workers.dev address.
   "workers_dev": false,
-  "preview_urls": true
+  "preview_urls": true,
+  // Required by `wrangler preview`, which builds a preview for every pull request.
+  "previews": {}
 }
