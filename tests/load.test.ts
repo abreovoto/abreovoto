@@ -56,6 +56,11 @@ test("rejects a candidate whose own seat does not declare for them", () => {
   expect(issuesOf({ senador: { "ms-3": { declaracao: nao } } }).join("\n")).toMatch(/\[tereza-cristina\].*ms-3/);
 });
 
+test("accepts a candidate's own seat that showed the vote for them in the session", () => {
+  const d = loadData(makeDataset({ shown: ["rn-3", "marinho"] }));
+  expect(d.senadores.find((s) => s.id === "rn-3")?.declaracao.status).toBe("mostrou_na_sessao");
+});
+
 test("rejects a missing photo and names the id", () => {
   expect(() => loadData(makeDataset({ dropPhoto: "ac-1" }))).toThrow(/ac-1.*foto/);
 });
