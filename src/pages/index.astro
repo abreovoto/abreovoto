@@ -2,7 +2,8 @@
 import CandidateCard from "../components/CandidateCard.astro";
 import PetitionArea from "../components/PetitionArea.astro";
 import Scoreboard from "../components/Scoreboard.astro";
-import { loadData } from "../data/load";
+import YourSenators from "../components/YourSenators.astro";
+import { emExercicio, loadData } from "../data/load";
 import { placar } from "../data/placar";
 import Base from "../layouts/Base.astro";
 import { candidatePhoto } from "../lib/photos";
@@ -37,4 +38,6 @@ const p = placar(d);
     </div>
     <p class="mt-3 text-sm text-fg-muted">41 votos elegem o presidente do Senado.</p>
   </section>
+
+  <YourSenators senadores={emExercicio(d)} candidatos={d.candidatos} />
 </Base>
