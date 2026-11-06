@@ -74,6 +74,25 @@ export function buildSeed(rows: ApiSenador[], today: string): Senador[] {
   return entries;
 }
 
+/**
+ * The vaga-3 entries whose titular is not in office today: their codigo is
+ * absent from lista/atual while lista/atual has someone else in exercise for
+ * a mandate of the same UF starting in legislature 57 (typically a
+ * substitute). Their situacao is left as seeded; a person checks each one.
+ */
+export function incumbencyWarnings(entries: Senador[], atual: ApiSenador[]): string[] {
+  const inOffice = new Set(atual.map((r) => r.codigo));
+  return entries.flatMap((e) => {
+    if (e.vaga !== 3 || e.codigo_senado === null || inOffice.has(e.codigo_senado)) return [];
+    return atual
+      .filter((r) => r.uf === e.uf && r.legislaturaInicial === 57)
+      .map(
+        (r) =>
+          `${e.uf} vaga 3: ${e.nome} é titular, mas quem está em exercício é ${r.nome} (${r.participacao}) — confira antes de publicar`,
+      );
+  });
+}
+
 /** Every "UF/vaga" pair (27 × 3) that no entry occupies, in UF order. */
 export function missingSeats(entries: Senador[]): string[] {
   const taken = new Set(entries.map((e) => `${e.uf}/${e.vaga}`));
@@ -95,6 +114,7 @@ async function main(): Promise<number> {
 
   const missing = missingSeats(entries);
   console.log(`seed: ${missing.length} vaga(s) sem ocupante: ${missing.join(" ")}`);
+  for (const warning of incumbencyWarnings(entries, atual)) console.log(`seed: atenção: ${warning}`);
   return 0;
 }
 
