@@ -13,7 +13,8 @@
     "seed": "tsx scripts/seed-senadores.ts",
     "fotos": "tsx scripts/fetch-fotos.ts",
     "test": "vitest run --passWithNoTests",
-    "check": "npm run validate && npm run test && astro check && astro build"
+    "check": "npm run validate && npm run test && astro check && astro build",
+    "fotos:check": "tsx scripts/check-photos.ts"
   },
   "dependencies": {
     "@fontsource-variable/archivo": "^5.3.0",
