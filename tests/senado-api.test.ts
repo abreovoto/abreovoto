@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { buildSeed, missingSeats } from "../scripts/seed-senadores";
+import { buildSeed, incumbencyWarnings, missingSeats } from "../scripts/seed-senadores";
 import { type ApiSenador, mergeUnique, parseAtual, parseLegislatura } from "../scripts/senado-api";
 import { SenadorSchema } from "../src/data/schema";
 import atualJson from "./fixtures/api/lista-atual.json";
@@ -74,6 +74,12 @@ describe("mergeUnique", () => {
       email: "pessoa.exemplo@example.org",
       fotoUrl: "http://www.example.org/fotos/senador999001.jpg",
     });
+  });
+
+  test("fills a party missing from the winning row", () => {
+    const a = row({ codigo: "8", participacao: "1º Suplente", partido: "PX" });
+    const b = row({ codigo: "8", participacao: "Titular", partido: null });
+    expect(mergeUnique([[a], [b]])[0]).toMatchObject({ participacao: "Titular", partido: "PX" });
   });
 
   test("between rows of equal participation, the later list wins and gaps are filled", () => {
@@ -160,4 +166,25 @@ test("missingSeats lists every UF/vaga pair without an entry", () => {
   expect(missing).toContain("AC/1");
   expect(missing).not.toContain("AC/3");
   expect(missing).not.toContain("AL/2");
+});
+
+describe("incumbencyWarnings", () => {
+  test("flags a vaga-3 titular absent from lista/atual whose substitute is in exercise", () => {
+    // Real rows: Flávio Dino (4605) is the MA titular in legislatura/58 only;
+    // lista/atual has Ana Paula Lobato (6358), 1º Suplente, in exercise.
+    const warnings = incumbencyWarnings(buildSeed(merged, "2026-11-01"), atual);
+    expect(warnings).toEqual([
+      "MA vaga 3: Flávio Dino é titular, mas quem está em exercício é Ana Paula Lobato (1º Suplente) — confira antes de publicar",
+    ]);
+  });
+
+  test("leaves the seeded situacao untouched", () => {
+    const dino = buildSeed(merged, "2026-11-01").find((e) => e.codigo_senado === "4605");
+    expect(dino?.situacao).toBe("em_exercicio");
+  });
+
+  test("says nothing about titulars in office or about 2027 mandates", () => {
+    const entries = buildSeed(merged, "2026-11-01").filter((e) => e.codigo_senado !== "4605");
+    expect(incumbencyWarnings(entries, atual)).toEqual([]);
+  });
 });

@@ -110,8 +110,8 @@ export function parseLegislatura(json: unknown, legislatura: number): ApiSenador
  * One row per `codigo`. A Titular row wins over a substitute row of the same
  * person; between rows of equal participation, the row from the LATER list
  * wins (pass `[atual, legislatura]` so the legislature list decides party,
- * UF, first legislature and participation). Photo, e-mail and full name
- * missing from the winner are filled from the other rows.
+ * UF, first legislature and participation). Party, photo, e-mail and full
+ * name missing from the winner are filled from the other rows.
  */
 export function mergeUnique(lists: ApiSenador[][]): ApiSenador[] {
   const byCodigo = new Map<string, ApiSenador>();
@@ -125,6 +125,7 @@ export function mergeUnique(lists: ApiSenador[][]): ApiSenador[] {
     const [winner, loser] = rowWins ? [row, prev] : [prev, row];
     byCodigo.set(row.codigo, {
       ...winner,
+      partido: winner.partido ?? loser.partido,
       fotoUrl: winner.fotoUrl ?? loser.fotoUrl,
       email: winner.email ?? loser.email,
       nomeCompleto: winner.nomeCompleto ?? loser.nomeCompleto,
