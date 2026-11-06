@@ -20,6 +20,14 @@ export type DatasetOverrides = {
   withdraw?: string;
   /** `[senatorId, candidateId]`, or a list of them: make the senator `declarou` for the candidate. */
   declareFor?: [string, string] | [string, string][];
+  /** `[senatorId, candidateId]`: make the senator `mostrou_na_sessao` for the candidate. */
+  shown?: [string, string];
+  /**
+   * `[oldId, newId]`: the old occupant leaves (`deixou_mandato`, replaced by `newId`) and a new
+   * `em_exercicio` entry takes the same uf, vaga and mandato. Applied after `declareFor` and
+   * `shown`, so a declaration set there stays with the former occupant.
+   */
+  replace?: [string, string];
   /** Do not write the photo file for this senator or candidate id. */
   dropPhoto?: string;
   /** Add a key the schema does not know to the `ac-1` entry. */
@@ -141,6 +149,18 @@ export function makeDataset(overrides: DatasetOverrides = {}): { dir: string; as
       ? (overrides.declareFor as [string, string][])
       : [overrides.declareFor as [string, string]];
     for (const [senatorId, candidateId] of pairs) byId(senadores, senatorId).declaracao = declarou(candidateId);
+  }
+  if (overrides.shown) {
+    const [senatorId, candidateId] = overrides.shown;
+    byId(senadores, senatorId).declaracao = { ...declarou(candidateId), status: "mostrou_na_sessao" };
+  }
+  if (overrides.replace) {
+    const [oldId, newId] = overrides.replace;
+    const old = byId(senadores, oldId);
+    old.situacao = "deixou_mandato";
+    old.deixou_em = FIXTURE_DATE;
+    old.substituido_por = newId;
+    senadores.push(senadorEntry(newId, old.uf as string, old.vaga as 1 | 2 | 3));
   }
   if (overrides.extraKey) byId(senadores, "ac-1").apelidoo = "typo";
   for (const [id, patch] of Object.entries(overrides.senador ?? {})) Object.assign(byId(senadores, id), patch);
