@@ -13,10 +13,33 @@ O site não toma lado. Nunca diz em quem votar, trata todos os candidatos da mes
 forma e não publica nada sobre um senador sem fonte pública. Os dados vivem neste
 repositório, então cada alteração é um commit que qualquer pessoa pode auditar.
 
-**Situação:** o trabalho ainda não começou. O site entra no ar discretamente no
+**Situação:** os dados dos 81 senadores e a validação deles já estão neste
+repositório; as páginas do site ainda não. O site entra no ar discretamente no
 fim de novembro de 2026 e passa a ser divulgado a partir de janeiro de 2027.
 
 - Site: `https://abreovoto.com` (ainda não está no ar)
 - Contato: abreovoto@gmail.com
 - Fontes e correções: abra uma issue com o modelo "Fonte ou correção"
 - Licença: MIT (código); dados do placar em CC BY 4.0
+
+## Dados
+
+Os dados ficam em `data/`, em YAML: `senadores.yaml`, `candidatos.yaml`,
+`peticao.yaml` e `site.yaml`. As fotos oficiais ficam em `src/assets/fotos/`,
+com o crédito registrado no YAML.
+
+Cada senador tem um status: `nao_declarou` ou `declarou` (e, no dia da eleição,
+`mostrou_na_sessao`). Todo `declarou` leva o candidato, a data e a fonte: tipo,
+link `https` e o trecho literal da declaração. Sem fonte, a validação recusa.
+
+Cada estado tem três vagas: as vagas 1 e 2 têm mandato 2027–2035 e a vaga 3,
+2023–2031. Quem deixa o mandato continua no arquivo como `deixou_mandato`,
+apontando para quem assumiu, e o placar conta só os 81 em exercício.
+
+- `npm run validate`: confere os dados contra as regras acima
+- `npm run seed`: gera o `senadores.yaml` inicial a partir dos dados abertos do
+  Senado (não sobrescreve um arquivo existente)
+- `npm run fotos`: baixa e normaliza as fotos que ainda faltam
+- `npm run check`: validação, testes, verificação de tipos e build
+
+Os dados são publicados sob a licença CC BY 4.0.
