@@ -21,48 +21,52 @@ interface Props {
 const { senador, candidatos, site, variant } = Astro.props;
 const departed = departureNote(senador) !== null;
 const full = variant === "full";
-const size = full ? "md" : "sm";
 const labels = actionLabels(senador);
 const card = senatorCardPath(senador.id);
 const file = `abreovoto-${senador.id}.png`;
 ---
 
 {
-  !departed && (
-    <div class="contents" data-share-actions>
-      <Button kind="primary" size={size} href={xIntentUrl(xText(senador, candidatos, site))} rel="noopener noreferrer" target="_blank">
-        {labels.x}
-      </Button>
-      {full && (
-        <Button
-          kind="secondary"
-          scripted
-          data-share-instagram=""
-          data-text={instagramText(senador, candidatos, site)}
-          data-card={card}
-          data-file={file}
-        >
-          {labels.instagram}
+  !departed &&
+    (full ? (
+      // Two rows on purpose: the three networks, then the two utilities. Five buttons do
+      // not fit the page column in one, and a lone wrapped button reads as an accident.
+      <div class="flex basis-full flex-col gap-2" data-share-actions>
+        <div class="flex flex-wrap gap-2">
+          <Button kind="primary" href={xIntentUrl(xText(senador, candidatos, site))} rel="noopener noreferrer" target="_blank">
+            {labels.x}
+          </Button>
+          <Button
+            kind="secondary"
+            scripted
+            data-share-instagram=""
+            data-text={instagramText(senador, candidatos, site)}
+            data-card={card}
+            data-file={file}
+          >
+            {labels.instagram}
+          </Button>
+          <Button kind="secondary" href={whatsappUrl(thirdPersonText(senador, candidatos, site))} rel="noopener noreferrer" target="_blank">
+            WhatsApp
+          </Button>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <Button kind="secondary" scripted data-copy-link="" data-url={absolute(senatorPath(senador.id))}>
+            Copiar link
+          </Button>
+          <Button kind="secondary" href={card} download={file}>
+            Baixar cartão
+          </Button>
+        </div>
+        <p role="status" aria-live="polite" data-share-status class="text-sm text-fg-muted empty:hidden" />
+      </div>
+    ) : (
+      <div class="contents" data-share-actions>
+        <Button kind="primary" size="sm" href={xIntentUrl(xText(senador, candidatos, site))} rel="noopener noreferrer" target="_blank">
+          {labels.x}
         </Button>
-      )}
-      {full && (
-        <Button kind="secondary" href={whatsappUrl(thirdPersonText(senador, candidatos, site))} rel="noopener noreferrer" target="_blank">
-          WhatsApp
-        </Button>
-      )}
-      {full && (
-        <Button kind="secondary" scripted data-copy-link="" data-url={absolute(senatorPath(senador.id))}>
-          Copiar link
-        </Button>
-      )}
-      {full && (
-        <Button kind="secondary" href={card} download={file}>
-          Baixar cartão
-        </Button>
-      )}
-      {full && <p role="status" aria-live="polite" data-share-status class="basis-full text-sm text-fg-muted" />}
-    </div>
-  )
+      </div>
+    ))
 }
 
 <script>
