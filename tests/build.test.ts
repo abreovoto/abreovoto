@@ -467,6 +467,8 @@ test("every senator page invites the visitor to the scoreboard with the totals a
 test("the senator page carries the source form and the footer points at it", () => {
   const h = html("senador/marcio-bittar/index.html");
   expect(h).toMatch(/<section id="fonte"[^>]*data-source-form/);
+  // A native submit, if the script ever fails, must not put the visitor's text in the address bar.
+  expect(h).toMatch(/<form method="post"/);
   expect(h).toContain('name="senador"');
   expect(h).toContain('value="marcio-bittar"');
   expect(h).toContain('href="#fonte"');
