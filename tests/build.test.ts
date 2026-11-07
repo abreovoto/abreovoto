@@ -337,3 +337,9 @@ test("the candidate badge agrees in gender, same rule for the three", () => {
   expect(html("senador/davi-alcolumbre/index.html")).toMatch(/>candidato</);
   expect(html("senador/rogerio-marinho/index.html")).toMatch(/>candidato</);
 });
+
+test("the methodology says why a scheduled departure already leaves the count", () => {
+  expect(html("metodologia/index.html").replace(/ |&nbsp;/g, " ")).toContain(
+    "Quando a saída já tem data marcada em lei, como a posse de um governador, a vaga passa ao suplente desde o registro, porque é ele quem vota em 1º de fevereiro.",
+  );
+});
