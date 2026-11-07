@@ -24,8 +24,8 @@ const label = candidato.total === 1 ? "declaração" : "declarações";
     </div>
   </div>
   <!-- Pushed to the bottom so the three counts share a line whatever the names' length. -->
-  <p class="mt-auto flex items-baseline gap-2.5 pt-6">
-    <span class="font-display text-5xl tabular-nums text-fg">{candidato.total}</span>
-    <span class="text-sm text-fg-muted">{label}</span>
+  <p class="mt-auto pt-6">
+    <span class="block font-display text-5xl leading-none tabular-nums text-fg">{candidato.total}</span>
+    <span class="mt-1.5 block text-sm font-semibold text-fg">{label}</span>
   </p>
 </article>
