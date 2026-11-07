@@ -4,6 +4,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { beforeAll, expect, test } from "vitest";
 import { emExercicio, loadData } from "../src/data/load";
+import { placar } from "../src/data/placar";
 import { UF } from "../src/data/schema";
 import { ufWithDe } from "../src/lib/uf";
 
@@ -45,11 +46,22 @@ test("the styleguide renders every component with real data and is not indexed",
   expect(h).toContain("não declararam");
   expect(h).toContain("Davi Alcolumbre");
   expect(h).toContain("assume a vaga em 6/1/2027");
-  expect(h).toContain("#AbreOVotoSenador");
   expect(
     (h.match(/width="1200" height="630"|width:1200px;height:630px|width: 1200px; height: 630px/g) ?? []).length,
   ).toBeGreaterThanOrEqual(3);
+  expect(h).toContain('src="/cartao/placar.png"');
   expect(h).toContain("<select");
+});
+
+test("a card PNG exists for every senator, every candidate and the scoreboard, at 1200×630", () => {
+  const d = loadData();
+  const size = (p: string) => {
+    const b = readFileSync(join(out, p));
+    return [b.readUInt32BE(16), b.readUInt32BE(20)];
+  };
+  for (const s of d.senadores) expect(size(`cartao/senador/${s.id}.png`), s.id).toEqual([1200, 630]);
+  for (const c of placar(d).porCandidato) expect(size(`cartao/candidato/${c.id}.png`), c.id).toEqual([1200, 630]);
+  expect(size("cartao/placar.png")).toEqual([1200, 630]);
 });
 
 test("the favicons exist and are referenced", () => {
@@ -214,7 +226,8 @@ test("the three candidate pages are the same page with different data", () => {
   const shape = (h: string) =>
     h
       .replace(/Davi Alcolumbre|Rogério Marinho|Tereza Cristina|UNIÃO-AP|PL-RN|PP-MS|davi-alcolumbre|rogerio-marinho|tereza-cristina|alcolumbre|marinho/g, "X")
-      .replace(/\/_astro\/[^"]+/g, "ASSET");
+      .replace(/\/_astro\/[^"]+/g, "ASSET")
+      .replace(/\?v=[0-9a-f]{8}/g, "?v=HASH"); // each card has its own version
   expect(shape(pages[1]!)).toBe(shape(pages[0]!));
   expect(shape(pages[2]!)).toBe(shape(pages[0]!));
 });
@@ -362,4 +375,19 @@ test("on a phone a long e-mail breaks after the @, never in the middle of a word
   expect(h).toMatch(/sen\.marciobittar@<wbr>senado\.leg\.br/);
   expect(h).toMatch(/<dd class="[^"]*\btext-sm\b[^"]*\bsm:text-base\b/);
   expect(h).not.toMatch(/<dd class="[^"]*break-words/);
+});
+
+test("every page carries the Open Graph tags; senator and candidate pages point at their own card", () => {
+  for (const p of allHtml(out)) {
+    const h = html(p);
+    expect(h, p).toMatch(/<meta property="og:image" content="https:\/\/abreovoto\.com\/cartao\/[^"]+\.png\?v=[0-9a-f]{8}">/);
+    expect(h, p).toContain('<meta name="twitter:card" content="summary_large_image">');
+    expect(h, p).toMatch(/<meta property="og:image:alt" content="Cartão do Abre o Voto: /);
+  }
+  expect(html("senador/marcio-bittar/index.html")).toContain('content="https://abreovoto.com/cartao/senador/marcio-bittar.png?v=');
+  expect(html("senador/flavio-dino/index.html")).toContain('content="https://abreovoto.com/cartao/senador/flavio-dino.png?v=');
+  expect(html("candidato/alcolumbre/index.html")).toContain('content="https://abreovoto.com/cartao/candidato/alcolumbre.png?v=');
+  for (const p of ["index.html", "estado/rn/index.html", "como-funciona/index.html", "404.html"]) expect(html(p), p).toContain('content="https://abreovoto.com/cartao/placar.png?v=');
+  expect(html("404.html")).not.toContain('property="og:url"');
+  expect(html("index.html")).toContain('<meta property="og:url" content="https://abreovoto.com/">');
 });

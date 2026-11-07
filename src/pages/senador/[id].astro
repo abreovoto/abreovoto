@@ -6,7 +6,8 @@ import SenatorLinks from "../../components/SenatorLinks.astro";
 import { loadData } from "../../data/load";
 import { type Senador, todayUtc } from "../../data/schema";
 import Base from "../../layouts/Base.astro";
-import { candidatePath, senatorPath, statePath } from "../../lib/routes";
+import { candidatePath, senatorCardPath, senatorPath, statePath } from "../../lib/routes";
+import { senatorCard } from "../../lib/share-card";
 import { departureNote, formatDate, partyState, sourceHost, sourceTypeLabel, statusLabel } from "../../lib/text";
 import { ufWithDe } from "../../lib/uf";
 
@@ -30,7 +31,11 @@ const description = `${senador.nome} (${partyState(senador)}) ${departed ?? stat
 
 ---
 
-<Base title={`${senador.nome} — Abre o Voto`} description={description}>
+<Base
+  title={`${senador.nome} — Abre o Voto`}
+  description={description}
+  card={{ path: senatorCardPath(senador.id), model: senatorCard(senador, d, todayUtc()) }}
+>
   <div class="max-w-2xl">
     <SenatorCard senador={senador} candidatos={d.candidatos} variant="page" heading="h1" />
 
