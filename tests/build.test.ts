@@ -343,3 +343,10 @@ test("the methodology says why a scheduled departure already leaves the count", 
     "Quando a saída já tem data marcada em lei, como a posse de um governador, a vaga passa ao suplente desde o registro, porque é ele quem vota em 1º de fevereiro.",
   );
 });
+
+test("a candidate's senator page links to the candidate page, the same way for the three", () => {
+  for (const [s, c, nome] of [["davi-alcolumbre", "alcolumbre", "Davi Alcolumbre"], ["rogerio-marinho", "marinho", "Rogério Marinho"], ["tereza-cristina", "tereza-cristina", "Tereza Cristina"]]) {
+    expect(html(`senador/${s}/index.html`)).toMatch(new RegExp(`<a href="/candidato/${c}/"[^>]*>Declarações de voto em ${nome}</a>`));
+  }
+  expect(html("senador/marcio-bittar/index.html")).not.toContain("Declarações de voto em");
+});
