@@ -139,6 +139,7 @@ export function makeDataset(overrides: DatasetOverrides = {}): { dir: string; as
     contato: "abreovoto@gmail.com",
     repositorio: "https://github.com/abreovoto/abreovoto",
     ecidadania_url: null,
+    turnstile_site_key: "1x00000000000000000000AA",
     redes: { instagram: null, x: null, tiktok: null, youtube: null },
   };
 

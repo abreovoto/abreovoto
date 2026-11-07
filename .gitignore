@@ -10,3 +10,6 @@ tmp/
 *.swp
 .*.sw?
 *~
+
+# Local Worker secrets (wrangler dev)
+.dev.vars

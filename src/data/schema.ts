@@ -160,6 +160,8 @@ export const SiteSchema = z.strictObject({
   contato: email,
   repositorio: httpsUrl,
   ecidadania_url: httpsUrl.nullable(),
+  /** Turnstile's public site key; the secret is a Worker secret. */
+  turnstile_site_key: text,
   /** The initiative's own profiles (not the senators'). */
   redes: z.strictObject({
     instagram: httpsUrl.nullable(),
