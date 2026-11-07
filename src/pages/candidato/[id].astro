@@ -6,7 +6,9 @@ import { emExercicio, loadData } from "../../data/load";
 import { type PlacarCandidato, placar } from "../../data/placar";
 import Base from "../../layouts/Base.astro";
 import { candidatePhoto } from "../../lib/photos";
-import { senatorPath } from "../../lib/routes";
+import { candidateCardPath, senatorPath } from "../../lib/routes";
+import { candidateCard } from "../../lib/share-card";
+import { todayUtc } from "../../data/schema";
 
 export function getStaticPaths() {
   return placar(loadData()).porCandidato.map((c) => ({ params: { id: c.id }, props: { candidato: c } }));
@@ -28,6 +30,7 @@ const declared = emExercicio(d)
 <Base
   title={`Declarações de voto em ${candidato.nome} — Abre o Voto`}
   description={`Os senadores que declararam voto em ${candidato.nome} na eleição para a Presidência do Senado, com fonte.`}
+  card={{ path: candidateCardPath(candidato.id), model: candidateCard(candidato, d, todayUtc()) }}
 >
   <div class="max-w-2xl">
     <div class="max-w-sm">
