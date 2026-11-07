@@ -1,0 +1,53 @@
+---
+/**
+ * The site's icons, drawn inline (no icon font, no request): 24×24, a 2 px stroke in the
+ * text colour, except the X mark, which is the network's own glyph. Decorative: the
+ * label beside the icon is what is read aloud.
+ */
+interface Props {
+  name: "senado" | "email" | "x" | "instagram" | "whatsapp" | "link" | "download" | "arrow";
+  class?: string;
+}
+
+const { name, class: className } = Astro.props;
+const stroke = { fill: "none", stroke: "currentColor", "stroke-width": "2", "stroke-linecap": "round", "stroke-linejoin": "round" } as const;
+---
+
+{
+  name === "x" ? (
+    <svg class={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+    </svg>
+  ) : (
+    <svg class={className} viewBox="0 0 24 24" {...stroke} aria-hidden="true" focusable="false">
+      {name === "senado" && <path d="M3 21h18M5 21v-9M10 21v-9M14 21v-9M19 21v-9M2 9l10-6 10 6z" />}
+      {name === "email" && (
+        <>
+          <rect x="3" y="5" width="18" height="14" rx="2" />
+          <path d="m3 7 9 6 9-6" />
+        </>
+      )}
+      {name === "instagram" && (
+        <>
+          <rect x="3" y="3" width="18" height="18" rx="5" />
+          <circle cx="12" cy="12" r="4" />
+          <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" />
+        </>
+      )}
+      {name === "whatsapp" && (
+        <>
+          <path d="M3 21l1.6-4.7A9 9 0 1 1 7.9 19.6z" />
+          <path d="M9 8.6c.2 3.4 3 6.2 6.4 6.4l1-1.7-2.1-1-1 .9a4.6 4.6 0 0 1-2.5-2.5l.9-1-1-2.1z" stroke-width="1.5" />
+        </>
+      )}
+      {name === "link" && (
+        <>
+          <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+          <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+        </>
+      )}
+      {name === "arrow" && <path d="M5 12h14M13 6l6 6-6 6" />}
+      {name === "download" && <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" />}
+    </svg>
+  )
+}

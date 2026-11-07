@@ -2,14 +2,14 @@
 import type { Senador } from "../data/schema";
 import { senateProfileUrl } from "../lib/routes";
 import { profileHandle } from "../lib/text";
+import Icon from "./Icon.astro";
 import SectionHead from "./SectionHead.astro";
 
 interface Props {
   senador: Senador;
 }
 
-type Icon = "senado" | "email" | "x" | "instagram";
-type Row = { icon: Icon; label: string; href: string; text: string; outbound: boolean };
+type Row = { icon: "senado" | "email" | "x" | "instagram"; label: string; href: string; text: string; outbound: boolean };
 
 // One row per channel the data has: the label with its icon, then the value — only the value is a link.
 const { senador } = Astro.props;
@@ -47,29 +47,7 @@ const rows = [
         {rows.map((r) => (
           <>
             <dt class="text-sm text-fg-muted">
-              {r.icon === "senado" && (
-                <svg class="inline-block size-4 align-[-0.2em] sm:mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-                  <path d="M3 21h18M5 21v-9M10 21v-9M14 21v-9M19 21v-9M2 9l10-6 10 6z" />
-                </svg>
-              )}
-              {r.icon === "email" && (
-                <svg class="inline-block size-4 align-[-0.2em] sm:mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-                  <rect x="3" y="5" width="18" height="14" rx="2" />
-                  <path d="m3 7 9 6 9-6" />
-                </svg>
-              )}
-              {r.icon === "x" && (
-                <svg class="inline-block size-4 align-[-0.2em] sm:mr-2" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
-                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-                </svg>
-              )}
-              {r.icon === "instagram" && (
-                <svg class="inline-block size-4 align-[-0.2em] sm:mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-                  <rect x="3" y="3" width="18" height="18" rx="5" />
-                  <circle cx="12" cy="12" r="4" />
-                  <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" />
-                </svg>
-              )}
+              <Icon name={r.icon} class="inline-block size-4 align-[-0.2em] sm:mr-2" />
               <span class="max-sm:sr-only">{r.label}</span>
             </dt>
             <dd class="min-w-0 text-sm sm:text-base">
