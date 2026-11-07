@@ -350,3 +350,9 @@ test("a candidate's senator page links to the candidate page, the same way for t
   }
   expect(html("senador/marcio-bittar/index.html")).not.toContain("Declarações de voto em");
 });
+
+test("on a phone the senator's links keep icon and value on one line", () => {
+  const h = html("senador/marcio-bittar/index.html");
+  expect(h).toMatch(/<dl class="[^"]*grid-cols-\[auto_1fr\][^"]*sm:grid-cols-\[8rem_1fr\]/);
+  expect(h).toMatch(/<span class="max-sm:sr-only">E-mail<\/span>/);
+});
