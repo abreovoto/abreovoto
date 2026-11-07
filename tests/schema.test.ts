@@ -38,10 +38,17 @@ test("senator vaga and mandato are constrained", () => {
   expect(SenadorSchema.safeParse({ ...base, assume_em: "06/01/2027" }).success).toBe(false);
 });
 
+const site = { dominio: "abreovoto.com", eleicao: "2027-02-01", hashtag: "#AbreOVotoSenador", contato: "abreovoto@gmail.com", repositorio: "https://github.com/abreovoto/abreovoto", ecidadania_url: null, turnstile_site_key: "1x00000000000000000000AA" };
+const redes = { instagram: "https://www.instagram.com/abreovoto", x: null, tiktok: null, youtube: null };
+
 test("site lists the initiative's own profiles as https links or null", () => {
-  const site = { dominio: "abreovoto.com", eleicao: "2027-02-01", hashtag: "#AbreOVotoSenador", contato: "abreovoto@gmail.com", repositorio: "https://github.com/abreovoto/abreovoto", ecidadania_url: null };
-  const redes = { instagram: "https://www.instagram.com/abreovoto", x: null, tiktok: null, youtube: null };
   expect(SiteSchema.safeParse({ ...site, redes }).success).toBe(true);
   expect(SiteSchema.safeParse(site).success).toBe(false);
   expect(SiteSchema.safeParse({ ...site, redes: { ...redes, x: "@abreovoto" } }).success).toBe(false);
+});
+
+test("site.yaml carries the Turnstile site key and refuses an empty or missing one", () => {
+  const { turnstile_site_key: _, ...without } = { ...site, redes };
+  expect(SiteSchema.safeParse({ ...site, redes, turnstile_site_key: "" }).success).toBe(false);
+  expect(SiteSchema.safeParse(without).success).toBe(false);
 });
