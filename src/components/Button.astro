@@ -8,14 +8,17 @@ interface Props {
   rel?: string;
   target?: string;
   download?: string;
-  /** Shown only when scripts run: an action that needs JavaScript, hidden before paint otherwise. */
-  scripted?: boolean;
+  /**
+   * Shown only when scripts run (`true`): an action that needs JavaScript, hidden before paint
+   * otherwise. `"share"`: shown only where the system share sheet takes files on a touch screen.
+   */
+  scripted?: boolean | "share";
   class?: string;
   [data: `data-${string}`]: string;
 }
 
 const { href, kind, size = "md", type = "button", rel, target, download, scripted = false, class: extra, ...data } = Astro.props;
-const display = scripted ? "hidden [.js_&]:inline-flex" : "inline-flex";
+const display = scripted === "share" ? "hidden [.share_&]:inline-flex" : scripted ? "hidden [.js_&]:inline-flex" : "inline-flex";
 const base = `${display} items-center justify-center gap-2 rounded border-2 text-sm font-semibold leading-none no-underline`;
 const height = size === "sm" ? "h-[36px] px-3" : size === "lg" ? "h-[48px] px-5" : "h-[40px] px-4";
 const look = kind === "primary" ? "border-accent bg-accent text-on-accent" : "border-fg bg-transparent text-fg";

@@ -45,10 +45,17 @@ const tags = ogTags({
     <link rel="icon" href="/favicon.ico" sizes="32x32" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <script is:inline>
-      // Runs before paint: marks that scripts run (so no-JS fallbacks hide without a flash), and
-      // applies a saved theme; without one the stylesheet follows the system.
+      // Runs before paint: marks that scripts run (so no-JS fallbacks hide without a flash), marks
+      // a touch screen whose share sheet takes files (a desktop sheet may take them too, but it
+      // reaches none of the phone's apps), and applies a saved theme; without one the stylesheet
+      // follows the system.
       (function () {
         document.documentElement.classList.add("js");
+        try {
+          var card = new File([""], "cartao.png", { type: "image/png" });
+          if (matchMedia("(pointer: coarse)").matches && navigator.canShare && navigator.canShare({ files: [card] }))
+            document.documentElement.classList.add("share");
+        } catch (e) {}
         var tema = null;
         try {
           tema = localStorage.getItem("tema");
