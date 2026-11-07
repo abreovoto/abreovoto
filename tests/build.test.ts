@@ -252,7 +252,7 @@ test("on the senator page a date shares its baseline with the text beside it", (
 
 test("the senator's links: a label with its icon, and only the value is the link", () => {
   const h = html("senador/marcio-bittar/index.html");
-  expect(h).toMatch(/<a href="mailto:sen\.marciobittar@senado\.leg\.br"[^>]*>sen\.marciobittar@senado\.leg\.br<\/a>/);
+  expect(h).toMatch(/<a href="mailto:sen\.marciobittar@senado\.leg\.br"[^>]*>sen\.marciobittar@(<wbr>)?senado\.leg\.br<\/a>/);
   expect(h).toMatch(/<a href="https:\/\/www\.instagram\.com\/marciobittar_"[^>]*>@marciobittar_<\/a>/);
   expect(h).toMatch(/<a href="https:\/\/www25\.senado\.leg\.br[^"]*"[^>]*>Perfil oficial<\/a>/);
   const from = h.indexOf('id="links"');
@@ -355,4 +355,11 @@ test("on a phone the senator's links keep icon and value on one line", () => {
   const h = html("senador/marcio-bittar/index.html");
   expect(h).toMatch(/<dl class="[^"]*grid-cols-\[auto_1fr\][^"]*sm:grid-cols-\[8rem_1fr\]/);
   expect(h).toMatch(/<span class="max-sm:sr-only">E-mail<\/span>/);
+});
+
+test("on a phone a long e-mail breaks after the @, never in the middle of a word", () => {
+  const h = html("senador/marcio-bittar/index.html");
+  expect(h).toMatch(/sen\.marciobittar@<wbr>senado\.leg\.br/);
+  expect(h).toMatch(/<dd class="[^"]*\btext-sm\b[^"]*\bsm:text-base\b/);
+  expect(h).not.toMatch(/<dd class="[^"]*break-words/);
 });
