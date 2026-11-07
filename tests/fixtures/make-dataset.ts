@@ -47,9 +47,9 @@ export type DatasetOverrides = {
 export const FIXTURE_DATE = "2026-10-15";
 
 const CANDIDATES = [
-  { id: "alcolumbre", nome: "Davi Alcolumbre", partido: "UNIÃO", uf: "AP", senador: "ap-3" },
-  { id: "marinho", nome: "Rogério Marinho", partido: "PL", uf: "RN", senador: "rn-3" },
-  { id: "tereza-cristina", nome: "Tereza Cristina", partido: "PP", uf: "MS", senador: "ms-3" },
+  { id: "alcolumbre", nome: "Davi Alcolumbre", partido: "UNIÃO", uf: "AP", senador: "ap-3", genero: "m" },
+  { id: "marinho", nome: "Rogério Marinho", partido: "PL", uf: "RN", senador: "rn-3", genero: "m" },
+  { id: "tereza-cristina", nome: "Tereza Cristina", partido: "PP", uf: "MS", senador: "ms-3", genero: "f" },
 ] as const;
 
 export function declarou(candidato: string): Entry {

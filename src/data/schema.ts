@@ -140,6 +140,8 @@ export const CandidatoSchema = z.strictObject({
   foto_origem: httpsUrl.nullable(),
   foto_credito: text.nullable(),
   situacao: z.enum(["candidato", "desistiu"]),
+  /** Grammatical gender for the badge's agreement ("candidata"/"candidato"); the same rule for all. */
+  genero: z.enum(["f", "m"]),
   desde: isoDateNotFuture,
   desistiu_em: isoDateNotFuture.nullable(),
   fonte: httpsUrl,

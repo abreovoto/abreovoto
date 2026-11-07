@@ -330,3 +330,10 @@ test("the senator cards' button reads 'Ver histórico'", () => {
     expect(html(p)).not.toContain("Ver página");
   }
 });
+
+test("the candidate badge agrees in gender, same rule for the three", () => {
+  expect(html("senador/tereza-cristina/index.html")).toMatch(/>candidata</);
+  expect(html("senador/tereza-cristina/index.html")).not.toMatch(/>candidato</);
+  expect(html("senador/davi-alcolumbre/index.html")).toMatch(/>candidato</);
+  expect(html("senador/rogerio-marinho/index.html")).toMatch(/>candidato</);
+});

@@ -4,7 +4,7 @@ import {
   assumeEmNote,
   departureNote,
   formatDate,
-  isCandidate,
+  candidateBadge,
   longestName,
   partyState,
   sourceHost,
@@ -54,10 +54,11 @@ test("a departure or arrival still ahead is written in the present tense", () =>
   expect(assumeEmNote(by("alex-diniz"), "2027-01-06")).toBe("assumiu a vaga em 6/1/2027");
 });
 
-test("partyState, isCandidate, sourceHost, longestName", () => {
+test("partyState, candidateBadge, sourceHost, longestName", () => {
   expect(partyState(by("rogerio-marinho"))).toBe("PL-RN");
-  expect(isCandidate(by("rogerio-marinho"), d.candidatos)).toBe(true);
-  expect(isCandidate(by("marcio-bittar"), d.candidatos)).toBe(false);
+  expect(candidateBadge(by("rogerio-marinho"), d.candidatos)).toBe("candidato");
+  expect(candidateBadge(by("tereza-cristina"), d.candidatos)).toBe("candidata");
+  expect(candidateBadge(by("marcio-bittar"), d.candidatos)).toBeNull();
   expect(sourceHost("https://www.gazetadopovo.com.br/republica/x")).toBe("gazetadopovo.com.br");
   expect(longestName(d).situacao).toBe("em_exercicio");
 });

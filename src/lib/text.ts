@@ -53,8 +53,11 @@ export function departureNote(s: Senador, today = todayUtc()): string | null {
   return `${today < s.deixou_em ? "deixa" : "deixou"} o mandato em ${formatDate(s.deixou_em)}`;
 }
 
-export function isCandidate(s: Senador, candidatos: Candidato[]): boolean {
-  return candidatos.some((c) => c.senador === s.id && c.situacao === "candidato");
+/** The badge a running candidate's senator card carries, agreeing in gender; null for everyone else. */
+export function candidateBadge(s: Senador, candidatos: Candidato[]): "candidata" | "candidato" | null {
+  const c = candidatos.find((c) => c.senador === s.id && c.situacao === "candidato");
+  if (!c) return null;
+  return c.genero === "f" ? "candidata" : "candidato";
 }
 
 /** `https://www.gazetadopovo.com.br/x` → `gazetadopovo.com.br` */
