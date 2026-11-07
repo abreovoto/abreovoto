@@ -6,7 +6,7 @@ import SenatorLinks from "../../components/SenatorLinks.astro";
 import { loadData } from "../../data/load";
 import { type Senador, todayUtc } from "../../data/schema";
 import Base from "../../layouts/Base.astro";
-import { senatorPath, statePath } from "../../lib/routes";
+import { candidatePath, senatorPath, statePath } from "../../lib/routes";
 import { departureNote, formatDate, partyState, sourceHost, sourceTypeLabel, statusLabel } from "../../lib/text";
 import { ufWithDe } from "../../lib/uf";
 
@@ -23,6 +23,8 @@ const d = loadData();
 const departed = departureNote(senador);
 const decl = senador.declaracao;
 const successor = senador.substituido_por ? d.senadores.find((s) => s.id === senador.substituido_por) : undefined;
+// A running candidate's own senator page points at the candidate page, the same way for the three.
+const asCandidate = d.candidatos.find((c) => c.senador === senador.id && c.situacao === "candidato");
 const successorVerb = senador.deixou_em && todayUtc() < senador.deixou_em ? "Quem assume a vaga" : "Quem assumiu a vaga";
 const description = `${senador.nome} (${partyState(senador)}) ${departed ?? statusLabel(senador, d.candidatos)}.`;
 
@@ -69,6 +71,13 @@ const description = `${senador.nome} (${partyState(senador)}) ${departed ?? stat
     <SenatorLinks senador={senador} />
 
     <p class="mt-16 flex flex-wrap gap-x-6 gap-y-2 text-sm">
+      {
+        asCandidate && (
+          <a href={candidatePath(asCandidate.id)} class="text-accent underline">
+            Declarações de voto em {asCandidate.nome}
+          </a>
+        )
+      }
       <a href={statePath(senador.uf)} class="text-accent underline">Senadores {ufWithDe(senador.uf)}</a>
       <a href="/#lista" class="text-accent underline">Todos os 81 senadores</a>
     </p>
