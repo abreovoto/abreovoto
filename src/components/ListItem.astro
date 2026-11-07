@@ -24,7 +24,7 @@ const forecast = assumeEmNote(senador);
 <li
   class:list={[
     "flex items-center gap-4 rounded-lg px-3 py-2.5 [&:nth-child(odd_of_:not([hidden]))]:bg-surface",
-    href && "group relative",
+    href && "relative",
   ]}
   {...rest}
 >
@@ -32,12 +32,7 @@ const forecast = assumeEmNote(senador);
   <div class="min-w-0 flex-1 sm:flex sm:items-center sm:gap-4">
     <div class="min-w-0 sm:flex-1">
       <p class="text-base font-semibold leading-tight text-fg">
-        {href ? <a
-              href={href}
-              class="text-fg no-underline underline-offset-2 group-hover:underline after:absolute after:inset-0 after:rounded-lg after:content-[''] focus-visible:outline-none focus-visible:after:outline-2 focus-visible:after:outline-offset-2 focus-visible:after:outline-focus"
-            >
-              {senador.nome}
-            </a> : senador.nome}
+        {href ? <a href={href} class="row-link">{senador.nome}</a> : senador.nome}
       </p>
       <p class="text-sm text-fg-muted">
         {partyState(senador)}
@@ -49,4 +44,5 @@ const forecast = assumeEmNote(senador);
       {candidate && <span class="font-semibold text-fg">{candidate.nome}</span>}
     </p>
   </div>
+  {href && <span data-chevron aria-hidden="true" class="row-chevron"></span>}
 </li>
