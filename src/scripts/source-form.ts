@@ -69,6 +69,11 @@ function setup(section: HTMLElement): void {
   let widget: string | null = null;
   let token: string | null = null;
   let waiting = false;
+  let waitTimer: number | undefined;
+  const stopWaiting = () => {
+    waiting = false;
+    window.clearTimeout(waitTimer);
+  };
   let sending = false;
   let refusals = 0;
 
@@ -98,7 +103,7 @@ function setup(section: HTMLElement): void {
           callback: (t) => {
             token = t;
             if (waiting) {
-              waiting = false;
+              stopWaiting();
               void send();
             }
           },
@@ -106,7 +111,7 @@ function setup(section: HTMLElement): void {
           "error-callback": () => {
             token = null;
             if (waiting) {
-              waiting = false;
+              stopWaiting();
               say(text.transient);
             }
           },
@@ -115,7 +120,7 @@ function setup(section: HTMLElement): void {
       .catch(() => {
         started = false;
         if (waiting) {
-          waiting = false;
+          stopWaiting();
           say(text.transient);
         }
       });
@@ -247,13 +252,13 @@ function setup(section: HTMLElement): void {
     const senador = field("senador");
     if (senador && senador.value === "") return fieldError("senador");
     const url = field("url");
-    if (url && (!url.checkValidity() || !url.value.trim().startsWith("https://"))) return fieldError("url");
+    if (url && (!url.checkValidity() || !/^https:\/\//i.test(url.value.trim()))) return fieldError("url");
     start();
     if (token !== null) return void send();
     // The widget usually answers within a second; if it never does, the visitor can try again.
     waiting = true;
     busy(true, text.verifying);
-    window.setTimeout(() => {
+    waitTimer = window.setTimeout(() => {
       if (!waiting) return;
       waiting = false;
       fresh();
