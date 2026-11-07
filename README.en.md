@@ -22,7 +22,7 @@ date is set.
 
 - Site: `https://abreovoto.com`
 - Contact: abreovoto@gmail.com
-- Sources and corrections: open an issue with the "Fonte ou correção" template
+- Sources and corrections: the form on each senator page (or at `/fonte/`), no sign-up; or an issue with the "Fonte ou correção" template
 - License: MIT (code); scoreboard data CC BY 4.0
 
 ## Data
