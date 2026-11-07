@@ -6,22 +6,29 @@ interface Props {
   size?: "sm" | "md" | "lg";
   type?: "button" | "submit";
   rel?: string;
+  target?: string;
+  download?: string;
+  /** Shown only when scripts run: an action that needs JavaScript, hidden before paint otherwise. */
+  scripted?: boolean;
+  class?: string;
+  [data: `data-${string}`]: string;
 }
 
-const { href, kind, size = "md", type = "button", rel } = Astro.props;
-const base = "inline-flex items-center justify-center rounded border-2 text-sm font-semibold leading-none no-underline";
+const { href, kind, size = "md", type = "button", rel, target, download, scripted = false, class: extra, ...data } = Astro.props;
+const display = scripted ? "hidden [.js_&]:inline-flex" : "inline-flex";
+const base = `${display} items-center justify-center rounded border-2 text-sm font-semibold leading-none no-underline`;
 const height = size === "sm" ? "h-[36px] px-3" : size === "lg" ? "h-[48px] px-5" : "h-[40px] px-4";
 const look = kind === "primary" ? "border-accent bg-accent text-on-accent" : "border-fg bg-transparent text-fg";
-const classes = `${base} ${height} ${look}`;
+const classes = [base, height, look, extra].filter(Boolean).join(" ");
 ---
 
 {
   href ? (
-    <a href={href} rel={rel} class={classes}>
+    <a href={href} rel={rel} target={target} download={download} {...data} class={classes}>
       <slot />
     </a>
   ) : (
-    <button type={type} class={classes}>
+    <button type={type} {...data} class={classes}>
       <slot />
     </button>
   )

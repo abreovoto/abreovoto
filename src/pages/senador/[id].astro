@@ -1,5 +1,6 @@
 ---
 import SectionHead from "../../components/SectionHead.astro";
+import ShareActions from "../../components/ShareActions.astro";
 import SenatorCard from "../../components/SenatorCard.astro";
 import SenatorHistory from "../../components/SenatorHistory.astro";
 import SenatorLinks from "../../components/SenatorLinks.astro";
@@ -37,7 +38,9 @@ const description = `${senador.nome} (${partyState(senador)}) ${departed ?? stat
   card={{ path: senatorCardPath(senador.id), model: senatorCard(senador, d, todayUtc()) }}
 >
   <div class="max-w-2xl">
-    <SenatorCard senador={senador} candidatos={d.candidatos} variant="page" heading="h1" />
+    <SenatorCard senador={senador} candidatos={d.candidatos} variant="page" heading="h1">
+      {!departed && <ShareActions slot="actions" senador={senador} candidatos={d.candidatos} site={d.site} variant="full" />}
+    </SenatorCard>
 
     {
       departed && successor && (

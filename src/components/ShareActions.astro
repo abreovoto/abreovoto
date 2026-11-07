@@ -1,0 +1,73 @@
+---
+/**
+ * The actions that put a senator's card in circulation. `full` on the senator's page;
+ * `primary` on the state cards, where there is room for one action: X when the senator
+ * has a profile there, Instagram otherwise. The texts and the card path travel as data
+ * attributes, so the script holds no text of its own.
+ */
+import type { Candidato, Senador, Site } from "../data/schema";
+import { absolute, senatorCardPath, senatorPath } from "../lib/routes";
+import { actionLabels, thirdPersonText, whatsappUrl, xIntentUrl, xText } from "../lib/share-text";
+import { departureNote } from "../lib/text";
+import Button from "./Button.astro";
+
+interface Props {
+  senador: Senador;
+  candidatos: Candidato[];
+  site: Site;
+  variant: "full" | "primary";
+}
+
+const { senador, candidatos, site, variant } = Astro.props;
+const departed = departureNote(senador) !== null;
+const full = variant === "full";
+const size = full ? "md" : "sm";
+const x = xText(senador, candidatos, site);
+const third = thirdPersonText(senador, candidatos, site);
+const labels = actionLabels(senador);
+const card = senatorCardPath(senador.id);
+const file = `abreovoto-${senador.id}.png`;
+// Instagram is the primary when there is no X profile, and the primary comes first.
+const instagram = { size, scripted: true, "data-share-instagram": "", "data-text": third, "data-card": card, "data-file": file } as const;
+---
+
+{
+  !departed && (
+    <div class="contents" data-share-actions>
+      {x !== null ? (
+        <Button kind="primary" size={size} href={xIntentUrl(x)} rel="noopener noreferrer" target="_blank">
+          {labels.x}
+        </Button>
+      ) : (
+        <Button kind="primary" {...instagram}>
+          {labels.instagram}
+        </Button>
+      )}
+      {full && (
+        <Button kind="secondary" href={whatsappUrl(third)} rel="noopener noreferrer" target="_blank">
+          WhatsApp
+        </Button>
+      )}
+      {full && x !== null && (
+        <Button kind="secondary" {...instagram}>
+          {labels.instagram}
+        </Button>
+      )}
+      {full && (
+        <Button kind="secondary" scripted data-copy-link="" data-url={absolute(senatorPath(senador.id))}>
+          Copiar link
+        </Button>
+      )}
+      {full && (
+        <Button kind="secondary" href={card} download={file}>
+          Baixar cartão
+        </Button>
+      )}
+      {full && <p role="status" aria-live="polite" data-share-status class="basis-full text-sm text-fg-muted" />}
+    </div>
+  )
+}
+
+<script>
+  import "../scripts/share-actions";
+</script>
