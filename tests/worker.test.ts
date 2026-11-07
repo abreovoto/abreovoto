@@ -239,3 +239,35 @@ test("no response is a redirect and none carries location", () => {
     expect(r.headers.get("cache-control")).toBe("no-store");
   }
 });
+
+test("a retried siteverify carries the same idempotency key, so a lost reply is not a duplicate", async () => {
+  const d = deps([new Error("network"), verified()], created());
+  const r = await run(post(good), env(), d);
+  expect(r.status).toBe(201);
+  const keys = d.calls
+    .filter((c) => c.url.includes("challenges.cloudflare.com"))
+    .map((c) => (c.init?.body as URLSearchParams).get("idempotency_key"));
+  expect(keys).toHaveLength(2);
+  expect(keys[0]).toMatch(/^[0-9a-f-]{36}$/);
+  expect(keys[1]).toBe(keys[0]);
+});
+
+test.each(["invalid-input-secret", "missing-input-secret"])("siteverify %s is a configuration error, not a bot", async (code) => {
+  const d = deps(Response.json({ success: false, "error-codes": [code] }), created());
+  const r = await run(post(good), env(), d);
+  expect(r.status).toBe(500);
+  expect(await r.json()).toEqual({ erro: "configuracao" });
+  expect(githubCalls(d)).toEqual([]);
+});
+
+test("a declared length over 8 KB is refused without reading the body", async () => {
+  const req = new Request("https://abreovoto.com/api/fonte", {
+    method: "POST",
+    headers: { "content-type": "application/json", "content-length": "9000" },
+    body: JSON.stringify(good),
+  });
+  const r = await run(req, env(), deps(verified(), created()));
+  expect(r.status).toBe(400);
+  expect(await r.json()).toEqual({ erro: "campo", campo: "corpo" });
+  expect(req.bodyUsed).toBe(false);
+});
