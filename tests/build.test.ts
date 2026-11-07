@@ -472,7 +472,7 @@ test("the senator page carries the source form and the footer points at it", () 
   expect(h).toContain('name="senador"');
   expect(h).toContain('value="marcio-bittar"');
   expect(h).toContain('href="#fonte"');
-  expect(h).toContain("Envie a correção</a>");
+  expect(h).toMatch(/Achou um erro\? <a href="#fonte"[^>]*>Envie a correção<\/a>/);
   expect(h).not.toMatch(/<script[^>]+src="https:\/\/challenges\.cloudflare\.com/);
   expect(h).toContain(">Ajude a manter o placar em dia</h2>");
   expect(h).toContain("Se Marcio Bittar declarou em público o voto para presidente do Senado, mudou de posição");
