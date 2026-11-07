@@ -72,7 +72,7 @@ test("every page has a canonical URL, the shell and no third party", () => {
 test("the footer's sentences and links are separated by whitespace", () => {
   const h = html("index.html");
   expect(h).not.toMatch(/pública\.<a|correção\.<a/);
-  // Visitors never land on GitHub to report an error; the site's own form handles it.
+  // Visitors never land on GitHub to report an error.
   expect(h).not.toContain("issues/new");
   expect(h).toMatch(/aria-label="Código no GitHub"/);
   expect(h).toContain('href="/dados.json"');
@@ -285,6 +285,13 @@ test("each row of the list is clickable as a whole, through the one link it hold
     expect(links[0]![0]).toMatch(/after:absolute/);
     expect(links[0]![0]).toMatch(/after:inset-0/);
   }
+});
+
+test("a senator who left the mandate is linked from no list", () => {
+  for (const page of ["index.html", "estado/ma/index.html", ...["alcolumbre", "marinho", "tereza-cristina"].map((c) => `candidato/${c}/index.html`).filter((p) => existsSync(join(out, p)))]) {
+    expect(html(page)).not.toContain('href="/senador/flavio-dino/"');
+  }
+  expect(html("senador/flavio-dino/index.html")).toContain('href="/senador/ana-paula-lobato/"');
 });
 
 test("without JavaScript the state links stand alone; with it they are hidden before paint", () => {

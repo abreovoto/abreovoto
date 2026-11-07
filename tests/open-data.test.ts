@@ -46,3 +46,8 @@ test("a declaration carries its candidate, date and source", () => {
   expect(o.placar.declararam).toBe(1);
   expect(o.placar.por_candidato.find((c) => c.id === "marinho")?.total).toBe(1);
 });
+
+test("the open data names the repository the site itself points to", () => {
+  const d = loadData();
+  expect(openData(d).fonte).toBe(d.site.repositorio);
+});
