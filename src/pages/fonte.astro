@@ -1,15 +1,17 @@
 ---
 import SourceForm from "../components/SourceForm.astro";
 import { loadData } from "../data/load";
+import { FORM_TEXT } from "../lib/source-form";
 import Base from "../layouts/Base.astro";
 
 const d = loadData();
 ---
 
-<Base title="Envie a fonte — Abre o Voto" description="Envie o link de uma declaração de voto ou uma correção. Sem cadastro.">
+<Base title={`${FORM_TEXT.title} — Abre o Voto`} description="Envie o link de uma declaração de voto ou uma correção. Sem cadastro.">
   <div class="max-w-2xl">
-    <h1 class="text-3xl font-semibold leading-tight sm:text-4xl">Envie a fonte ou uma correção</h1>
-    <p class="mt-4 text-base">Viu um senador declarar o voto? Mande o link. Algo errado no site? Diga qual página.</p>
-    <SourceForm site={d.site} senadores={d.senadores} />
+    <h1 id="fonte-pagina" class="text-3xl font-semibold leading-tight sm:text-4xl">{FORM_TEXT.title}</h1>
+    <div class="mt-4">
+      <SourceForm site={d.site} senadores={d.senadores} labelledBy="fonte-pagina" />
+    </div>
   </div>
 </Base>
