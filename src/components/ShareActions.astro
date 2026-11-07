@@ -10,6 +10,7 @@ import { absolute, senatorCardPath, senatorPath } from "../lib/routes";
 import { actionLabels, instagramText, thirdPersonText, whatsappUrl, xIntentUrl, xText } from "../lib/share-text";
 import { departureNote } from "../lib/text";
 import Button from "./Button.astro";
+import Icon from "./Icon.astro";
 
 interface Props {
   senador: Senador;
@@ -32,8 +33,9 @@ const file = `abreovoto-${senador.id}.png`;
       // Two rows on purpose: the three networks, then the two utilities. Five buttons do
       // not fit the page column in one, and a lone wrapped button reads as an accident.
       <div class="flex basis-full flex-col gap-2" data-share-actions>
-        <div class="flex flex-wrap gap-2">
+        <div class="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
           <Button kind="primary" href={xIntentUrl(xText(senador, candidatos, site))} rel="noopener noreferrer" target="_blank">
+            <Icon name="x" class="size-4 shrink-0" />
             {labels.x}
           </Button>
           <Button
@@ -44,17 +46,21 @@ const file = `abreovoto-${senador.id}.png`;
             data-card={card}
             data-file={file}
           >
+            <Icon name="instagram" class="size-4 shrink-0" />
             {labels.instagram}
           </Button>
           <Button kind="secondary" href={whatsappUrl(thirdPersonText(senador, candidatos, site))} rel="noopener noreferrer" target="_blank">
+            <Icon name="whatsapp" class="size-4 shrink-0" />
             WhatsApp
           </Button>
         </div>
-        <div class="flex flex-wrap gap-2">
+        <div class="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
           <Button kind="secondary" scripted data-copy-link="" data-url={absolute(senatorPath(senador.id))}>
+            <Icon name="link" class="size-4 shrink-0" />
             Copiar link
           </Button>
           <Button kind="secondary" href={card} download={file}>
+            <Icon name="download" class="size-4 shrink-0" />
             Baixar cartão
           </Button>
         </div>
@@ -63,6 +69,7 @@ const file = `abreovoto-${senador.id}.png`;
     ) : (
       <div class="contents" data-share-actions>
         <Button kind="primary" size="sm" href={xIntentUrl(xText(senador, candidatos, site))} rel="noopener noreferrer" target="_blank">
+          <Icon name="x" class="size-4 shrink-0" />
           {labels.x}
         </Button>
       </div>

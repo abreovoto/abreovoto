@@ -16,7 +16,7 @@ interface Props {
 
 const { href, kind, size = "md", type = "button", rel, target, download, scripted = false, class: extra, ...data } = Astro.props;
 const display = scripted ? "hidden [.js_&]:inline-flex" : "inline-flex";
-const base = `${display} items-center justify-center rounded border-2 text-sm font-semibold leading-none no-underline`;
+const base = `${display} items-center justify-center gap-2 rounded border-2 text-sm font-semibold leading-none no-underline`;
 const height = size === "sm" ? "h-[36px] px-3" : size === "lg" ? "h-[48px] px-5" : "h-[40px] px-4";
 const look = kind === "primary" ? "border-accent bg-accent text-on-accent" : "border-fg bg-transparent text-fg";
 const classes = [base, height, look, extra].filter(Boolean).join(" ");
