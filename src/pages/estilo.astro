@@ -9,22 +9,19 @@ import CandidateCard from "../components/CandidateCard.astro";
 import ListItem from "../components/ListItem.astro";
 import Scoreboard from "../components/Scoreboard.astro";
 import SenatorCard from "../components/SenatorCard.astro";
-import ShareCard from "../components/ShareCard.astro";
 import StateSelector from "../components/StateSelector.astro";
 import Wordmark from "../components/Wordmark.astro";
 import mark from "../assets/mark.svg?raw";
 import { emExercicio, loadData } from "../data/load";
 import { placar } from "../data/placar";
-import { todayUtc } from "../data/schema";
 import Base from "../layouts/Base.astro";
-import { candidatePhoto, senatorPhoto } from "../lib/photos";
-import { candidateCard, homeCard, senatorCard } from "../lib/share-card";
+import { candidatePhoto } from "../lib/photos";
+import { HOME_CARD_PATH, candidateCardPath, senatorCardPath } from "../lib/routes";
 import { longestName } from "../lib/text";
 import { palette } from "../styles/tokens";
 
 const d = loadData();
 const p = placar(d);
-const today = todayUtc();
 const inOffice = emExercicio(d);
 const rn = inOffice.filter((s) => s.uf === "RN");
 const longest = longestName(d);
@@ -177,9 +174,9 @@ const scale = [
     <h2 id="cards" class="text-2xl font-semibold">Cards de compartilhamento</h2>
     <p class="mt-2 max-w-prose text-fg-muted">1200 × 630, sempre no modo claro; reduzidos em telas estreitas.</p>
     <div class="mt-4 space-y-6">
-      <div class="card-frame"><ShareCard model={senatorCard(longest, d, today)} foto={senatorPhoto(longest.id)} /></div>
-      <div class="card-frame"><ShareCard model={candidateCard(firstCandidate, d, today)} foto={candidatePhoto(firstCandidate.id)} /></div>
-      <div class="card-frame"><ShareCard model={homeCard(d, today)} /></div>
+      <div class="card-frame"><img src={senatorCardPath(longest.id)} width="1200" height="630" alt={`Cartão de ${longest.nome}`} /></div>
+      <div class="card-frame"><img src={candidateCardPath(firstCandidate.id)} width="1200" height="630" alt={`Cartão de ${firstCandidate.nome}`} /></div>
+      <div class="card-frame"><img src={HOME_CARD_PATH} width="1200" height="630" alt="Cartão do placar" /></div>
     </div>
   </section>
 </Base>
@@ -189,31 +186,22 @@ const scale = [
   .card-frame {
     width: 360px;
     max-width: 100%;
-    height: 189px;
-    overflow: hidden;
     border: 1px solid var(--color-line);
   }
-  .card-frame > :global(div) {
-    transform: scale(0.3);
-    transform-origin: top left;
+  .card-frame > img {
+    display: block;
+    width: 100%;
+    height: auto;
   }
   @media (min-width: 640px) {
     .card-frame {
       width: 600px;
-      height: 315px;
-    }
-    .card-frame > :global(div) {
-      transform: scale(0.5);
     }
   }
   @media (min-width: 1240px) {
     .card-frame {
       width: 1200px;
-      height: 630px;
       margin-left: calc((100% - 1200px) / 2);
-    }
-    .card-frame > :global(div) {
-      transform: none;
     }
   }
   span :global(svg) {
