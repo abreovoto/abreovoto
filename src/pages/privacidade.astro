@@ -7,11 +7,18 @@ const { site } = loadData();
 const link = "text-accent underline";
 ---
 
-<TextPage title="Privacidade" description="O Abre o Voto não coleta dados pessoais. O que fica no seu navegador e quais serviços de terceiros o site usa.">
+<TextPage title="Privacidade" description="O Abre o Voto não pede dados pessoais. O que o formulário de fonte envia, o que fica no seu navegador e quais serviços de terceiros o site usa.">
   <section aria-labelledby="coleta">
     <SectionHead id="coleta" title="O que o site coleta" />
     <div class="mt-6 space-y-4">
-      <p>O site não coleta dados pessoais. Não há cadastro nem login.</p>
+      <p>O site não pede dados pessoais: não há cadastro, login, nome nem e-mail em lugar nenhum.</p>
+      <p>
+        O formulário de fonte envia o link, o comentário e a marcação de correção, e nada mais. Eles viram um registro
+        público no repositório do site, com número de protocolo, que fica como histórico do que foi pedido e do que foi
+        decidido — por isso o formulário pede que você não escreva dados pessoais. O formulário usa o Cloudflare Turnstile
+        para barrar robôs; ele é carregado só quando você chega ao formulário e segue a política de privacidade da
+        Cloudflare. Seu endereço IP é usado para limitar envios repetidos e para a verificação, e não é guardado pelo site.
+      </p>
       <p>
         Para contar visitas, o site usa o Cloudflare Web Analytics, que não usa cookies nem identifica quem visita. Ele
         produz números agregados, como páginas vistas, país e tipo de navegador.

@@ -22,7 +22,7 @@ para isso, sem data marcada.
 
 - Site: `https://abreovoto.com`
 - Contato: abreovoto@gmail.com
-- Fontes e correções: abra uma issue com o modelo "Fonte ou correção"
+- Fontes e correções: o formulário na página de cada senador (ou em `/fonte/`), sem cadastro; ou uma issue com o modelo "Fonte ou correção"
 - Licença: MIT (código); dados do placar em CC BY 4.0
 
 ## Dados
