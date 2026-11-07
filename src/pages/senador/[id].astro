@@ -1,10 +1,12 @@
 ---
+import LandingStrip from "../../components/LandingStrip.astro";
 import SectionHead from "../../components/SectionHead.astro";
 import ShareActions from "../../components/ShareActions.astro";
 import SenatorCard from "../../components/SenatorCard.astro";
 import SenatorHistory from "../../components/SenatorHistory.astro";
 import SenatorLinks from "../../components/SenatorLinks.astro";
 import { loadData } from "../../data/load";
+import { placar } from "../../data/placar";
 import { type Senador, todayUtc } from "../../data/schema";
 import Base from "../../layouts/Base.astro";
 import { candidatePath, senatorCardPath, senatorPath, statePath } from "../../lib/routes";
@@ -41,6 +43,8 @@ const description = `${senador.nome} (${partyState(senador)}) ${departed ?? stat
     <SenatorCard senador={senador} candidatos={d.candidatos} variant="page" heading="h1">
       {!departed && <ShareActions slot="actions" senador={senador} candidatos={d.candidatos} site={d.site} variant="full" />}
     </SenatorCard>
+
+    <LandingStrip placar={placar(d)} peticao={d.peticao} />
 
     {
       departed && successor && (
