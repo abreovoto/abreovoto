@@ -49,5 +49,5 @@ test("a declaration carries its candidate, date and source", () => {
 
 test("the open data names the repository the site itself points to", () => {
   const d = loadData();
-  expect(openData(d).fonte).toBe(d.site.repositorio);
+  expect(openData(d, "2026-11-06").fonte).toBe(d.site.repositorio);
 });
