@@ -1,13 +1,14 @@
 ---
 import type { Senador, Site } from "../data/schema";
 import { CONTROL, FIELD, SELECT } from "../lib/controls";
-import { FORM_TEXT, noScriptText } from "../lib/source-form";
+import { FORM_TEXT, introText, noScriptText } from "../lib/source-form";
 import Button from "./Button.astro";
 import SectionHead from "./SectionHead.astro";
 
 // The same form for every senator: on a senator page the senator is fixed; on /fonte/ the
 // visitor picks one of every seat holder, or says it is not about a senator.
-type Props = { site: Site; senador: Senador } | { site: Site; senadores: Senador[] };
+// On /fonte/ the page's own heading names the form, so the section carries no second one.
+type Props = { site: Site; senador: Senador } | { site: Site; senadores: Senador[]; labelledBy: string };
 
 const props = Astro.props;
 const { site } = props;
@@ -16,7 +17,8 @@ const senadores =
   "senadores" in props ? [...props.senadores].sort((a, b) => a.nome.localeCompare(b.nome, "pt-BR")) : [];
 const siteKey = import.meta.env.TURNSTILE_SITE_KEY ?? site.turnstile_site_key;
 
-const [introBefore, introAfter] = FORM_TEXT.intro.split("Metodologia");
+const [introBefore, introAfter] = introText(senador?.nome ?? null).split("Metodologia");
+const labelledBy = "labelledBy" in props ? props.labelledBy : "fonte-titulo";
 const [noScriptBefore, noScriptAfter] = noScriptText(site.contato).split(site.contato);
 const scriptText = JSON.stringify({
   verifying: FORM_TEXT.verifying,
@@ -32,7 +34,7 @@ const errorLine = "text-sm font-semibold text-fg empty:hidden";
 
 <section
   id="fonte"
-  aria-labelledby="fonte-titulo"
+  aria-labelledby={labelledBy}
   class="scroll-mt-6"
   data-source-form
   data-contato={site.contato}
@@ -40,8 +42,8 @@ const errorLine = "text-sm font-semibold text-fg empty:hidden";
   data-nome={senador?.nome}
   data-text={scriptText}
 >
-  <SectionHead id="fonte-titulo" title="Envie a fonte" />
-  <div class="mt-6" data-form-body>
+  {senador && <SectionHead id="fonte-titulo" title={FORM_TEXT.title} />}
+  <div class:list={[senador && "mt-6"]} data-form-body>
     <p class="text-base">
       {introBefore}<a href="/metodologia/" class="text-accent underline">Metodologia</a>{introAfter}
     </p>

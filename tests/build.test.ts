@@ -474,17 +474,25 @@ test("the senator page carries the source form and the footer points at it", () 
   expect(h).toContain('href="#fonte"');
   expect(h).toContain("Envie a correção</a>");
   expect(h).not.toMatch(/<script[^>]+src="https:\/\/challenges\.cloudflare\.com/);
-  expect(h).toContain("Só entra no placar o que tiver fonte pública");
+  expect(h).toContain(">Ajude a manter o placar em dia</h2>");
+  expect(h).toContain("Se Marcio Bittar declarou em público o voto para presidente do Senado, mudou de posição");
+  // Right under the status, the same for every senator in office: the way to the form.
+  expect(h).toMatch(/Viu Marcio Bittar declarar ou mudar o voto\? <a href="#fonte"[^>]*>Avise<\/a>/);
   expect(h).toContain("Não envie dados pessoais.");
   expect(h.toLowerCase()).not.toContain("github.com/abreovoto/abreovoto/issues");
 });
 
 test("a departed senator's page carries the form too", () => {
-  expect(html("senador/flavio-dino/index.html")).toContain('value="flavio-dino"');
+  const h = html("senador/flavio-dino/index.html");
+  expect(h).toContain('value="flavio-dino"');
+  expect(h).not.toContain("declarar ou mudar o voto?"); // no vote to report for a seat already left
 });
 
 test("/fonte/ offers every seat holder and the site itself; other pages' footers point at it", () => {
   const h = html("fonte/index.html");
+  expect(h).toMatch(/<h1[^>]*>Ajude a manter o placar em dia<\/h1>/);
+  expect(h).not.toContain("<h2"); // the page's own heading names the form; no second one under it
+  expect(h).toContain("Se um senador declarou em público o voto para presidente do Senado");
   expect(h).toMatch(/<select name="senador"/);
   expect(h).toContain('<option value="site">Não é sobre um senador</option>');
   expect((h.match(/<option value="[a-z0-9-]+">/g) ?? []).length).toBe(loadData().senadores.length + 1);

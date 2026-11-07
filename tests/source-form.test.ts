@@ -1,8 +1,8 @@
 import { expect, test } from "vitest";
-import { FORM_TEXT, mailtoFor, noScriptText, protocolText } from "../src/lib/source-form";
+import { FORM_TEXT, introText, mailtoFor, noScriptText, protocolText, shortcutText } from "../src/lib/source-form";
 
 test("no visitor-facing sentence names GitHub or an issue", () => {
-  const all = [...Object.values(FORM_TEXT).flatMap((v) => (typeof v === "string" ? [v] : Object.values(v))), protocolText(1), noScriptText("x@y")];
+  const all = [...Object.values(FORM_TEXT).flatMap((v) => (typeof v === "string" ? [v] : Object.values(v))), protocolText(1), noScriptText("x@y"), introText("X"), introText(null), shortcutText("X")];
   for (const s of all) expect(s.toLowerCase()).not.toMatch(/github|issue/);
 });
 
@@ -19,4 +19,16 @@ test("a site-wide correction has no senator line and the correction subject", ()
   const u = new URL(mailtoFor("c@d", { senador: null, url: "https://x.test/", comentario: "", correcao: true }));
   expect(u.searchParams.get("subject")).toBe("Correção: site");
   expect(u.searchParams.get("body")).toBe("Link: https://x.test/\nCorreção do que o site mostra: sim");
+});
+
+test("the section invites help, says what to send and that nothing changes unchecked", () => {
+  expect(FORM_TEXT.title).toBe("Ajude a manter o placar em dia");
+  expect(introText("Marcio Bittar")).toBe(
+    "O placar é atualizado com a ajuda de quem acompanha. Se Marcio Bittar declarou em público o voto para presidente do Senado, mudou de posição, ou se algo nesta página está errado, mande o link de onde viu. Conferimos pela regra da Metodologia antes de mudar o placar.",
+  );
+  expect(introText(null)).toBe(
+    "O placar é atualizado com a ajuda de quem acompanha. Se um senador declarou em público o voto para presidente do Senado, mudou de posição, ou se algo no site está errado, mande o link de onde viu. Conferimos pela regra da Metodologia antes de mudar o placar.",
+  );
+  expect(shortcutText("Marcio Bittar")).toBe("Viu Marcio Bittar declarar ou mudar o voto?");
+  expect(FORM_TEXT.shortcutLink).toBe("Avise");
 });

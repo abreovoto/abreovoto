@@ -4,7 +4,8 @@
  */
 
 export const FORM_TEXT = Object.freeze({
-  intro: "Só entra no placar o que tiver fonte pública: a regra está na Metodologia.",
+  title: "Ajude a manter o placar em dia",
+  shortcutLink: "Avise",
   urlLabel: "Link da fonte",
   urlHint:
     "Vídeo, post no perfil oficial, matéria com a fala entre aspas ou nota oficial. Se for vídeo, diga o minuto no comentário.",
@@ -28,6 +29,13 @@ export const FORM_TEXT = Object.freeze({
     senador: "Escolha o senador ou marque que não é sobre um senador.",
   }),
 });
+
+/** The section's first paragraph: the same for every senator, or for the site as a whole. */
+export const introText = (nome: string | null): string =>
+  `O placar é atualizado com a ajuda de quem acompanha. Se ${nome ?? "um senador"} declarou em público o voto para presidente do Senado, mudou de posição, ou se algo ${nome === null ? "no site" : "nesta página"} está errado, mande o link de onde viu. Conferimos pela regra da Metodologia antes de mudar o placar.`;
+
+/** The line under a senator's status that leads to the form. */
+export const shortcutText = (nome: string): string => `Viu ${nome} declarar ou mudar o voto?`;
 
 export const protocolText = (n: number): string => `Protocolo ${n}`;
 
