@@ -1,19 +1,21 @@
 ---
-import type { Candidato, Senador } from "../data/schema";
+import type { Candidato, Senador, Site } from "../data/schema";
 import { UF } from "../data/schema";
 import { senatorPath, statePath } from "../lib/routes";
 import { ufName, ufWithDe } from "../lib/uf";
 import Button from "./Button.astro";
 import SectionHead from "./SectionHead.astro";
 import SenatorCard from "./SenatorCard.astro";
+import ShareActions from "./ShareActions.astro";
 import StateSelector from "./StateSelector.astro";
 
 interface Props {
   senadores: Senador[];
   candidatos: Candidato[];
+  site: Site;
 }
 
-const { senadores, candidatos } = Astro.props;
+const { senadores, candidatos, site } = Astro.props;
 const byState = UF.options.map((uf) => ({
   uf,
   senadores: senadores.filter((s) => s.uf === uf).sort((a, b) => a.vaga - b.vaga),
@@ -46,6 +48,7 @@ const byState = UF.options.map((uf) => ({
           {g.senadores.map((s) => (
             <SenatorCard senador={s} candidatos={candidatos} variant="state">
               <Fragment slot="actions">
+                <ShareActions senador={s} candidatos={candidatos} site={site} variant="primary" />
                 <Button kind="secondary" size="sm" href={senatorPath(s.id)}>
                   Ver histórico
                 </Button>

@@ -2,6 +2,7 @@
 import Button from "../../components/Button.astro";
 import SectionHead from "../../components/SectionHead.astro";
 import SenatorCard from "../../components/SenatorCard.astro";
+import ShareActions from "../../components/ShareActions.astro";
 import { emExercicio, loadData } from "../../data/load";
 import { UF, type UF as UFType } from "../../data/schema";
 import Base from "../../layouts/Base.astro";
@@ -36,6 +37,7 @@ const ofState = ufWithDe(uf);
         senadores.map((s) => (
           <SenatorCard senador={s} candidatos={d.candidatos} variant="page">
             <Fragment slot="actions">
+              <ShareActions senador={s} candidatos={d.candidatos} site={d.site} variant="primary" />
               <Button kind="secondary" size="sm" href={senatorPath(s.id)}>
                 Ver histórico
               </Button>

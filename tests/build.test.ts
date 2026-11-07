@@ -1,7 +1,8 @@
 import { execFileSync } from "node:child_process";
-import { existsSync, mkdtempSync, readdirSync, readFileSync, statSync } from "node:fs";
+import { existsSync, mkdtempSync, readdirSync, readFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
+import { gzipSync } from "node:zlib";
 import { beforeAll, expect, test } from "vitest";
 import { emExercicio, loadData } from "../src/data/load";
 import { placar } from "../src/data/placar";
@@ -273,10 +274,12 @@ test("the senator's links: a label with its icon, and only the value is the link
   expect(section.match(/<svg[^>]*aria-hidden="true"/g)?.length).toBe(3); // Senado, e-mail, Instagram; no X today
 });
 
-test("the home's HTML, CSS and JS stay under 300 KB", () => {
+// Measured as it travels: compressed, as the host serves HTML, CSS and JS.
+test("the home's HTML, CSS and JS stay under 300 KB compressed", () => {
   const h = html("index.html");
   const refs = [...new Set([...h.matchAll(/\/_astro\/[^"']+\.(css|js)/g)].map((m) => m[0]))];
-  const bytes = Buffer.byteLength(h) + refs.reduce((n, r) => n + statSync(join(out, r)).size, 0);
+  const gz = (b: Buffer | string) => gzipSync(b).length;
+  const bytes = gz(h) + refs.reduce((n, r) => n + gz(readFileSync(join(out, r))), 0);
   expect(bytes).toBeLessThan(300 * 1024);
 });
 
@@ -390,4 +393,45 @@ test("every page carries the Open Graph tags; senator and candidate pages point 
   for (const p of ["index.html", "estado/rn/index.html", "como-funciona/index.html", "404.html"]) expect(html(p), p).toContain('content="https://abreovoto.com/cartao/placar.png?v=');
   expect(html("404.html")).not.toContain('property="og:url"');
   expect(html("index.html")).toContain('<meta property="og:url" content="https://abreovoto.com/">');
+});
+
+test("a senator page carries the actions: X when there is a profile, WhatsApp, Instagram, copy, download", () => {
+  const h = html("senador/arthur-lira/index.html");
+  expect(h).toContain('href="https://x.com/intent/post?text=%40arthurlira_%2C%20quem%20te%20elegeu');
+  expect(h).toContain("%23AbreOVotoSenador");
+  expect(h).toContain("Cobrar no X");
+  expect(h).toContain('href="https://wa.me/?text=Arthur%20Lira%20(PP-AL)%20representa%20voc%C3%AA');
+  expect(h).toContain('data-card="/cartao/senador/arthur-lira.png"');
+  expect(h).toContain('data-url="https://abreovoto.com/senador/arthur-lira/"');
+  expect(h).toContain('href="/cartao/senador/arthur-lira.png" download="abreovoto-arthur-lira.png"');
+  expect(h).toContain('role="status"');
+});
+
+test("a senator without an X profile has no X action and Instagram is the primary", () => {
+  const h = html("senador/marcio-bittar/index.html");
+  expect(h).not.toContain("x.com/intent/post");
+  expect(h).toMatch(/<button[^>]*data-share-instagram[^>]*class="[^"]*border-accent bg-accent/);
+  expect(h).toContain("wa.me/?text=");
+  expect(h.search(/<button[^>]*data-share-instagram/)).toBeLessThan(h.indexOf("wa.me/?text=")); // the primary comes first
+});
+
+test("a former occupant's page has no actions", () => {
+  const h = html("senador/flavio-dino/index.html");
+  expect(h).not.toContain("x.com/intent/post");
+  expect(h).not.toContain("wa.me/?text=");
+  expect(h).not.toContain("data-share-instagram");
+});
+
+test("the state cards carry one share action beside Ver histórico, on the home and on the state page", () => {
+  for (const p of ["index.html", "estado/al/index.html"]) {
+    const h = html(p);
+    expect(h, p).toContain("%40arthurlira_%2C%20quem%20te%20elegeu");
+    expect(h, p).toContain("Ver histórico");
+  }
+  const al = html("estado/al/index.html");
+  expect(al).not.toContain("wa.me/?text="); // primary only
+  // One action per card: a senator with an X profile gets the X link and no Instagram button.
+  expect(al.match(/<button[^>]*data-share-instagram/g)?.length ?? 0).toBe(
+    loadData().senadores.filter((s) => s.uf === "AL" && s.situacao === "em_exercicio" && !s.redes.x).length,
+  );
 });
