@@ -1,12 +1,15 @@
 ---
 /**
  * Under the card on a senator's page: whoever arrives from a shared link sees where the
- * whole Senate stands and can go to the scoreboard, and to the petition once it exists.
+ * whole Senate stands, is asked to act, and is invited to the scoreboard — and to the
+ * petition once it has an address. The same panel on every senator's page.
  */
 import type { Placar } from "../data/placar";
 import type { Peticao } from "../data/schema";
 import { petitionView } from "../lib/petition";
 import Button from "./Button.astro";
+import Hemicycle from "./Hemicycle.astro";
+import Icon from "./Icon.astro";
 
 interface Props {
   placar: Placar;
@@ -17,17 +20,30 @@ const { placar, peticao } = Astro.props;
 const view = petitionView(peticao, null);
 ---
 
-<div class="mt-4 flex flex-wrap items-center gap-x-6 gap-y-3 text-base">
-  <p>
-    <a href="/#placar" class="text-accent underline tabular-nums">
-      {`${placar.naoDeclararam} não declararam · ${placar.declararam} declararam — ver o placar`}
-    </a>
-  </p>
-  {
-    view && (
-      <Button kind="primary" size="sm" href={view.url} rel="noopener noreferrer">
-        Assinar a petição
+<aside class="mt-4 rounded-lg bg-surface p-5 sm:p-6" aria-label="Placar do Senado">
+  <!-- Phone: the hemicycle and the number side by side, the rest below from the same left edge.
+       Wider: the hemicycle in its own column, everything else in one column beside it. -->
+  <div class="grid grid-cols-[6rem_1fr] items-center gap-x-4 gap-y-3 sm:grid-cols-[9rem_1fr] sm:gap-x-6">
+    <div class="col-start-1 row-start-1 sm:row-span-4" aria-hidden="true">
+      <Hemicycle declararam={placar.declararam} total={placar.total} />
+    </div>
+    <p class="contents">
+      <span class="col-start-2 row-start-1 font-display text-5xl tabular-nums text-undeclared sm:self-end">{placar.naoDeclararam}</span>
+      <span class="col-span-2 text-base text-fg sm:col-span-1 sm:col-start-2">de {placar.total} senadores ainda não declararam o voto para presidente do Senado.</span>
+    </p>
+    <p class="col-span-2 text-base text-fg sm:col-span-1 sm:col-start-2">Você tem o direito de saber em quem cada um vota. Cobre que declarem antes.</p>
+    <div class="col-span-2 mt-1 flex flex-col gap-2 sm:col-span-1 sm:col-start-2 sm:flex-row sm:flex-wrap sm:self-start">
+      {
+        view && (
+          <Button kind="primary" href={view.url} rel="noopener noreferrer">
+            Assinar a petição
+          </Button>
+        )
+      }
+      <Button kind="secondary" href="/">
+        Ver o placar
+        <Icon name="arrow" class="size-4 shrink-0" />
       </Button>
-    )
-  }
-</div>
+    </div>
+  </div>
+</aside>

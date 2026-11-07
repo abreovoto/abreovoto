@@ -202,7 +202,7 @@ test("a departed senator's page keeps the note, drops the status, and names the 
   expect(h).toContain("deixou o mandato em 20/2/2024");
   // No status: no badge, no declaration, nothing in the description. The dated history still
   // says when the senator entered the list ("entrou na lista como não declarou").
-  expect(h).not.toContain("text-undeclared");
+  expect(h.match(/<article[\s\S]*?<\/article>/)![0]).not.toContain("text-undeclared"); // the card; the scoreboard below is the Senate's
   expect(h).not.toContain('id="declaracao"');
   expect(h).toContain('<meta name="description" content="Flávio Dino (PSB-MA) deixou o mandato em 20/2/2024.">');
   expect(h).toContain("renunciou ao mandato");
@@ -438,13 +438,16 @@ test("the state cards carry the X action beside Ver histórico, on the home and 
   expect(al).not.toMatch(/<button[^>]*data-share-instagram/);
 });
 
-test("every senator page receives the visitor with the totals and a link to the scoreboard", () => {
+test("every senator page invites the visitor to the scoreboard with the totals and the call to act", () => {
   const d = loadData();
   const p = placar(d);
   for (const id of ["marcio-bittar", "flavio-dino"]) {
     const h = html(`senador/${id}/index.html`);
-    expect(h, id).toContain(`${p.naoDeclararam} não declararam · ${p.declararam} declararam`);
-    expect(h, id).toContain('href="/#placar"');
+    // The number and its sentence are one paragraph, laid out in two places.
+    expect(h, id).toMatch(new RegExp(`<p[^>]*>\\s*<span[^>]*>${p.naoDeclararam}</span>\\s*<span[^>]*>de ${p.total} senadores ainda não declararam o voto para presidente do Senado\\.</span>\\s*</p>`));
+    expect(h, id).toContain("Você tem o direito de saber em quem cada um vota. Cobre que declarem antes.");
+    expect(h, id).toMatch(/<a href="\/"[^>]*>(?:(?!<\/a>)[\s\S])*Ver o placar/); // the home's top: an anchor would cut the headline off
+    expect(h, id).toContain('aria-label="81 cadeiras do Senado');
     expect(h, id).not.toContain("Assinar a petição"); // peticao.url is null today
   }
 });
