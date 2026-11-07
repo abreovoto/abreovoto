@@ -463,3 +463,36 @@ test("every senator page invites the visitor to the scoreboard with the totals a
     expect(h, id).not.toContain("Assinar a petição"); // peticao.url is null today
   }
 });
+
+test("the senator page carries the source form and the footer points at it", () => {
+  const h = html("senador/marcio-bittar/index.html");
+  expect(h).toMatch(/<section id="fonte"[^>]*data-source-form/);
+  expect(h).toContain('name="senador"');
+  expect(h).toContain('value="marcio-bittar"');
+  expect(h).toContain('href="#fonte"');
+  expect(h).toContain("Envie a correção</a>");
+  expect(h).not.toMatch(/<script[^>]+src="https:\/\/challenges\.cloudflare\.com/);
+  expect(h).toContain("Só entra no placar o que tiver fonte pública");
+  expect(h).toContain("Não envie dados pessoais.");
+  expect(h.toLowerCase()).not.toContain("github.com/abreovoto/abreovoto/issues");
+});
+
+test("a departed senator's page carries the form too", () => {
+  expect(html("senador/flavio-dino/index.html")).toContain('value="flavio-dino"');
+});
+
+test("/fonte/ offers every seat holder and the site itself; other pages' footers point at it", () => {
+  const h = html("fonte/index.html");
+  expect(h).toMatch(/<select name="senador"/);
+  expect(h).toContain('<option value="site">Não é sobre um senador</option>');
+  expect((h.match(/<option value="[a-z0-9-]+">/g) ?? []).length).toBe(loadData().senadores.length + 1);
+  for (const page of ["index.html", "metodologia/index.html", "candidato/alcolumbre/index.html"]) expect(html(page)).toContain('href="/fonte/"');
+  expect(readFileSync(join(out, "sitemap-0.xml"), "utf8")).toContain("https://abreovoto.com/fonte/");
+});
+
+test("no visitor-facing sentence of the form names GitHub or an issue", () => {
+  // The form's own section: the footer's repository link is labelled for what it is.
+  const h = html("fonte/index.html").match(/<section id="fonte"[\s\S]*?<\/section>/)![0];
+  const visible = h.replace(/<script[\s\S]*?<\/script>/g, "").replace(/href="[^"]*"/g, "");
+  expect(visible.toLowerCase()).not.toMatch(/github|issue/);
+});

@@ -1,0 +1,124 @@
+---
+import type { Senador, Site } from "../data/schema";
+import { CONTROL, FIELD, SELECT } from "../lib/controls";
+import { FORM_TEXT, noScriptText } from "../lib/source-form";
+import Button from "./Button.astro";
+import SectionHead from "./SectionHead.astro";
+
+// The same form for every senator: on a senator page the senator is fixed; on /fonte/ the
+// visitor picks one of every seat holder, or says it is not about a senator.
+type Props = { site: Site; senador: Senador } | { site: Site; senadores: Senador[] };
+
+const props = Astro.props;
+const { site } = props;
+const senador = "senador" in props ? props.senador : null;
+const senadores =
+  "senadores" in props ? [...props.senadores].sort((a, b) => a.nome.localeCompare(b.nome, "pt-BR")) : [];
+const siteKey = import.meta.env.TURNSTILE_SITE_KEY ?? site.turnstile_site_key;
+
+const [introBefore, introAfter] = FORM_TEXT.intro.split("Metodologia");
+const [noScriptBefore, noScriptAfter] = noScriptText(site.contato).split(site.contato);
+const scriptText = JSON.stringify({
+  verifying: FORM_TEXT.verifying,
+  receivedSenator: FORM_TEXT.receivedSenator,
+  receivedSite: FORM_TEXT.receivedSite,
+  transient: FORM_TEXT.transient,
+  definitive: FORM_TEXT.definitive,
+  field: FORM_TEXT.field,
+  submit: FORM_TEXT.submit,
+});
+const errorLine = "text-sm font-semibold text-fg empty:hidden";
+---
+
+<section
+  id="fonte"
+  aria-labelledby="fonte-titulo"
+  class="scroll-mt-6"
+  data-source-form
+  data-contato={site.contato}
+  data-sitekey={siteKey}
+  data-nome={senador?.nome}
+  data-text={scriptText}
+>
+  <SectionHead id="fonte-titulo" title="Envie a fonte" />
+  <div class="mt-6" data-form-body>
+    <p class="text-base">
+      {introBefore}<a href="/metodologia/" class="text-accent underline">Metodologia</a>{introAfter}
+    </p>
+    <form class="mt-6 hidden space-y-5 [.js_&]:block" novalidate>
+      {
+        senador ? (
+          <>
+            <input type="hidden" name="senador" value={senador.id} />
+            <p class="text-sm font-semibold text-fg">
+              {FORM_TEXT.senatorLabel}: <span class="font-normal">{senador.nome}</span>
+            </p>
+          </>
+        ) : (
+          <div>
+            <label class={FIELD}>
+              {FORM_TEXT.senatorLabel}
+              <select name="senador" class={SELECT} aria-describedby="fonte-senador-erro">
+                <option value="">{FORM_TEXT.choose}</option>
+                <option value="site">{FORM_TEXT.notAboutASenator}</option>
+                {senadores.map((s) => (
+                  <option value={s.id}>{`${s.nome} (${s.partido}-${s.uf})`}</option>
+                ))}
+              </select>
+            </label>
+            <p id="fonte-senador-erro" class={`mt-1.5 ${errorLine}`} data-field-error="senador" />
+          </div>
+        )
+      }
+      <div>
+        <label class={FIELD}>
+          {FORM_TEXT.urlLabel}
+          <input
+            type="url"
+            name="url"
+            required
+            maxlength="2000"
+            inputmode="url"
+            autocomplete="off"
+            class={CONTROL}
+            aria-describedby="fonte-url-dica fonte-url-erro"
+          />
+        </label>
+        <p id="fonte-url-dica" class="mt-1.5 text-sm text-fg-muted">{FORM_TEXT.urlHint}</p>
+        <p id="fonte-url-erro" class={`mt-1.5 ${errorLine}`} data-field-error="url" />
+      </div>
+      <div>
+        <label class={FIELD}>
+          {FORM_TEXT.commentLabel}
+          <textarea
+            name="comentario"
+            maxlength="1000"
+            rows="3"
+            class={`${CONTROL} h-auto min-h-[132px] py-3`}
+            aria-describedby="fonte-comentario-dica fonte-comentario-erro"></textarea>
+        </label>
+        <p id="fonte-comentario-dica" class="mt-1.5 text-sm text-fg-muted">{FORM_TEXT.commentHint}</p>
+        <p id="fonte-comentario-erro" class={`mt-1.5 ${errorLine}`} data-field-error="comentario" />
+      </div>
+      <label class="flex items-center gap-3 text-base text-fg">
+        <input type="checkbox" name="correcao" value="true" class="size-5 shrink-0 accent-accent" />
+        {FORM_TEXT.correctionLabel}
+      </label>
+      <div data-turnstile></div>
+      <div class="space-y-3">
+        <Button kind="primary" type="submit" data-source-submit="">{FORM_TEXT.submit}</Button>
+        <p class="text-sm text-fg-muted">{FORM_TEXT.publicNote}</p>
+        <p role="status" aria-live="polite" class="text-sm text-fg-muted empty:hidden" data-form-status></p>
+      </div>
+    </form>
+    <noscript>
+      <p class="mt-6 text-base">
+        {noScriptBefore}<a href={`mailto:${site.contato}`} class="text-accent underline">{site.contato}</a>{noScriptAfter}
+      </p>
+    </noscript>
+  </div>
+</section>
+
+<script>
+  import "../scripts/source-form";
+</script>
