@@ -282,8 +282,7 @@ test("each row of the list is clickable as a whole, through the one link it hold
     expect(li).toMatch(/<li[^>]*class="[^"]*\brelative\b/);
     const links = [...inner!.matchAll(/<a [^>]*>/g)];
     expect(links).toHaveLength(1);
-    expect(links[0]![0]).toMatch(/after:absolute/);
-    expect(links[0]![0]).toMatch(/after:inset-0/);
+    expect(links[0]![0]).toMatch(/class="row-link"/);
   }
 });
 
@@ -317,4 +316,10 @@ test("a candidate card puts its label under the number, as the scoreboard does",
     expect(label).toMatch(/\bblock\b/);
   }
   expect(html("index.html")).toMatch(/<p class="mt-auto[^"]*">\s*<span[^>]*>\d+<\/span>\s*<span class="[^"]*\bblock\b/);
+});
+
+test("each row of the list shows a chevron, hidden from screen readers", () => {
+  const rows = [...html("index.html").matchAll(/<li[^>]*data-nome="[^"]*"[^>]*>([\s\S]*?)<\/li>/g)];
+  expect(rows).toHaveLength(81);
+  for (const [, inner] of rows) expect(inner).toMatch(/<span data-chevron aria-hidden="true"/);
 });

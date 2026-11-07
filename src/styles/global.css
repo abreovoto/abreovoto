@@ -125,3 +125,39 @@
     }
   }
 }
+
+/* The link of a list row covers the whole row (its ::after fills the positioned <li>), so a
+   click anywhere opens the page while the row stays one link. A utility rather than inline
+   classes: it repeats on 81 rows of the home. */
+@utility row-link {
+  color: var(--color-fg);
+  text-decoration: none;
+  text-underline-offset: 2px;
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius-lg);
+  }
+  li:hover & {
+    text-decoration: underline;
+  }
+  &:focus-visible {
+    outline: none;
+  }
+  &:focus-visible::after {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 2px;
+  }
+}
+
+/* A small chevron drawn by two borders, at the end of a clickable row. */
+@utility row-chevron {
+  width: 0.5rem;
+  height: 0.5rem;
+  flex-shrink: 0;
+  margin-right: 0.25rem;
+  rotate: 45deg;
+  border-top: 2px solid var(--color-fg-muted);
+  border-right: 2px solid var(--color-fg-muted);
+}
