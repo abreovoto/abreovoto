@@ -74,11 +74,13 @@ function parseBody(text: string, type: string): Record<string, unknown> | null {
 type Verdict = { success: boolean; codes: unknown } | null;
 
 async function siteverify(deps: Deps, secret: string, token: string, ip: string): Promise<Verdict> {
+  // The same key on the retry: if the first reply was lost, the token is not judged a duplicate.
+  const idempotency_key = crypto.randomUUID();
   for (let attempt = 0; attempt < 2; attempt++) {
     try {
       const r = await deps.fetch(SITEVERIFY, {
         method: "POST",
-        body: new URLSearchParams({ secret, response: token, remoteip: ip }),
+        body: new URLSearchParams({ secret, response: token, remoteip: ip, idempotency_key }),
         signal: AbortSignal.timeout(TIMEOUT_MS),
       });
       const v = (await r.json()) as { success?: unknown; "error-codes"?: unknown };
@@ -89,6 +91,10 @@ async function siteverify(deps: Deps, secret: string, token: string, ip: string)
   }
   return null;
 }
+
+/** A wrong or missing secret is the site's fault, not the visitor's. */
+const secretRefused = (codes: unknown): boolean =>
+  Array.isArray(codes) && codes.some((c) => c === "invalid-input-secret" || c === "missing-input-secret");
 
 type Opened = { kind: "created"; number: number; url: string } | { kind: "refused" } | { kind: "down" };
 
@@ -121,6 +127,7 @@ async function openIssue(deps: Deps, token: string, issue: ReturnType<typeof iss
 export async function handleFonte(request: Request, env: FonteEnv, deps: Deps = defaultDeps): Promise<Response> {
   if (request.method !== "POST") return fail(405, "metodo");
 
+  if (Number(request.headers.get("content-length") ?? 0) > LIMITS.body) return fail(400, "campo", { campo: "corpo" });
   const text = await request.text();
   if (text.length > LIMITS.body) return fail(400, "campo", { campo: "corpo" });
   const raw = parseBody(text, request.headers.get("content-type") ?? "");
@@ -142,6 +149,7 @@ export async function handleFonte(request: Request, env: FonteEnv, deps: Deps = 
 
   const verdict = await siteverify(deps, env.TURNSTILE_SECRET, parsed.token, ip);
   if (verdict === null) return fail(503, "verificacao");
+  if (secretRefused(verdict.codes)) return fail(500, "configuracao");
   if (!verdict.success) return fail(403, "turnstile", { codigos: verdict.codes });
 
   const seat = parsed.senador === "site" ? null : (seatMap.get(parsed.senador) ?? null);
