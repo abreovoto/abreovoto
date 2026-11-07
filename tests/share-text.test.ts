@@ -1,6 +1,16 @@
 import { expect, test } from "vitest";
 import { emExercicio, loadData } from "../src/data/load";
-import { actionLabels, thirdPersonText, xHandle, xIntentUrl, xLength, xText, whatsappUrl } from "../src/lib/share-text";
+import {
+  actionLabels,
+  instagramHandle,
+  instagramText,
+  thirdPersonText,
+  whatsappUrl,
+  xHandle,
+  xIntentUrl,
+  xLength,
+  xText,
+} from "../src/lib/share-text";
 
 const d = loadData();
 const by = (id: string) => d.senadores.find((s) => s.id === id)!;
@@ -16,18 +26,33 @@ test("the X text mentions the senator, links the page and carries the hashtag", 
   );
 });
 
-test("without an X profile there is no X text, but there is a third-person text", () => {
-  const s = by("marcio-bittar");
-  expect(xHandle(s)).toBeNull();
-  expect(xText(s, d.candidatos, d.site)).toBeNull();
-  expect(thirdPersonText(s, d.candidatos, d.site)).toBe(
-    "Marcio Bittar (PL-AC) representa você no Senado, e você tem o direito de saber em quem vota para presidente do Senado. Vai abrir o voto, ou vai votar em segredo? https://abreovoto.com/senador/marcio-bittar/ #AbreOVotoSenador",
+test("the Instagram text mentions the senator's Instagram profile, in the same words", () => {
+  const s = by("arthur-lira");
+  expect(instagramHandle(s)).toBe("@oficialarthurlira");
+  expect(instagramText(s, d.candidatos, d.site)).toBe(
+    "@oficialarthurlira, quem te elegeu tem o direito de saber em quem você vota para presidente do Senado. Vai abrir o voto, ou vai votar em segredo? https://abreovoto.com/senador/arthur-lira/ #AbreOVotoSenador",
   );
+  expect(instagramText(declared(s, "marinho"), d.candidatos, d.site)).toBe(
+    "@oficialarthurlira abriu o voto para presidente do Senado: Rogério Marinho, com fonte pública. Seus eleitores agradecem a transparência. Quem mais? https://abreovoto.com/senador/arthur-lira/ #AbreOVotoSenador",
+  );
+});
+
+test("without a profile on a network, that network's text is the third-person one", () => {
+  const s = by("marcio-bittar"); // no X, has Instagram
+  const third =
+    "Marcio Bittar (PL-AC) representa você no Senado, e você tem o direito de saber em quem vota para presidente do Senado. Vai abrir o voto, ou vai votar em segredo? https://abreovoto.com/senador/marcio-bittar/ #AbreOVotoSenador";
+  expect(xHandle(s)).toBeNull();
+  expect(thirdPersonText(s, d.candidatos, d.site)).toBe(third);
+  expect(xText(s, d.candidatos, d.site)).toBe(third);
+  expect(instagramText(s, d.candidatos, d.site)).toMatch(/^@marciobittar_, quem te elegeu/);
+  const none = by("cheila-moreira"); // neither X nor Instagram
+  expect(instagramHandle(none)).toBeNull();
+  expect(instagramText(none, d.candidatos, d.site)).toBe(thirdPersonText(none, d.candidatos, d.site));
 });
 
 test("a declared senator's texts name the candidate from the data and are the same shape for the three", () => {
   const s = by("arthur-lira");
-  const texts = d.candidatos.map((c) => xText(declared(s, c.id), d.candidatos, d.site)!);
+  const texts = d.candidatos.map((c) => xText(declared(s, c.id), d.candidatos, d.site));
   expect(texts[0]).toBe(
     "@arthurlira_ abriu o voto para presidente do Senado: Davi Alcolumbre, com fonte pública. Seus eleitores agradecem a transparência. Quem mais? https://abreovoto.com/senador/arthur-lira/ #AbreOVotoSenador",
   );
@@ -39,15 +64,14 @@ test("a declared senator's texts name the candidate from the data and are the sa
 
 test("every text fits X and carries no date", () => {
   for (const s of emExercicio(d)) {
-    for (const t of [xText(s, d.candidatos, d.site), thirdPersonText(s, d.candidatos, d.site)]) {
-      if (t === null) continue;
+    for (const t of [xText(s, d.candidatos, d.site), instagramText(s, d.candidatos, d.site), thirdPersonText(s, d.candidatos, d.site)]) {
       expect(xLength(t), s.id).toBeLessThanOrEqual(280);
       expect(t).not.toMatch(/\d\/\d|1º|fevereiro/);
     }
   }
   const longest = [...d.candidatos].sort((a, b) => b.nome.length - a.nome.length)[0]!;
   const s = by("professora-dorinha-seabra"); // the longest name in office, with an X profile
-  expect(xLength(xText(declared(s, longest.id), d.candidatos, d.site)!)).toBeLessThanOrEqual(280);
+  for (const f of [xText, instagramText, thirdPersonText]) expect(xLength(f(declared(s, longest.id), d.candidatos, d.site))).toBeLessThanOrEqual(280);
 });
 
 test("the intent URLs encode the text", () => {
