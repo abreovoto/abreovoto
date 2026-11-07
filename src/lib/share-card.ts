@@ -2,6 +2,7 @@
  * What each 1200×630 share card says, as data: one shape for the three kinds,
  * so the senator, candidate and home cards differ only in their values.
  */
+import { createHash } from "node:crypto";
 import type { Dataset } from "../data/load";
 import { type PlacarCandidato, placar } from "../data/placar";
 import type { Senador } from "../data/schema";
@@ -59,4 +60,22 @@ export function homeCard(d: Dataset, today: string): ShareCardModel {
     numberLabel: "ainda não declararam",
     ...common(d, today),
   };
+}
+
+/** The card read aloud, for `og:image:alt`: what the image says, in the order it says it. */
+export function cardAlt(m: ShareCardModel): string {
+  const lead = `Cartão do Abre o Voto: ${m.title}`;
+  switch (m.kind) {
+    case "senator":
+      return `${lead} (${m.subtitle}), ${m.status}, ${m.date}`;
+    case "candidate":
+      return `${lead} (${m.subtitle}), ${m.number} ${m.numberLabel}, ${m.date}`;
+    case "home":
+      return `${lead}, ${m.number} ${m.numberLabel}, ${m.date}`;
+  }
+}
+
+/** A short hash of everything the card shows, so a changed card gets a new image URL. */
+export function cardVersion(m: ShareCardModel): string {
+  return createHash("sha256").update(JSON.stringify(m)).digest("hex").slice(0, 8);
 }
