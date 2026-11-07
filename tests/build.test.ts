@@ -286,3 +286,11 @@ test("each row of the list is clickable as a whole, through the one link it hold
     expect(links[0]![0]).toMatch(/after:inset-0/);
   }
 });
+
+test("without JavaScript the state links stand alone; with it they are hidden before paint", () => {
+  const h = html("index.html");
+  expect(h).toContain("Abra a página do seu estado:");
+  expect(h).not.toContain("Escolha o estado acima");
+  expect(h).toMatch(/classList\.add\("js"\)/);
+  expect(h).toMatch(/<div data-no-js class="[^"]*\[\.js_&(amp;)?\]:hidden/);
+});

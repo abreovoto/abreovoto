@@ -30,8 +30,10 @@ const canonical = notFound ? null : new URL(Astro.url.pathname, Astro.site).toSt
     <link rel="icon" href="/favicon.ico" sizes="32x32" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <script is:inline>
-      // Runs before paint: a saved choice is applied; without one the stylesheet follows the system.
+      // Runs before paint: marks that scripts run (so no-JS fallbacks hide without a flash), and
+      // applies a saved theme; without one the stylesheet follows the system.
       (function () {
+        document.documentElement.classList.add("js");
         var tema = null;
         try {
           tema = localStorage.getItem("tema");
