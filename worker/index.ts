@@ -16,4 +16,5 @@ export async function handle(request: Request, env: Env, deps: Deps = defaultDep
   return json({ erro: "não encontrado" }, 404);
 }
 
-export default { fetch: handle };
+// The runtime calls fetch(request, env, ctx); the context is not the injected deps.
+export default { fetch: (request: Request, env: Env): Promise<Response> => handle(request, env) };

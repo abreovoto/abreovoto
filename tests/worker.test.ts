@@ -1,5 +1,5 @@
-import { beforeEach, expect, test } from "vitest";
-import { handle } from "../worker/index";
+import { afterEach, beforeEach, expect, test, vi } from "vitest";
+import worker, { handle } from "../worker/index";
 import { _resetSeatsCache, type Deps, type FonteEnv } from "../worker/fonte";
 
 const dados = JSON.stringify({
@@ -68,6 +68,21 @@ const run = async (r: Request, e: FonteEnv, d: Deps) => {
 beforeEach(() => {
   _resetSeatsCache();
   assetCalls = 0;
+});
+
+afterEach(() => {
+  vi.unstubAllGlobals();
+});
+
+test("the runtime entry point reaches the outside services with the global fetch", async () => {
+  // The runtime calls fetch(request, env, ctx): the context must not stand in for the injected deps.
+  const d = deps(verified(), created());
+  vi.stubGlobal("fetch", d.fetch);
+  const ctx = { waitUntil: () => {}, passThroughOnException: () => {}, props: {} };
+  const runtimeFetch = worker.fetch as (r: Request, e: FonteEnv, c: unknown) => Promise<Response>;
+  const r = await runtimeFetch(post(good), env(), ctx);
+  expect(r.status).toBe(201);
+  expect(d.calls.map((c) => new URL(c.url).host)).toEqual(["challenges.cloudflare.com", "api.github.com"]);
 });
 
 test("GET /api/health answers ok and is never cached", async () => {
