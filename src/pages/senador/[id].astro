@@ -5,6 +5,7 @@ import ShareActions from "../../components/ShareActions.astro";
 import SenatorCard from "../../components/SenatorCard.astro";
 import SenatorHistory from "../../components/SenatorHistory.astro";
 import SenatorLinks from "../../components/SenatorLinks.astro";
+import SourceForm from "../../components/SourceForm.astro";
 import { loadData } from "../../data/load";
 import { placar } from "../../data/placar";
 import { type Senador, todayUtc } from "../../data/schema";
@@ -38,6 +39,7 @@ const description = `${senador.nome} (${partyState(senador)}) ${departed ?? stat
   title={`${senador.nome} — Abre o Voto`}
   description={description}
   card={{ path: senatorCardPath(senador.id), model: senatorCard(senador, d, todayUtc()) }}
+  fonteHref="#fonte"
 >
   <div class="max-w-2xl">
     <SenatorCard senador={senador} candidatos={d.candidatos} variant="page" heading="h1">
@@ -81,6 +83,8 @@ const description = `${senador.nome} (${partyState(senador)}) ${departed ?? stat
     <SenatorHistory senador={senador} repositorio={d.site.repositorio} />
 
     <SenatorLinks senador={senador} />
+
+    <SourceForm site={d.site} senador={senador} />
 
     <p class="mt-16 flex flex-wrap gap-x-6 gap-y-2 text-sm">
       {
