@@ -49,3 +49,15 @@ test("a card renders to a 1200×630 PNG", async () => {
   expect(png.readUInt32BE(16)).toBe(1200);
   expect(png.readUInt32BE(20)).toBe(630);
 }, 20_000);
+
+test("every fixed-size box inside a flex row keeps its size when the text beside it wraps", () => {
+  const s = d.senadores.find((x) => x.id === "marcio-bittar")!;
+  const unshrinkable = (n: CardNode | string, inFlex: boolean): string[] => {
+    if (typeof n === "string") return [];
+    const st = n.props.style ?? {};
+    const own = inFlex && typeof st.width === "number" && typeof st.height === "number" && st.flexShrink !== 0 ? [JSON.stringify(st)] : [];
+    const kids = ([] as (CardNode | string)[]).concat(n.props.children ?? []);
+    return own.concat(kids.flatMap((k) => unshrinkable(k, st.display === "flex")));
+  };
+  for (const m of [senatorCard(s, d, today), homeCard(d, today)]) expect(unshrinkable(cardTree(m, "data:"), false)).toEqual([]);
+});
