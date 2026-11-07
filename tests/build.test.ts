@@ -311,3 +311,10 @@ test("every outbound source link carries noopener noreferrer", () => {
 test("the 404's h1 looks like every other h1", () => {
   expect(html("404.html")).toMatch(/<h1 class="text-3xl font-semibold leading-tight sm:text-4xl">/);
 });
+
+test("a candidate card puts its label under the number, as the scoreboard does", () => {
+  for (const [, label] of html("index.html").matchAll(/<p class="mt-auto[^"]*">\s*<span[^>]*>\d+<\/span>\s*(<span[^>]*>)declara/g)) {
+    expect(label).toMatch(/\bblock\b/);
+  }
+  expect(html("index.html")).toMatch(/<p class="mt-auto[^"]*">\s*<span[^>]*>\d+<\/span>\s*<span class="[^"]*\bblock\b/);
+});
