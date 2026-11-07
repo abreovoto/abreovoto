@@ -1,13 +1,14 @@
 ---
 /**
  * The actions that put a senator's card in circulation, the same for every senator.
- * `full` on the senator's page, in one order: X, Instagram, WhatsApp, copy, download;
+ * `full` on the senator's page, in one order: X, share the card (phones only), WhatsApp, copy,
+ * download;
  * `primary` on the state cards, where there is room for one action: X. The texts and the
  * card path travel as data attributes, so the script holds no text of its own.
  */
 import type { Candidato, Senador, Site } from "../data/schema";
 import { absolute, senatorCardPath, senatorPath } from "../lib/routes";
-import { actionLabels, instagramText, thirdPersonText, whatsappUrl, xIntentUrl, xText } from "../lib/share-text";
+import { thirdPersonText, whatsappUrl, xIntentUrl, xLabel, xText } from "../lib/share-text";
 import { departureNote } from "../lib/text";
 import Button from "./Button.astro";
 import Icon from "./Icon.astro";
@@ -22,7 +23,7 @@ interface Props {
 const { senador, candidatos, site, variant } = Astro.props;
 const departed = departureNote(senador) !== null;
 const full = variant === "full";
-const labels = actionLabels(senador);
+const third = thirdPersonText(senador, candidatos, site);
 const card = senatorCardPath(senador.id);
 const file = `abreovoto-${senador.id}.png`;
 ---
@@ -36,20 +37,13 @@ const file = `abreovoto-${senador.id}.png`;
         <div class="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
           <Button kind="primary" href={xIntentUrl(xText(senador, candidatos, site))} rel="noopener noreferrer" target="_blank">
             <Icon name="x" class="size-4 shrink-0" />
-            {labels.x}
+            {xLabel(senador)}
           </Button>
-          <Button
-            kind="secondary"
-            scripted
-            data-share-instagram=""
-            data-text={instagramText(senador, candidatos, site)}
-            data-card={card}
-            data-file={file}
-          >
-            <Icon name="instagram" class="size-4 shrink-0" />
-            {labels.instagram}
+          <Button kind="secondary" scripted="share" data-share-card="" data-text={third} data-card={card} data-file={file}>
+            <Icon name="share" class="size-4 shrink-0" />
+            Compartilhar cartão
           </Button>
-          <Button kind="secondary" href={whatsappUrl(thirdPersonText(senador, candidatos, site))} rel="noopener noreferrer" target="_blank">
+          <Button kind="secondary" href={whatsappUrl(third)} rel="noopener noreferrer" target="_blank">
             <Icon name="whatsapp" class="size-4 shrink-0" />
             WhatsApp
           </Button>
@@ -70,7 +64,7 @@ const file = `abreovoto-${senador.id}.png`;
       <div class="contents" data-share-actions>
         <Button kind="primary" size="sm" href={xIntentUrl(xText(senador, candidatos, site))} rel="noopener noreferrer" target="_blank">
           <Icon name="x" class="size-4 shrink-0" />
-          {labels.x}
+          {xLabel(senador)}
         </Button>
       </div>
     ))

@@ -395,27 +395,39 @@ test("every page carries the Open Graph tags; senator and candidate pages point 
   expect(html("index.html")).toContain('<meta property="og:url" content="https://abreovoto.com/">');
 });
 
-test("a senator page carries the actions in one order: X, Instagram, WhatsApp, copy, download", () => {
+test("a senator page carries the actions in one order: X, share the card, WhatsApp, copy, download", () => {
   const h = html("senador/arthur-lira/index.html");
   expect(h).toContain('href="https://x.com/intent/post?text=%40arthurlira_%2C%20quem%20te%20elegeu');
   expect(h).toContain("%23AbreOVotoSenador");
   expect(h).toContain("Cobrar no X");
-  expect(h).toContain('data-text="@oficialarthurlira, quem te elegeu');
+  expect(h).toContain("Compartilhar cartão");
+  // The share sheet carries the card and the third-person text, the WhatsApp one: no mention,
+  // since the sheet does not know where the text goes.
+  expect(h).toContain('data-text="Arthur Lira (PP-AL) representa você no Senado');
   expect(h).toContain('href="https://wa.me/?text=Arthur%20Lira%20(PP-AL)%20representa%20voc%C3%AA');
   expect(h).toContain('data-card="/cartao/senador/arthur-lira.png"');
   expect(h).toContain('data-url="https://abreovoto.com/senador/arthur-lira/"');
   expect(h).toContain('href="/cartao/senador/arthur-lira.png" download="abreovoto-arthur-lira.png"');
   expect(h).toContain('role="status"');
-  const order = [/href="https:\/\/x\.com\/intent/, /<button[^>]*data-share-instagram/, /href="https:\/\/wa\.me/, /<button[^>]*data-copy-link/, /download="abreovoto-/].map((r) => h.search(r));
+  expect(h).not.toContain("data-share-instagram");
+  const order = [/href="https:\/\/x\.com\/intent/, /<button[^>]*data-share-card/, /href="https:\/\/wa\.me/, /<button[^>]*data-copy-link/, /download="abreovoto-/].map((r) => h.search(r));
   expect(order.every((i) => i > 0)).toBe(true);
   expect([...order].sort((a, b) => a - b)).toEqual(order);
+});
+
+test("the share-card button shows only where the system share sheet takes files on a touch screen", () => {
+  const h = html("senador/arthur-lira/index.html");
+  expect(h).toMatch(/<button[^>]*data-share-card[^>]*class="[^"]*hidden \[\.share_&(amp;)?\]:inline-flex/);
+  // Decided before paint, beside the "js" class, so the button never flashes on a desktop.
+  expect(h).toContain('matchMedia("(pointer: coarse)")');
+  expect(h).toContain('classList.add("share")');
 });
 
 test("a senator without an X profile gets the same actions; the X post names them in the third person", () => {
   const h = html("senador/marcio-bittar/index.html");
   expect(h).toContain('href="https://x.com/intent/post?text=Marcio%20Bittar%20(PL-AC)%20representa%20voc%C3%AA');
   expect(h).toMatch(/<a[^>]*href="https:\/\/x\.com\/intent[^"]*"[^>]*class="[^"]*border-accent bg-accent/);
-  expect(h).toContain('data-text="@marciobittar_, quem te elegeu');
+  expect(h).toContain('data-text="Marcio Bittar (PL-AC) representa você');
   expect(h).toContain("wa.me/?text=");
 });
 
@@ -423,7 +435,7 @@ test("a former occupant's page has no actions", () => {
   const h = html("senador/flavio-dino/index.html");
   expect(h).not.toContain("x.com/intent/post");
   expect(h).not.toContain("wa.me/?text=");
-  expect(h).not.toContain("data-share-instagram");
+  expect(h).not.toContain("data-share-card");
 });
 
 test("the state cards carry the X action beside Ver histórico, on the home and on the state page", () => {
@@ -435,7 +447,7 @@ test("the state cards carry the X action beside Ver histórico, on the home and 
   const al = html("estado/al/index.html");
   expect(al.match(/href="https:\/\/x\.com\/intent/g)).toHaveLength(3);
   expect(al).not.toContain("wa.me/?text="); // primary only
-  expect(al).not.toMatch(/<button[^>]*data-share-instagram/);
+  expect(al).not.toMatch(/<button[^>]*data-share-card/);
 });
 
 test("every senator page invites the visitor to the scoreboard with the totals and the call to act", () => {

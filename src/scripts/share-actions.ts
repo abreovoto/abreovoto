@@ -1,7 +1,7 @@
-// The two share actions that need a script: Instagram (copy the text, then share or
-// download the card) and copy link. The share texts come from the button's data attributes.
+// The two share actions that need a script: share the card (the system share sheet, with the
+// card and the text) and copy link. The texts come from the button's data attributes.
 
-import { instagramMode, instagramStatus, type Delivery } from "../lib/share-mode";
+import { shareStatus, type Delivery } from "../lib/share-mode";
 
 const announce = (el: Element, text: string): void => {
   const line = el.closest("[data-share-actions]")?.querySelector<HTMLElement>("[data-share-status]");
@@ -32,39 +32,31 @@ function download(blob: Blob, name: string): void {
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
-for (const button of document.querySelectorAll<HTMLElement>("[data-share-instagram]")) {
+for (const button of document.querySelectorAll<HTMLElement>("[data-share-card]")) {
   button.addEventListener("pointerdown", () => void cardBlob(button).catch(() => prefetched.delete(button)), { passive: true });
   button.addEventListener("click", async () => {
-    const { text, file: name } = button.dataset;
-    // Through a promise, so a missing clipboard API counts as a failed copy, not a crash.
-    const copied = await Promise.resolve()
-      .then(() => navigator.clipboard.writeText(text!))
-      .then(
-        () => true,
-        () => false,
-      );
-    const delivery = await deliver(button, name!);
+    const delivery = await deliver(button);
     if (delivery === "failed") prefetched.delete(button);
-    const status = instagramStatus(copied, delivery);
+    const status = shareStatus(delivery);
     if (status) announce(button, status);
   });
 }
 
-async function deliver(button: HTMLElement, name: string): Promise<Delivery> {
+// The button only shows where the share sheet takes files on a touch screen (the "share"
+// class, set before paint), so the sheet is the path; the download is the fallback.
+async function deliver(button: HTMLElement): Promise<Delivery> {
+  const { text, file: name } = button.dataset;
   try {
-    const file = new File([await cardBlob(button)], name, { type: "image/png" });
-    const touch = matchMedia("(pointer: coarse)").matches;
-    if (instagramMode({ touch, canShareFiles: navigator.canShare?.({ files: [file] }) ?? false }) === "share") {
-      try {
-        await navigator.share({ files: [file] });
-        return "shared";
-      } catch (e) {
-        // The person closed the share sheet.
-        if (e instanceof DOMException && e.name === "AbortError") return "cancelled";
-        // Refused (e.g. the gesture expired while the card loaded): the download still works.
-      }
+    const file = new File([await cardBlob(button)], name!, { type: "image/png" });
+    try {
+      await navigator.share({ files: [file], text: text! });
+      return "shared";
+    } catch (e) {
+      // The person closed the share sheet.
+      if (e instanceof DOMException && e.name === "AbortError") return "cancelled";
+      // Refused (e.g. the gesture expired while the card loaded): the download still works.
     }
-    download(file, name);
+    download(file, name!);
     return "downloaded";
   } catch {
     return "failed";

@@ -1,13 +1,11 @@
 import { expect, test } from "vitest";
 import { emExercicio, loadData } from "../src/data/load";
 import {
-  actionLabels,
-  instagramHandle,
-  instagramText,
   thirdPersonText,
   whatsappUrl,
   xHandle,
   xIntentUrl,
+  xLabel,
   xLength,
   xText,
 } from "../src/lib/share-text";
@@ -26,28 +24,13 @@ test("the X text mentions the senator, links the page and carries the hashtag", 
   );
 });
 
-test("the Instagram text mentions the senator's Instagram profile, in the same words", () => {
-  const s = by("arthur-lira");
-  expect(instagramHandle(s)).toBe("@oficialarthurlira");
-  expect(instagramText(s, d.candidatos, d.site)).toBe(
-    "@oficialarthurlira, quem te elegeu tem o direito de saber em quem você vota para presidente do Senado. Vai abrir o voto, ou vai votar em segredo? https://abreovoto.com/senador/arthur-lira/ #AbreOVotoSenador",
-  );
-  expect(instagramText(declared(s, "marinho"), d.candidatos, d.site)).toBe(
-    "@oficialarthurlira abriu o voto para presidente do Senado: Rogério Marinho, com fonte pública. Seus eleitores agradecem a transparência. Quem mais? https://abreovoto.com/senador/arthur-lira/ #AbreOVotoSenador",
-  );
-});
-
-test("without a profile on a network, that network's text is the third-person one", () => {
-  const s = by("marcio-bittar"); // no X, has Instagram
+test("without an X profile, the X text is the third-person one", () => {
+  const s = by("marcio-bittar"); // no X profile
   const third =
     "Marcio Bittar (PL-AC) representa você no Senado, e você tem o direito de saber em quem vota para presidente do Senado. Vai abrir o voto, ou vai votar em segredo? https://abreovoto.com/senador/marcio-bittar/ #AbreOVotoSenador";
   expect(xHandle(s)).toBeNull();
   expect(thirdPersonText(s, d.candidatos, d.site)).toBe(third);
   expect(xText(s, d.candidatos, d.site)).toBe(third);
-  expect(instagramText(s, d.candidatos, d.site)).toMatch(/^@marciobittar_, quem te elegeu/);
-  const none = by("cheila-moreira"); // neither X nor Instagram
-  expect(instagramHandle(none)).toBeNull();
-  expect(instagramText(none, d.candidatos, d.site)).toBe(thirdPersonText(none, d.candidatos, d.site));
 });
 
 test("a declared senator's texts name the candidate from the data and are the same shape for the three", () => {
@@ -58,20 +41,20 @@ test("a declared senator's texts name the candidate from the data and are the sa
   );
   expect(new Set(texts.map((t, i) => t.replace(d.candidatos[i]!.nome, "X"))).size).toBe(1);
   expect(thirdPersonText(declared(s, "marinho"), d.candidatos, d.site)).toContain("Arthur Lira (PP-AL) abriu o voto para presidente do Senado: Rogério Marinho,");
-  expect(actionLabels(declared(s, "marinho"))).toEqual({ x: "Compartilhar no X", instagram: "Compartilhar no Instagram" });
-  expect(actionLabels(s)).toEqual({ x: "Cobrar no X", instagram: "Cobrar no Instagram" });
+  expect(xLabel(declared(s, "marinho"))).toBe("Compartilhar no X");
+  expect(xLabel(s)).toBe("Cobrar no X");
 });
 
 test("every text fits X and carries no date", () => {
   for (const s of emExercicio(d)) {
-    for (const t of [xText(s, d.candidatos, d.site), instagramText(s, d.candidatos, d.site), thirdPersonText(s, d.candidatos, d.site)]) {
+    for (const t of [xText(s, d.candidatos, d.site), thirdPersonText(s, d.candidatos, d.site)]) {
       expect(xLength(t), s.id).toBeLessThanOrEqual(280);
       expect(t).not.toMatch(/\d\/\d|1º|fevereiro/);
     }
   }
   const longest = [...d.candidatos].sort((a, b) => b.nome.length - a.nome.length)[0]!;
   const s = by("professora-dorinha-seabra"); // the longest name in office, with an X profile
-  for (const f of [xText, instagramText, thirdPersonText]) expect(xLength(f(declared(s, longest.id), d.candidatos, d.site))).toBeLessThanOrEqual(280);
+  for (const f of [xText, thirdPersonText]) expect(xLength(f(declared(s, longest.id), d.candidatos, d.site))).toBeLessThanOrEqual(280);
 });
 
 test("the intent URLs encode the text", () => {
