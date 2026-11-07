@@ -294,3 +294,9 @@ test("without JavaScript the state links stand alone; with it they are hidden be
   expect(h).toMatch(/classList\.add\("js"\)/);
   expect(h).toMatch(/<div data-no-js class="[^"]*\[\.js_&(amp;)?\]:hidden/);
 });
+
+test("every outbound source link carries noopener noreferrer", () => {
+  for (const p of allHtml(out)) {
+    for (const [a] of html(p).matchAll(/<a [^>]*rel="noopener"[^>]*>/g)) expect(a, p).toBe("");
+  }
+});
