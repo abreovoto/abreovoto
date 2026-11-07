@@ -34,7 +34,7 @@ function statusColour(status: string): string {
 function mark(): CardNode {
   return el(
     "svg",
-    { width: 48, height: 48 },
+    { width: 48, height: 48, flexShrink: 0 },
     el("path", {}, undefined, { d: "M54.1 18.3A26 26 0 1 1 45.7 9.9", fill: "none", stroke: p.fg, strokeWidth: 12 }),
     { xmlns: "http://www.w3.org/2000/svg", width: 48, height: 48, viewBox: "0 0 64 64" },
   );
@@ -49,7 +49,7 @@ function titleBlock(m: ShareCardModel): CardNode {
     const c = statusColour(m.status);
     children.push(
       el("div", { display: "flex", alignItems: "center", gap: 16, marginTop: 28, ...display, fontSize: 48, lineHeight: 1, color: c }, [
-        el("div", { width: 22, height: 22, background: c }),
+        el("div", { width: 22, height: 22, flexShrink: 0, background: c }),
         el("div", {}, m.status),
       ]),
     );
