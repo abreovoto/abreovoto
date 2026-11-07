@@ -1,7 +1,7 @@
 // The two share actions that need a script: Instagram (copy the text, then share or
-// download the card) and copy link. Every text comes from the button's data attributes.
+// download the card) and copy link. The share texts come from the button's data attributes.
 
-import { instagramMode } from "../lib/share-mode";
+import { instagramMode, instagramStatus, type Delivery } from "../lib/share-mode";
 
 const announce = (el: Element, text: string): void => {
   const line = el.closest("[data-share-actions]")?.querySelector<HTMLElement>("[data-share-status]");
@@ -36,28 +36,39 @@ for (const button of document.querySelectorAll<HTMLElement>("[data-share-instagr
   button.addEventListener("pointerdown", () => void cardBlob(button).catch(() => prefetched.delete(button)), { passive: true });
   button.addEventListener("click", async () => {
     const { text, file: name } = button.dataset;
-    try {
-      await navigator.clipboard.writeText(text!);
-      const file = new File([await cardBlob(button)], name!, { type: "image/png" });
-      const touch = matchMedia("(pointer: coarse)").matches;
-      if (instagramMode({ touch, canShareFiles: navigator.canShare?.({ files: [file] }) ?? false }) === "share") {
-        try {
-          await navigator.share({ files: [file] });
-          announce(button, "Texto copiado. Cole no Instagram.");
-          return;
-        } catch (e) {
-          // The person closed the share sheet: nothing to say.
-          if (e instanceof DOMException && e.name === "AbortError") return;
-          // Refused (e.g. the gesture expired while the card loaded): the download still works.
-        }
-      }
-      download(file, name!);
-      announce(button, "Texto copiado e cartão baixado. Cole no Instagram.");
-    } catch {
-      prefetched.delete(button);
-      announce(button, "Não foi possível compartilhar. Baixe o cartão e copie o link.");
-    }
+    // Through a promise, so a missing clipboard API counts as a failed copy, not a crash.
+    const copied = await Promise.resolve()
+      .then(() => navigator.clipboard.writeText(text!))
+      .then(
+        () => true,
+        () => false,
+      );
+    const delivery = await deliver(button, name!);
+    if (delivery === "failed") prefetched.delete(button);
+    const status = instagramStatus(copied, delivery);
+    if (status) announce(button, status);
   });
+}
+
+async function deliver(button: HTMLElement, name: string): Promise<Delivery> {
+  try {
+    const file = new File([await cardBlob(button)], name, { type: "image/png" });
+    const touch = matchMedia("(pointer: coarse)").matches;
+    if (instagramMode({ touch, canShareFiles: navigator.canShare?.({ files: [file] }) ?? false }) === "share") {
+      try {
+        await navigator.share({ files: [file] });
+        return "shared";
+      } catch (e) {
+        // The person closed the share sheet.
+        if (e instanceof DOMException && e.name === "AbortError") return "cancelled";
+        // Refused (e.g. the gesture expired while the card loaded): the download still works.
+      }
+    }
+    download(file, name);
+    return "downloaded";
+  } catch {
+    return "failed";
+  }
 }
 
 for (const button of document.querySelectorAll<HTMLElement>("[data-copy-link]")) {
