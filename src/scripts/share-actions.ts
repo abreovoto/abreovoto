@@ -1,6 +1,8 @@
 // The two share actions that need a script: Instagram (copy the text, then share or
 // download the card) and copy link. Every text comes from the button's data attributes.
 
+import { instagramMode } from "../lib/share-mode";
+
 const announce = (el: Element, text: string): void => {
   const line = el.closest("[data-share-actions]")?.querySelector<HTMLElement>("[data-share-status]");
   if (line) line.textContent = text;
@@ -37,7 +39,8 @@ for (const button of document.querySelectorAll<HTMLElement>("[data-share-instagr
     try {
       await navigator.clipboard.writeText(text!);
       const file = new File([await cardBlob(button)], name!, { type: "image/png" });
-      if (navigator.canShare?.({ files: [file] })) {
+      const touch = matchMedia("(pointer: coarse)").matches;
+      if (instagramMode({ touch, canShareFiles: navigator.canShare?.({ files: [file] }) ?? false }) === "share") {
         try {
           await navigator.share({ files: [file] });
           announce(button, "Texto copiado. Cole no Instagram.");
