@@ -300,3 +300,7 @@ test("every outbound source link carries noopener noreferrer", () => {
     for (const [a] of html(p).matchAll(/<a [^>]*rel="noopener"[^>]*>/g)) expect(a, p).toBe("");
   }
 });
+
+test("the 404's h1 looks like every other h1", () => {
+  expect(html("404.html")).toMatch(/<h1 class="text-3xl font-semibold leading-tight sm:text-4xl">/);
+});
