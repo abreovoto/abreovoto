@@ -1,0 +1,33 @@
+---
+/**
+ * Under the card on a senator's page: whoever arrives from a shared link sees where the
+ * whole Senate stands and can go to the scoreboard, and to the petition once it exists.
+ */
+import type { Placar } from "../data/placar";
+import type { Peticao } from "../data/schema";
+import { petitionView } from "../lib/petition";
+import Button from "./Button.astro";
+
+interface Props {
+  placar: Placar;
+  peticao: Peticao;
+}
+
+const { placar, peticao } = Astro.props;
+const view = petitionView(peticao, null);
+---
+
+<div class="mt-4 flex flex-wrap items-center gap-x-6 gap-y-3 text-base">
+  <p>
+    <a href="/#placar" class="text-accent underline tabular-nums">
+      {`${placar.naoDeclararam} não declararam · ${placar.declararam} declararam — ver o placar`}
+    </a>
+  </p>
+  {
+    view && (
+      <Button kind="primary" size="sm" href={view.url} rel="noopener noreferrer">
+        Assinar a petição
+      </Button>
+    )
+  }
+</div>

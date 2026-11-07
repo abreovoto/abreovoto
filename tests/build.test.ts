@@ -435,3 +435,14 @@ test("the state cards carry one share action beside Ver histórico, on the home 
     loadData().senadores.filter((s) => s.uf === "AL" && s.situacao === "em_exercicio" && !s.redes.x).length,
   );
 });
+
+test("every senator page receives the visitor with the totals and a link to the scoreboard", () => {
+  const d = loadData();
+  const p = placar(d);
+  for (const id of ["marcio-bittar", "flavio-dino"]) {
+    const h = html(`senador/${id}/index.html`);
+    expect(h, id).toContain(`${p.naoDeclararam} não declararam · ${p.declararam} declararam`);
+    expect(h, id).toContain('href="/#placar"');
+    expect(h, id).not.toContain("Assinar a petição"); // peticao.url is null today
+  }
+});
