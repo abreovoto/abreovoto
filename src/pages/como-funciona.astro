@@ -60,7 +60,7 @@ const link = "text-accent underline";
       <p>
         O site é mantido pela iniciativa Abre o Voto. Tudo o que ele afirma pode ser conferido: a metodologia é pública,
         os dados estão abertos em <a href="/dados.json" class={link}>dados.json</a> e cada alteração fica registrada em
-        um <a href={site.repositorio} rel="noopener" class={link}>repositório público</a>, com data e descrição.
+        um <a href={site.repositorio} rel="noopener noreferrer" class={link}>repositório público</a>, com data e descrição.
       </p>
       <p>
         Todos os dias, as fontes recebidas são conferidas pela regra da <a href="/metodologia/" class={link}>Metodologia</a> e o placar é atualizado. O endereço de
@@ -92,7 +92,7 @@ const link = "text-accent underline";
           <p>
             Para que em 2029 isso não precise de campanha, há no e-Cidadania, o portal de participação do Senado, uma
             proposta de voto aberto na eleição da Mesa.{" "}
-            <a href={site.ecidadania_url} rel="noopener" class={link}>Apoie no e-Cidadania</a>.
+            <a href={site.ecidadania_url} rel="noopener noreferrer" class={link}>Apoie no e-Cidadania</a>.
           </p>
         </div>
       </section>
@@ -110,7 +110,7 @@ const link = "text-accent underline";
             {profiles.map((p, i) => (
               <>
                 {i > 0 && ", "}
-                <a href={p.href} rel="noopener" class={link}>
+                <a href={p.href} rel="noopener noreferrer" class={link}>
                   {p.label}
                 </a>
               </>
