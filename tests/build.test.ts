@@ -226,7 +226,8 @@ test("the three candidate pages are the same page with different data", () => {
   const shape = (h: string) =>
     h
       .replace(/Davi Alcolumbre|Rogério Marinho|Tereza Cristina|UNIÃO-AP|PL-RN|PP-MS|davi-alcolumbre|rogerio-marinho|tereza-cristina|alcolumbre|marinho/g, "X")
-      .replace(/\/_astro\/[^"]+/g, "ASSET");
+      .replace(/\/_astro\/[^"]+/g, "ASSET")
+      .replace(/\?v=[0-9a-f]{8}/g, "?v=HASH"); // each card has its own version
   expect(shape(pages[1]!)).toBe(shape(pages[0]!));
   expect(shape(pages[2]!)).toBe(shape(pages[0]!));
 });
@@ -374,4 +375,19 @@ test("on a phone a long e-mail breaks after the @, never in the middle of a word
   expect(h).toMatch(/sen\.marciobittar@<wbr>senado\.leg\.br/);
   expect(h).toMatch(/<dd class="[^"]*\btext-sm\b[^"]*\bsm:text-base\b/);
   expect(h).not.toMatch(/<dd class="[^"]*break-words/);
+});
+
+test("every page carries the Open Graph tags; senator and candidate pages point at their own card", () => {
+  for (const p of allHtml(out)) {
+    const h = html(p);
+    expect(h, p).toMatch(/<meta property="og:image" content="https:\/\/abreovoto\.com\/cartao\/[^"]+\.png\?v=[0-9a-f]{8}">/);
+    expect(h, p).toContain('<meta name="twitter:card" content="summary_large_image">');
+    expect(h, p).toMatch(/<meta property="og:image:alt" content="Cartão do Abre o Voto: /);
+  }
+  expect(html("senador/marcio-bittar/index.html")).toContain('content="https://abreovoto.com/cartao/senador/marcio-bittar.png?v=');
+  expect(html("senador/flavio-dino/index.html")).toContain('content="https://abreovoto.com/cartao/senador/flavio-dino.png?v=');
+  expect(html("candidato/alcolumbre/index.html")).toContain('content="https://abreovoto.com/cartao/candidato/alcolumbre.png?v=');
+  for (const p of ["index.html", "estado/rn/index.html", "como-funciona/index.html", "404.html"]) expect(html(p), p).toContain('content="https://abreovoto.com/cartao/placar.png?v=');
+  expect(html("404.html")).not.toContain('property="og:url"');
+  expect(html("index.html")).toContain('<meta property="og:url" content="https://abreovoto.com/">');
 });

@@ -3,18 +3,32 @@ import "../styles/global.css";
 import Footer from "../components/Footer.astro";
 import Nav from "../components/Nav.astro";
 import { loadData } from "../data/load";
+import { todayUtc } from "../data/schema";
+import { type Card, ogTags } from "../lib/og";
+import { HOME_CARD_PATH } from "../lib/routes";
+import { homeCard } from "../lib/share-card";
 
 interface Props {
   title: string;
   description: string;
   noindex?: boolean;
+  /** The card shown when the page is shared; the scoreboard's when the page has none of its own. */
+  card?: Card;
 }
 
-const { title, description, noindex = false } = Astro.props;
-const { site } = loadData();
+const { title, description, noindex = false, card } = Astro.props;
+const d = loadData();
+const { site } = d;
 // The 404 page answers for addresses that do not exist, so it names no canonical address of its own.
 const notFound = Astro.url.pathname.replace(/\/$/, "") === "/404";
 const canonical = notFound ? null : new URL(Astro.url.pathname, Astro.site).toString();
+const tags = ogTags({
+  title,
+  description,
+  canonical,
+  card: card ?? { path: HOME_CARD_PATH, model: homeCard(d, todayUtc()) },
+  siteX: site.redes.x,
+});
 ---
 
 <!doctype html>
@@ -24,6 +38,7 @@ const canonical = notFound ? null : new URL(Astro.url.pathname, Astro.site).toSt
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    {tags.map((t) => ("property" in t ? <meta property={t.property} content={t.content} /> : <meta name={t.name} content={t.content} />))}
     {noindex && <meta name="robots" content="noindex" />}
     {canonical && <link rel="canonical" href={canonical} />}
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
