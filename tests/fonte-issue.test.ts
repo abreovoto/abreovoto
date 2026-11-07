@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { CORRECAO_TITLE, fence, issueFor, parseSubmission } from "../worker/fonte-issue";
+import { CORRECAO_TITLE, fence, issueFor, parseSubmission, type Submission } from "../worker/fonte-issue";
 import { CORRECAO_SUBJECT } from "../src/lib/source-form";
 
 const ids = new Set(["marcio-bittar", "flavio-dino"]);
@@ -12,6 +12,7 @@ test("a complete submission parses, trimmed, with the checkbox as a boolean", ()
 
 test.each([
   ["http://g1.globo.com/x", "url"], ["g1.globo.com/x", "url"], ["https://g1.globo.com/a b", "url"], ["javascript:alert(1)", "url"],
+  ["https:@someone", "url"], ["https:/g1.globo.com/x", "url"],
   [`https://g1.globo.com/${"a".repeat(2000)}`, "url"],
 ])("%s is refused as a url", (url, campo) => {
   expect(parseSubmission({ ...ok, url }, ids)).toEqual({ campo });
@@ -35,7 +36,7 @@ test("the issue is framed, links the page, fences the comment and mentions nobod
   expect(issue.labels).toEqual(["data"]);
   expect(issue.body.startsWith("Enviado pelo formulário do site em 2026-11-07 14:05 UTC. **Não verificado**: só entra no placar depois da regra da [Metodologia](https://abreovoto.com/metodologia/).")).toBe(true);
   expect(issue.body).toContain("Senador(a): [Marcio Bittar](https://abreovoto.com/senador/marcio-bittar/)");
-  expect(issue.body).toContain("Fonte: https://g1.globo.com/x");
+  expect(issue.body).toContain("Fonte: <https://g1.globo.com/x>");
   expect(issue.body).toContain("Correção do que o site mostra: não");
   expect(issue.body).toContain("Comentário:\n````\nveja @alguem #12 ``` <b>oi</b>\n````");
   expect(issue.body.indexOf("@alguem")).toBeGreaterThan(issue.body.indexOf("````"));
@@ -57,4 +58,11 @@ test("the fence is one backtick longer than the longest run, three at least", ()
   expect(fence("oi")).toBe("```");
   expect(fence("a ``` b")).toBe("````");
   expect(fence("`````")).toBe("``````");
+});
+
+test("the url is kept normalized, and inside the issue it is an autolink that mentions nobody", () => {
+  const sub = parseSubmission({ ...ok, url: "HTTPS://a.b/<@someone>`x`" }, ids);
+  expect(sub).toMatchObject({ url: "https://a.b/%3C@someone%3E%60x%60" });
+  const issue = issueFor(sub as Submission, seat, new Date("2026-11-07T14:05:00Z"));
+  expect(issue.body).toContain("Fonte: <https://a.b/%3C@someone%3E%60x%60>");
 });

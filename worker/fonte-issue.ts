@@ -17,12 +17,17 @@ export const CORRECAO_TITLE = "Correção: site";
 
 const TRUE = new Set<unknown>([true, "true", "on", "1"]);
 
+/**
+ * An https URL written out in full, returned normalized: the parser percent-encodes `<`, `>`,
+ * backticks and quotes, so the address can sit inside an autolink in the public record.
+ */
 function validUrl(raw: unknown): string | null {
   if (typeof raw !== "string") return null;
   const url = raw.trim();
-  if (url === "" || url.length > LIMITS.url || /\s/.test(url)) return null;
+  if (url.length > LIMITS.url || /\s/.test(url) || !/^https:\/\//i.test(url)) return null;
   try {
-    return new URL(url).protocol === "https:" ? url : null;
+    const href = new URL(url).href;
+    return href.length > LIMITS.url ? null : href;
   } catch {
     return null;
   }
@@ -51,7 +56,8 @@ export function issueFor(s: Submission, seat: Seat | null, at: Date): { title: s
   const paragraphs = [
     `Enviado pelo formulário do site em ${when} UTC. **Não verificado**: só entra no placar depois da regra da [Metodologia](https://abreovoto.com/metodologia/).`,
     seat === null ? "Sobre: o site" : `Senador(a): [${seat.nome}](${seat.pagina})`,
-    `Fonte: ${s.url}`,
+    // An autolink: GitHub renders the address and processes no mention inside it.
+    `Fonte: <${s.url}>`,
     `Correção do que o site mostra: ${s.correcao ? "sim" : "não"}`,
   ];
   if (s.comentario !== "") {
