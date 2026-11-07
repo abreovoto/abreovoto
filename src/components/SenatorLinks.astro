@@ -72,9 +72,18 @@ const rows = [
               )}
               <span class="max-sm:sr-only">{r.label}</span>
             </dt>
-            <dd class="min-w-0 break-words text-base">
+            <dd class="min-w-0 text-sm sm:text-base">
               <a href={r.href} rel={r.outbound ? "noopener noreferrer" : undefined} class="text-accent underline">
-                {r.text}
+                {
+                  r.icon === "email" ? (
+                    <>
+                      {r.text.split("@")[0]}@<wbr />
+                      {r.text.split("@")[1]}
+                    </>
+                  ) : (
+                    r.text
+                  )
+                }
               </a>
             </dd>
           </>
