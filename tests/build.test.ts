@@ -323,3 +323,10 @@ test("each row of the list shows a chevron, hidden from screen readers", () => {
   expect(rows).toHaveLength(81);
   for (const [, inner] of rows) expect(inner).toMatch(/<span data-chevron aria-hidden="true"/);
 });
+
+test("the senator cards' button reads 'Ver histórico'", () => {
+  for (const p of ["index.html", "estado/rn/index.html"]) {
+    expect(html(p)).toContain("Ver histórico");
+    expect(html(p)).not.toContain("Ver página");
+  }
+});
