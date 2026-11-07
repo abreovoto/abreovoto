@@ -1,14 +1,15 @@
 /**
  * The fonts the share card is rasterised with. Satori renders a variable font at
  * its default instance only, so the three Archivo instances the card uses are
- * committed as static files.
+ * committed as static files. Paths resolve against the working directory, as
+ * the data loader's do: inside the build, `import.meta.url` points into the bundle.
  */
 import { readFileSync } from "node:fs";
-import { fileURLToPath } from "node:url";
+import { resolve } from "node:path";
 
 export type CardFont = { name: "Display" | "Text"; data: Buffer; weight: 400 | 600 | 800; style: "normal" };
 
-const read = (file: string): Buffer => readFileSync(fileURLToPath(new URL(`../assets/fonts/${file}`, import.meta.url)));
+const read = (file: string): Buffer => readFileSync(resolve("src", "assets", "fonts", file));
 
 export function cardFonts(): CardFont[] {
   return [

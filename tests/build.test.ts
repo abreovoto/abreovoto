@@ -4,6 +4,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { beforeAll, expect, test } from "vitest";
 import { emExercicio, loadData } from "../src/data/load";
+import { placar } from "../src/data/placar";
 import { UF } from "../src/data/schema";
 import { ufWithDe } from "../src/lib/uf";
 
@@ -45,11 +46,22 @@ test("the styleguide renders every component with real data and is not indexed",
   expect(h).toContain("não declararam");
   expect(h).toContain("Davi Alcolumbre");
   expect(h).toContain("assume a vaga em 6/1/2027");
-  expect(h).toContain("#AbreOVotoSenador");
   expect(
     (h.match(/width="1200" height="630"|width:1200px;height:630px|width: 1200px; height: 630px/g) ?? []).length,
   ).toBeGreaterThanOrEqual(3);
+  expect(h).toContain('src="/cartao/placar.png"');
   expect(h).toContain("<select");
+});
+
+test("a card PNG exists for every senator, every candidate and the scoreboard, at 1200×630", () => {
+  const d = loadData();
+  const size = (p: string) => {
+    const b = readFileSync(join(out, p));
+    return [b.readUInt32BE(16), b.readUInt32BE(20)];
+  };
+  for (const s of d.senadores) expect(size(`cartao/senador/${s.id}.png`), s.id).toEqual([1200, 630]);
+  for (const c of placar(d).porCandidato) expect(size(`cartao/candidato/${c.id}.png`), c.id).toEqual([1200, 630]);
+  expect(size("cartao/placar.png")).toEqual([1200, 630]);
 });
 
 test("the favicons exist and are referenced", () => {
