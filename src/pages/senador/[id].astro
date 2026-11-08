@@ -50,7 +50,7 @@ const description = `${senador.nome} (${partyState(senador)}) ${departed ?? stat
     {
       !departed && (
         <p class="mt-4 text-base">
-          {shortcutText(senador.nome)} <a href="#fonte" class="text-accent underline">{FORM_TEXT.shortcutLink}</a>
+          {shortcutText(senador.nome, decl.status !== "nao_declarou")} <a href="#fonte" class="text-accent underline">{FORM_TEXT.shortcutLink}</a>
         </p>
       )
     }

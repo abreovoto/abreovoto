@@ -30,12 +30,24 @@ export const FORM_TEXT = Object.freeze({
   }),
 });
 
-/** The section's first paragraph: the same for every senator, or for the site as a whole. */
-export const introText = (nome: string | null): string =>
-  `O placar é atualizado com a ajuda de quem acompanha. Se ${nome ?? "um senador"} declarou em público o voto para presidente do Senado, mudou de posição, ou se algo ${nome === null ? "no site" : "nesta página"} está errado, mande o link de onde viu. Conferimos pela regra da Metodologia antes de mudar o placar.`;
+/**
+ * The section's first paragraph. For the site as a whole it covers everything; on a senator's
+ * page it depends only on whether the senator has declared: before, it asks whether they have
+ * already said it; after, it asks for a stronger source, a change of position or an error. The
+ * same two texts for every senator.
+ */
+export function introText(nome: string | null, declared = false): string {
+  const check = "Conferimos pela regra da Metodologia antes de mudar o placar.";
+  if (nome === null)
+    return `O placar é atualizado com a ajuda de quem acompanha. Se um senador declarou em público o voto para presidente do Senado, mudou de posição, ou se algo no site está errado, mande o link de onde viu. ${check}`;
+  return declared
+    ? `${nome} já declarou o voto, com a fonte mostrada acima. Você pode ajudar a deixar esse registro mais forte: se conhece uma fonte mais direta da mesma declaração, como o vídeo original, um post no perfil oficial ou a frase completa, mande o link. Se ${nome} mudou de posição, ou se algo nesta página está errado, avise também. ${check}`
+    : `O placar é atualizado com a ajuda de quem acompanha. Se você viu ${nome} dizer em público em quem vota para presidente do Senado, mande o link de onde viu: um vídeo, um post no perfil oficial ou uma matéria com a fala entre aspas. Se algo nesta página está errado, avise também. ${check}`;
+}
 
-/** The line under a senator's status that leads to the form. */
-export const shortcutText = (nome: string): string => `Viu ${nome} declarar ou mudar o voto?`;
+/** The line under a senator's status that leads to the form, in the same two cases. */
+export const shortcutText = (nome: string, declared = false): string =>
+  declared ? `Tem uma fonte melhor, ou viu ${nome} mudar o voto?` : `Viu ${nome} declarar o voto?`;
 
 export const protocolText = (n: number): string => `Protocolo ${n}`;
 

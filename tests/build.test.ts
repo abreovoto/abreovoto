@@ -485,9 +485,9 @@ test("the senator page carries the source form and the footer points at it", () 
   expect(h).toMatch(/Achou um erro\? <a href="#fonte"[^>]*>Envie a correção<\/a>/);
   expect(h).not.toMatch(/<script[^>]+src="https:\/\/challenges\.cloudflare\.com/);
   expect(h).toContain(">Ajude a manter o placar em dia</h2>");
-  expect(h).toContain("Se Marcio Bittar declarou em público o voto para presidente do Senado, mudou de posição");
+  expect(h).toContain("Se você viu Marcio Bittar dizer em público em quem vota para presidente do Senado");
   // Right under the status, the same for every senator in office: the way to the form.
-  expect(h).toMatch(/Viu Marcio Bittar declarar ou mudar o voto\? <a href="#fonte"[^>]*>Avise<\/a>/);
+  expect(h).toMatch(/Viu Marcio Bittar declarar o voto\? <a href="#fonte"[^>]*>Avise<\/a>/);
   expect(h).toContain("Não envie dados pessoais.");
   expect(h.toLowerCase()).not.toContain("github.com/abreovoto/abreovoto/issues");
 });
@@ -495,7 +495,7 @@ test("the senator page carries the source form and the footer points at it", () 
 test("a departed senator's page carries the form too", () => {
   const h = html("senador/flavio-dino/index.html");
   expect(h).toContain('value="flavio-dino"');
-  expect(h).not.toContain("declarar ou mudar o voto?"); // no vote to report for a seat already left
+  expect(h).not.toContain("declarar o voto?"); // no vote to report for a seat already left
 });
 
 test("/fonte/ offers every seat holder and the site itself; other pages' footers point at it", () => {
