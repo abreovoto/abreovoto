@@ -485,14 +485,21 @@
     instagram: https://www.instagram.com/ottoalencar
   email_institucional: sen.ottoalencar@senado.leg.br
   declaracao:
-    status: nao_declarou
-    candidato: null
-    data: null
-    fonte: null
+    status: declarou
+    candidato: alcolumbre
+    data: 2026-10-29
+    fonte:
+      tipo: materia
+      url: https://www.bnews.com.br/noticias/politica/otto-minimiza-possivel-anistia-a-bolsonaro-articulada-por-alcolumbre-fala-superficial.html
+      titulo: "Otto minimiza possível anistia a Bolsonaro articulada por Alcolumbre: ‘Fala superficial’"
+      trecho: "O Davi já se coloca, já trabalha nessa direção de ser reeleito presidente. […] eu também já manifestei apoio a ele, ao Davi, pelo PSD. […]"
   observacoes: []
   historico:
     - data: 2026-11-06
       evento: entrou na lista como não declarou
+      issue: null
+    - data: 2026-11-08
+      evento: declarou voto em Davi Alcolumbre (matéria jornalística, 29 de outubro de 2026)
       issue: null
 - id: cid-gomes
   nome: Cid Gomes
