@@ -1,4 +1,5 @@
 import { expect, test } from "vitest";
+import { asUndeclared } from "./fixtures/undeclared";
 import { emExercicio, loadData } from "../src/data/load";
 import {
   thirdPersonText,
@@ -25,7 +26,7 @@ test("the X text mentions the senator, links the page and carries the hashtag", 
 });
 
 test("without an X profile, the X text is the third-person one", () => {
-  const s = by("marcio-bittar"); // no X profile
+  const s = asUndeclared(by("marcio-bittar")); // no X profile; the not-declared text
   const third =
     "Marcio Bittar (PL-AC) representa você no Senado, e você tem o direito de saber em quem vota para presidente do Senado. Vai abrir o voto, ou vai votar em segredo? https://abreovoto.com/senador/marcio-bittar/ #AbreOVotoSenador";
   expect(xHandle(s)).toBeNull();
