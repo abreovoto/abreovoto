@@ -2517,14 +2517,21 @@
     instagram: https://www.instagram.com/astropontes
   email_institucional: sen.astronautamarcospontes@senado.leg.br
   declaracao:
-    status: nao_declarou
-    candidato: null
-    data: null
-    fonte: null
+    status: declarou
+    candidato: marinho
+    data: 2026-11-05
+    fonte:
+      tipo: materia
+      url: https://tmc.com.br/politica/marcos-pontes-defende-candidatura-de-rogerio-marinho-a-presidencia-do-senado-para-o-bem-do-pais/
+      titulo: "Marcos Pontes defende Rogério Marinho à presidência do Senado"
+      trecho: "[…] para o bem do país, é importante o equilíbrio institucional e para isso o Senado precisa ter na presidência agora o Rogério Marinho"
   observacoes: []
   historico:
     - data: 2026-11-06
       evento: entrou na lista como não declarou
+      issue: null
+    - data: 2026-11-08
+      evento: declarou voto em Rogério Marinho (matéria jornalística, 5 de novembro de 2026)
       issue: null
 - id: eduardo-gomes
   nome: Eduardo Gomes
