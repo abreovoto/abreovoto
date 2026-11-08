@@ -396,7 +396,8 @@ test("on a phone a long e-mail breaks after the @, never in the middle of a word
   const h = html("senador/marcio-bittar/index.html");
   expect(h).toMatch(/sen\.marciobittar@<wbr>senado\.leg\.br/);
   expect(h).toMatch(/<dd class="[^"]*\btext-sm\b[^"]*\bsm:text-base\b/);
-  expect(h).not.toMatch(/<dd class="[^"]*break-words/);
+  const links = h.slice(h.indexOf('id="links"')); // the declaration's source title may wrap anywhere; the links do not
+  expect(links).not.toMatch(/<dd class="[^"]*break-words/);
 });
 
 test("every page carries the Open Graph tags; senator and candidate pages point at their own card", () => {
