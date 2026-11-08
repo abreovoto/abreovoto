@@ -254,6 +254,8 @@ test("the three text pages carry their sections and the contact anchor", () => {
   expect(cf).toContain("Candidatos até agora: Davi Alcolumbre, Rogério Marinho e Tereza Cristina.");
   const m = text("metodologia/index.html");
   for (const s of ["O que conta como fonte", "Correções", "CC BY 4.0", 'href="/dados.json"']) expect(m).toContain(s);
+  // Declared support counts only with the candidate and the election inside the quote: the page says so.
+  expect(m).toContain("Conta como dizer em quem vota o apoio declarado pelo próprio senador a uma candidatura, quando a citação traz o nome do candidato e a eleição para a Presidência do Senado.");
   const p = text("privacidade/index.html");
   for (const s of ["Web Analytics", "localStorage", "GitHub", "Change.org"]) expect(p).toContain(s);
   for (const h of [cf, m, p]) expect(h.match(/<h1[ >]/g)).toHaveLength(1);
