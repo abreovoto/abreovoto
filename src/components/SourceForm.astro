@@ -17,7 +17,8 @@ const senadores =
   "senadores" in props ? [...props.senadores].sort((a, b) => a.nome.localeCompare(b.nome, "pt-BR")) : [];
 const siteKey = import.meta.env.TURNSTILE_SITE_KEY ?? site.turnstile_site_key;
 
-const [introBefore, introAfter] = introText(senador?.nome ?? null).split("Metodologia");
+const declared = senador !== null && senador.declaracao.status !== "nao_declarou";
+const [introBefore, introAfter] = introText(senador?.nome ?? null, declared).split("Metodologia");
 const labelledBy = "labelledBy" in props ? props.labelledBy : "fonte-titulo";
 const [noScriptBefore, noScriptAfter] = noScriptText(site.contato).split(site.contato);
 const scriptText = JSON.stringify({
