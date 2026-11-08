@@ -2293,14 +2293,21 @@
     instagram: https://www.instagram.com/carlosbolsonaro
   email_institucional: null
   declaracao:
-    status: nao_declarou
-    candidato: null
-    data: null
-    fonte: null
+    status: declarou
+    candidato: marinho
+    data: 2026-10-31
+    fonte:
+      tipo: materia
+      url: https://www.gp1.com.br/brasil/noticia/2026/10/31/carlos-bolsonaro-visita-jair-bolsonaro-e-reforca-apoio-a-rogerio-marinho-para-presidencia-do-senado-635296.html
+      titulo: "Carlos Bolsonaro visita Jair Bolsonaro e reforça apoio a Rogério Marinho para presidência do Senado"
+      trecho: "A gente tem uma eleição do Senado agora. Nosso candidato é o Rogério Marinho e a gente vai seguir essa linha […]"
   observacoes: []
   historico:
     - data: 2026-11-06
       evento: entrou na lista como não declarou
+      issue: null
+    - data: 2026-11-08
+      evento: declarou voto em Rogério Marinho (matéria jornalística, 31 de outubro de 2026)
       issue: null
 - id: jorge-seif
   nome: Jorge Seif
