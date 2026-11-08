@@ -2443,14 +2443,21 @@
     instagram: https://www.instagram.com/guilhermederrite
   email_institucional: dep.guilhermederrite@camara.leg.br
   declaracao:
-    status: nao_declarou
-    candidato: null
-    data: null
-    fonte: null
+    status: declarou
+    candidato: marinho
+    data: 2026-11-08
+    fonte:
+      tipo: materia
+      url: https://agorarn.com.br/politica/rogerio-marinho-apoio-senadores-eleitos-senado/
+      titulo: "Rogério Marinho recebe apoio público de senadores eleitos de três partidos para presidir o Senado"
+      trecho: "Com certeza, a gente vai resgatar a nossa democracia com Rogério Marinho, presidente do Senado Federal. Estamos juntos"
   observacoes: []
   historico:
     - data: 2026-11-06
       evento: entrou na lista como não declarou
+      issue: null
+    - data: 2026-11-08
+      evento: declarou voto em Rogério Marinho (matéria jornalística, 8 de novembro de 2026)
       issue: null
 - id: andre-do-prado
   nome: André do Prado
