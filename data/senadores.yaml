@@ -1972,14 +1972,21 @@
     instagram: https://www.instagram.com/drfernandomaximo007
   email_institucional: dep.dr.fernandomaximo@camara.leg.br
   declaracao:
-    status: nao_declarou
-    candidato: null
-    data: null
-    fonte: null
+    status: declarou
+    candidato: marinho
+    data: 2026-11-03
+    fonte:
+      tipo: materia
+      url: https://www.tudorondonia.com/noticias/fernando-maximo-nao-aceita-falar-sobre-alcolumbre-o-candidato-do-meu-partido-e-o-senador-rogerio-marinho,164515.shtml
+      titulo: "FERNANDO MÁXIMO NÃO ACEITA FALAR SOBRE ALCOLUMBRE: 'O CANDIDATO DO MEU PARTIDO É O SENADOR ROGÉRIO MARINHO'!"
+      trecho: "meu candidato à Presidência do Senado é Rogério Marinho, porque ele é o nome do meu partido, o PL. Não há uma segunda opção"
   observacoes: []
   historico:
     - data: 2026-11-06
       evento: entrou na lista como não declarou
+      issue: null
+    - data: 2026-11-08
+      evento: declarou voto em Rogério Marinho (matéria jornalística, 3 de novembro de 2026)
       issue: null
 - id: bruno-scheid
   nome: Bruno Scheid
