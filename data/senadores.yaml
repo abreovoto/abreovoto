@@ -1127,14 +1127,21 @@
     instagram: https://www.instagram.com/reinaldoazambuja
   email_institucional: null
   declaracao:
-    status: nao_declarou
-    candidato: null
-    data: null
-    fonte: null
+    status: declarou
+    candidato: marinho
+    data: 2026-11-06
+    fonte:
+      tipo: materia
+      url: https://www.douranews.com.br/politica/2026/11/06/reinaldo-trabalha-por-rogerio-marinho-para-o-senado.html
+      titulo: "Reinaldo trabalha por Rogério Marinho para o Senado"
+      trecho: "Rogério Marinho reúne essas três condições […] Cabe a nós agora aglutinar forças em torno desse nome para a presidência do Senado. […]"
   observacoes: []
   historico:
     - data: 2026-11-06
       evento: entrou na lista como não declarou
+      issue: null
+    - data: 2026-11-08
+      evento: declarou voto em Rogério Marinho (matéria jornalística, 6 de novembro de 2026)
       issue: null
 - id: capitao-contar
   nome: Capitão Contar
