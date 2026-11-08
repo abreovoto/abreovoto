@@ -1,4 +1,5 @@
 import { expect, test } from "vitest";
+import { asUndeclared } from "./fixtures/undeclared";
 import { loadData } from "../src/data/load";
 import { placar } from "../src/data/placar";
 import { cardTree, type CardNode } from "../src/lib/card-tree";
@@ -16,7 +17,7 @@ const flexDivs = (n: CardNode | string): boolean =>
     ([] as (CardNode | string)[]).concat(n.props.children ?? []).every(flexDivs));
 
 test("every card ends with the date and the domain, and every multi-child div is flex", () => {
-  const s = d.senadores.find((x) => x.id === "marcio-bittar")!;
+  const s = asUndeclared(d.senadores.find((x) => x.id === "marcio-bittar")!);
   for (const m of [senatorCard(s, d, today), candidateCard(placar(d).porCandidato[0]!, d, today), homeCard(d, today)]) {
     const t = cardTree(m, null);
     expect(texts(t)).toContain("7/11/2026 · abreovoto.com");
@@ -26,7 +27,7 @@ test("every card ends with the date and the domain, and every multi-child div is
 });
 
 test("the status colour follows the status, the same for every candidate", () => {
-  const s = d.senadores.find((x) => x.id === "marcio-bittar")!;
+  const s = asUndeclared(d.senadores.find((x) => x.id === "marcio-bittar")!);
   const declared = {
     ...s,
     declaracao: {
@@ -51,7 +52,7 @@ test("a card renders to a 1200×630 PNG", async () => {
 }, 20_000);
 
 test("every fixed-size box inside a flex row keeps its size when the text beside it wraps", () => {
-  const s = d.senadores.find((x) => x.id === "marcio-bittar")!;
+  const s = asUndeclared(d.senadores.find((x) => x.id === "marcio-bittar")!);
   const unshrinkable = (n: CardNode | string, inFlex: boolean): string[] => {
     if (typeof n === "string") return [];
     const st = n.props.style ?? {};
