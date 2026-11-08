@@ -51,3 +51,8 @@ test("the open data names the repository the site itself points to", () => {
   const d = loadData();
   expect(openData(d, "2026-11-06").fonte).toBe(d.site.repositorio);
 });
+
+test("the open data carries the petition's address and its manual figure", () => {
+  const d = loadData();
+  expect(openData(d, "2026-11-06").peticao).toEqual({ url: d.peticao.url, contagem_manual: d.peticao.contagem_manual });
+});

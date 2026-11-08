@@ -1,6 +1,6 @@
 /**
- * The open-data export served at /dados.json: the scoreboard and every seat holder, past and
- * present, with keys in Portuguese like the files under data/.
+ * The open-data export served at /dados.json: the petition, the scoreboard and every seat holder,
+ * past and present, with keys in Portuguese like the files under data/.
  */
 import type { Dataset } from "../data/load";
 import { placar } from "../data/placar";
@@ -11,6 +11,7 @@ export type OpenData = {
   eleicao: string;
   licenca: "CC BY 4.0";
   fonte: "https://github.com/abreovoto/abreovoto";
+  peticao: { url: string | null; contagem_manual: number };
   placar: {
     total: number;
     nao_declararam: number;
@@ -44,6 +45,7 @@ export function openData(d: Dataset, today: string): OpenData {
     eleicao: d.site.eleicao,
     licenca: "CC BY 4.0",
     fonte: "https://github.com/abreovoto/abreovoto",
+    peticao: { url: d.peticao.url, contagem_manual: d.peticao.contagem_manual },
     placar: {
       total: p.total,
       nao_declararam: p.naoDeclararam,

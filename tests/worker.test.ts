@@ -1,13 +1,14 @@
 import { afterEach, beforeEach, expect, test, vi } from "vitest";
-import worker, { handle } from "../worker/index";
-import { _resetSeatsCache, type Deps, type FonteEnv } from "../worker/fonte";
+import worker, { type Env, handle } from "../worker/index";
+import { _resetSeatsCache, type Deps } from "../worker/fonte";
 
 const dados = JSON.stringify({
+  peticao: { url: null, contagem_manual: 0 },
   senadores: [{ id: "marcio-bittar", nome: "Marcio Bittar", partido: "PL", uf: "AC", pagina: "https://abreovoto.com/senador/marcio-bittar/" }],
 });
 
 let assetCalls = 0;
-function env(over: Partial<FonteEnv> = {}, limited = false): FonteEnv {
+function env(over: Partial<Env> = {}, limited = false): Env {
   return {
     ASSETS: {
       fetch: async (r: Request) => {
@@ -19,6 +20,7 @@ function env(over: Partial<FonteEnv> = {}, limited = false): FonteEnv {
       },
     },
     FONTE_LIMIT: { limit: async () => ({ success: !limited }) },
+    PETICAO_KV: { get: async () => null, put: async () => {} },
     TURNSTILE_SECRET: "s",
     GITHUB_TOKEN: "g",
     ...over,
@@ -59,7 +61,7 @@ const good = { senador: "marcio-bittar", url: "https://g1.globo.com/x", comentar
 
 const githubCalls = (d: { calls: Call[] }) => d.calls.filter((c) => c.url.startsWith("https://api.github.com/"));
 const seen: Response[] = [];
-const run = async (r: Request, e: FonteEnv, d: Deps) => {
+const run = async (r: Request, e: Env, d: Deps) => {
   const res = await handle(r, e, d);
   seen.push(res);
   return res;
@@ -79,7 +81,7 @@ test("the runtime entry point reaches the outside services with the global fetch
   const d = deps(verified(), created());
   vi.stubGlobal("fetch", d.fetch);
   const ctx = { waitUntil: () => {}, passThroughOnException: () => {}, props: {} };
-  const runtimeFetch = worker.fetch as (r: Request, e: FonteEnv, c: unknown) => Promise<Response>;
+  const runtimeFetch = worker.fetch as (r: Request, e: Env, c: unknown) => Promise<Response>;
   const r = await runtimeFetch(post(good), env(), ctx);
   expect(r.status).toBe(201);
   expect(d.calls.map((c) => new URL(c.url).host)).toEqual(["challenges.cloudflare.com", "api.github.com"]);
