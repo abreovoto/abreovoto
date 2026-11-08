@@ -1,4 +1,5 @@
 import { expect, test } from "vitest";
+import { asUndeclared } from "./fixtures/undeclared";
 import { loadData } from "../src/data/load";
 import { placar } from "../src/data/placar";
 import { candidateCard, cardAlt, cardVersion, homeCard, senatorCard } from "../src/lib/share-card";
@@ -7,7 +8,7 @@ const d = loadData();
 const today = "2026-11-07";
 
 test("a senator card names the senator, state and status", () => {
-  const s = d.senadores.find((x) => x.id === "marcio-bittar")!;
+  const s = asUndeclared(d.senadores.find((x) => x.id === "marcio-bittar")!);
   const m = senatorCard(s, d, today);
   expect(m).toMatchObject({
     kind: "senator",
@@ -28,7 +29,7 @@ test("the home card carries the not-declared count", () => {
 
 test("candidate cards are identical in shape and differ only in name and number", () => {
   const cards = placar(d).porCandidato.map((c) => candidateCard(c, d, today));
-  expect(new Set(cards.map((c) => c.numberLabel)).size).toBe(1);
+  for (const [c, card] of placar(d).porCandidato.map((c, i) => [c, cards[i]!] as const)) expect(card.numberLabel).toBe(c.total === 1 ? "declaração" : "declarações");
   expect(new Set(cards.map((c) => c.subtitle.length > 0)).size).toBe(1);
 });
 
@@ -38,13 +39,13 @@ test("a departed senator's card carries the departure note instead of a status",
 });
 
 test("the alt text reads the card aloud", () => {
-  const s = d.senadores.find((x) => x.id === "marcio-bittar")!;
+  const s = asUndeclared(d.senadores.find((x) => x.id === "marcio-bittar")!);
   expect(cardAlt(senatorCard(s, d, today))).toBe("Cartão do Abre o Voto: Marcio Bittar (PL-AC), não declarou, 7/11/2026");
   expect(cardAlt(homeCard(d, today))).toMatch(/^Cartão do Abre o Voto: Eleição da Presidência do Senado, \d+ ainda não declararam, 7\/11\/2026$/);
 });
 
 test("the version is stable for an equal model and changes with the status or the date", () => {
-  const s = d.senadores.find((x) => x.id === "marcio-bittar")!;
+  const s = asUndeclared(d.senadores.find((x) => x.id === "marcio-bittar")!);
   const a = cardVersion(senatorCard(s, d, today));
   expect(a).toMatch(/^[0-9a-f]{8}$/);
   expect(cardVersion(senatorCard(s, d, today))).toBe(a);

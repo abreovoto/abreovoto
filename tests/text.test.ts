@@ -1,4 +1,5 @@
 import { expect, test } from "vitest";
+import { asUndeclared } from "./fixtures/undeclared";
 import { loadData } from "../src/data/load";
 import {
   assumeEmNote,
@@ -24,7 +25,7 @@ test("formatDate is day/month/year without zero padding", () => {
 });
 
 test("statusLabel uses the site's exact labels", () => {
-  expect(statusLabel(by("marcio-bittar"), d.candidatos)).toBe("não declarou");
+  expect(statusLabel(asUndeclared(by("marcio-bittar")), d.candidatos)).toBe("não declarou");
   const declared = {
     ...by("marcio-bittar"),
     declaracao: {

@@ -1,4 +1,5 @@
 import { expect, test } from "vitest";
+import { asUndeclared } from "./fixtures/undeclared";
 import { loadData } from "../src/data/load";
 import { ogTags } from "../src/lib/og";
 import { cardVersion, homeCard, senatorCard } from "../src/lib/share-card";
@@ -7,7 +8,7 @@ const d = loadData();
 const today = "2026-11-07";
 
 test("the tags carry the card, its version, its alt and the site's X account", () => {
-  const s = d.senadores.find((x) => x.id === "marcio-bittar")!;
+  const s = asUndeclared(d.senadores.find((x) => x.id === "marcio-bittar")!);
   const model = senatorCard(s, d, today);
   const tags = ogTags({ title: "Marcio Bittar — Abre o Voto", description: "d", canonical: "https://abreovoto.com/senador/marcio-bittar/", card: { path: "/cartao/senador/marcio-bittar.png", model }, siteX: d.site.redes.x });
   const get = (k: string) => tags.find((t) => ("property" in t ? t.property : t.name) === k)?.content;

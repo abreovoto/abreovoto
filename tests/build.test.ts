@@ -7,7 +7,9 @@ import { beforeAll, expect, test } from "vitest";
 import { emExercicio, loadData } from "../src/data/load";
 import { placar } from "../src/data/placar";
 import { UF } from "../src/data/schema";
+import { partyState } from "../src/lib/text";
 import { ufWithDe } from "../src/lib/uf";
+import { undeclaredSeat } from "./fixtures/undeclared";
 
 let out: string;
 beforeAll(() => {
@@ -121,7 +123,7 @@ test("the home opens with the headline, the scoreboard and the three candidates 
   expect(h).not.toContain("Assinar"); // peticao.url is null today
   expect(h).toContain("Apoie no e-Cidadania");
   expect(h).toContain("não declararam");
-  const order = ["Davi Alcolumbre", "Rogério Marinho", "Tereza Cristina"].map((n) => h.indexOf(n));
+  const order = placar(loadData()).porCandidato.map((c) => h.indexOf(c.nome)); // the published order rule
   expect(order.every((i) => i > 0)).toBe(true);
   expect(order).toEqual([...order].sort((a, b) => a - b));
   expect(h).toContain('href="/candidato/alcolumbre/"');
@@ -230,7 +232,8 @@ test("every entry of the data has a page", () => {
 
 test("the three candidate pages are the same page with different data", () => {
   const pages = ["alcolumbre", "marinho", "tereza-cristina"].map((id) => html(`candidato/${id}/index.html`));
-  for (const h of pages) expect(h).toContain("até agora."); // zero declarations today
+  const totals = Object.fromEntries(placar(loadData()).porCandidato.map((c) => [c.id, c.total]));
+  ["alcolumbre", "marinho", "tereza-cristina"].forEach((id, i) => expect(pages[i]!.includes("até agora."), id).toBe(totals[id] === 0));
   for (const h of pages) expect(h.match(/<h1[ >]/g)).toHaveLength(1);
   expect(pages[0]).toContain('href="/senador/davi-alcolumbre/"');
   expect(pages[0]).toContain('href="/#lista"');
@@ -238,7 +241,11 @@ test("the three candidate pages are the same page with different data", () => {
     h
       .replace(/Davi Alcolumbre|Rogério Marinho|Tereza Cristina|UNIÃO-AP|PL-RN|PP-MS|davi-alcolumbre|rogerio-marinho|tereza-cristina|alcolumbre|marinho/g, "X")
       .replace(/\/_astro\/[^"]+/g, "ASSET")
-      .replace(/\?v=[0-9a-f]{8}/g, "?v=HASH"); // each card has its own version
+      .replace(/\?v=[0-9a-f]{8}/g, "?v=HASH") // each card has its own version
+      // The list of who declared, and the counts, are the data; the page around them is the shape.
+      .replace(/<section aria-labelledby="declararam">[\s\S]*?<\/section>/, "LIST")
+      .replace(/\d+/g, "N")
+      .replace(/declaração\b/g, "declarações");
   expect(shape(pages[1]!)).toBe(shape(pages[0]!));
   expect(shape(pages[2]!)).toBe(shape(pages[0]!));
 });
@@ -251,7 +258,7 @@ test("the three text pages carry their sections and the contact anchor", () => {
   for (const s of ["anônim", "nome de pessoa", "lado só"]) expect(cf).not.toContain(s);
   // Every mention of the methodology in the prose links to it.
   expect(cf.match(/(?<!>)Metodologia(?!<\/a>)/g) ?? []).toEqual([]);
-  expect(cf).toContain("Candidatos até agora: Davi Alcolumbre, Rogério Marinho e Tereza Cristina.");
+  expect(cf).toContain(`Candidatos até agora: ${new Intl.ListFormat("pt-BR", { type: "conjunction" }).format(placar(loadData()).porCandidato.map((c) => c.nome))}.`);
   const m = text("metodologia/index.html");
   for (const s of ["O que conta como fonte", "Correções", "CC BY 4.0", 'href="/dados.json"']) expect(m).toContain(s);
   // Declared support counts only with the candidate and the election inside the quote: the page says so.
@@ -436,10 +443,11 @@ test("the share-card button shows only where the system share sheet takes files 
 });
 
 test("a senator without an X profile gets the same actions; the X post names them in the third person", () => {
-  const h = html("senador/marcio-bittar/index.html");
-  expect(h).toContain('href="https://x.com/intent/post?text=Marcio%20Bittar%20(PL-AC)%20representa%20voc%C3%AA');
+  const u = undeclaredSeat(loadData().senadores, loadData().candidatos);
+  const h = html(`senador/${u.id}/index.html`);
+  expect(h).toContain(`href="https://x.com/intent/post?text=${encodeURIComponent(`${u.nome} (${partyState(u)})`)}%20representa%20voc%C3%AA`);
   expect(h).toMatch(/<a[^>]*href="https:\/\/x\.com\/intent[^"]*"[^>]*class="[^"]*border-accent bg-accent/);
-  expect(h).toContain('data-text="Marcio Bittar (PL-AC) representa você');
+  expect(h).toContain(`data-text="${u.nome} (${partyState(u)}) representa você`);
   expect(h).toContain("wa.me/?text=");
 });
 
@@ -477,21 +485,32 @@ test("every senator page invites the visitor to the scoreboard with the totals a
 });
 
 test("the senator page carries the source form and the footer points at it", () => {
-  const h = html("senador/marcio-bittar/index.html");
+  const u = undeclaredSeat(loadData().senadores, loadData().candidatos);
+  const h = html(`senador/${u.id}/index.html`);
   expect(h).toMatch(/<section id="fonte"[^>]*data-source-form/);
   // A native submit, if the script ever fails, must not put the visitor's text in the address bar.
   expect(h).toMatch(/<form method="post"/);
   expect(h).toContain('name="senador"');
-  expect(h).toContain('value="marcio-bittar"');
+  expect(h).toContain(`value="${u.id}"`);
   expect(h).toContain('href="#fonte"');
   expect(h).toMatch(/Achou um erro\? <a href="#fonte"[^>]*>Envie a correção<\/a>/);
   expect(h).not.toMatch(/<script[^>]+src="https:\/\/challenges\.cloudflare\.com/);
   expect(h).toContain(">Ajude a manter o placar em dia</h2>");
-  expect(h).toContain("Se você viu Marcio Bittar dizer em público em quem vota para presidente do Senado");
+  expect(h).toContain(`Se você viu ${u.nome} dizer em público em quem vota para presidente do Senado`);
   // Right under the status, the same for every senator in office: the way to the form.
-  expect(h).toMatch(/Viu Marcio Bittar declarar o voto\? <a href="#fonte"[^>]*>Avise<\/a>/);
+  expect(h).toContain(`Viu ${u.nome} declarar o voto? <a href="#fonte"`);
   expect(h).toContain("Não envie dados pessoais.");
   expect(h.toLowerCase()).not.toContain("github.com/abreovoto/abreovoto/issues");
+});
+
+test("a declared senator's page quotes the source and asks for a stronger one", () => {
+  const declared = loadData().senadores.filter((s) => s.situacao === "em_exercicio" && s.declaracao.status === "declarou");
+  for (const s of declared) {
+    const h = html(`senador/${s.id}/index.html`);
+    expect(h, s.id).toContain(`${s.nome} já declarou o voto, com a fonte mostrada acima.`);
+    expect(h, s.id).toContain(`Tem uma fonte melhor, ou viu ${s.nome} mudar o voto?`);
+    expect(h, s.id).toContain(`<figcaption class="mt-3 text-sm text-fg-muted">— ${s.nome}</figcaption>`);
+  }
 });
 
 test("a departed senator's page carries the form too", () => {

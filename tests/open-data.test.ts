@@ -1,6 +1,8 @@
 import { expect, test } from "vitest";
 import { loadData } from "../src/data/load";
+import { placar } from "../src/data/placar";
 import { openData } from "../src/lib/open-data";
+import { undeclaredSeat } from "./fixtures/undeclared";
 
 test("the open data mirrors the scoreboard and lists every seat holder, past and present", () => {
   const d = loadData();
@@ -11,11 +13,12 @@ test("the open data mirrors the scoreboard and lists every seat holder, past and
   expect(o.fonte).toBe("https://github.com/abreovoto/abreovoto");
   expect(o.placar.total).toBe(81);
   expect(o.placar.nao_declararam + o.placar.declararam).toBe(81);
-  expect(o.placar.por_candidato.map((c) => c.id)).toEqual(["alcolumbre", "marinho", "tereza-cristina"]);
+  expect(o.placar.por_candidato.map((c) => c.id)).toEqual(placar(d).porCandidato.map((c) => c.id));
   expect(o.senadores).toHaveLength(d.senadores.length);
   expect(o.senadores.filter((s) => s.situacao === "em_exercicio")).toHaveLength(81);
   expect(o.senadores.find((s) => s.id === "marcio-bittar")?.pagina).toBe("https://abreovoto.com/senador/marcio-bittar/");
-  expect(o.senadores.find((s) => s.id === "marcio-bittar")?.declaracao).toEqual({ status: "nao_declarou", candidato: null, data: null, fonte: null });
+  const u = undeclaredSeat(d.senadores, d.candidatos);
+  expect(o.senadores.find((s) => s.id === u.id)?.declaracao).toEqual({ status: "nao_declarou", candidato: null, data: null, fonte: null });
   const names = o.senadores.map((s) => s.nome);
   expect(names).toEqual([...names].sort((a, b) => a.localeCompare(b, "pt-BR")));
 });
@@ -29,7 +32,9 @@ test("a departed senator is in the file, outside the scoreboard", () => {
 
 test("a declaration carries its candidate, date and source", () => {
   const d = loadData();
-  const s = d.senadores.find((x) => x.id === "marcio-bittar")!;
+  const before = placar(d);
+  const marinho = (p: ReturnType<typeof placar>) => p.porCandidato.find((c) => c.id === "marinho")!.total;
+  const s = undeclaredSeat(d.senadores, d.candidatos);
   s.declaracao = {
     status: "declarou",
     candidato: "marinho",
@@ -37,14 +42,14 @@ test("a declaration carries its candidate, date and source", () => {
     fonte: { tipo: "video", url: "https://www.youtube.com/watch?v=x", titulo: null, trecho: "Voto nele." },
   };
   const o = openData(d, "2026-11-06");
-  expect(o.senadores.find((x) => x.id === "marcio-bittar")?.declaracao).toEqual({
+  expect(o.senadores.find((x) => x.id === s.id)?.declaracao).toEqual({
     status: "declarou",
     candidato: "marinho",
     data: "2026-11-05",
     fonte: { tipo: "video", url: "https://www.youtube.com/watch?v=x" },
   });
-  expect(o.placar.declararam).toBe(1);
-  expect(o.placar.por_candidato.find((c) => c.id === "marinho")?.total).toBe(1);
+  expect(o.placar.declararam).toBe(before.declararam + 1);
+  expect(o.placar.por_candidato.find((c) => c.id === "marinho")?.total).toBe(marinho(before) + 1);
 });
 
 test("the open data names the repository the site itself points to", () => {
