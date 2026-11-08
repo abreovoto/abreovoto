@@ -79,6 +79,9 @@ const SOURCE_TYPES: Record<FonteTipo, string> = {
 };
 
 /** The kind of source behind a declaration, in words. */
+/** A declaration's excerpt as shown on the page: the senator's literal words, inside quotation marks. */
+export const quoted = (trecho: string): string => `“${trecho}”`;
+
 export const sourceTypeLabel = (tipo: FonteTipo): string => SOURCE_TYPES[tipo];
 
 // The next word may start right after a tag ("em <a>um link</a>"), hence the end of a text run.
