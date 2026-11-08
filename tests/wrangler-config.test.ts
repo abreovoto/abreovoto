@@ -14,3 +14,14 @@ test("the Worker keeps no per-request log, so no visitor IP is stored", () => {
   expect(config.observability).toEqual({ enabled: true, logs: { invocation_logs: false } });
   expect(config.previews.observability).toEqual({ enabled: true, logs: { invocation_logs: false } });
 });
+
+test("the counter has its cron, and KV bound so that previews and dev never write production", () => {
+  expect(config.triggers).toEqual({ crons: ["*/15 * * * *"] });
+  expect(config.previews.triggers).toBeUndefined();
+  const [kv] = config.kv_namespaces;
+  expect(kv.binding).toBe("PETICAO_KV");
+  expect(kv.id).toMatch(/^[0-9a-f]{32}$/);
+  expect(kv.preview_id).toMatch(/^[0-9a-f]{32}$/);
+  expect(kv.preview_id).not.toBe(kv.id);
+  expect(config.previews.kv_namespaces).toEqual([{ binding: "PETICAO_KV", id: kv.preview_id }]);
+});
