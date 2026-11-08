@@ -166,7 +166,7 @@
   foto_credito: Agência Senado
   redes:
     x: https://x.com/renanfilho_
-    instagram: https://www.instagram.com/renanfilho15
+    instagram: https://www.instagram.com/renanfilho
   email_institucional: sen.renanfilho@senado.leg.br
   declaracao:
     status: nao_declarou
@@ -1266,7 +1266,7 @@
   foto_origem: https://www.senado.leg.br/senadores/img/fotos-oficiais/senador1173.jpg
   foto_credito: Agência Senado
   redes:
-    x: null
+    x: https://x.com/sen_wellington
     instagram: https://www.instagram.com/wellingtonfagundesmt
   email_institucional: sen.wellingtonfagundes@senado.leg.br
   declaracao:
@@ -2328,7 +2328,7 @@
   foto_origem: https://www.senado.leg.br/senadores/img/fotos-oficiais/senador5352.jpg
   foto_credito: Agência Senado
   redes:
-    x: null
+    x: https://x.com/senadorrogerio
     instagram: null
   email_institucional: sen.rogeriocarvalho@senado.leg.br
   declaracao:
