@@ -7,6 +7,7 @@ import Button from "../components/Button.astro";
 import Hemicycle from "../components/Hemicycle.astro";
 import CandidateCard from "../components/CandidateCard.astro";
 import ListItem from "../components/ListItem.astro";
+import PetitionArea from "../components/PetitionArea.astro";
 import Scoreboard from "../components/Scoreboard.astro";
 import SenatorCard from "../components/SenatorCard.astro";
 import StateSelector from "../components/StateSelector.astro";
@@ -28,6 +29,9 @@ const longest = longestName(d);
 const substitute = inOffice.find((s) => s.assume_em !== null)!;
 const firstFive = [...inOffice].sort((a, b) => a.nome.localeCompare(b.nome, "pt-BR")).slice(0, 5);
 const firstCandidate = p.porCandidato[0]!;
+// Fixture petitions: the real one has no address until launch, and then the block shows itself.
+const petitionButton = { url: "https://www.change.org/", meta: d.peticao.meta, contagem_manual: 0 };
+const petitionCount = { ...petitionButton, contagem_manual: 1204 };
 
 const colours = [
   ["bg", "fundo"],
@@ -122,6 +126,15 @@ const scale = [
       <Button kind="primary" href="/">Primário como link</Button>
       <Button kind="secondary" href="/">Secundário como link</Button>
     </div>
+  </section>
+
+  <section class="mt-10" aria-labelledby="peticao">
+    <h2 id="peticao" class="text-2xl font-semibold">Petição</h2>
+    <p class="mt-2 max-w-prose text-fg-muted">Com poucas assinaturas, só o botão; o número aparece a partir de 500 e é atualizado ao vivo.</p>
+    <h3 class="mt-6 text-lg font-semibold">Petição: botão</h3>
+    <PetitionArea peticao={petitionButton} />
+    <h3 class="mt-8 text-lg font-semibold">Petição: com contagem</h3>
+    <PetitionArea peticao={petitionCount} />
   </section>
 
   <section class="mt-10" aria-labelledby="painel-placar">

@@ -54,6 +54,16 @@ test("the styleguide renders every component with real data and is not indexed",
   expect(h).toContain("<select");
 });
 
+test("the styleguide shows the petition block in both states, and the home carries no count while the petition has no address", () => {
+  // Attributes in the markup; the inlined script also names them as selectors.
+  const estilo = html("estilo/index.html");
+  expect(estilo.match(/<span[^>]*\sdata-petition-count[\s>]/g)?.length).toBe(2);
+  expect(estilo.match(/<p[^>]*\sdata-petition[\s>]/g)?.length).toBe(2);
+  expect(estilo).toContain("1.204");
+  expect(estilo).toContain("Assinar a petição");
+  expect(html("index.html")).not.toMatch(/<p[^>]*\sdata-petition[\s>]/);
+});
+
 test("a card PNG exists for every senator, every candidate and the scoreboard, at 1200×630", () => {
   const d = loadData();
   const size = (p: string) => {
