@@ -1,6 +1,6 @@
 ---
 import type { Peticao } from "../data/schema";
-import { petitionView } from "../lib/petition";
+import { formatCount, PETITION_COUNT_FLOOR, petitionView } from "../lib/petition";
 import Button from "./Button.astro";
 
 interface Props {
@@ -8,23 +8,26 @@ interface Props {
 }
 
 const { peticao } = Astro.props;
-// The live count arrives later; until then the manual figure decides.
+// The build shows the manual figure; the script replaces it with the live count from the route.
 const view = petitionView(peticao, null);
-const count = view ? new Intl.NumberFormat("pt-BR").format(view.count) : "";
 ---
 
 {
   view && (
     <div class="mt-7 max-w-lg border-t border-line pt-6">
-      {view.showCount && (
-        <p class="mb-4">
-          <span class="font-display block text-4xl tabular-nums text-fg">{count}</span>
-          <span class="mt-2 block max-w-[32ch] text-base text-fg">pessoas já pedem que os senadores declarem o voto antes da eleição</span>
-        </p>
-      )}
+      <p class="mb-4" data-petition data-floor={PETITION_COUNT_FLOOR} hidden={!view.showCount}>
+        <span class="font-display block text-4xl tabular-nums text-fg" data-petition-count>
+          {formatCount(view.count)}
+        </span>
+        <span class="mt-2 block max-w-[32ch] text-base text-fg">pessoas já pedem que os senadores declarem o voto antes da eleição</span>
+      </p>
       <Button kind="primary" size="lg" href={view.url} rel="noopener noreferrer">
         Assinar a petição
       </Button>
     </div>
   )
 }
+
+<script>
+  import "../scripts/petition-count";
+</script>
