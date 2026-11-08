@@ -19,3 +19,7 @@ lançamento.
 - Cartão de cada senador, de cada candidato e do placar, gerado a cada atualização e mostrado como prévia quando um link do site é compartilhado no X, no WhatsApp e em outras redes.
 - Na página de cada senador, botões para cobrar a declaração no X, compartilhar no WhatsApp, copiar o link e baixar o cartão, e, no celular, compartilhar o cartão com o texto pelo menu de compartilhamento do aparelho; a página também mostra o placar e a petição a quem chega por ela. Nos cartões de senador da home e das páginas por estado, o botão do X.
 - Formulário para enviar a fonte de uma declaração ou uma correção, na página de cada senador e em `/fonte/`, sem cadastro, nome ou e-mail: o envio vira um registro público com número de protocolo, conferido antes de entrar no placar. Antes da declaração, o convite pede a fonte de onde o senador disse em quem vota; depois, pede uma fonte mais direta, uma mudança de posição ou um erro.
+- Petição no Change.org pedindo que os senadores declarem o voto: botão para assinar na home e na página de cada senador, e, na home, o número de assinaturas, atualizado a cada 15 minutos a partir de 500.
+- `/dados.json` passa a trazer o endereço da petição.
+- O placar sai com as declarações já públicas, cada uma com sua fonte e o trecho literal entre aspas.
+- A metodologia diz quando o apoio declarado conta como dizer em quem vota: com o nome do candidato e a eleição na própria citação.
