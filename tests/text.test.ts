@@ -7,6 +7,7 @@ import {
   candidateBadge,
   longestName,
   partyState,
+  quoted,
   sourceHost,
   sourceTypeLabel,
   statusLabel,
@@ -83,4 +84,9 @@ test("short words are tied to the next one in text, never inside a tag", () => {
 test("a profile link shows as its handle", () => {
   expect(profileHandle("https://www.instagram.com/marciobittar_")).toBe("@marciobittar_");
   expect(profileHandle("https://x.com/davialcolumbre/")).toBe("@davialcolumbre");
+});
+
+test("a declaration's excerpt is shown inside quotation marks, as the senator's words", () => {
+  expect(quoted("Estamos com X para presidente do Senado")).toBe("“Estamos com X para presidente do Senado”");
+  expect(quoted("[…] para o bem do país")).toBe("“[…] para o bem do país”");
 });

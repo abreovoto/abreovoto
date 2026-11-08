@@ -13,7 +13,7 @@ import { type Senador, todayUtc } from "../../data/schema";
 import Base from "../../layouts/Base.astro";
 import { candidatePath, senatorCardPath, senatorPath, statePath } from "../../lib/routes";
 import { senatorCard } from "../../lib/share-card";
-import { departureNote, formatDate, partyState, sourceHost, sourceTypeLabel, statusLabel } from "../../lib/text";
+import { departureNote, formatDate, partyState, quoted, sourceHost, sourceTypeLabel, statusLabel } from "../../lib/text";
 import { ufWithDe } from "../../lib/uf";
 
 export function getStaticPaths() {
@@ -84,7 +84,10 @@ const description = `${senador.nome} (${partyState(senador)}) ${departed ?? stat
               </a>
             </dd>
           </dl>
-          <blockquote class="mt-6 rounded-lg bg-surface px-6 py-5 text-base text-fg">{decl.fonte.trecho}</blockquote>
+          <figure class="mt-6 rounded-lg bg-surface px-6 py-5">
+            <blockquote class="text-base text-fg">{quoted(decl.fonte.trecho)}</blockquote>
+            <figcaption class="mt-3 text-sm text-fg-muted">— {senador.nome}</figcaption>
+          </figure>
         </section>
       )
     }
