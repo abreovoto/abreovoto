@@ -289,9 +289,10 @@ test("the senator's links: a label with its icon, and only the value is the link
   expect(h).toMatch(/<a href="mailto:sen\.marciobittar@senado\.leg\.br"[^>]*>sen\.marciobittar@(<wbr>)?senado\.leg\.br<\/a>/);
   expect(h).toMatch(/<a href="https:\/\/www\.instagram\.com\/marciobittar_"[^>]*>@marciobittar_<\/a>/);
   expect(h).toMatch(/<a href="https:\/\/www25\.senado\.leg\.br[^"]*"[^>]*>Perfil oficial<\/a>/);
+  expect(h).toMatch(/<a href="https:\/\/x\.com\/marciombittar"[^>]*>@marciombittar<\/a>/);
   const from = h.indexOf('id="links"');
   const section = h.slice(from, h.indexOf("</section>", from));
-  expect(section.match(/<svg[^>]*aria-hidden="true"/g)?.length).toBe(3); // Senado, e-mail, Instagram; no X today
+  expect(section.match(/<svg[^>]*aria-hidden="true"/g)?.length).toBe(4); // Senado, e-mail, X, Instagram
 });
 
 // Measured as it travels: compressed, as the host serves HTML, CSS and JS.

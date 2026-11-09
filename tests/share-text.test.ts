@@ -27,9 +27,9 @@ test("the X text mentions the senator, links the page and carries the hashtag", 
 });
 
 test("without an X profile, the X text is the third-person one", () => {
-  const s = asUndeclared(by("marcio-bittar")); // no X profile; the not-declared text
+  const s = asUndeclared(by("mara-rocha")); // no X profile; the not-declared text
   const third =
-    `Marcio Bittar (PL-AC) representa você no Senado, e você tem o direito de saber em quem vota para presidente do Senado. Vai abrir o voto, ou vai votar em segredo? ${shareUrl(s)} #AbreOVotoSenador`;
+    `Mara Rocha (REPUBLICANOS-AC) representa você no Senado, e você tem o direito de saber em quem vota para presidente do Senado. Vai abrir o voto, ou vai votar em segredo? ${shareUrl(s)} #AbreOVotoSenador`;
   expect(xHandle(s)).toBeNull();
   expect(thirdPersonText(s, d.candidatos, d.site)).toBe(third);
   expect(xText(s, d.candidatos, d.site)).toBe(third);
