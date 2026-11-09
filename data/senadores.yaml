@@ -2501,14 +2501,21 @@
     instagram: https://www.instagram.com/andredopradosp
   email_institucional: null
   declaracao:
-    status: nao_declarou
-    candidato: null
-    data: null
-    fonte: null
+    status: declarou
+    candidato: marinho
+    data: 2026-11-08
+    fonte:
+      tipo: post
+      url: https://x.com/andredopradosp/status/2119442130280088014
+      titulo: "MEU VOTO PARA A PRESIDÊNCIA DO SENADO! 🇧🇷"
+      trecho: "Quero deixar registrada minha posição: meu voto será no senador Rogério Marinho (PL-RN)."
   observacoes: []
   historico:
     - data: 2026-11-06
       evento: entrou na lista como não declarou
+      issue: null
+    - data: 2026-11-08
+      evento: declarou voto em Rogério Marinho (publicação no perfil oficial, 8 de novembro de 2026)
       issue: null
 - id: astronauta-marcos-pontes
   nome: Astronauta Marcos Pontes
