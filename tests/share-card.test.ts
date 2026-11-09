@@ -21,10 +21,14 @@ test("a senator card names the senator, state and status", () => {
   });
 });
 
-test("the home card carries the not-declared count", () => {
+test("the home card carries the campaign line and nothing that ages: no number, no date", () => {
+  // The home address is typed and pasted, never versioned: networks cache its preview for days.
   const m = homeCard(d, today);
-  expect(m.number).toBe(placar(d).naoDeclararam);
-  expect(m.numberLabel).toBe("ainda não declararam");
+  expect(m.title).toBe("O seu voto é secreto. O deles não precisa ser.");
+  expect(m.number).toBeNull();
+  expect(m.numberLabel).toBeNull();
+  expect(m.date).toBeNull();
+  expect(cardVersion(homeCard(d, "2026-12-01"))).toBe(cardVersion(m)); // the same card on any day
 });
 
 test("candidate cards are identical in shape and differ only in name and number", () => {
@@ -41,7 +45,7 @@ test("a departed senator's card carries the departure note instead of a status",
 test("the alt text reads the card aloud", () => {
   const s = asUndeclared(d.senadores.find((x) => x.id === "marcio-bittar")!);
   expect(cardAlt(senatorCard(s, d, today))).toBe("Cartão do Abre o Voto: Marcio Bittar (PL-AC), não declarou, 7/11/2026");
-  expect(cardAlt(homeCard(d, today))).toMatch(/^Cartão do Abre o Voto: Eleição da Presidência do Senado, \d+ ainda não declararam, 7\/11\/2026$/);
+  expect(cardAlt(homeCard(d, today))).toBe("Cartão do Abre o Voto: O seu voto é secreto. O deles não precisa ser. Em quem cada senador vota para presidente do Senado, sempre com a fonte.");
 });
 
 test("the version is stable for an equal model and changes with the status or the date", () => {

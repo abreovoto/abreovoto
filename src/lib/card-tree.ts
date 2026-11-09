@@ -42,8 +42,13 @@ function mark(): CardNode {
 
 function titleBlock(m: ShareCardModel): CardNode {
   const children: CardNode[] = [
-    el("div", { ...display, fontSize: 72, lineHeight: 1.05, letterSpacing: "-0.02em" }, m.title),
-    el("div", { ...text, fontSize: 36, lineHeight: 1.2, color: p.fgMuted, marginTop: 8 }, m.subtitle),
+    ...(m.kind === "home"
+      ? // The campaign line: one sentence per line, the answer in the accent colour, as on the petition.
+        m.title.split(/(?<=\.) /).map((line, i) =>
+          el("div", { ...display, fontSize: 64, lineHeight: 1.1, letterSpacing: "-0.02em", color: i === 0 ? p.fg : p.accent }, line),
+        )
+      : [el("div", { ...display, fontSize: 72, lineHeight: 1.05, letterSpacing: "-0.02em" }, m.title)]),
+    el("div", { ...text, fontSize: 36, lineHeight: 1.2, color: p.fgMuted, marginTop: m.kind === "home" ? 20 : 8 }, m.subtitle),
   ];
   if (m.status) {
     const c = statusColour(m.status);
@@ -103,7 +108,7 @@ export function cardTree(m: ShareCardModel, portrait: string | null): CardNode {
       el("div", { display: "flex", alignItems: "center", gap: 40 }, middle),
       el("div", { display: "flex", justifyContent: "space-between", alignItems: "center", ...text, fontWeight: 600, fontSize: 32, color: p.fgMuted }, [
         el("div", {}, m.hashtag),
-        el("div", {}, `${m.date} · ${m.domain}`),
+        el("div", {}, m.date === null ? m.domain : `${m.date} · ${m.domain}`),
       ]),
     ],
   );

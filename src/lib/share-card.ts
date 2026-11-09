@@ -4,7 +4,7 @@
  */
 import { createHash } from "node:crypto";
 import type { Dataset } from "../data/load";
-import { type PlacarCandidato, placar } from "../data/placar";
+import type { PlacarCandidato } from "../data/placar";
 import type { Senador } from "../data/schema";
 import { departureNote, formatDate, partyState, statusLabel } from "./text";
 
@@ -17,7 +17,8 @@ export type ShareCardModel = {
   numberLabel: string | null;
   hashtag: string;
   domain: string;
-  date: string;
+  /** null on the home card, whose address is never versioned: nothing on it may age. */
+  date: string | null;
 };
 
 function common(d: Dataset, today: string) {
@@ -49,16 +50,21 @@ export function candidateCard(c: PlacarCandidato, d: Dataset, today: string): Sh
   };
 }
 
+/**
+ * The home card says what the campaign asks and nothing that ages: the home address is typed
+ * and pasted as is, and the networks keep its preview for days, so a count or a date on it
+ * would be shown stale. The numbers live on the page.
+ */
 export function homeCard(d: Dataset, today: string): ShareCardModel {
-  const p = placar(d);
   return {
     kind: "home",
-    title: "Eleição da Presidência do Senado",
-    subtitle: `${p.total} senadores votam em ${formatDate(d.site.eleicao)}, em voto secreto`,
+    title: "O seu voto é secreto. O deles não precisa ser.",
+    subtitle: "Em quem cada senador vota para presidente do Senado, sempre com a fonte.",
     status: null,
-    number: p.naoDeclararam,
-    numberLabel: "ainda não declararam",
+    number: null,
+    numberLabel: null,
     ...common(d, today),
+    date: null,
   };
 }
 
@@ -71,7 +77,7 @@ export function cardAlt(m: ShareCardModel): string {
     case "candidate":
       return `${lead} (${m.subtitle}), ${m.number} ${m.numberLabel}, ${m.date}`;
     case "home":
-      return `${lead}, ${m.number} ${m.numberLabel}, ${m.date}`;
+      return `${lead} ${m.subtitle}`;
   }
 }
 

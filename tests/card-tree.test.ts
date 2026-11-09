@@ -16,11 +16,12 @@ const flexDivs = (n: CardNode | string): boolean =>
   ((n.type !== "div" || !Array.isArray(n.props.children) || n.props.style?.display === "flex") &&
     ([] as (CardNode | string)[]).concat(n.props.children ?? []).every(flexDivs));
 
-test("every card ends with the date and the domain, and every multi-child div is flex", () => {
+test("every card ends with the domain, dated except the home card, and every multi-child div is flex", () => {
   const s = asUndeclared(d.senadores.find((x) => x.id === "marcio-bittar")!);
   for (const m of [senatorCard(s, d, today), candidateCard(placar(d).porCandidato[0]!, d, today), homeCard(d, today)]) {
     const t = cardTree(m, null);
-    expect(texts(t)).toContain("7/11/2026 · abreovoto.com");
+    expect(texts(t)).toContain(m.kind === "home" ? "abreovoto.com" : "7/11/2026 · abreovoto.com");
+    if (m.kind === "home") expect(texts(t)).not.toContain("7/11/2026");
     expect(texts(t)).toContain("#AbreOVotoSenador");
     expect(flexDivs(t)).toBe(true);
   }
