@@ -18,7 +18,8 @@
   // Source-form submissions: 2 per minute per IP (the platform allows a period of 10 or 60 seconds).
   "ratelimits": [{ "name": "FONTE_LIMIT", "namespace_id": "1001", "simple": { "limit": 2, "period": 60 } }],
   // Petition counter: every 15 minutes, the Change.org total into one KV value.
-  "triggers": { "crons": ["*/15 * * * *"] },
+  // Daily rebuild: 00:05 in Brasília, so date-dependent sentences follow the calendar (worker/rebuild.ts).
+  "triggers": { "crons": ["*/15 * * * *", "5 3 * * *"] },
   // preview_id is what wrangler dev writes to; production is never written from a machine.
   "kv_namespaces": [{ "binding": "PETICAO_KV", "id": "823df51915864f7db97c06e3f96fe627", "preview_id": "651a8bb9111c4d72a0ed860470d0c99a" }],
   // Required by `wrangler preview`, which builds a preview for every pull request.
