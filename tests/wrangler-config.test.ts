@@ -1,5 +1,6 @@
 import { readFileSync } from "node:fs";
 import { expect, test } from "vitest";
+import { REBUILD_CRON } from "../worker/rebuild";
 
 // wrangler.jsonc carries only whole-line comments.
 const config = JSON.parse(
@@ -15,8 +16,8 @@ test("the Worker keeps no per-request log, so no visitor IP is stored", () => {
   expect(config.previews.observability).toEqual({ enabled: true, logs: { invocation_logs: false } });
 });
 
-test("the counter has its cron, and KV bound so that previews and dev never write production", () => {
-  expect(config.triggers).toEqual({ crons: ["*/15 * * * *"] });
+test("the counter and the daily rebuild have their crons, and KV bound so that previews and dev never write production", () => {
+  expect(config.triggers).toEqual({ crons: ["*/15 * * * *", REBUILD_CRON] });
   expect(config.previews.triggers).toBeUndefined();
   const [kv] = config.kv_namespaces;
   expect(kv.binding).toBe("PETICAO_KV");

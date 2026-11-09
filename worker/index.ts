@@ -1,7 +1,8 @@
 import { type Deps, type FonteEnv, defaultDeps, handleFonte } from "./fonte";
 import { handlePeticao, handleScheduled, type PeticaoEnv } from "./peticao";
+import { handleRebuild, REBUILD_CRON, type RebuildEnv } from "./rebuild";
 
-export type Env = FonteEnv & PeticaoEnv;
+export type Env = FonteEnv & PeticaoEnv & RebuildEnv;
 
 const json = (body: unknown, status: number, headers: Record<string, string> = {}) =>
   new Response(JSON.stringify(body), {
@@ -23,5 +24,7 @@ type Context = { waitUntil(promise: Promise<unknown>): void };
 // The runtime calls fetch(request, env, ctx); the context is not the injected deps.
 export default {
   fetch: (request: Request, env: Env): Promise<Response> => handle(request, env),
-  scheduled: (_controller: unknown, env: Env, ctx: Context): void => ctx.waitUntil(handleScheduled(env)),
+  // Two crons: the daily rebuild, and every other one the petition counter.
+  scheduled: (controller: { cron?: string }, env: Env, ctx: Context): void =>
+    ctx.waitUntil(controller.cron === REBUILD_CRON ? handleRebuild(env) : handleScheduled(env)),
 };
