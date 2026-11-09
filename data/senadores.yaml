@@ -2180,14 +2180,21 @@
     instagram: https://www.instagram.com/sandersonrs
   email_institucional: dep.sanderson@camara.leg.br
   declaracao:
-    status: nao_declarou
-    candidato: null
-    data: null
-    fonte: null
+    status: declarou
+    candidato: marinho
+    data: 2026-11-08
+    fonte:
+      tipo: video
+      url: https://www.youtube.com/watch?v=h9WGpti-mQ4&t=40s
+      titulo: "DERRITE, SANDERSON E VAN HATTEM DECLARAM APOIO A ROGÉRIO MARINHO PARA PRESIDÊNCIA DO SENADO"
+      trecho: "A gente tá muito entusiasmado para esse começo dos trabalhos do Senado. E Rogério Marinho, tamo junto. Brasil tá contigo."
   observacoes: []
   historico:
     - data: 2026-11-06
       evento: entrou na lista como não declarou
+      issue: null
+    - data: 2026-11-08
+      evento: declarou voto em Rogério Marinho (vídeo, 8 de novembro de 2026)
       issue: null
 - id: marcel-van-hattem
   nome: Marcel van Hattem
