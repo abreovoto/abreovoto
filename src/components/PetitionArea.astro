@@ -1,30 +1,50 @@
 ---
 import type { Peticao } from "../data/schema";
 import { formatCount, PETITION_COUNT_FLOOR, petitionView } from "../lib/petition";
-import Button from "./Button.astro";
+import Icon from "./Icon.astro";
 
 interface Props {
   peticao: Peticao;
+  /** `hero`: under the home's headline. `closing`: after the list, for whoever read to the end. */
+  placement?: "hero" | "closing";
 }
 
-const { peticao } = Astro.props;
+const { peticao, placement = "hero" } = Astro.props;
 // The build shows the manual figure; the script replaces it with the live count from the route.
 const view = petitionView(peticao, null);
+const closing = placement === "closing";
+const host = view ? new URL(view.url).hostname.replace(/^www\./, "") : "";
 ---
 
 {
   view && (
-    <div class="mt-7 max-w-lg border-t border-line pt-6">
-      <p class="mb-4" data-petition data-floor={PETITION_COUNT_FLOOR} hidden={!view.showCount}>
+    <aside
+      aria-label="Petição"
+      class:list={["rounded-lg border-2 border-accent bg-accent/10 p-5 sm:p-6", closing ? "mt-16 max-w-2xl" : "mt-7"]}
+    >
+      <p class="flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-accent">
+        <Icon name="pen" class="size-4 shrink-0" />
+        Petição pública
+      </p>
+      {/* Under the headline the subtitle already asks; only the closing block needs its own sentence. */}
+      {closing && <p class="mt-3 text-xl font-semibold leading-snug text-fg">Chegou até aqui? Some a sua assinatura.</p>}
+      <p class="mt-4" data-petition data-floor={PETITION_COUNT_FLOOR} hidden={!view.showCount}>
         <span class="font-display block text-4xl tabular-nums text-fg" data-petition-count>
           {formatCount(view.count)}
         </span>
-        <span class="mt-2 block max-w-[32ch] text-base text-fg">pessoas já pedem que os senadores declarem o voto antes da eleição</span>
+        <span class="mt-1 block max-w-[32ch] text-base text-fg">pessoas já assinaram</span>
       </p>
-      <Button kind="primary" size="lg" href={view.url} rel="noopener noreferrer">
+      <a
+        href={view.url}
+        rel="noopener noreferrer"
+        target="_blank"
+        class="mt-4 flex h-[56px] w-full items-center justify-center gap-3 rounded border-2 border-accent bg-accent px-5 text-base font-semibold leading-none text-on-accent no-underline hover:brightness-110"
+      >
         Assinar a petição
-      </Button>
-    </div>
+        <Icon name="arrow" class="size-5 shrink-0" />
+      </a>
+      <p class="mt-3 text-center text-sm text-fg-muted">Leva menos de um minuto · abre no {host}</p>
+    </aside>
   )
 }
 
