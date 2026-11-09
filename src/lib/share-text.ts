@@ -3,6 +3,7 @@
  * declared. These are the site's own words, identical for every senator and for every
  * candidate, and they are read on the pre-launch review list. They carry no date.
  */
+import { createHash } from "node:crypto";
 import type { Candidato, Senador, Site } from "../data/schema";
 import { absolute, senatorPath } from "./routes";
 import { partyState, profileHandle } from "./text";
@@ -21,7 +22,19 @@ export function declaredCandidateName(s: Senador, candidatos: Candidato[]): stri
   return c.nome;
 }
 
-const tail = (s: Senador, site: Site): string => `${absolute(senatorPath(s.id))} ${site.hashtag}`;
+/**
+ * The senator's page as it is shared: the address plus a short version of the declaration
+ * (status, candidate, source). Networks cache a link's preview card by its address, so a
+ * senator who declares, or whose source changes, is shared under a new address and the
+ * preview shows the current card; while nothing changes, the address stays the same.
+ */
+export function shareUrl(s: Senador): string {
+  const d = s.declaracao;
+  const key = JSON.stringify(d.status === "nao_declarou" ? [d.status] : [d.status, d.candidato, d.fonte.url]);
+  return `${absolute(senatorPath(s.id))}?v=${createHash("sha256").update(key).digest("hex").slice(0, 8)}`;
+}
+
+const tail = (s: Senador, site: Site): string => `${shareUrl(s)} ${site.hashtag}`;
 
 /** The text about the senator, for WhatsApp and the share sheet, and for X when the senator has no profile there. */
 export function thirdPersonText(s: Senador, candidatos: Candidato[], site: Site): string {
