@@ -427,7 +427,7 @@ test("a senator page carries the actions in one order: X, share the card, WhatsA
   expect(h).toContain('data-text="Arthur Lira (PP-AL) representa você no Senado');
   expect(h).toContain('href="https://wa.me/?text=Arthur%20Lira%20(PP-AL)%20representa%20voc%C3%AA');
   expect(h).toContain('data-card="/cartao/senador/arthur-lira.png"');
-  expect(h).toContain('data-url="https://abreovoto.com/senador/arthur-lira/"');
+  expect(h).toMatch(/data-url="https:\/\/abreovoto\.com\/senador\/arthur-lira\/\?v=[0-9a-f]{8}"/); // the same versioned address as the share texts
   expect(h).toContain('href="/cartao/senador/arthur-lira.png" download="abreovoto-arthur-lira.png"');
   expect(h).toContain('role="status"');
   expect(h).not.toContain("data-share-instagram");

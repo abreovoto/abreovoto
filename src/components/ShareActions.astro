@@ -7,8 +7,8 @@
  * card path travel as data attributes, so the script holds no text of its own.
  */
 import type { Candidato, Senador, Site } from "../data/schema";
-import { absolute, senatorCardPath, senatorPath } from "../lib/routes";
-import { thirdPersonText, whatsappUrl, xIntentUrl, xLabel, xText } from "../lib/share-text";
+import { senatorCardPath } from "../lib/routes";
+import { shareUrl, thirdPersonText, whatsappUrl, xIntentUrl, xLabel, xText } from "../lib/share-text";
 import { departureNote } from "../lib/text";
 import Button from "./Button.astro";
 import Icon from "./Icon.astro";
@@ -49,7 +49,7 @@ const file = `abreovoto-${senador.id}.png`;
           </Button>
         </div>
         <div class="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
-          <Button kind="secondary" scripted data-copy-link="" data-url={absolute(senatorPath(senador.id))}>
+          <Button kind="secondary" scripted data-copy-link="" data-url={shareUrl(senador)}>
             <Icon name="link" class="size-4 shrink-0" />
             Copiar link
           </Button>

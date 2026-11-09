@@ -9,6 +9,7 @@ import {
   xLabel,
   xLength,
   xText,
+  shareUrl,
 } from "../src/lib/share-text";
 
 const d = loadData();
@@ -21,14 +22,14 @@ const declared = (s: ReturnType<typeof by>, candidato: string) => ({
 test("the X text mentions the senator, links the page and carries the hashtag", () => {
   const s = by("arthur-lira");
   expect(xText(s, d.candidatos, d.site)).toBe(
-    "@arthurlira_, quem te elegeu tem o direito de saber em quem você vota para presidente do Senado. Vai abrir o voto, ou vai votar em segredo? https://abreovoto.com/senador/arthur-lira/ #AbreOVotoSenador",
+    `@arthurlira_, quem te elegeu tem o direito de saber em quem você vota para presidente do Senado. Vai abrir o voto, ou vai votar em segredo? ${shareUrl(s)} #AbreOVotoSenador`,
   );
 });
 
 test("without an X profile, the X text is the third-person one", () => {
   const s = asUndeclared(by("marcio-bittar")); // no X profile; the not-declared text
   const third =
-    "Marcio Bittar (PL-AC) representa você no Senado, e você tem o direito de saber em quem vota para presidente do Senado. Vai abrir o voto, ou vai votar em segredo? https://abreovoto.com/senador/marcio-bittar/ #AbreOVotoSenador";
+    `Marcio Bittar (PL-AC) representa você no Senado, e você tem o direito de saber em quem vota para presidente do Senado. Vai abrir o voto, ou vai votar em segredo? ${shareUrl(s)} #AbreOVotoSenador`;
   expect(xHandle(s)).toBeNull();
   expect(thirdPersonText(s, d.candidatos, d.site)).toBe(third);
   expect(xText(s, d.candidatos, d.site)).toBe(third);
@@ -38,9 +39,9 @@ test("a declared senator's texts name the candidate from the data and are the sa
   const s = by("arthur-lira");
   const texts = d.candidatos.map((c) => xText(declared(s, c.id), d.candidatos, d.site));
   expect(texts[0]).toBe(
-    "@arthurlira_ abriu o voto para presidente do Senado: Davi Alcolumbre, com fonte pública. Seus eleitores agradecem a transparência. Quem mais? https://abreovoto.com/senador/arthur-lira/ #AbreOVotoSenador",
+    `@arthurlira_ abriu o voto para presidente do Senado: Davi Alcolumbre, com fonte pública. Seus eleitores agradecem a transparência. Quem mais? ${shareUrl(declared(s, "alcolumbre"))} #AbreOVotoSenador`,
   );
-  expect(new Set(texts.map((t, i) => t.replace(d.candidatos[i]!.nome, "X"))).size).toBe(1);
+  expect(new Set(texts.map((t, i) => t.replace(d.candidatos[i]!.nome, "X").replace(/\?v=[0-9a-f]{8}/, "?v=V"))).size).toBe(1);
   expect(thirdPersonText(declared(s, "marinho"), d.candidatos, d.site)).toContain("Arthur Lira (PP-AL) abriu o voto para presidente do Senado: Rogério Marinho,");
   expect(xLabel(declared(s, "marinho"))).toBe("Compartilhar no X");
   expect(xLabel(s)).toBe("Cobrar no X");
@@ -61,4 +62,15 @@ test("every text fits X and carries no date", () => {
 test("the intent URLs encode the text", () => {
   expect(xIntentUrl("a b #c")).toBe("https://x.com/intent/post?text=a%20b%20%23c");
   expect(whatsappUrl("a b")).toBe("https://wa.me/?text=a%20b");
+});
+
+test("the shared address carries a version of the declaration, so a changed status is a new link for the networks' caches", () => {
+  const s = asUndeclared(by("arthur-lira"));
+  expect(shareUrl(s)).toMatch(/^https:\/\/abreovoto\.com\/senador\/arthur-lira\/\?v=[0-9a-f]{8}$/);
+  expect(shareUrl(s)).toBe(shareUrl(asUndeclared(by("arthur-lira")))); // stable while nothing changes
+  const a = shareUrl(declared(s, "alcolumbre"));
+  expect(a).not.toBe(shareUrl(s)); // declaring changes it
+  expect(shareUrl(declared(s, "marinho"))).not.toBe(a); // another candidate changes it
+  const better = { ...declared(s, "alcolumbre"), declaracao: { ...declared(s, "alcolumbre").declaracao, fonte: { tipo: "video" as const, url: "https://example.com/v", titulo: null, trecho: "Voto." } } };
+  expect(shareUrl(better)).not.toBe(a); // a new source changes it
 });
