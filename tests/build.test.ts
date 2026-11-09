@@ -170,13 +170,13 @@ test("the home's scoreboard carries the hemicycle and the e-Cidadania line close
   expect(h.match(/<circle /g)?.length).toBe(81);
   expect(h).toMatch(/aria-label="81 cadeiras do Senado: \d+ não declararam, \d+ declararam"/);
   const idx = (t: string) => h.indexOf(t);
-  expect(idx("Para 2029")).toBeGreaterThan(idx("Os 81 senadores"));
+  expect(idx("Para 2029")).toBeGreaterThan(idx("Escolha um senador para cobrar"));
   expect(h).toContain("de&nbsp;voto&nbsp;aberto");
 });
 
 test("the home's sections open with the same head: rule, title, note", () => {
   const h = html("index.html");
-  for (const note of ["41 votos elegem o presidente do Senado", "três por estado", "em ordem alfabética"]) {
+  for (const note of ["41 votos elegem o presidente do Senado", "três por estado", "81 senadores, em ordem alfabética"]) {
     expect(h).toMatch(new RegExp(`<h2 id="[a-z-]+"[^>]*>[^<]+</h2>\\s*<p[^>]*>${note}</p>`));
   }
   expect(h).not.toContain("41 votos elegem o presidente do Senado.");
@@ -357,10 +357,15 @@ test("a candidate card puts its label under the number, as the scoreboard does",
   expect(html("index.html")).toMatch(/<p class="mt-auto[^"]*">\s*<span[^>]*>\d+<\/span>\s*<span class="[^"]*\bblock\b/);
 });
 
-test("each row of the list shows a chevron, hidden from screen readers", () => {
-  const rows = [...html("index.html").matchAll(/<li[^>]*data-nome="[^"]*"[^>]*>([\s\S]*?)<\/li>/g)];
+test("each row of the list ends in an action that follows the status alone, hidden from screen readers", () => {
+  const rows = [...html("index.html").matchAll(/<li[^>]*data-status="([a-z_]+)"[^>]*>([\s\S]*?)<\/li>/g)];
   expect(rows).toHaveLength(81);
-  for (const [, inner] of rows) expect(inner).toMatch(/<span data-chevron aria-hidden="true"/);
+  for (const [, status, inner] of rows) {
+    expect(inner).toMatch(/<span data-action aria-hidden="true"/);
+    // The pill is not a link: it must let the click through to the row's link.
+    expect(inner).toMatch(/<span data-action aria-hidden="true" class="pointer-events-none /);
+    expect(inner).toContain(status === "nao_declarou" ? "Cobrar" : "Ver fonte");
+  }
 });
 
 test("the senator cards' button reads 'Ver histórico'", () => {
