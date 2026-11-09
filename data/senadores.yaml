@@ -2471,10 +2471,10 @@
     candidato: marinho
     data: 2026-11-08
     fonte:
-      tipo: materia
-      url: https://agorarn.com.br/politica/rogerio-marinho-apoio-senadores-eleitos-senado/
-      titulo: "Rogério Marinho recebe apoio público de senadores eleitos de três partidos para presidir o Senado"
-      trecho: "Com certeza, a gente vai resgatar a nossa democracia com Rogério Marinho, presidente do Senado Federal. Estamos juntos"
+      tipo: video
+      url: https://www.youtube.com/watch?v=h9WGpti-mQ4&t=33s
+      titulo: "DERRITE, SANDERSON E VAN HATTEM DECLARAM APOIO A ROGÉRIO MARINHO PARA PRESIDÊNCIA DO SENADO"
+      trecho: "[…] com certeza a gente vai resgatar a nossa democracia com o Rogério Marinho, presidente do Senado Federal. Tamo junto, estamos junto."
   observacoes: []
   historico:
     - data: 2026-11-06
@@ -2482,6 +2482,9 @@
       issue: null
     - data: 2026-11-08
       evento: declarou voto em Rogério Marinho (matéria jornalística, 8 de novembro de 2026)
+      issue: null
+    - data: 2026-11-08
+      evento: a fonte da declaração passou a ser o vídeo original, publicado pela Itatiaia em 8 de novembro de 2026
       issue: null
 - id: andre-do-prado
   nome: André do Prado
