@@ -24,3 +24,9 @@ lançamento.
 - O placar sai com as declarações já públicas, cada uma com sua fonte e o trecho literal entre aspas.
 - A metodologia diz quando o apoio declarado conta como dizer em quem vota: com o nome do candidato e a eleição na própria citação.
 - O site é gerado de novo todo dia, logo depois da meia-noite de Brasília, mesmo sem mudança nos dados: a data do placar, o `gerado_em` de `/dados.json` e as frases de quem assume ou deixa uma vaga acompanham o calendário.
+
+### Alterado
+
+- A home abre com "O seu voto é secreto. O deles não precisa ser."; a data da eleição e o voto secreto vão para o subtítulo.
+- A petição ganha um bloco próprio na home, com botão largo, e aparece de novo depois da lista dos senadores. Na home e na página de cada senador, ela abre em nova aba.
+- A lista dos senadores passa a se chamar "Escolha um senador para cobrar", e cada linha termina num botão: "Cobrar" para quem não declarou, "Ver fonte" para quem declarou.
