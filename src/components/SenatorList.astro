@@ -20,7 +20,8 @@ const parties = [...new Set(senadores.map((s) => s.partido))].sort(byName);
 ---
 
 <section id="lista" aria-labelledby="lista-titulo">
-  <SectionHead id="lista-titulo" title={`Os ${rows.length} senadores`} note="em ordem alfabética" />
+  <!-- The heading is the call to action; the "Cobrar" at the end of each row says the rest. -->
+  <SectionHead id="lista-titulo" title="Escolha um senador para cobrar" note={`${rows.length} senadores, em ordem alfabética`} />
   <form data-filtros hidden class="mt-6 grid gap-4 rounded-lg bg-surface p-4 sm:p-5" role="search" aria-label="Filtrar a lista">
     <fieldset>
       <legend class="text-sm font-semibold leading-tight text-fg">Mostrar</legend>

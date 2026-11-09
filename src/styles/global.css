@@ -151,13 +151,3 @@
   }
 }
 
-/* A small chevron drawn by two borders, at the end of a clickable row. */
-@utility row-chevron {
-  width: 0.5rem;
-  height: 0.5rem;
-  flex-shrink: 0;
-  margin-right: 0.25rem;
-  rotate: 45deg;
-  border-top: 2px solid var(--color-fg-muted);
-  border-right: 2px solid var(--color-fg-muted);
-}

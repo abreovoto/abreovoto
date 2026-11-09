@@ -4,6 +4,7 @@ import type { Candidato, Senador } from "../data/schema";
 import { senatorPhoto } from "../lib/photos";
 import { assumeEmNote, partyState } from "../lib/text";
 import Portrait from "./Portrait.astro";
+import Icon from "./Icon.astro";
 import StatusBadge from "./StatusBadge.astro";
 
 interface Props extends HTMLAttributes<"li"> {
@@ -17,6 +18,9 @@ const { senador, candidatos, href, ...rest } = Astro.props;
 const decl = senador.declaracao;
 const candidate = decl.status === "nao_declarou" ? null : candidatos.find((c) => c.id === decl.candidato);
 const forecast = assumeEmNote(senador);
+// The row's call to action follows the status alone, never the candidate: ask whoever has not answered,
+// show the source of whoever has.
+const action = decl.status === "nao_declarou" ? "Cobrar" : "Ver fonte";
 ---
 
 <!-- Stripes count only the rows a filter leaves visible. With a link, its ::after
@@ -24,7 +28,7 @@ const forecast = assumeEmNote(senador);
 <li
   class:list={[
     "flex items-center gap-4 rounded-lg px-3 py-2.5 [&:nth-child(odd_of_:not([hidden]))]:bg-surface",
-    href && "relative",
+    href && "group relative",
   ]}
   {...rest}
 >
@@ -44,5 +48,24 @@ const forecast = assumeEmNote(senador);
       {candidate && <span class="font-semibold text-fg">{candidate.nome}</span>}
     </p>
   </div>
-  {href && <span data-chevron aria-hidden="true" class="row-chevron"></span>}
+  {
+    href && (
+      <span
+        data-action
+        aria-hidden="true"
+        class:list={[
+          // Not a link of its own: clicks pass through to the row's link. Without this, the hover filter
+          // lifts the pill above the link's ::after and swallows the click.
+          "pointer-events-none inline-flex h-[36px] shrink-0 items-center gap-2 rounded border-2 px-3 text-sm font-semibold leading-none",
+          decl.status === "nao_declarou"
+            ? "border-accent bg-accent text-on-accent group-hover:brightness-110"
+            : "border-line text-fg-muted group-hover:border-fg group-hover:text-fg",
+        ]}
+      >
+        {decl.status === "nao_declarou" && <Icon name="megaphone" class="size-4 shrink-0" />}
+        {action}
+        {decl.status !== "nao_declarou" && <Icon name="arrow" class="size-3.5 shrink-0" />}
+      </span>
+    )
+  }
 </li>
