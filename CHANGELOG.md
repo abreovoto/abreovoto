@@ -23,3 +23,4 @@ lançamento.
 - `/dados.json` passa a trazer o endereço da petição.
 - O placar sai com as declarações já públicas, cada uma com sua fonte e o trecho literal entre aspas.
 - A metodologia diz quando o apoio declarado conta como dizer em quem vota: com o nome do candidato e a eleição na própria citação.
+- O site é gerado de novo todo dia, logo depois da meia-noite de Brasília, mesmo sem mudança nos dados: a data do placar, o `gerado_em` de `/dados.json` e as frases de quem assume ou deixa uma vaga acompanham o calendário.
