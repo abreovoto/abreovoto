@@ -16,13 +16,17 @@ const p = placar(d);
 ---
 
 <Base title="Abre o Voto" description="Placar público da eleição para a Presidência do Senado Federal.">
-  <div class="grid grid-cols-1 items-start gap-8 min-[900px]:grid-cols-[7fr_5fr] min-[900px]:gap-12">
+  <div class="grid grid-cols-1 items-start gap-8 min-[900px]:grid-cols-[7fr_5fr] min-[900px]:items-stretch min-[900px]:gap-12">
     <div>
-      <h1 class="max-w-[19ch] text-3xl font-semibold leading-tight sm:text-4xl">
-        Em 1º de fevereiro, seus senadores escolhem quem comanda o Senado. Em voto secreto.
-      </h1>
-      <p class="mt-5 max-w-[34ch] text-lg text-fg">Você tem o direito de saber em quem cada um vota. Cobre que declarem antes.</p>
-      <PetitionArea peticao={d.peticao} />
+      <h1 class="max-w-[16ch] text-3xl font-semibold leading-tight sm:text-4xl">O seu voto é secreto. O deles não precisa ser.</h1>
+      <!-- One measure for the subtitle and the petition block, so their right edges meet. -->
+      <div class="max-w-[29rem]">
+        <p class="mt-5 text-lg text-fg">
+          Em 1º de fevereiro, seus senadores escolhem quem comanda o Senado, em voto secreto. Você tem o direito de saber em
+          quem cada um vota. Cobre que declarem antes.
+        </p>
+        <PetitionArea peticao={d.peticao} />
+      </div>
     </div>
     <Scoreboard placar={p} />
   </div>
@@ -42,6 +46,7 @@ const p = placar(d);
 
   <YourSenators senadores={emExercicio(d)} candidatos={d.candidatos} site={d.site} />
   <SenatorList senadores={emExercicio(d)} candidatos={d.candidatos} />
+  <PetitionArea peticao={d.peticao} placement="closing" />
 
   {
     d.site.ecidadania_url && (
