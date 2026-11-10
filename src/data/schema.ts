@@ -97,8 +97,13 @@ export const ObservacaoSchema = z.strictObject({
   fonte_url: httpsUrl,
 });
 
-/** The senator said in public they have not decided, or do not follow their party: party support stops applying. */
+/**
+ * The senator said in public they have not decided, or do not follow their party: that party's
+ * support stops applying. `partido` is the party they opted out of; after a switch, the new
+ * party's support applies again.
+ */
 export const RecusaPartidoSchema = z.strictObject({
+  partido: text,
   data: isoDateNotFuture,
   trecho: text,
   fonte_url: httpsUrl,

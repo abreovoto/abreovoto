@@ -220,9 +220,11 @@ test("apoio_mapeado loads on any other seat", () => {
 });
 
 test("recusa_partido loads when present and is optional", () => {
-  const recusa = { data: "2026-10-12", trecho: "ainda não decidi", fonte_url: "https://www12.senado.leg.br/noticias/x" };
+  const recusa = { partido: "PARTIDO", data: "2026-10-12", trecho: "ainda não decidi", fonte_url: "https://www12.senado.leg.br/noticias/x" };
   const d = loadData(makeDataset({ senador: { "ac-1": { recusa_partido: recusa } } }));
   expect(d.senadores.find((s) => s.id === "ac-1")?.recusa_partido).toEqual(recusa);
   expect(d.senadores.find((s) => s.id === "ac-2")?.recusa_partido).toBeUndefined();
   expect(issuesOf({ senador: { "ac-1": { recusa_partido: { ...recusa, fonte_url: "http://x.org" } } } }).join("\n")).toMatch(/\[ac-1\].*recusa_partido/);
+  const { partido: _, ...noParty } = recusa;
+  expect(issuesOf({ senador: { "ac-1": { recusa_partido: noParty } } }).join("\n")).toMatch(/\[ac-1\].*recusa_partido\.partido/);
 });
