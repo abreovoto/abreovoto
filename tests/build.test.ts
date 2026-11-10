@@ -204,8 +204,9 @@ test("the selects and the search share one 44 px construction; the selects draw 
   }
   expect(cls(search)).toContain("h-[44px]");
   const radios = h.match(/<input type="radio" name="status"[^>]*>/g) ?? [];
-  expect(radios).toHaveLength(3);
+  expect(radios.map((r) => r.match(/value="([a-z_]+)"/)?.[1])).toEqual(["todos", "nao_declarou", "declarou", "apoio_mapeado", "partido"]);
   for (const r of radios) expect(cls(r)).toContain("sr-only");
+  for (const label of ["Todos", "Sem posição", "Declararam", "Apoio mapeado", "Pelo partido"]) expect(h).toMatch(new RegExp(`class="sr-only">\\s*${label}\\s*</label>`));
 });
 
 test("a senator page carries the card, the history and the links, and sends nobody to GitHub", () => {
