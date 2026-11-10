@@ -44,7 +44,7 @@ const declared = emExercicio(d)
         declared.length > 0 ? (
           <ul class="mt-6">
             {declared.map((s) => (
-              <ListItem senador={s} candidatos={d.candidatos} href={senatorPath(s.id)} />
+              <ListItem senador={s} d={d} href={senatorPath(s.id)} />
             ))}
           </ul>
         ) : (

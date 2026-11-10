@@ -165,24 +165,24 @@ const scale = [
     <h2 id="senador" class="text-2xl font-semibold">Senador</h2>
     <p class="mt-2 max-w-prose text-fg-muted">Os três do estado escolhido, como cards de "seus senadores".</p>
     <div class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-3">
-      {rn.map((s) => <SenatorCard senador={s} candidatos={d.candidatos} variant="state" />)}
+      {rn.map((s) => <SenatorCard senador={s} d={d} variant="state" />)}
     </div>
     <p class="mt-6 max-w-prose text-fg-muted">O card da página do senador, com o nome mais longo em exercício e com um suplente que assume em data marcada.</p>
     <div class="mt-4 grid max-w-2xl grid-cols-1 gap-4">
-      <SenatorCard senador={longest} candidatos={d.candidatos} variant="page">
+      <SenatorCard senador={longest} d={d} variant="page">
         <Fragment slot="actions">
           <Button kind="primary">Cobrar no X</Button>
           <Button kind="secondary">Compartilhar</Button>
         </Fragment>
       </SenatorCard>
-      <SenatorCard senador={substitute} candidatos={d.candidatos} variant="page" />
+      <SenatorCard senador={substitute} d={d} variant="page" />
     </div>
   </section>
 
   <section class="mt-10" aria-labelledby="lista">
     <h2 id="lista" class="text-2xl font-semibold">Lista</h2>
     <ul class="mt-4 max-w-2xl" role="list">
-      {firstFive.map((s) => <ListItem senador={s} candidatos={d.candidatos} />)}
+      {firstFive.map((s) => <ListItem senador={s} d={d} />)}
     </ul>
   </section>
 

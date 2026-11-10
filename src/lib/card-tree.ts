@@ -28,6 +28,7 @@ const text: Style = { fontFamily: "Text", fontWeight: 400 };
 function statusColour(status: string): string {
   if (status === "não declarou") return p.undeclared;
   if (/^(declarou|mostrou)/.test(status)) return p.declared;
+  if (/^apoio (mapeado|pelo partido|pela federação) a /.test(status)) return p.mappedText;
   return p.fgMuted; // the departure note
 }
 

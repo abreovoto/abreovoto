@@ -37,6 +37,24 @@ test("candidate cards are identical in shape and differ only in name and number"
   expect(new Set(cards.map((c) => c.subtitle.length > 0)).size).toBe(1);
 });
 
+test("a party-level senator's card says the support is the party's", () => {
+  const s = asUndeclared(d.senadores.find((x) => x.id === "marcio-bittar")!);
+  const withParty = {
+    ...d,
+    partidos: [
+      {
+        id: "teste",
+        partido: s.partido,
+        escopo: "partido" as const,
+        candidato: "marinho",
+        data: "2026-11-05",
+        fonte: { tipo: "nota" as const, url: "https://example.org/n", titulo: null, trecho: "apoio" },
+      },
+    ],
+  };
+  expect(senatorCard(s, withParty, today).status).toBe("apoio pelo partido a Rogério Marinho");
+});
+
 test("a departed senator's card carries the departure note instead of a status", () => {
   const s = d.senadores.find((x) => x.id === "cleitinho")!;
   expect(senatorCard(s, d, today).status).toBe("deixa o mandato em 6/1/2027");

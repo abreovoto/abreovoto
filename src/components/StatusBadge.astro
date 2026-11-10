@@ -1,17 +1,22 @@
 ---
-import type { Status } from "../data/schema";
+import type { Posicao } from "../data/posicao";
+import { statusPrefix } from "../lib/text";
 
 interface Props {
-  status: Status;
+  posicao: Posicao;
 }
 
-const { status } = Astro.props;
-// The two states share one construction — a square marker and the label — and differ only in colour and text.
-const label = status === "nao_declarou" ? "não declarou" : status === "declarou" ? "declarou voto em" : "mostrou o voto na sessão:";
-const colour = status === "nao_declarou" ? "text-undeclared" : "text-declared";
+const { posicao } = Astro.props;
+// Every level shares one construction — a square marker and the label — and differs only in colour and text.
+// The senator's own word is in the declared green; mapped and party support in a lighter green, their
+// marker in the hemicycle's fill for that level.
+const own = posicao.nivel === "declarou" || posicao.nivel === "mostrou_na_sessao";
+const colour = posicao.nivel === "nao_declarou" ? "text-undeclared" : own ? "text-declared" : "text-mapped-text";
+const marker =
+  posicao.nivel === "apoio_mapeado" ? "bg-mapped" : posicao.nivel === "partido" ? "border border-mapped bg-party" : "bg-current";
 ---
 
 <span class={`inline-flex items-center gap-2 text-sm font-semibold ${colour}`}>
-  <span class="size-2.5 shrink-0 bg-current" aria-hidden="true"></span>
-  {label}
+  <span class={`size-2.5 shrink-0 ${marker}`} aria-hidden="true"></span>
+  {statusPrefix(posicao)}
 </span>

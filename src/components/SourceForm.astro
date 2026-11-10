@@ -8,7 +8,8 @@ import SectionHead from "./SectionHead.astro";
 // The same form for every senator: on a senator page the senator is fixed; on /fonte/ the
 // visitor picks one of every seat holder, or says it is not about a senator.
 // On /fonte/ the page's own heading names the form, so the section carries no second one.
-type Props = { site: Site; senador: Senador } | { site: Site; senadores: Senador[]; labelledBy: string };
+// `declared`: the senator's own word is on record (`proprioVoto`); mapped or party support is not.
+type Props = { site: Site; senador: Senador; declared: boolean } | { site: Site; senadores: Senador[]; labelledBy: string };
 
 const props = Astro.props;
 const { site } = props;
@@ -17,7 +18,7 @@ const senadores =
   "senadores" in props ? [...props.senadores].sort((a, b) => a.nome.localeCompare(b.nome, "pt-BR")) : [];
 const siteKey = import.meta.env.TURNSTILE_SITE_KEY ?? site.turnstile_site_key;
 
-const declared = senador !== null && senador.declaracao.status !== "nao_declarou";
+const declared = "declared" in props && props.declared;
 const [introBefore, introAfter] = introText(senador?.nome ?? null, declared).split("Metodologia");
 const labelledBy = "labelledBy" in props ? props.labelledBy : "fonte-titulo";
 const [noScriptBefore, noScriptAfter] = noScriptText(site.contato).split(site.contato);

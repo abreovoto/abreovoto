@@ -9,11 +9,12 @@ import SourceForm from "../../components/SourceForm.astro";
 import { FORM_TEXT, shortcutText } from "../../lib/source-form";
 import { loadData } from "../../data/load";
 import { placar } from "../../data/placar";
+import { posicao, proprioVoto } from "../../data/posicao";
 import { type Senador, todayUtc } from "../../data/schema";
 import Base from "../../layouts/Base.astro";
 import { candidatePath, senatorCardPath, senatorPath, statePath } from "../../lib/routes";
 import { senatorCard } from "../../lib/share-card";
-import { departureNote, formatDate, partyState, quoted, sourceHost, sourceTypeLabel, statusLabel } from "../../lib/text";
+import { departureNote, formatDate, partyState, positionSourceLabel, quoted, sourceHost, statusLabel } from "../../lib/text";
 import { ufWithDe } from "../../lib/uf";
 
 export function getStaticPaths() {
@@ -27,12 +28,34 @@ interface Props {
 const { senador } = Astro.props;
 const d = loadData();
 const departed = departureNote(senador);
-const decl = senador.declaracao;
+const p = posicao(senador, d);
+const own = proprioVoto(p);
+const candidateName = (id: string) => d.candidatos.find((c) => c.id === id)!.nome;
 const successor = senador.substituido_por ? d.senadores.find((s) => s.id === senador.substituido_por) : undefined;
 // A running candidate's own senator page points at the candidate page, the same way for the three.
 const asCandidate = d.candidatos.find((c) => c.senador === senador.id && c.situacao === "candidato");
 const successorVerb = senador.deixou_em && todayUtc() < senador.deixou_em ? "Quem assume a vaga" : "Quem assumiu a vaga";
-const description = `${senador.nome} (${partyState(senador)}) ${departed ?? statusLabel(senador, d.candidatos)}.`;
+const description = `${senador.nome} (${partyState(senador)}) ${departed ?? statusLabel(senador, d)}.`;
+
+// The section names the level in effect; below the senator's own word it also says whose word it is.
+const sectionTitle =
+  own ? "Declaração"
+  : p.origem === "candidatura" ? "Candidatura"
+  : p.nivel === "partido" ? (p.origem === "federacao" ? "Apoio pela federação" : "Apoio pelo partido")
+  : "Apoio mapeado";
+const PARTY_SUBJECT = {
+  partido: (sigla: string) => `O partido ${sigla}`,
+  bancada: (sigla: string) => `A bancada do partido ${sigla} no Senado`,
+  federacao: (sigla: string) => `A federação que inclui o partido ${sigla}`,
+} as const;
+const selfWord = asCandidate?.genero === "f" ? "si mesma" : "si mesmo";
+const levelNote =
+  own || p.nivel === "nao_declarou" ? null
+  : p.origem === "candidatura" ? `${senador.nome} lançou a própria candidatura em ${formatDate(p.data)}. A candidatura conta como apoio mapeado a ${selfWord}, não como declaração de voto.`
+  : p.nivel === "partido" ? `${PARTY_SUBJECT[p.partido!.escopo](p.partido!.partido)} anunciou o apoio. ${senador.nome} ainda não declarou o voto em público.`
+  : `Uma fonte pública cita ${senador.nome} pelo nome como apoio. Não é uma declaração de voto: ${senador.nome} ainda não disse em público em quem vota.`;
+// The party's announcement in effect, when it is not the level shown above: an observation with its source.
+const partyAside = p.partido && p.nivel !== "partido" ? p.partido : null;
 
 ---
 
@@ -43,14 +66,14 @@ const description = `${senador.nome} (${partyState(senador)}) ${departed ?? stat
   fonteHref="#fonte"
 >
   <div class="max-w-2xl">
-    <SenatorCard senador={senador} candidatos={d.candidatos} variant="page" heading="h1">
+    <SenatorCard senador={senador} d={d} variant="page" heading="h1">
       {!departed && <ShareActions slot="actions" senador={senador} candidatos={d.candidatos} site={d.site} variant="full" />}
     </SenatorCard>
 
     {
       !departed && (
         <p class="mt-4 text-base">
-          {shortcutText(senador.nome, decl.status !== "nao_declarou")} <a href="#fonte" class="text-accent underline">{FORM_TEXT.shortcutLink}</a>
+          {shortcutText(senador.nome, own)} <a href="#fonte" class="text-accent underline">{FORM_TEXT.shortcutLink}</a>
         </p>
       )
     }
@@ -69,26 +92,52 @@ const description = `${senador.nome} (${partyState(senador)}) ${departed ?? stat
     }
 
     {
-      !departed && decl.status !== "nao_declarou" && (
+      !departed && p.nivel !== "nao_declarou" && (
         <section aria-labelledby="declaracao">
-          <SectionHead id="declaracao" title="Declaração" />
+          <SectionHead id="declaracao" title={sectionTitle} />
+          {levelNote && <p class="mt-6 text-base">{levelNote}</p>}
           <dl class="mt-6 grid items-baseline gap-x-6 gap-y-2 text-base sm:grid-cols-[8rem_1fr]">
             <dt class="text-sm text-fg-muted">Data</dt>
-            <dd class="tabular-nums">{formatDate(decl.data)}</dd>
+            <dd class="tabular-nums">{formatDate(p.data)}</dd>
             <dt class="text-sm text-fg-muted">Tipo de fonte</dt>
-            <dd>{sourceTypeLabel(decl.fonte.tipo)}</dd>
+            <dd>{positionSourceLabel(p)}</dd>
             <dt class="text-sm text-fg-muted">Fonte</dt>
             <dd class="break-words">
-              <a href={decl.fonte.url} rel="noopener noreferrer" class="text-accent underline">
-                {decl.fonte.titulo ?? sourceHost(decl.fonte.url)}
+              <a href={p.fonte.url} rel="noopener noreferrer" class="text-accent underline">
+                {p.fonte.titulo ?? sourceHost(p.fonte.url)}
               </a>
             </dd>
           </dl>
-          <figure class="mt-6 rounded-lg bg-surface px-6 py-5">
-            <blockquote class="text-base text-fg">{quoted(decl.fonte.trecho)}</blockquote>
-            <figcaption class="mt-3 text-sm text-fg-muted">— {senador.nome}</figcaption>
-          </figure>
+          {p.fonte.trecho !== null && (
+            <figure class="mt-6 rounded-lg bg-surface px-6 py-5">
+              <blockquote class="text-base text-fg">{quoted(p.fonte.trecho)}</blockquote>
+              <figcaption class="mt-3 text-sm text-fg-muted">— {own ? senador.nome : (p.fonte.titulo ?? sourceHost(p.fonte.url))}</figcaption>
+            </figure>
+          )}
         </section>
+      )
+    }
+
+    {
+      !departed && (partyAside || p.recusa) && (
+        <div class="mt-6 space-y-2 text-base">
+          {partyAside && (
+            <p>
+              {PARTY_SUBJECT[partyAside.escopo](partyAside.partido)}{" "}
+              {partyAside.candidato === null
+                ? `liberou seus senadores em ${formatDate(partyAside.data)}`
+                : `anunciou apoio a ${candidateName(partyAside.candidato)} em ${formatDate(partyAside.data)}`}{" "}
+              (<a href={partyAside.fonte.url} rel="noopener noreferrer" class="text-accent underline">fonte</a>).
+            </p>
+          )}
+          {p.recusa && (
+            <p>
+              Em {formatDate(p.recusa.data)}, {senador.nome} disse em público: {quoted(p.recusa.trecho)}{" "}
+              (<a href={p.recusa.fonte_url} rel="noopener noreferrer" class="text-accent underline">fonte</a>).
+              {p.partido?.candidato && " Por isso, o apoio do partido não conta aqui."}
+            </p>
+          )}
+        </div>
       )
     }
 
@@ -96,7 +145,7 @@ const description = `${senador.nome} (${partyState(senador)}) ${departed ?? stat
 
     <SenatorLinks senador={senador} />
 
-    <SourceForm site={d.site} senador={senador} />
+    <SourceForm site={d.site} senador={senador} declared={own} />
 
     <p class="mt-16 flex flex-wrap gap-x-6 gap-y-2 text-sm">
       {

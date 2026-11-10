@@ -41,6 +41,11 @@ test("the status colour follows the status, the same for every candidate", () =>
   const json = (m: ReturnType<typeof senatorCard>) => JSON.stringify(cardTree(m, null));
   expect(json(senatorCard(s, d, today))).toContain(palette.light.undeclared);
   expect(json(senatorCard(declared, d, today))).toContain(palette.light.declared);
+  for (const status of ["apoio mapeado a Rogério Marinho", "apoio pelo partido a Rogério Marinho", "apoio pela federação a Rogério Marinho"]) {
+    const m = { ...senatorCard(s, d, today), status };
+    expect(json(m), status).toContain(palette.light.mappedText);
+    expect(json(m), status).not.toContain(palette.light.declared);
+  }
   const colours = placar(d).porCandidato.map((c) => json(candidateCard(c, d, today)).replace(/[^#]*(#[0-9a-f]{6})/gi, "$1 "));
   expect(new Set(colours.map((c) => c.split(" ").sort().join(" "))).size).toBe(1);
 });
