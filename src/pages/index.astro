@@ -7,9 +7,11 @@ import SenatorList from "../components/SenatorList.astro";
 import YourSenators from "../components/YourSenators.astro";
 import { emExercicio, loadData } from "../data/load";
 import { placar } from "../data/placar";
+import { todayUtc } from "../data/schema";
 import Base from "../layouts/Base.astro";
 import { candidatePhoto } from "../lib/photos";
 import { candidatePath } from "../lib/routes";
+import { homeShareUrl } from "../lib/share-text";
 
 const d = loadData();
 const p = placar(d);
@@ -28,7 +30,7 @@ const p = placar(d);
         <PetitionArea peticao={d.peticao} />
       </div>
     </div>
-    <Scoreboard placar={p} />
+    <Scoreboard placar={p} shareUrl={homeShareUrl(d, todayUtc())} />
   </div>
 
   <section aria-labelledby="candidatos">

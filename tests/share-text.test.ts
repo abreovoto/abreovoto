@@ -11,7 +11,9 @@ import {
   xLength,
   xText,
   shareUrl,
+  homeShareUrl,
 } from "../src/lib/share-text";
+import { cardVersion, homeCard } from "../src/lib/share-card";
 
 const d = loadData();
 const by = (id: string) => d.senadores.find((s) => s.id === id)!;
@@ -74,6 +76,15 @@ test("the shared address carries a version of the declaration, so a changed stat
   expect(shareUrl(declared(s, "marinho"), d)).not.toBe(a); // another candidate changes it
   const better = { ...declared(s, "alcolumbre"), declaracao: { ...declared(s, "alcolumbre").declaracao, fonte: { tipo: "video" as const, url: "https://example.com/v", titulo: null, trecho: "Voto." } } };
   expect(shareUrl(better, d)).not.toBe(a); // a new source changes it
+});
+
+test("the home's shared address carries the home card's version, so a new day or a new count is a new link", () => {
+  expect(homeShareUrl(d, "2026-11-07")).toBe(`https://abreovoto.com/?v=${cardVersion(homeCard(d, "2026-11-07"))}`);
+  expect(homeShareUrl(d, "2026-11-07")).toBe(homeShareUrl(d, "2026-11-07"));
+  expect(homeShareUrl(d, "2026-11-08")).not.toBe(homeShareUrl(d, "2026-11-07"));
+  const lira = (s: Senador): Dataset => ({ ...d, senadores: d.senadores.map((x) => (x.id === "arthur-lira" ? s : x)) });
+  const before = asUndeclared(by("arthur-lira"));
+  expect(homeShareUrl(lira(declared(before, "alcolumbre")), "2026-11-07")).not.toBe(homeShareUrl(lira(before), "2026-11-07"));
 });
 
 const fonte = { tipo: "materia" as const, url: "https://example.com/m", titulo: null, trecho: "Entre os apoiadores." };
