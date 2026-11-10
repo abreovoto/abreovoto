@@ -6,6 +6,7 @@ import { createHash } from "node:crypto";
 import type { Dataset } from "../data/load";
 import { placar, type PlacarCandidato } from "../data/placar";
 import type { Senador } from "../data/schema";
+import { CARD_LAYOUT } from "./card-tree";
 import { departureNote, formatDate, partyState, statusLabel } from "./text";
 
 /** The scoreboard as the home card shows it: each running candidate's total, and who has no known position. */
@@ -99,7 +100,7 @@ export function cardAlt(m: ShareCardModel): string {
   }
 }
 
-/** A short hash of everything the card shows, so a changed card gets a new image URL. */
+/** A short hash of everything the card shows and of how it is drawn, so a changed card gets a new image URL. */
 export function cardVersion(m: ShareCardModel): string {
-  return createHash("sha256").update(JSON.stringify(m)).digest("hex").slice(0, 8);
+  return createHash("sha256").update(JSON.stringify([CARD_LAYOUT, m])).digest("hex").slice(0, 8);
 }
