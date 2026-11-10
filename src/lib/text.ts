@@ -78,7 +78,7 @@ export function levelNote(s: Senador, d: Dataset): string | null {
 
 /** True when the senator's opt-out is what keeps a party announcement in effect from counting for them. */
 export function partyNoLongerCounts(p: Posicao): boolean {
-  return p.recusa !== null && p.nivel === "nao_declarou" && p.partido?.candidato != null;
+  return p.recusa !== null && p.nivel === "nao_declarou" && p.partido?.candidato != null && p.recusa.partido === p.partido.partido;
 }
 
 /** The badge's full text: the level's label and, when there is one, the candidate's name. */

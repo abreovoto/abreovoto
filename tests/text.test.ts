@@ -170,12 +170,13 @@ test("statusSentence reads as a sentence after the name, for every level", () =>
 });
 
 test("the party no longer counts only where the opt-out is what leaves the senator without a position", () => {
-  const recusa = { data: "2026-10-12", trecho: "ainda não decidi", fonte_url: "https://example.org/r" };
+  const recusa = { partido: "PSD", data: "2026-10-12", trecho: "ainda não decidi", fonte_url: "https://example.org/r" };
   const withRecusa = (id: string, patch: object = {}) => posicao({ ...at(id), ...patch, recusa_partido: recusa } as never, levels);
   expect(partyNoLongerCounts(withRecusa("ac-2"))).toBe(true); // PSD backs marinho; the opt-out blocks it
   expect(partyNoLongerCounts(withRecusa("ac-2", { declaracao: declarou("marinho") }))).toBe(false); // a declaration is in effect
   expect(partyNoLongerCounts(withRecusa("ba-3"))).toBe(false); // no party announcement
   expect(partyNoLongerCounts(pos("ac-2"))).toBe(false); // no opt-out
+  expect(partyNoLongerCounts(posicao({ ...at("ac-2"), recusa_partido: { ...recusa, partido: "PP" } } as never, levels))).toBe(false); // an opt-out from another party
 });
 
 test("the hemicycle's label agrees in number with each count", () => {

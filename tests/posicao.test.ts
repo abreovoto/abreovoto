@@ -5,7 +5,7 @@ import { type DatasetOverrides, declarou, makeDataset, partidoEntry } from "./fi
 
 const nao = { status: "nao_declarou", candidato: null, data: null, fonte: null };
 const mapped = (candidato: string) => ({ ...declarou(candidato), status: "apoio_mapeado" });
-const recusa = { data: "2026-10-12", trecho: "ainda não decidi", fonte_url: "https://www12.senado.leg.br/noticias/recusa" };
+const recusa = { partido: "PSD", data: "2026-10-12", trecho: "ainda não decidi", fonte_url: "https://www12.senado.leg.br/noticias/recusa" };
 
 function load(overrides: DatasetOverrides): Dataset {
   return loadData(makeDataset(overrides));
@@ -129,4 +129,11 @@ test("a senator no longer in office gets no party support", () => {
   const d = load({ senador: psd, replace: ["ac-1", "ac-1-suplente"], partidos: [partidoEntry("PSD", "marinho")] });
   expect(of(d, "ac-1")).toMatchObject({ nivel: "nao_declarou" });
   expect(of(d, "ac-2")).toMatchObject({ nivel: "partido" });
+});
+
+test("an opt-out from another party does not block the senator's current party", () => {
+  const d = load({ senador: { ...psd, "ac-1": { partido: "PSD", recusa_partido: { ...recusa, partido: "PP" } } }, partidos: [partidoEntry("PSD", "marinho")] });
+  const p = of(d, "ac-1");
+  expect(p).toMatchObject({ nivel: "partido", candidato: "marinho" });
+  expect(p.recusa?.partido).toBe("PP");
 });

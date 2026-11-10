@@ -60,8 +60,9 @@ export function posicao(s: Senador, d: Dataset): Posicao {
     return { nivel: "apoio_mapeado", candidato: decl.candidato, data: decl.data, fonte: decl.fonte, origem: "senador", partido, recusa };
   }
 
-  // Party support speaks for the caucus in office; a former occupant is not in it.
-  if (partido?.candidato && !recusa && s.situacao === "em_exercicio") {
+  // Party support speaks for the caucus in office; a former occupant is not in it. An opt-out
+  // blocks only the party it was made from.
+  if (partido?.candidato && recusa?.partido !== s.partido && s.situacao === "em_exercicio") {
     return {
       nivel: "partido",
       candidato: partido.candidato,

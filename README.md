@@ -40,7 +40,7 @@ candidato, a data e a fonte: tipo, link `https` e o trecho literal. Sem fonte, a
 validação recusa. `partidos.yaml` guarda os anúncios de apoio de partido, bancada
 ou federação (o mais recente de cada partido vale; `candidato: null` libera a
 bancada), e `recusa_partido`, no senador, registra com fonte quem disse que não
-segue o partido. A posição que o site mostra é calculada desses dados, valendo o
+segue o partido, e qual (uma troca de partido volta a valer o anúncio do novo). A posição que o site mostra é calculada desses dados, valendo o
 nível mais alto: o voto mostrado na sessão, a declaração, o apoio mapeado (cada
 candidato em campanha tem apoio mapeado a si mesmo, com o anúncio da candidatura
 como fonte) e, por fim, o apoio do partido.

@@ -40,7 +40,8 @@ carries the candidate, the date and the source: type, `https` link and the
 literal quote. Without a source, validation rejects it. `partidos.yaml` holds the
 support announcements of parties, caucuses and federations (each party's latest
 one is in effect; `candidato: null` releases the caucus), and `recusa_partido`, on
-a senator, records with a source that they do not follow their party. The
+a senator, records with a source that they do not follow their party, and which
+one (after a switch, the new party's announcement applies). The
 position the site shows is derived from these, the highest level winning: the
 ballot shown in the session, the declaration, mapped support (every running
 candidate has mapped support for themselves, sourced by the candidacy
