@@ -1,7 +1,9 @@
+import { createHash } from "node:crypto";
 import { expect, test } from "vitest";
 import { asUndeclared } from "./fixtures/undeclared";
 import { loadData } from "../src/data/load";
 import { placar } from "../src/data/placar";
+import { CARD_LAYOUT } from "../src/lib/card-tree";
 import { candidateCard, cardAlt, cardVersion, homeCard, senatorCard } from "../src/lib/share-card";
 
 const d = loadData();
@@ -81,4 +83,11 @@ test("the version is stable for an equal model and changes with the status or th
   expect(cardVersion(senatorCard(s, d, today))).toBe(a);
   expect(cardVersion(senatorCard(s, d, "2026-11-08"))).not.toBe(a);
   expect(cardVersion(senatorCard({ ...s, nome: "Outro Nome" }, d, today))).not.toBe(a);
+});
+
+test("the version also follows the layout's revision, so a redrawn card gets a new image URL", () => {
+  const m = homeCard(d, today);
+  const plain = createHash("sha256").update(JSON.stringify(m)).digest("hex").slice(0, 8);
+  expect(cardVersion(m)).toBe(createHash("sha256").update(JSON.stringify([CARD_LAYOUT, m])).digest("hex").slice(0, 8));
+  expect(cardVersion(m)).not.toBe(plain);
 });

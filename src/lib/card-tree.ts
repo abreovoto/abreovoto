@@ -6,6 +6,13 @@ import { PORTRAIT_SIZES, portraitHeight } from "./portrait";
 import type { CardScoreboard, ShareCardModel } from "./share-card";
 import { palette } from "../styles/tokens";
 
+/**
+ * The composition's revision, part of every card's version: raise it whenever a change here
+ * alters what a card looks like for the same data, so its image gets a new address and no
+ * network keeps showing the old drawing under it.
+ */
+export const CARD_LAYOUT = 2;
+
 export type CardNode = {
   type: string;
   props: Record<string, unknown> & {
