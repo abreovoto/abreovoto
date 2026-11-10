@@ -46,7 +46,7 @@ test.each(["index.html", "estilo/index.html"])("%s requests no third party", (pa
 test("the styleguide renders every component with real data and is not indexed", () => {
   const h = html("estilo/index.html");
   expect(h).toMatch(/<meta name="robots" content="noindex">/);
-  expect(h).toContain("não declararam");
+  expect(h).toContain("sem posição conhecida");
   expect(h).toContain("Davi Alcolumbre");
   expect(h).toContain("assume a vaga em 6/1/2027");
   expect(
@@ -125,7 +125,12 @@ test("the home opens with the headline, the scoreboard and the three candidates 
   expect(h).toContain(`href="${loadData().peticao.url}"`);
   expect(h).toContain("Assinar a petição");
   expect(h).toContain("Apoie no e-Cidadania");
-  expect(h).toContain("não declararam");
+  const p = placar(loadData());
+  expect(h).toContain("sem posição conhecida");
+  expect(h).toContain("com posição conhecida");
+  expect(h.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ")).toContain(
+    `${p.declararam} declararam · ${p.mapeados} apoio mapeado · ${p.partido} pelo partido`,
+  );
   const order = placar(loadData()).porCandidato.map((c) => h.indexOf(c.nome)); // the published order rule
   expect(order.every((i) => i > 0)).toBe(true);
   expect(order).toEqual([...order].sort((a, b) => a - b));
@@ -168,7 +173,10 @@ test("the list has the 81 in office, alphabetical, with hidden filter controls",
 test("the home's scoreboard carries the hemicycle and the e-Cidadania line closes the page", () => {
   const h = html("index.html");
   expect(h.match(/<circle /g)?.length).toBe(81);
-  expect(h).toMatch(/aria-label="81 cadeiras do Senado: \d+ não declararam, \d+ declararam"/);
+  const p = placar(loadData());
+  expect(h).toContain(
+    `aria-label="81 cadeiras do Senado: ${p.semPosicao} sem posição conhecida, ${p.declararam} declararam, ${p.mapeados} apoio mapeado, ${p.partido} pelo partido"`,
+  );
   const idx = (t: string) => h.indexOf(t);
   expect(idx("Para 2029")).toBeGreaterThan(idx("Escolha um senador para cobrar"));
   expect(h).toContain("de&nbsp;voto&nbsp;aberto");
@@ -486,7 +494,7 @@ test("every senator page invites the visitor to the scoreboard with the totals a
   for (const id of ["marcio-bittar", "flavio-dino"]) {
     const h = html(`senador/${id}/index.html`);
     // The number and its sentence are one paragraph, laid out in two places.
-    expect(h, id).toMatch(new RegExp(`<p[^>]*>\\s*<span[^>]*>${p.semPosicao}</span>\\s*<span[^>]*>de ${p.total} senadores ainda não declararam o voto para presidente do Senado\\.</span>\\s*</p>`));
+    expect(h, id).toMatch(new RegExp(`<p[^>]*>\\s*<span[^>]*>${p.semPosicao}</span>\\s*<span[^>]*>de ${p.total} senadores ainda sem posição conhecida para presidente do Senado\\.</span>\\s*</p>`));
     expect(h, id).toContain("Você tem o direito de saber em quem cada um vota. Cobre que declarem antes.");
     expect(h, id).toMatch(/<a href="\/"[^>]*>(?:(?!<\/a>)[\s\S])*Ver o placar/); // the home's top: an anchor would cut the headline off
     expect(h, id).toContain('aria-label="81 cadeiras do Senado');

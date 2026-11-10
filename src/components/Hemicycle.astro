@@ -3,24 +3,39 @@ import { fillOrder, seats } from "../lib/hemicycle";
 
 interface Props {
   declararam: number;
+  mapeados: number;
+  partido: number;
   total: number;
 }
 
-// An undeclared seat is an open ring (the mark's own shape); a declared seat is a filled disc.
-const { declararam, total } = Astro.props;
+// A seat with no known position is an open ring (the mark's own shape). Seats with a position fill
+// from the centre outward: the senator's own word first, then mapped support, then party support.
+const { declararam, mapeados, partido, total } = Astro.props;
 const all = seats();
-const declared = new Set(fillOrder().slice(0, declararam));
-const label = `${total} cadeiras do Senado: ${total - declararam} não declararam, ${declararam} declararam`;
+const order = fillOrder();
+const level = new Map<number, "declared" | "mapped" | "party">();
+order.slice(0, declararam).forEach((i) => level.set(i, "declared"));
+order.slice(declararam, declararam + mapeados).forEach((i) => level.set(i, "mapped"));
+order.slice(declararam + mapeados, declararam + mapeados + partido).forEach((i) => level.set(i, "party"));
+const semPosicao = total - declararam - mapeados - partido;
+const label = `${total} cadeiras do Senado: ${semPosicao} sem posição conhecida, ${declararam} declararam, ${mapeados} apoio mapeado, ${partido} pelo partido`;
 ---
 
 <svg viewBox="0 0 300 158" role="img" aria-label={label} class="block h-auto w-full">
   {
-    all.map((s, i) =>
-      declared.has(i) ? (
-        <circle cx={s.x.toFixed(1)} cy={s.y.toFixed(1)} r="6.2" fill="var(--color-declared)" />
-      ) : (
-        <circle cx={s.x.toFixed(1)} cy={s.y.toFixed(1)} r="5.2" fill="none" stroke="var(--color-undeclared)" stroke-width="2" />
-      ),
-    )
+    all.map((s, i) => {
+      const x = s.x.toFixed(1);
+      const y = s.y.toFixed(1);
+      switch (level.get(i)) {
+        case "declared":
+          return <circle cx={x} cy={y} r="6.2" fill="var(--color-declared)" />;
+        case "mapped":
+          return <circle cx={x} cy={y} r="6.2" fill="var(--color-mapped)" />;
+        case "party":
+          return <circle cx={x} cy={y} r="5.7" fill="var(--color-party)" stroke="var(--color-mapped)" stroke-width="1" />;
+        default:
+          return <circle cx={x} cy={y} r="5.2" fill="none" stroke="var(--color-undeclared)" stroke-width="2" />;
+      }
+    })
   }
 </svg>

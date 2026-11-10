@@ -11,6 +11,9 @@ const names = {
   line: "line",
   undeclared: "undeclared",
   declared: "declared",
+  mapped: "mapped",
+  party: "party",
+  mappedText: "mapped-text",
   accent: "accent",
   onAccent: "on-accent",
   focus: "focus",
@@ -34,6 +37,15 @@ test.each(["light", "dark"] as const)("%s palette meets WCAG AA on every text pa
   expect(contrast(p.declared, p.bg)).toBeGreaterThanOrEqual(4.5);
   expect(contrast(p.onAccent, p.accent)).toBeGreaterThanOrEqual(4.5);
   expect(contrast(p.focus, p.bg)).toBeGreaterThanOrEqual(3);
+});
+
+test.each(["light", "dark"] as const)("the mapped and party levels are legible in %s", (mode) => {
+  const p = palette[mode];
+  // Label text for the two levels below the senator's own word.
+  expect(contrast(p.mappedText, p.bg)).toBeGreaterThanOrEqual(4.5);
+  expect(contrast(p.mappedText, p.surface)).toBeGreaterThanOrEqual(4.5);
+  // A mapped seat is a non-text mark on the card; a party seat carries the same colour as its outline.
+  expect(contrast(p.mapped, p.surface)).toBeGreaterThanOrEqual(3);
 });
 
 test.each(["light", "dark"] as const)("the two status colours carry equal weight in %s", (mode) => {

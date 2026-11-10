@@ -13,6 +13,12 @@ export type Palette = {
   line: string;
   undeclared: string;
   declared: string;
+  /** Fill of a mapped-support seat or swatch; also the outline of a party-support seat. */
+  mapped: string;
+  /** Fill of a party-support seat or swatch: pale, always outlined in `mapped`. */
+  party: string;
+  /** Label text for the mapped and party levels. */
+  mappedText: string;
   accent: string;
   onAccent: string;
   focus: string;
@@ -28,6 +34,9 @@ export const palette: Record<Mode, Palette> = {
     line: "#c9cfd9",
     undeclared: "#b8291f",
     declared: "#17753a",
+    mapped: "#469765",
+    party: "#c3e2cd",
+    mappedText: "#267a46",
     accent: "#1d4fd7",
     onAccent: "#ffffff",
     focus: "#1d4fd7",
@@ -40,6 +49,9 @@ export const palette: Record<Mode, Palette> = {
     line: "#30415f",
     undeclared: "#ff9486",
     declared: "#55cc82",
+    mapped: "#3a8f5c",
+    party: "#245c3c",
+    mappedText: "#46a46b",
     accent: "#8fb0ff",
     onAccent: "#0e1a33",
     focus: "#8fb0ff",

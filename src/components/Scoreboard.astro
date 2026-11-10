@@ -11,6 +11,11 @@ interface Props {
 const { placar } = Astro.props;
 // The date of the build: the scoreboard is as fresh as the last deploy.
 const updated = formatDate(todayUtc());
+const legend = [
+  [placar.declararam, "declararam", "bg-declared"],
+  [placar.mapeados, "apoio mapeado", "bg-mapped"],
+  [placar.partido, "pelo partido", "bg-party border border-mapped"],
+] as const;
 const numeral = "font-display block text-4xl tabular-nums min-[400px]:text-5xl min-[900px]:text-6xl";
 ---
 
@@ -23,18 +28,30 @@ const numeral = "font-display block text-4xl tabular-nums min-[400px]:text-5xl m
   </div>
   <div class="flex flex-1 flex-col justify-center">
     <div class="mt-5">
-      <Hemicycle declararam={placar.declararam} total={placar.total} />
+      <Hemicycle declararam={placar.declararam} mapeados={placar.mapeados} partido={placar.partido} total={placar.total} />
     </div>
     <div class="mt-3 grid grid-cols-2 text-center">
       <p class="px-2 py-1">
         <span class={`${numeral} text-undeclared`}>{placar.semPosicao}</span>
-        <span class="mt-1.5 block text-sm font-semibold text-fg">não declararam</span>
+        <span class="mt-1.5 block text-sm font-semibold text-fg">sem posição conhecida</span>
       </p>
       <p class="border-l border-line px-2 py-1">
-        <span class={`${numeral} text-declared`}>{placar.declararam}</span>
-        <span class="mt-1.5 block text-sm font-semibold text-fg">declararam</span>
+        <span class={`${numeral} text-declared`}>{placar.comPosicao}</span>
+        <span class="mt-1.5 block text-sm font-semibold text-fg">com posição conhecida</span>
       </p>
     </div>
+    <!-- How "com posição conhecida" splits: the senator's own word, mapped support, party support. -->
+    <p class="mt-3 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-center text-xs text-fg-muted">
+      {
+        legend.map(([n, label, swatch], i) => (
+          <span class="inline-flex items-center gap-1.5 whitespace-nowrap">
+            {i > 0 && <span aria-hidden="true">·</span>}
+            <span class={`inline-block size-2.5 rounded-full ${swatch}`} aria-hidden="true" />
+            {n} {label}
+          </span>
+        ))
+      }
+    </p>
   </div>
   <p class="mt-5 border-t border-line pt-3.5 text-xs text-fg-muted">{placar.total} senadores em exercício · 41 votos elegem</p>
 </section>
