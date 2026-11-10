@@ -1,6 +1,14 @@
 import type { UF } from "../data/schema";
+import { PRODUCTION_URL } from "./preview";
 
-export const SITE_URL = "https://abreovoto.com";
+/**
+ * The origin of the build, from the site configured for it: abreovoto.com, or a preview's own
+ * address. Outside a build (tests, scripts), abreovoto.com.
+ */
+export const SITE_URL: string = (import.meta.env?.SITE as string | undefined)?.replace(/\/$/, "") ?? PRODUCTION_URL;
+
+/** A preview build: its pages stay out of search engines. */
+export const IS_PREVIEW = SITE_URL !== PRODUCTION_URL;
 
 export const senatorPath = (id: string): string => `/senador/${id}/`;
 

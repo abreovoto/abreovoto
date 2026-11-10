@@ -5,7 +5,7 @@ import Nav from "../components/Nav.astro";
 import { loadData } from "../data/load";
 import { todayUtc } from "../data/schema";
 import { type Card, ogTags } from "../lib/og";
-import { HOME_CARD_PATH } from "../lib/routes";
+import { HOME_CARD_PATH, IS_PREVIEW } from "../lib/routes";
 import { homeCard } from "../lib/share-card";
 
 interface Props {
@@ -41,7 +41,7 @@ const tags = ogTags({
     <title>{title}</title>
     <meta name="description" content={description} />
     {tags.map((t) => ("property" in t ? <meta property={t.property} content={t.content} /> : <meta name={t.name} content={t.content} />))}
-    {noindex && <meta name="robots" content="noindex" />}
+    {(noindex || IS_PREVIEW) && <meta name="robots" content="noindex" />}
     {canonical && <link rel="canonical" href={canonical} />}
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/favicon.ico" sizes="32x32" />
