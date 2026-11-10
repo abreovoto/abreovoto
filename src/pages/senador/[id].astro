@@ -67,7 +67,7 @@ const partyAside = p.partido && p.nivel !== "partido" ? p.partido : null;
 >
   <div class="max-w-2xl">
     <SenatorCard senador={senador} d={d} variant="page" heading="h1">
-      {!departed && <ShareActions slot="actions" senador={senador} candidatos={d.candidatos} site={d.site} variant="full" />}
+      {!departed && <ShareActions slot="actions" senador={senador} d={d} variant="full" />}
     </SenatorCard>
 
     {

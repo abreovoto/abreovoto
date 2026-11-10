@@ -48,7 +48,7 @@ const byState = UF.options.map((uf) => ({
           {g.senadores.map((s) => (
             <SenatorCard senador={s} d={d} variant="state">
               <Fragment slot="actions">
-                <ShareActions senador={s} candidatos={d.candidatos} site={d.site} variant="primary" />
+                <ShareActions senador={s} d={d} variant="primary" />
                 <Button kind="secondary" size="sm" href={senatorPath(s.id)}>
                   Ver histórico
                 </Button>

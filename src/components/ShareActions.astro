@@ -6,7 +6,8 @@
  * `primary` on the state cards, where there is room for one action: X. The texts and the
  * card path travel as data attributes, so the script holds no text of its own.
  */
-import type { Candidato, Senador, Site } from "../data/schema";
+import type { Dataset } from "../data/load";
+import type { Senador } from "../data/schema";
 import { senatorCardPath } from "../lib/routes";
 import { shareUrl, thirdPersonText, whatsappUrl, xIntentUrl, xLabel, xText } from "../lib/share-text";
 import { departureNote } from "../lib/text";
@@ -15,15 +16,15 @@ import Icon from "./Icon.astro";
 
 interface Props {
   senador: Senador;
-  candidatos: Candidato[];
-  site: Site;
+  d: Dataset;
   variant: "full" | "primary";
 }
 
-const { senador, candidatos, site, variant } = Astro.props;
+const { senador, d, variant } = Astro.props;
+const site = d.site;
 const departed = departureNote(senador) !== null;
 const full = variant === "full";
-const third = thirdPersonText(senador, candidatos, site);
+const third = thirdPersonText(senador, d, site);
 const card = senatorCardPath(senador.id);
 const file = `abreovoto-${senador.id}.png`;
 ---
@@ -35,9 +36,9 @@ const file = `abreovoto-${senador.id}.png`;
       // not fit the page column in one, and a lone wrapped button reads as an accident.
       <div class="flex basis-full flex-col gap-2" data-share-actions>
         <div class="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
-          <Button kind="primary" href={xIntentUrl(xText(senador, candidatos, site))} rel="noopener noreferrer" target="_blank">
+          <Button kind="primary" href={xIntentUrl(xText(senador, d, site))} rel="noopener noreferrer" target="_blank">
             <Icon name="x" class="size-4 shrink-0" />
-            {xLabel(senador)}
+            {xLabel(senador, d)}
           </Button>
           <Button kind="secondary" scripted="share" data-share-card="" data-text={third} data-card={card} data-file={file}>
             <Icon name="share" class="size-4 shrink-0" />
@@ -49,7 +50,7 @@ const file = `abreovoto-${senador.id}.png`;
           </Button>
         </div>
         <div class="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
-          <Button kind="secondary" scripted data-copy-link="" data-url={shareUrl(senador)}>
+          <Button kind="secondary" scripted data-copy-link="" data-url={shareUrl(senador, d)}>
             <Icon name="link" class="size-4 shrink-0" />
             Copiar link
           </Button>
@@ -62,9 +63,9 @@ const file = `abreovoto-${senador.id}.png`;
       </div>
     ) : (
       <div class="contents" data-share-actions>
-        <Button kind="primary" size="sm" href={xIntentUrl(xText(senador, candidatos, site))} rel="noopener noreferrer" target="_blank">
+        <Button kind="primary" size="sm" href={xIntentUrl(xText(senador, d, site))} rel="noopener noreferrer" target="_blank">
           <Icon name="x" class="size-4 shrink-0" />
-          {xLabel(senador)}
+          {xLabel(senador, d)}
         </Button>
       </div>
     ))
