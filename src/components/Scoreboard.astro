@@ -41,11 +41,12 @@ const numeral = "font-display block text-4xl tabular-nums min-[400px]:text-5xl m
       </p>
     </div>
     <!-- How "com posição conhecida" splits: the senator's own word, mapped support, party support. -->
-    <p class="mt-3 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-center text-xs text-fg-muted">
+    <!-- Each item keeps its swatch beside its words; the swatches separate the items, so a wrapped line
+         never starts with a separator. -->
+    <p data-legenda class="mt-3 flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-center text-xs text-fg-muted">
       {
-        legend.map(([n, label, swatch], i) => (
+        legend.map(([n, label, swatch]) => (
           <span class="inline-flex items-center gap-1.5 whitespace-nowrap">
-            {i > 0 && <span aria-hidden="true">·</span>}
             <span class={`inline-block size-2.5 rounded-full ${swatch}`} aria-hidden="true" />
             {n} {label}
           </span>
