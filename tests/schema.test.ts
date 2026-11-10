@@ -14,6 +14,11 @@ test("declarou requires candidate, date, source with quote", () => {
   expect(DeclaracaoSchema.safeParse({ status: "declarou", candidato: null, data: "2026-11-04", fonte }).success).toBe(false);
 });
 
+test("apoio_mapeado requires candidate, date and a source", () => {
+  expect(DeclaracaoSchema.safeParse({ status: "apoio_mapeado", candidato: "marinho", data: "2026-11-04", fonte }).success).toBe(true);
+  expect(DeclaracaoSchema.safeParse({ status: "apoio_mapeado", candidato: "marinho", data: "2026-11-04", fonte: null }).success).toBe(false);
+});
+
 test("declaration date cannot be in the future", () => {
   expect(DeclaracaoSchema.safeParse({ status: "declarou", candidato: "marinho", data: "2099-01-01", fonte }).success).toBe(false);
 });
