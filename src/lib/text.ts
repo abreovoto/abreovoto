@@ -40,6 +40,23 @@ export function statusPrefix(p: Posicao): string {
   }
 }
 
+/**
+ * The status as the rest of a sentence that starts with the senator's name — the page's
+ * description and its link preview: "declarou voto em X", "aparece com apoio mapeado a X",
+ * "é candidata a presidente do Senado". The badge's label alone is not a sentence.
+ */
+export function statusSentence(s: Senador, d: Dataset): string {
+  const p = posicao(s, d);
+  if (p.nivel === "nao_declarou" || p.nivel === "declarou" || p.nivel === "mostrou_na_sessao") return statusLabel(s, d);
+  if (p.origem === "candidatura") return `é ${candidateBadge(s, d.candidatos) ?? "candidato"} a presidente do Senado`;
+  return `aparece com ${statusLabel(s, d)}`;
+}
+
+/** True when the senator's opt-out is what keeps a party announcement in effect from counting for them. */
+export function partyNoLongerCounts(p: Posicao): boolean {
+  return p.recusa !== null && p.nivel === "nao_declarou" && p.partido?.candidato != null;
+}
+
 /** The badge's full text: the level's label and, when there is one, the candidate's name. */
 export function statusLabel(s: Senador, d: Dataset): string {
   const p = posicao(s, d);

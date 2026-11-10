@@ -14,8 +14,10 @@ import {
   sourceHost,
   positionSourceLabel,
   sourceTypeLabel,
+  partyNoLongerCounts,
   statusLabel,
   statusPrefix,
+  statusSentence,
   tieShortWords,
   profileHandle,
 } from "../src/lib/text";
@@ -148,4 +150,28 @@ test("a profile link shows as its handle", () => {
 test("a declaration's excerpt is shown inside quotation marks, as the senator's words", () => {
   expect(quoted("Estamos com X para presidente do Senado")).toBe("“Estamos com X para presidente do Senado”");
   expect(quoted("[…] para o bem do país")).toBe("“[…] para o bem do país”");
+});
+
+test("statusSentence reads as a sentence after the name, for every level", () => {
+  const cases: [string, string][] = [
+    ["ba-3", "não declarou"],
+    ["ap-3", "declarou voto em Davi Alcolumbre"],
+    ["ba-2", "mostrou o voto na sessão: Davi Alcolumbre"],
+    ["ac-1", "aparece com apoio mapeado a Rogério Marinho"],
+    ["rn-3", "é candidato a presidente do Senado"],
+    ["ac-2", "aparece com apoio pelo partido a Rogério Marinho"],
+    ["ac-3", "aparece com apoio pela federação a Davi Alcolumbre"],
+  ];
+  for (const [id, sentence] of cases) expect(statusSentence(at(id), levels), id).toBe(sentence);
+  const tereza = { ...at("ms-3"), declaracao: nao } as ReturnType<typeof at>;
+  expect(statusSentence(tereza, levels)).toBe("é candidata a presidente do Senado");
+});
+
+test("the party no longer counts only where the opt-out is what leaves the senator without a position", () => {
+  const recusa = { data: "2026-10-12", trecho: "ainda não decidi", fonte_url: "https://example.org/r" };
+  const withRecusa = (id: string, patch: object = {}) => posicao({ ...at(id), ...patch, recusa_partido: recusa } as never, levels);
+  expect(partyNoLongerCounts(withRecusa("ac-2"))).toBe(true); // PSD backs marinho; the opt-out blocks it
+  expect(partyNoLongerCounts(withRecusa("ac-2", { declaracao: declarou("marinho") }))).toBe(false); // a declaration is in effect
+  expect(partyNoLongerCounts(withRecusa("ba-3"))).toBe(false); // no party announcement
+  expect(partyNoLongerCounts(pos("ac-2"))).toBe(false); // no opt-out
 });

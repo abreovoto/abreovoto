@@ -14,7 +14,7 @@ import { type Senador, todayUtc } from "../../data/schema";
 import Base from "../../layouts/Base.astro";
 import { candidatePath, senatorCardPath, senatorPath, statePath } from "../../lib/routes";
 import { senatorCard } from "../../lib/share-card";
-import { departureNote, formatDate, partyState, positionSourceLabel, quoted, sourceHost, statusLabel } from "../../lib/text";
+import { departureNote, formatDate, partyNoLongerCounts, partyState, positionSourceLabel, quoted, sourceHost, statusSentence } from "../../lib/text";
 import { ufWithDe } from "../../lib/uf";
 
 export function getStaticPaths() {
@@ -35,7 +35,7 @@ const successor = senador.substituido_por ? d.senadores.find((s) => s.id === sen
 // A running candidate's own senator page points at the candidate page, the same way for the three.
 const asCandidate = d.candidatos.find((c) => c.senador === senador.id && c.situacao === "candidato");
 const successorVerb = senador.deixou_em && todayUtc() < senador.deixou_em ? "Quem assume a vaga" : "Quem assumiu a vaga";
-const description = `${senador.nome} (${partyState(senador)}) ${departed ?? statusLabel(senador, d)}.`;
+const description = `${senador.nome} (${partyState(senador)}) ${departed ?? statusSentence(senador, d)}.`;
 
 // The section names the level in effect; below the senator's own word it also says whose word it is.
 const sectionTitle =
@@ -134,7 +134,7 @@ const partyAside = p.partido && p.nivel !== "partido" ? p.partido : null;
             <p>
               Em {formatDate(p.recusa.data)}, {senador.nome} disse em público: {quoted(p.recusa.trecho)}{" "}
               (<a href={p.recusa.fonte_url} rel="noopener noreferrer" class="text-accent underline">fonte</a>).
-              {p.partido?.candidato && " Por isso, o apoio do partido não conta aqui."}
+              {partyNoLongerCounts(p) && " Por isso, o apoio do partido não conta aqui."}
             </p>
           )}
         </div>
