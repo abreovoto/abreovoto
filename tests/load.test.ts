@@ -1,6 +1,8 @@
 import { expect, test } from "vitest";
 import { DataError, emExercicio, loadData } from "../src/data/load";
-import { type DatasetOverrides, makeDataset, senadorEntry } from "./fixtures/make-dataset";
+import { rmSync } from "node:fs";
+import { join } from "node:path";
+import { type DatasetOverrides, declarou, makeDataset, partidoEntry, senadorEntry } from "./fixtures/make-dataset";
 
 /** The issue lines a dataset produces; fails the test when loading succeeds. */
 function issuesOf(overrides: DatasetOverrides, today?: string): string[] {
@@ -155,4 +157,72 @@ test("the loader refuses a raw history event or an ISO date in an observation", 
 
 test("the fixture's history reads as a sentence", () => {
   expect(() => loadData(makeDataset({}))).not.toThrow();
+});
+
+const nao = { status: "nao_declarou", candidato: null, data: null, fonte: null };
+
+test("partidos.yaml: an entry for a party no senator in office belongs to is rejected", () => {
+  const entry = partidoEntry("XYZ", "marinho");
+  expect(issuesOf({ partidos: [entry] })).toContain(`partidos.yaml [${entry.id}]: partido "XYZ" não tem senadores em exercício`);
+});
+
+test("partidos.yaml: a candidate not in candidatos.yaml is rejected", () => {
+  expect(issuesOf({ partidos: [partidoEntry("PL", "nao-existe")] }).join("\n")).toMatch(/partidos\.yaml \[pl-2026-10-15\]: .*"nao-existe" não está em candidatos\.yaml/);
+});
+
+test("partidos.yaml: the entry in effect may not point at a withdrawn candidate", () => {
+  const issues = issuesOf({ withdraw: "marinho", senador: { "rn-3": { declaracao: nao } }, partidos: [partidoEntry("PL", "marinho")] });
+  expect(issues.join("\n")).toMatch(/partidos\.yaml \[pl-2026-10-15\]: .*desistiu/);
+});
+
+test("partidos.yaml: a superseded entry for a withdrawn candidate is history and loads", () => {
+  const partidos = [partidoEntry("PL", "marinho", "2026-10-01"), partidoEntry("PL", null, "2026-10-10")];
+  const d = loadData(makeDataset({ withdraw: "marinho", senador: { "rn-3": { declaracao: nao } }, partidos }));
+  expect(d.partidos).toHaveLength(2);
+});
+
+test("partidos.yaml: two entries for the same party on the same date are rejected", () => {
+  const second = { ...partidoEntry("PL", null), id: "pl-outra" };
+  expect(issuesOf({ partidos: [partidoEntry("PL", "marinho"), second] }).join("\n")).toMatch(/partidos\.yaml .*PL.*2026-10-15/);
+});
+
+test("partidos.yaml: duplicate ids are rejected", () => {
+  const entry = partidoEntry("PL", "marinho", "2026-10-01");
+  const dup = { ...partidoEntry("PL", null, "2026-10-10"), id: entry.id };
+  expect(issuesOf({ partidos: [entry, dup] }).join("\n")).toMatch(/partidos\.yaml \[pl-2026-10-01\]: id repetido/);
+});
+
+test("a missing partidos.yaml is reported", () => {
+  const paths = makeDataset({});
+  rmSync(join(paths.dir, "partidos.yaml"));
+  try {
+    loadData(paths);
+    throw new Error("expected loadData to throw a DataError");
+  } catch (e) {
+    expect((e as DataError).issues.join("\n")).toMatch(/partidos\.yaml: arquivo não encontrado/);
+  }
+});
+
+test("partidos.yaml: dates are not later than today", () => {
+  expect(() => loadData({ ...makeDataset({ partidos: [partidoEntry("PL", "marinho")] }), today: "2026-10-15" })).not.toThrow();
+  const issues = issuesOf({ partidos: [partidoEntry("PL", "marinho", "2026-10-14")] }, "2026-10-13");
+  expect(issues.join("\n")).toMatch(/partidos\.yaml \[pl-2026-10-14\]: data 2026-10-14 é posterior/);
+});
+
+test("a running candidate's seat may not store apoio_mapeado", () => {
+  const mapped = { ...declarou("marinho"), status: "apoio_mapeado" };
+  expect(issuesOf({ senador: { "rn-3": { declaracao: mapped } } }).join("\n")).toMatch(/\[rn-3\].*candidato em campanha/);
+});
+
+test("apoio_mapeado loads on any other seat", () => {
+  const d = loadData(makeDataset({ senador: { "ac-1": { declaracao: { ...declarou("marinho"), status: "apoio_mapeado" } } } }));
+  expect(d.senadores.find((s) => s.id === "ac-1")?.declaracao.status).toBe("apoio_mapeado");
+});
+
+test("recusa_partido loads when present and is optional", () => {
+  const recusa = { data: "2026-10-12", trecho: "ainda não decidi", fonte_url: "https://www12.senado.leg.br/noticias/x" };
+  const d = loadData(makeDataset({ senador: { "ac-1": { recusa_partido: recusa } } }));
+  expect(d.senadores.find((s) => s.id === "ac-1")?.recusa_partido).toEqual(recusa);
+  expect(d.senadores.find((s) => s.id === "ac-2")?.recusa_partido).toBeUndefined();
+  expect(issuesOf({ senador: { "ac-1": { recusa_partido: { ...recusa, fonte_url: "http://x.org" } } } }).join("\n")).toMatch(/\[ac-1\].*recusa_partido/);
 });

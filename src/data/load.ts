@@ -4,18 +4,26 @@ import { parse } from "yaml";
 import { z } from "zod";
 import {
   CandidatoSchema,
+  PartidoApoioSchema,
   PeticaoSchema,
   SenadorSchema,
   SiteSchema,
   todayUtc,
   UF,
   type Candidato,
+  type PartidoApoio,
   type Peticao,
   type Senador,
   type Site,
 } from "./schema";
 
-export type Dataset = { senadores: Senador[]; candidatos: Candidato[]; peticao: Peticao; site: Site };
+export type Dataset = {
+  senadores: Senador[];
+  candidatos: Candidato[];
+  partidos: PartidoApoio[];
+  peticao: Peticao;
+  site: Site;
+};
 
 /** Every problem found in the data, one human-readable line each. */
 export class DataError extends Error {
@@ -42,6 +50,7 @@ const SEATS_TOTAL = UF.options.length * SEATS_PER_UF.length;
 
 const SENADORES = "senadores.yaml";
 const CANDIDATOS = "candidatos.yaml";
+const PARTIDOS = "partidos.yaml";
 const PETICAO = "peticao.yaml";
 const SITE = "site.yaml";
 
@@ -225,6 +234,57 @@ function withdrawals(candidatos: Candidato[]): string[] {
   });
 }
 
+/** The announcement in effect for `partido`: the one with the latest `data`, or null when it has none. */
+export function partidoVigente(partidos: PartidoApoio[], partido: string): PartidoApoio | null {
+  let current: PartidoApoio | null = null;
+  for (const p of partidos) {
+    if (p.partido === partido && (current === null || p.data > current.data)) current = p;
+  }
+  return current;
+}
+
+function partyEntries(partidos: PartidoApoio[], senadores: Senador[], candidatos: Candidato[]): string[] {
+  const inOffice = new Set(senadores.filter((s) => s.situacao === "em_exercicio").map((s) => s.partido));
+  const byId = new Map(candidatos.map((c) => [c.id, c]));
+  const issues: string[] = [];
+  const seen = new Set<string>();
+  for (const p of partidos) {
+    if (!inOffice.has(p.partido)) issues.push(line(PARTIDOS, p.id, `partido "${p.partido}" não tem senadores em exercício`));
+    if (p.candidato !== null && !byId.has(p.candidato)) {
+      issues.push(line(PARTIDOS, p.id, `candidato "${p.candidato}" não está em ${CANDIDATOS}`));
+    }
+    // Two entries on one date would make the one in effect depend on file order.
+    const key = `${p.partido}\u0000${p.data}`;
+    if (seen.has(key)) issues.push(line(PARTIDOS, p.id, `outra entrada para ${p.partido} na mesma data (${p.data})`));
+    seen.add(key);
+  }
+  // Only the entry in effect is checked against withdrawals; superseded ones are history.
+  for (const partido of new Set(partidos.map((p) => p.partido))) {
+    const current = partidoVigente(partidos, partido);
+    const candidate = current?.candidato ? byId.get(current.candidato) : undefined;
+    if (current && candidate?.situacao === "desistiu") {
+      issues.push(
+        line(
+          PARTIDOS,
+          current.id,
+          `candidato ${candidate.id} desistiu em ${candidate.desistiu_em ?? "data não informada"}; registre uma nova entrada para ${partido} (candidato null se o partido não anunciou outro)`,
+        ),
+      );
+    }
+  }
+  return issues;
+}
+
+/** A running candidate is already mapped support for themselves; a stored `apoio_mapeado` there would never show. */
+function storedMappedOnCandidates(senadores: Senador[], candidatos: Candidato[]): string[] {
+  const running = new Set(candidatos.filter((c) => c.situacao === "candidato").map((c) => c.senador));
+  return senadores.flatMap((s) =>
+    s.declaracao.status === "apoio_mapeado" && running.has(s.id)
+      ? [line(SENADORES, s.id, "apoio_mapeado não se registra na cadeira de um candidato em campanha (a candidatura já conta como apoio mapeado a si mesmo)")]
+      : [],
+  );
+}
+
 function photos(file: string, folder: string, entries: { id: string; foto_credito: string | null }[], required: (id: string) => boolean): string[] {
   return entries.flatMap((e) => {
     const path = join(folder, `${e.id}.jpg`);
@@ -266,7 +326,12 @@ function notAfter(today: string, file: string, id: string, dates: [string, strin
   );
 }
 
-function datesNotAfterToday(today: string, senadores: Senador[] | null, candidatos: Candidato[] | null): string[] {
+function datesNotAfterToday(
+  today: string,
+  senadores: Senador[] | null,
+  candidatos: Candidato[] | null,
+  partidos: PartidoApoio[] | null,
+): string[] {
   const issues: string[] = [];
   const byId = new Map((senadores ?? []).map((s) => [s.id, s]));
   for (const s of senadores ?? []) {
@@ -275,6 +340,7 @@ function datesNotAfterToday(today: string, senadores: Senador[] | null, candidat
     issues.push(
       ...notAfter(today, SENADORES, s.id, [
         ["declaracao.data", s.declaracao.data],
+        ["recusa_partido.data", s.recusa_partido?.data ?? null],
         ["deixou_em", scheduled ? null : s.deixou_em],
         ...s.observacoes.map((o, i): [string, string] => [`observacoes.${i}.data`, o.data]),
         ...s.historico.map((h, i): [string, string] => [`historico.${i}.data`, h.data]),
@@ -284,11 +350,12 @@ function datesNotAfterToday(today: string, senadores: Senador[] | null, candidat
   for (const c of candidatos ?? []) {
     issues.push(...notAfter(today, CANDIDATOS, c.id, [["desde", c.desde], ["desistiu_em", c.desistiu_em]]));
   }
+  for (const p of partidos ?? []) issues.push(...notAfter(today, PARTIDOS, p.id, [["data", p.data]]));
   return issues;
 }
 
 /**
- * Read the four data files, check them against the schemas and against each
+ * Read the five data files, check them against the schemas and against each
  * other, and return the dataset. Throws one `DataError` carrying every issue.
  * Cross-checks run only on the files that passed their schema.
  */
@@ -300,11 +367,13 @@ export function loadData(opts: LoadOptions = {}): Dataset {
   const issues: string[] = [];
   const senadores = readFile(dir, SENADORES, z.array(SenadorSchema), issues);
   const candidatos = readFile(dir, CANDIDATOS, z.array(CandidatoSchema), issues);
+  const partidos = readFile(dir, PARTIDOS, z.array(PartidoApoioSchema), issues);
   const peticao = readFile(dir, PETICAO, PeticaoSchema, issues);
   const site = readFile(dir, SITE, SiteSchema, issues);
 
   if (senadores) issues.push(...uniqueIds(SENADORES, senadores));
   if (candidatos) issues.push(...uniqueIds(CANDIDATOS, candidatos));
+  if (partidos) issues.push(...uniqueIds(PARTIDOS, partidos));
   if (senadores) {
     issues.push(
       ...seatsFilled(senadores),
@@ -314,7 +383,12 @@ export function loadData(opts: LoadOptions = {}): Dataset {
     );
   }
   if (senadores && candidatos) {
-    issues.push(...declaredCandidates(senadores, candidatos), ...candidateSenators(senadores, candidatos));
+    issues.push(
+      ...declaredCandidates(senadores, candidatos),
+      ...candidateSenators(senadores, candidatos),
+      ...storedMappedOnCandidates(senadores, candidatos),
+    );
+    if (partidos) issues.push(...partyEntries(partidos, senadores, candidatos));
   }
   if (candidatos) issues.push(...withdrawals(candidatos));
   if (senadores) {
@@ -325,10 +399,10 @@ export function loadData(opts: LoadOptions = {}): Dataset {
   if (senadores) issues.push(...historyPresent(senadores), ...readableText(senadores));
   // contagem_manual >= 0 is enforced by PeticaoSchema itself.
   if (site) issues.push(...electionDate(site));
-  issues.push(...datesNotAfterToday(today, senadores, candidatos));
+  issues.push(...datesNotAfterToday(today, senadores, candidatos, partidos));
 
-  if (issues.length > 0 || !senadores || !candidatos || !peticao || !site) throw new DataError(issues);
-  return { senadores, candidatos, peticao, site };
+  if (issues.length > 0 || !senadores || !candidatos || !partidos || !peticao || !site) throw new DataError(issues);
+  return { senadores, candidatos, partidos, peticao, site };
 }
 
 /** The 81 current seat holders. */

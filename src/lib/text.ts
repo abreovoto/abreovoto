@@ -30,6 +30,8 @@ export function statusLabel(s: Senador, candidatos: Candidato[]): string {
       return "não declarou";
     case "declarou":
       return `declarou voto em ${candidateName(decl.candidato, candidatos)}`;
+    case "apoio_mapeado":
+      return `apoio mapeado a ${candidateName(decl.candidato, candidatos)}`;
     case "mostrou_na_sessao":
       return `mostrou o voto na sessão: ${candidateName(decl.candidato, candidatos)}`;
   }

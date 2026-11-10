@@ -63,7 +63,7 @@ export const UF = z.enum([
 
 export const FonteTipo = z.enum(["video", "post", "materia", "nota", "email_institucional"]);
 
-export const Status = z.enum(["nao_declarou", "declarou", "mostrou_na_sessao"]);
+export const Status = z.enum(["nao_declarou", "declarou", "apoio_mapeado", "mostrou_na_sessao"]);
 
 export const FonteSchema = z.strictObject({
   tipo: FonteTipo,
@@ -86,12 +86,21 @@ export const DeclaracaoSchema = z.discriminatedUnion("status", [
     fonte: z.null(),
   }),
   z.strictObject({ status: z.literal("declarou"), ...DeclaracaoComFonte }),
+  // A public source names this senator individually as a supporter; not their own word.
+  z.strictObject({ status: z.literal("apoio_mapeado"), ...DeclaracaoComFonte }),
   z.strictObject({ status: z.literal("mostrou_na_sessao"), ...DeclaracaoComFonte }),
 ]);
 
 export const ObservacaoSchema = z.strictObject({
   data: isoDateNotFuture,
   texto: text,
+  fonte_url: httpsUrl,
+});
+
+/** The senator said in public they have not decided, or do not follow their party: party support stops applying. */
+export const RecusaPartidoSchema = z.strictObject({
+  data: isoDateNotFuture,
+  trecho: text,
   fonte_url: httpsUrl,
 });
 
@@ -127,6 +136,8 @@ export const SenadorSchema = z.strictObject({
   }),
   email_institucional: email.nullable(),
   declaracao: DeclaracaoSchema,
+  // Absent means none, so existing entries need no edit.
+  recusa_partido: RecusaPartidoSchema.optional(),
   observacoes: z.array(ObservacaoSchema),
   historico: z.array(HistoricoSchema),
 });
@@ -145,6 +156,19 @@ export const CandidatoSchema = z.strictObject({
   desde: isoDateNotFuture,
   desistiu_em: isoDateNotFuture.nullable(),
   fonte: httpsUrl,
+});
+
+/**
+ * One support announcement by a party, its Senate caucus or its federation. The latest
+ * entry per party is the one in effect; `candidato: null` releases the caucus.
+ */
+export const PartidoApoioSchema = z.strictObject({
+  id,
+  partido: text,
+  escopo: z.enum(["partido", "bancada", "federacao"]),
+  candidato: id.nullable(),
+  data: isoDateNotFuture,
+  fonte: FonteSchema,
 });
 
 export const PeticaoSchema = z.strictObject({
@@ -180,5 +204,7 @@ export type Observacao = z.infer<typeof ObservacaoSchema>;
 export type Historico = z.infer<typeof HistoricoSchema>;
 export type Senador = z.infer<typeof SenadorSchema>;
 export type Candidato = z.infer<typeof CandidatoSchema>;
+export type RecusaPartido = z.infer<typeof RecusaPartidoSchema>;
+export type PartidoApoio = z.infer<typeof PartidoApoioSchema>;
 export type Peticao = z.infer<typeof PeticaoSchema>;
 export type Site = z.infer<typeof SiteSchema>;

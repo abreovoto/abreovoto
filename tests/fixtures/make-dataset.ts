@@ -42,6 +42,8 @@ export type DatasetOverrides = {
   peticao?: Patch;
   /** Shallow patch merged into `site.yaml`. */
   site?: Patch;
+  /** Entries written to `partidos.yaml` (use `partidoEntry` to build one); default `[]`. */
+  partidos?: Entry[];
 };
 
 export const FIXTURE_DATE = "2026-10-15";
@@ -62,6 +64,24 @@ export function declarou(candidato: string): Entry {
       url: `https://www12.senado.leg.br/noticias/materias/2026/10/15/${candidato}`,
       titulo: null,
       trecho: "meu voto é declarado",
+    },
+  };
+}
+
+/** A party announcement for `partidos.yaml`; `candidato: null` releases the caucus. */
+export function partidoEntry(partido: string, candidato: string | null, data = FIXTURE_DATE, escopo = "partido"): Entry {
+  const slug = partido.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-");
+  return {
+    id: `${slug}-${data}`,
+    partido,
+    escopo,
+    candidato,
+    data,
+    fonte: {
+      tipo: "nota",
+      url: `https://www12.senado.leg.br/noticias/materias/${data.replaceAll("-", "/")}/${slug}`,
+      titulo: null,
+      trecho: candidato === null ? "o partido liberou a bancada" : `o partido apoia ${candidato}`,
     },
   };
 }
@@ -186,6 +206,7 @@ export function makeDataset(overrides: DatasetOverrides = {}): { dir: string; as
   writeFileSync(join(dir, "candidatos.yaml"), stringify(candidatos));
   writeFileSync(join(dir, "peticao.yaml"), stringify(peticao));
   writeFileSync(join(dir, "site.yaml"), stringify(site));
+  writeFileSync(join(dir, "partidos.yaml"), stringify(overrides.partidos ?? []));
 
   for (const s of senadores) {
     if (s.situacao === "em_exercicio" && s.id !== overrides.dropPhoto) {
