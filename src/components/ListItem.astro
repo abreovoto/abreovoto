@@ -1,6 +1,8 @@
 ---
 import type { HTMLAttributes } from "astro/types";
-import type { Candidato, Senador } from "../data/schema";
+import type { Dataset } from "../data/load";
+import { posicao, proprioVoto } from "../data/posicao";
+import type { Senador } from "../data/schema";
 import { senatorPhoto } from "../lib/photos";
 import { assumeEmNote, partyState } from "../lib/text";
 import Portrait from "./Portrait.astro";
@@ -9,18 +11,19 @@ import StatusBadge from "./StatusBadge.astro";
 
 interface Props extends HTMLAttributes<"li"> {
   senador: Senador;
-  candidatos: Candidato[];
+  d: Dataset;
   /** When set, the name links here, and the link covers the whole row. */
   href?: string;
 }
 
-const { senador, candidatos, href, ...rest } = Astro.props;
-const decl = senador.declaracao;
-const candidate = decl.status === "nao_declarou" ? null : candidatos.find((c) => c.id === decl.candidato);
+const { senador, d, href, ...rest } = Astro.props;
+const p = posicao(senador, d);
+const candidate = p.candidato === null ? null : d.candidatos.find((c) => c.id === p.candidato);
 const forecast = assumeEmNote(senador);
-// The row's call to action follows the status alone, never the candidate: ask whoever has not answered,
-// show the source of whoever has.
-const action = decl.status === "nao_declarou" ? "Cobrar" : "Ver fonte";
+// The row's call to action follows the level alone, never the candidate: ask whoever has not said it in
+// their own words (mapped and party support included), show the source of whoever has — and of a candidacy.
+const ask = !proprioVoto(p) && p.origem !== "candidatura";
+const action = ask ? "Cobrar" : "Ver fonte";
 ---
 
 <!-- Stripes count only the rows a filter leaves visible. With a link, its ::after
@@ -44,7 +47,7 @@ const action = decl.status === "nao_declarou" ? "Cobrar" : "Ver fonte";
       </p>
     </div>
     <p class="mt-1 flex flex-wrap items-baseline gap-x-2 text-sm sm:mt-0 sm:shrink-0">
-      <StatusBadge status={decl.status} />
+      <StatusBadge posicao={p} />
       {candidate && <span class="font-semibold text-fg">{candidate.nome}</span>}
     </p>
   </div>
@@ -57,14 +60,14 @@ const action = decl.status === "nao_declarou" ? "Cobrar" : "Ver fonte";
           // Not a link of its own: clicks pass through to the row's link. Without this, the hover filter
           // lifts the pill above the link's ::after and swallows the click.
           "pointer-events-none inline-flex h-[36px] shrink-0 items-center gap-2 rounded border-2 px-3 text-sm font-semibold leading-none",
-          decl.status === "nao_declarou"
+          ask
             ? "border-accent bg-accent text-on-accent group-hover:brightness-110"
             : "border-line text-fg-muted group-hover:border-fg group-hover:text-fg",
         ]}
       >
-        {decl.status === "nao_declarou" && <Icon name="megaphone" class="size-4 shrink-0" />}
+        {ask && <Icon name="megaphone" class="size-4 shrink-0" />}
         {action}
-        {decl.status !== "nao_declarou" && <Icon name="arrow" class="size-3.5 shrink-0" />}
+        {!ask && <Icon name="arrow" class="size-3.5 shrink-0" />}
       </span>
     )
   }

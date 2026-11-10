@@ -1,9 +1,10 @@
 /**
  * Every label the site prints about a senator, as pure functions over the data.
- * Status labels are the site's exact words: "não declarou" and "declarou voto em"
- * followed by the candidate's name.
+ * Status labels are the site's exact words, one per level ("não declarou", "declarou voto em",
+ * "apoio mapeado a", "apoio pelo partido a", …), the candidate's name after all but the first.
  */
 import { type Dataset, emExercicio } from "../data/load";
+import { type Posicao, posicao } from "../data/posicao";
 import { type Candidato, type FonteTipo, type Senador, todayUtc } from "../data/schema";
 
 /** `2027-01-06` → `6/1/2027`: day and month without a leading zero, full year. */
@@ -23,18 +24,27 @@ function candidateName(id: string, candidatos: Candidato[]): string {
   return c.nome;
 }
 
-export function statusLabel(s: Senador, candidatos: Candidato[]): string {
-  const decl = s.declaracao;
-  switch (decl.status) {
+/** The label of the level in effect, without the candidate's name. */
+export function statusPrefix(p: Posicao): string {
+  switch (p.nivel) {
     case "nao_declarou":
       return "não declarou";
     case "declarou":
-      return `declarou voto em ${candidateName(decl.candidato, candidatos)}`;
-    case "apoio_mapeado":
-      return `apoio mapeado a ${candidateName(decl.candidato, candidatos)}`;
+      return "declarou voto em";
     case "mostrou_na_sessao":
-      return `mostrou o voto na sessão: ${candidateName(decl.candidato, candidatos)}`;
+      return "mostrou o voto na sessão:";
+    case "apoio_mapeado":
+      return "apoio mapeado a";
+    case "partido":
+      return p.origem === "federacao" ? "apoio pela federação a" : "apoio pelo partido a";
   }
+}
+
+/** The badge's full text: the level's label and, when there is one, the candidate's name. */
+export function statusLabel(s: Senador, d: Dataset): string {
+  const p = posicao(s, d);
+  const prefix = statusPrefix(p);
+  return p.candidato === null ? prefix : `${prefix} ${candidateName(p.candidato, d.candidatos)}`;
 }
 
 /**
@@ -80,7 +90,33 @@ const SOURCE_TYPES: Record<FonteTipo, string> = {
   email_institucional: "e-mail institucional",
 };
 
-/** The kind of source behind a declaration, in words. */
+// A mapped source may be the candidate's or a party's post, a report or a list: never call it the senator's own.
+const MAPPED_SOURCE_TYPES: Record<FonteTipo, string> = {
+  video: "vídeo",
+  post: "publicação",
+  materia: "matéria jornalística",
+  nota: "nota oficial",
+  email_institucional: "e-mail institucional",
+};
+
+const PARTY_SOURCES = { partido: "anúncio do partido", bancada: "anúncio da bancada", federacao: "anúncio da federação" } as const;
+
+/** The kind of source behind the level in effect, in words; empty when there is none. */
+export function positionSourceLabel(p: Posicao): string {
+  if (p.nivel === "nao_declarou") return "";
+  switch (p.origem) {
+    case "candidatura":
+      return "anúncio da candidatura";
+    case "partido":
+    case "bancada":
+    case "federacao":
+      return PARTY_SOURCES[p.origem];
+    case "senador":
+      if (p.fonte.tipo === "candidatura") return "anúncio da candidatura"; // unreachable: only a candidacy carries it
+      return p.nivel === "apoio_mapeado" ? MAPPED_SOURCE_TYPES[p.fonte.tipo] : SOURCE_TYPES[p.fonte.tipo];
+  }
+}
+
 /** A declaration's excerpt as shown on the page: the senator's literal words, inside quotation marks. */
 export const quoted = (trecho: string): string => `“${trecho}”`;
 

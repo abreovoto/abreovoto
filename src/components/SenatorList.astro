@@ -1,5 +1,6 @@
 ---
-import type { Candidato, Senador } from "../data/schema";
+import type { Dataset } from "../data/load";
+import type { Senador } from "../data/schema";
 import { UF } from "../data/schema";
 import { CONTROL, FIELD, SELECT } from "../lib/controls";
 import { senatorPath } from "../lib/routes";
@@ -9,10 +10,10 @@ import SectionHead from "./SectionHead.astro";
 
 interface Props {
   senadores: Senador[];
-  candidatos: Candidato[];
+  d: Dataset;
 }
 
-const { senadores, candidatos } = Astro.props;
+const { senadores, d } = Astro.props;
 const byName = (a: string, b: string) => a.localeCompare(b, "pt-BR");
 const rows = [...senadores].sort((a, b) => byName(a.nome, b.nome));
 const states = [...UF.options].sort((a, b) => byName(ufName(a), ufName(b)));
@@ -68,7 +69,7 @@ const parties = [...new Set(senadores.map((s) => s.partido))].sort(byName);
       rows.map((s) => (
         <ListItem
           senador={s}
-          candidatos={candidatos}
+          d={d}
           href={senatorPath(s.id)}
           data-nome={s.nome}
           data-status={s.declaracao.status}

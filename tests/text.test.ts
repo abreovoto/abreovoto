@@ -1,6 +1,8 @@
 import { expect, test } from "vitest";
 import { asUndeclared } from "./fixtures/undeclared";
-import { loadData } from "../src/data/load";
+import { type Dataset, loadData } from "../src/data/load";
+import { posicao } from "../src/data/posicao";
+import { declarou, makeDataset, partidoEntry } from "./fixtures/make-dataset";
 import {
   assumeEmNote,
   departureNote,
@@ -10,8 +12,10 @@ import {
   partyState,
   quoted,
   sourceHost,
+  positionSourceLabel,
   sourceTypeLabel,
   statusLabel,
+  statusPrefix,
   tieShortWords,
   profileHandle,
 } from "../src/lib/text";
@@ -25,7 +29,7 @@ test("formatDate is day/month/year without zero padding", () => {
 });
 
 test("statusLabel uses the site's exact labels", () => {
-  expect(statusLabel(asUndeclared(by("marcio-bittar")), d.candidatos)).toBe("não declarou");
+  expect(statusLabel(asUndeclared(by("marcio-bittar")), d)).toBe("não declarou");
   const declared = {
     ...by("marcio-bittar"),
     declaracao: {
@@ -35,7 +39,61 @@ test("statusLabel uses the site's exact labels", () => {
       fonte: { tipo: "materia" as const, url: "https://example.org/x", titulo: null, trecho: "x" },
     },
   };
-  expect(statusLabel(declared, d.candidatos)).toBe("declarou voto em Rogério Marinho");
+  expect(statusLabel(declared, d)).toBe("declarou voto em Rogério Marinho");
+});
+
+const nao = { status: "nao_declarou", candidato: null, data: null, fonte: null };
+/** One senator per level, in the fixture: ac-1..ac-3 and ba-1 in PSD, PL, PSB, PDT. */
+const levels: Dataset = loadData(
+  makeDataset({
+    senador: {
+      "ac-1": { declaracao: { ...declarou("marinho"), status: "apoio_mapeado", fonte: { ...declarou("marinho").fonte as object, tipo: "post" } } },
+      "ac-2": { partido: "PSD" },
+      "ac-3": { partido: "PSB" },
+      "ba-1": { partido: "PDT" },
+      "rn-3": { declaracao: nao },
+    },
+    shown: ["ba-2", "alcolumbre"],
+    partidos: [partidoEntry("PSD", "marinho"), partidoEntry("PSB", "alcolumbre", undefined, "federacao"), partidoEntry("PDT", "marinho", undefined, "bancada")],
+  }),
+);
+const at = (id: string) => levels.senadores.find((s) => s.id === id)!;
+const pos = (id: string) => posicao(at(id), levels);
+
+test("statusLabel and statusPrefix follow the level in effect", () => {
+  const cases: [string, string, string][] = [
+    ["ba-3", "não declarou", "não declarou"],
+    ["ap-3", "declarou voto em", "declarou voto em Davi Alcolumbre"],
+    ["ba-2", "mostrou o voto na sessão:", "mostrou o voto na sessão: Davi Alcolumbre"],
+    ["ac-1", "apoio mapeado a", "apoio mapeado a Rogério Marinho"],
+    ["rn-3", "apoio mapeado a", "apoio mapeado a Rogério Marinho"],
+    ["ac-2", "apoio pelo partido a", "apoio pelo partido a Rogério Marinho"],
+    ["ba-1", "apoio pelo partido a", "apoio pelo partido a Rogério Marinho"],
+    ["ac-3", "apoio pela federação a", "apoio pela federação a Davi Alcolumbre"],
+  ];
+  for (const [id, prefix, label] of cases) {
+    expect(statusPrefix(pos(id)), id).toBe(prefix);
+    expect(statusLabel(at(id), levels), id).toBe(label);
+  }
+});
+
+test("positionSourceLabel never says a mapped source is the senator's own", () => {
+  expect(positionSourceLabel(pos("ap-3"))).toBe("matéria com citação direta");
+  expect(positionSourceLabel(pos("ba-2"))).toBe("matéria com citação direta");
+  expect(positionSourceLabel(pos("ac-1"))).toBe("publicação");
+  expect(positionSourceLabel(pos("rn-3"))).toBe("anúncio da candidatura");
+  expect(positionSourceLabel(pos("ac-2"))).toBe("anúncio do partido");
+  expect(positionSourceLabel(pos("ba-1"))).toBe("anúncio da bancada");
+  expect(positionSourceLabel(pos("ac-3"))).toBe("anúncio da federação");
+  expect(positionSourceLabel(pos("ba-3"))).toBe("");
+  const mapped = (tipo: string) => positionSourceLabel({ ...pos("ac-1"), fonte: { ...pos("ac-1").fonte!, tipo } as never });
+  expect(["video", "post", "materia", "nota", "email_institucional"].map(mapped)).toEqual([
+    "vídeo",
+    "publicação",
+    "matéria jornalística",
+    "nota oficial",
+    "e-mail institucional",
+  ]);
 });
 
 test("the three substitutes carry the same forecast note", () => {

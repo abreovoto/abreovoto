@@ -35,7 +35,7 @@ const ofState = ufWithDe(uf);
     <div class="mt-6 grid max-w-2xl grid-cols-1 gap-4">
       {
         senadores.map((s) => (
-          <SenatorCard senador={s} candidatos={d.candidatos} variant="page">
+          <SenatorCard senador={s} d={d} variant="page">
             <Fragment slot="actions">
               <ShareActions senador={s} candidatos={d.candidatos} site={d.site} variant="primary" />
               <Button kind="secondary" size="sm" href={senatorPath(s.id)}>

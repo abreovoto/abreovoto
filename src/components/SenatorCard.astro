@@ -1,24 +1,28 @@
 ---
-import type { Candidato, Senador } from "../data/schema";
+import type { Dataset } from "../data/load";
+import { posicao } from "../data/posicao";
+import type { Senador } from "../data/schema";
 import { senatorPhoto } from "../lib/photos";
-import { assumeEmNote, candidateBadge, departureNote, formatDate, partyState, sourceHost } from "../lib/text";
+import { assumeEmNote, candidateBadge, departureNote, formatDate, partyState, positionSourceLabel, sourceHost } from "../lib/text";
 import Portrait from "./Portrait.astro";
 import StatusBadge from "./StatusBadge.astro";
 
 interface Props {
   senador: Senador;
-  candidatos: Candidato[];
+  d: Dataset;
   variant: "state" | "page";
   /** The senator's own page makes the name its h1; everywhere else it is an h3. */
   heading?: "h1" | "h3";
 }
 
-const { senador, candidatos, variant, heading: Heading = "h3" } = Astro.props;
+const { senador, d, variant, heading: Heading = "h3" } = Astro.props;
 const departed = departureNote(senador);
 const forecast = assumeEmNote(senador);
-const decl = senador.declaracao;
-const candidate = decl.status === "nao_declarou" ? null : candidatos.find((c) => c.id === decl.candidato);
-const badge = candidateBadge(senador, candidatos);
+const p = posicao(senador, d);
+const candidate = p.candidato === null ? null : d.candidatos.find((c) => c.id === p.candidato);
+const badge = candidateBadge(senador, d.candidatos);
+// Below the senator's own word the source line also names whose announcement or report it is.
+const own = p.nivel === "declarou" || p.nivel === "mostrou_na_sessao";
 const nameSize = variant === "page" ? "text-xl" : "text-lg";
 ---
 
@@ -37,12 +41,13 @@ const nameSize = variant === "page" ? "text-xl" : "text-lg";
         !departed && (
           <div class="mt-3">
             <p class="flex flex-wrap items-baseline gap-x-2 text-sm">
-              <StatusBadge status={decl.status} />
+              <StatusBadge posicao={p} />
               {candidate && <span class="font-semibold text-fg">{candidate.nome}</span>}
             </p>
-            {decl.status !== "nao_declarou" && (
+            {p.nivel !== "nao_declarou" && (
               <p class="mt-1 break-words text-xs text-fg-muted">
-                fonte: <a href={decl.fonte.url} rel="noopener noreferrer" class="text-accent underline">{sourceHost(decl.fonte.url)}</a>, {formatDate(decl.data)}
+                fonte: {!own && <>{positionSourceLabel(p)}, </>}
+                <a href={p.fonte.url} rel="noopener noreferrer" class="text-accent underline">{sourceHost(p.fonte.url)}</a>, {formatDate(p.data)}
               </p>
             )}
           </div>

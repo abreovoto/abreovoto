@@ -31,7 +31,7 @@ export function senatorCard(s: Senador, d: Dataset, today: string): ShareCardMod
     title: s.nome,
     subtitle: partyState(s),
     // A former occupant's card says when they left, never a vote that no longer counts.
-    status: departureNote(s, today) ?? statusLabel(s, d.candidatos),
+    status: departureNote(s, today) ?? statusLabel(s, d),
     number: null,
     numberLabel: null,
     ...common(d, today),

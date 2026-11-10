@@ -6,8 +6,9 @@ import { gzipSync } from "node:zlib";
 import { beforeAll, expect, test } from "vitest";
 import { emExercicio, loadData } from "../src/data/load";
 import { placar } from "../src/data/placar";
+import { posicao, proprioVoto } from "../src/data/posicao";
 import { UF } from "../src/data/schema";
-import { partyState } from "../src/lib/text";
+import { partyState, statusPrefix } from "../src/lib/text";
 import { ufWithDe } from "../src/lib/uf";
 import { undeclaredSeat } from "./fixtures/undeclared";
 
@@ -365,14 +366,35 @@ test("a candidate card puts its label under the number, as the scoreboard does",
   expect(html("index.html")).toMatch(/<p class="mt-auto[^"]*">\s*<span[^>]*>\d+<\/span>\s*<span class="[^"]*\bblock\b/);
 });
 
-test("each row of the list ends in an action that follows the status alone, hidden from screen readers", () => {
-  const rows = [...html("index.html").matchAll(/<li[^>]*data-status="([a-z_]+)"[^>]*>([\s\S]*?)<\/li>/g)];
+test("each row of the list ends in an action that follows the level alone, hidden from screen readers", () => {
+  const d = loadData();
+  const rows = [...html("index.html").matchAll(/<li[^>]*data-nome="([^"]+)"[^>]*>([\s\S]*?)<\/li>/g)];
   expect(rows).toHaveLength(81);
-  for (const [, status, inner] of rows) {
+  for (const [, nome, inner] of rows) {
     expect(inner).toMatch(/<span data-action aria-hidden="true"/);
     // The pill is not a link: it must let the click through to the row's link.
     expect(inner).toMatch(/<span data-action aria-hidden="true" class="pointer-events-none /);
-    expect(inner).toContain(status === "nao_declarou" ? "Cobrar" : "Ver fonte");
+    const p = posicao(emExercicio(d).find((s) => s.nome === nome.replace(/&#39;/g, "'"))!, d);
+    // Ask whoever has not spoken in their own words; show the source of whoever has, and of a candidacy.
+    expect(inner, nome).toContain(proprioVoto(p) || p.origem === "candidatura" ? "Ver fonte" : "Cobrar");
+  }
+});
+
+test("every senator page in office carries the label of the level in effect", () => {
+  const d = loadData();
+  for (const s of emExercicio(d)) expect(html(`senador/${s.id}/index.html`), s.id).toContain(statusPrefix(posicao(s, d)));
+});
+
+test("a running candidate's page shows the candidacy as the source, with no quote", () => {
+  const d = loadData();
+  for (const c of d.candidatos.filter((x) => x.situacao === "candidato")) {
+    const s = d.senadores.find((x) => x.id === c.senador)!;
+    if (posicao(s, d).origem !== "candidatura") continue;
+    const section = html(`senador/${s.id}/index.html`).match(/<section aria-labelledby="declaracao">[\s\S]*?<\/section>/)![0];
+    expect(section).toContain(">Candidatura<");
+    expect(section).toContain("anúncio da candidatura");
+    expect(section).toContain(`href="${c.fonte}"`);
+    expect(section).not.toContain("<blockquote");
   }
 });
 
