@@ -4,6 +4,7 @@
  */
 import type { Dataset } from "../data/load";
 import { placar } from "../data/placar";
+import { posicao } from "../data/posicao";
 import { absolute, senatorPath } from "./routes";
 
 export type OpenData = {
@@ -14,9 +15,26 @@ export type OpenData = {
   peticao: { url: string | null; contagem_manual: number };
   placar: {
     total: number;
-    nao_declararam: number;
+    /** No known position at any level. */
+    sem_posicao: number;
+    /** Any level: `declararam + apoio_mapeado + pelo_partido`. */
+    com_posicao: number;
+    /** The senator's own word: `declarou` plus `mostrou_na_sessao`. */
     declararam: number;
-    por_candidato: { id: string; nome: string; partido: string; uf: string; total: number }[];
+    apoio_mapeado: number;
+    pelo_partido: number;
+    /** `total - declararam`, as before the levels existed. */
+    nao_declararam: number;
+    por_candidato: {
+      id: string;
+      nome: string;
+      partido: string;
+      uf: string;
+      total: number;
+      declararam: number;
+      apoio_mapeado: number;
+      pelo_partido: number;
+    }[];
   };
   senadores: {
     id: string;
@@ -31,6 +49,14 @@ export type OpenData = {
       status: string;
       candidato: string | null;
       data: string | null;
+      fonte: { tipo: string; url: string } | null;
+    };
+    /** The position in effect, derived from the declaration, a candidacy and the party's announcement. */
+    posicao: {
+      nivel: string;
+      candidato: string | null;
+      data: string | null;
+      origem: string | null;
       fonte: { tipo: string; url: string } | null;
     };
     pagina: string;
@@ -48,14 +74,28 @@ export function openData(d: Dataset, today: string): OpenData {
     peticao: { url: d.peticao.url, contagem_manual: d.peticao.contagem_manual },
     placar: {
       total: p.total,
-      nao_declararam: p.naoDeclararam,
+      sem_posicao: p.semPosicao,
+      com_posicao: p.comPosicao,
       declararam: p.declararam,
-      por_candidato: p.porCandidato.map(({ id, nome, partido, uf, total }) => ({ id, nome, partido, uf, total })),
+      apoio_mapeado: p.mapeados,
+      pelo_partido: p.partido,
+      nao_declararam: p.total - p.declararam,
+      por_candidato: p.porCandidato.map(({ id, nome, partido, uf, total, porNivel }) => ({
+        id,
+        nome,
+        partido,
+        uf,
+        total,
+        declararam: porNivel.declararam,
+        apoio_mapeado: porNivel.mapeados,
+        pelo_partido: porNivel.partido,
+      })),
     },
     senadores: [...d.senadores]
       .sort((a, b) => a.nome.localeCompare(b.nome, "pt-BR"))
       .map((s) => {
         const decl = s.declaracao;
+        const pos = posicao(s, d);
         return {
           id: s.id,
           nome: s.nome,
@@ -69,6 +109,13 @@ export function openData(d: Dataset, today: string): OpenData {
             decl.status === "nao_declarou"
               ? { status: decl.status, candidato: null, data: null, fonte: null }
               : { status: decl.status, candidato: decl.candidato, data: decl.data, fonte: { tipo: decl.fonte.tipo, url: decl.fonte.url } },
+          posicao: {
+            nivel: pos.nivel,
+            candidato: pos.candidato,
+            data: pos.data,
+            origem: pos.origem,
+            fonte: pos.fonte === null ? null : { tipo: pos.fonte.tipo, url: pos.fonte.url },
+          },
           pagina: absolute(senatorPath(s.id)),
         };
       }),

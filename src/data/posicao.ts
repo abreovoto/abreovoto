@@ -3,7 +3,8 @@
  * candidacy, the party announcements and the senator's opt-out. Nothing stores it.
  *
  * Precedence, highest first: `mostrou_na_sessao` > `declarou` > `apoio_mapeado`
- * (a running candidate for themselves, or stored) > party/caucus/federation > none.
+ * (a running candidate for themselves, or stored) > party/caucus/federation (senators
+ * in office only) > none.
  */
 import { type Dataset, partidoVigente } from "./load";
 import type { FonteTipo, PartidoApoio, RecusaPartido, Senador } from "./schema";
@@ -59,7 +60,8 @@ export function posicao(s: Senador, d: Dataset): Posicao {
     return { nivel: "apoio_mapeado", candidato: decl.candidato, data: decl.data, fonte: decl.fonte, origem: "senador", partido, recusa };
   }
 
-  if (partido?.candidato && !recusa) {
+  // Party support speaks for the caucus in office; a former occupant is not in it.
+  if (partido?.candidato && !recusa && s.situacao === "em_exercicio") {
     return {
       nivel: "partido",
       candidato: partido.candidato,

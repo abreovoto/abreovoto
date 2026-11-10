@@ -1,13 +1,17 @@
 // Validates the data directory. Paths resolve against the working directory,
 // which is the repository root under `npm run validate`.
 import { DataError, emExercicio, loadData } from "../src/data/load";
+import { placar } from "../src/data/placar";
 
 function main(): number {
   try {
     const d = loadData();
     const active = emExercicio(d);
-    const declared = active.filter((s) => s.declaracao.status !== "nao_declarou").length;
-    console.log(`validate: ${active.length} senadores em exercício, ${d.candidatos.length} candidatos, ${declared} declarações`);
+    const p = placar(d);
+    console.log(
+      `validate: ${active.length} senadores em exercício, ${d.candidatos.length} candidatos, ${d.partidos.length} anúncios de partido; ` +
+        `${p.comPosicao} com posição conhecida (${p.declararam} declararam, ${p.mapeados} apoio mapeado, ${p.partido} pelo partido), ${p.semPosicao} sem posição`,
+    );
     return 0;
   } catch (e) {
     if (!(e instanceof DataError)) {
