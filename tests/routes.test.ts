@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { absolute, candidatePath, senateProfileUrl, senatorPath, statePath } from "../src/lib/routes";
+import { absolute, candidatePath, onOrigin, senateProfileUrl, senatorPath, statePath } from "../src/lib/routes";
 import { UF_NAMES, ufName } from "../src/lib/uf";
 
 test("paths are lowercase, Portuguese and end with a slash", () => {
@@ -14,4 +14,10 @@ test("every UF has an official name", () => {
   expect(Object.keys(UF_NAMES)).toHaveLength(27);
   expect(ufName("DF")).toBe("Distrito Federal");
   expect(ufName("SP")).toBe("São Paulo");
+});
+
+test("a copied address keeps its path and version on the origin the visitor is on", () => {
+  expect(onOrigin("https://abreovoto.com/?v=5dbfa76a", "https://abreovoto.com")).toBe("https://abreovoto.com/?v=5dbfa76a");
+  expect(onOrigin("https://abreovoto.com/?v=5dbfa76a", "https://abc123-abreovoto.example.workers.dev")).toBe("https://abc123-abreovoto.example.workers.dev/?v=5dbfa76a");
+  expect(onOrigin("https://abreovoto.com/senador/arthur-lira/?v=1a2b3c4d", "http://localhost:4321")).toBe("http://localhost:4321/senador/arthur-lira/?v=1a2b3c4d");
 });
