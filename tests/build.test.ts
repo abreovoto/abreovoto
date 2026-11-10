@@ -15,7 +15,9 @@ import { undeclaredSeat } from "./fixtures/undeclared";
 let out: string;
 beforeAll(() => {
   out = mkdtempSync(join(tmpdir(), "abreovoto-dist-"));
-  execFileSync("npx", ["astro", "build", "--outDir", out], { stdio: "pipe" });
+  // The production build, wherever the tests run: a branch name would make it a preview's.
+  const { WORKERS_CI_BRANCH: _, ...env } = process.env;
+  execFileSync("npx", ["astro", "build", "--outDir", out], { stdio: "pipe", env });
 }, 180_000);
 
 const html = (path: string) => readFileSync(join(out, path), "utf8");
