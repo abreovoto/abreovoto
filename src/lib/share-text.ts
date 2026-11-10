@@ -8,6 +8,7 @@ import type { Dataset } from "../data/load";
 import { type Posicao, posicao, proprioVoto } from "../data/posicao";
 import type { Senador, Site } from "../data/schema";
 import { absolute, senatorPath } from "./routes";
+import { cardVersion, homeCard } from "./share-card";
 import { partyState, profileHandle } from "./text";
 
 /** `@arthurlira_`, or null when the senator has no X profile in the data. */
@@ -35,6 +36,15 @@ export function shareUrl(s: Senador, d: Dataset): string {
     p.nivel === "nao_declarou" ? [p.nivel] : p.nivel === "partido" ? [p.nivel, p.candidato, p.fonte.url, p.origem] : [p.nivel, p.candidato, p.fonte.url],
   );
   return `${absolute(senatorPath(s.id))}?v=${createHash("sha256").update(key).digest("hex").slice(0, 8)}`;
+}
+
+/**
+ * The home as it is shared: the address plus the home card's version. The card is dated, so
+ * the address changes with the scoreboard and with the day, and a new post never shows the
+ * preview a network kept from an earlier one.
+ */
+export function homeShareUrl(d: Dataset, today: string): string {
+  return `${absolute("/")}?v=${cardVersion(homeCard(d, today))}`;
 }
 
 const tail = (s: Senador, d: Dataset, site: Site): string => `${shareUrl(s, d)} ${site.hashtag}`;

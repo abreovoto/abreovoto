@@ -496,6 +496,12 @@ test("every page carries the Open Graph tags; senator and candidate pages point 
   expect(html("index.html")).toContain('<meta property="og:url" content="https://abreovoto.com/">');
 });
 
+test("the home's copy-link button copies the home address with the version of the card it shows", () => {
+  const h = html("index.html");
+  const image = h.match(/<meta property="og:image" content="https:\/\/abreovoto\.com\/cartao\/placar\.png\?v=([0-9a-f]{8})">/)![1];
+  expect(h).toMatch(new RegExp(`<button[^>]*data-copy-link[^>]*data-url="https://abreovoto\\.com/\\?v=${image}"`));
+});
+
 test("a senator page carries the actions in one order: X, share the card, WhatsApp, copy, download", () => {
   const h = html("senador/arthur-lira/index.html");
   expect(h).toContain('href="https://x.com/intent/post?text=%40arthurlira_%2C%20quem%20te%20elegeu');

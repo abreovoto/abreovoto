@@ -68,6 +68,9 @@ for (const button of document.querySelectorAll<HTMLElement>("[data-copy-link]"))
     try {
       await navigator.clipboard.writeText(button.dataset.url!);
       announce(button, "Link copiado.");
+      // For a button whose label shows the outcome instead of a status line.
+      button.dataset.copied = "";
+      setTimeout(() => delete button.dataset.copied, 2000);
     } catch {
       announce(button, "Não foi possível copiar o link.");
     }
