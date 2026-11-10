@@ -25,11 +25,11 @@ const view = petitionView(peticao, null);
        Wider: the hemicycle in its own column, everything else in one column beside it. -->
   <div class="grid grid-cols-[6rem_1fr] items-center gap-x-4 gap-y-3 sm:grid-cols-[9rem_1fr] sm:gap-x-6">
     <div class="col-start-1 row-start-1 sm:row-span-4" aria-hidden="true">
-      <Hemicycle declararam={placar.declararam} total={placar.total} />
+      <Hemicycle declararam={placar.declararam} mapeados={placar.mapeados} partido={placar.partido} total={placar.total} />
     </div>
     <p class="contents">
       <span class="col-start-2 row-start-1 font-display text-5xl tabular-nums text-undeclared sm:self-end">{placar.semPosicao}</span>
-      <span class="col-span-2 text-base text-fg sm:col-span-1 sm:col-start-2">de {placar.total} senadores ainda não declararam o voto para presidente do Senado.</span>
+      <span class="col-span-2 text-base text-fg sm:col-span-1 sm:col-start-2">de {placar.total} senadores ainda sem posição conhecida para presidente do Senado.</span>
     </p>
     <p class="col-span-2 text-base text-fg sm:col-span-1 sm:col-start-2">Você tem o direito de saber em quem cada um vota. Cobre que declarem antes.</p>
     <div class="col-span-2 mt-1 flex flex-col gap-2 sm:col-span-1 sm:col-start-2 sm:flex-row sm:flex-wrap sm:self-start">
