@@ -1,5 +1,6 @@
 ---
 import type { Dataset } from "../data/load";
+import { posicao } from "../data/posicao";
 import type { Senador } from "../data/schema";
 import { UF } from "../data/schema";
 import { CONTROL, FIELD, SELECT } from "../lib/controls";
@@ -15,7 +16,7 @@ interface Props {
 
 const { senadores, d } = Astro.props;
 const byName = (a: string, b: string) => a.localeCompare(b, "pt-BR");
-const rows = [...senadores].sort((a, b) => byName(a.nome, b.nome));
+const rows = [...senadores].sort((a, b) => byName(a.nome, b.nome)).map((s) => ({ s, p: posicao(s, d) }));
 const states = [...UF.options].sort((a, b) => byName(ufName(a), ufName(b)));
 const parties = [...new Set(senadores.map((s) => s.partido))].sort(byName);
 ---
@@ -31,8 +32,10 @@ const parties = [...new Set(senadores.map((s) => s.partido))].sort(byName);
         {
           [
             ["todos", "Todos"],
-            ["nao_declarou", "Não declararam"],
+            ["nao_declarou", "Sem posição"],
             ["declarou", "Declararam"],
+            ["apoio_mapeado", "Apoio mapeado"],
+            ["partido", "Pelo partido"],
           ].map(([value, label], i) => (
             <label class="inline-flex h-[36px] cursor-pointer items-center rounded border-2 border-line px-3.5 text-sm font-semibold text-fg has-checked:border-fg has-checked:bg-fg has-checked:text-bg has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-focus">
               <input type="radio" name="status" value={value} checked={i === 0} class="sr-only" />
@@ -66,14 +69,14 @@ const parties = [...new Set(senadores.map((s) => s.partido))].sort(byName);
   <p aria-live="polite" data-contagem class="mt-5 text-sm text-fg-muted">{rows.length} senadores</p>
   <ul class="mt-4" role="list" data-lista>
     {
-      rows.map((s) => (
+      rows.map(({ s, p }) => (
         <ListItem
           senador={s}
           d={d}
           href={senatorPath(s.id)}
           data-nome={s.nome}
-          data-status={s.declaracao.status}
-          data-candidato={s.declaracao.status === "nao_declarou" ? "" : s.declaracao.candidato}
+          data-status={p.nivel}
+          data-candidato={p.candidato ?? ""}
           data-uf={s.uf}
           data-partido={s.partido}
         />

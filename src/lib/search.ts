@@ -1,15 +1,17 @@
 /** The list filter: pure, so the page script and the tests share it. */
+import type { Nivel } from "../data/posicao";
 
 export type ListRow = {
   nome: string;
-  status: "nao_declarou" | "declarou" | "mostrou_na_sessao";
+  /** The level in effect (`posicao().nivel`). */
+  status: Nivel;
   candidato: string | null;
   uf: string;
   partido: string;
 };
 
 export type ListFilter = {
-  status: "todos" | "nao_declarou" | "declarou";
+  status: "todos" | "nao_declarou" | "declarou" | "apoio_mapeado" | "partido";
   uf: string;
   partido: string;
   q: string;
@@ -27,8 +29,8 @@ export function normalizeName(s: string): string {
 
 /** Every filter must hold; an empty one holds for everyone. A ballot shown in the session counts as declared. */
 export function matches(row: ListRow, f: ListFilter): boolean {
-  if (f.status === "nao_declarou" && row.status !== "nao_declarou") return false;
-  if (f.status === "declarou" && row.status === "nao_declarou") return false;
+  const level = row.status === "mostrou_na_sessao" ? "declarou" : row.status;
+  if (f.status !== "todos" && level !== f.status) return false;
   if (f.uf && row.uf !== f.uf) return false;
   if (f.partido && row.partido !== f.partido) return false;
   const q = normalizeName(f.q);
