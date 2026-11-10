@@ -39,7 +39,7 @@ export const FORM_TEXT = Object.freeze({
 export function introText(nome: string | null, declared = false): string {
   const check = "Conferimos pela regra da Metodologia antes de mudar o placar.";
   if (nome === null)
-    return `O placar é atualizado com a ajuda de quem acompanha. Se um senador declarou em público o voto para presidente do Senado, mudou de posição, ou se algo no site está errado, mande o link de onde viu. ${check}`;
+    return `O placar é atualizado com a ajuda de quem acompanha. Se um senador declarou em público o voto para presidente do Senado, mudou de posição, ou se algo no site está errado, mande o link de onde viu. Também vale uma matéria ou lista que cite um senador pelo nome como apoio a um candidato, ou o anúncio de apoio de um partido, de uma bancada ou de uma federação. ${check}`;
   return declared
     ? `${nome} já declarou o voto, com a fonte mostrada acima. Você pode ajudar a deixar esse registro mais forte: se conhece uma fonte mais direta da mesma declaração, como o vídeo original, um post no perfil oficial ou a frase completa, mande o link. Se ${nome} mudou de posição, ou se algo nesta página está errado, avise também. ${check}`
     : `O placar é atualizado com a ajuda de quem acompanha. Se você viu ${nome} dizer em público em quem vota para presidente do Senado, mande o link de onde viu: um vídeo, um post no perfil oficial ou uma matéria com a fala entre aspas. Se algo nesta página está errado, avise também. ${check}`;
