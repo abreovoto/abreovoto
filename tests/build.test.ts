@@ -305,8 +305,13 @@ test("the three text pages carry their sections and the contact anchor", () => {
   expect(cf).toContain(`Candidatos até agora: ${new Intl.ListFormat("pt-BR", { type: "conjunction" }).format(placar(loadData()).porCandidato.map((c) => c.nome))}.`);
   const m = text("metodologia/index.html");
   for (const s of ["O que conta como fonte", "Correções", "CC BY 4.0", 'href="/dados.json"']) expect(m).toContain(s);
-  // Declared support counts only with the candidate and the election inside the quote: the page says so.
-  expect(m).toContain("Conta como dizer em quem vota o apoio declarado pelo próprio senador a uma candidatura, quando a citação traz o nome do candidato e a eleição para a Presidência do Senado.");
+  // Four states, three of them counted, the highest level winning: the page says so.
+  expect(m).toContain("Cada senador aparece em um de quatro estados. Os três primeiros entram no placar, sempre com uma fonte pública que qualquer pessoa pode abrir. Quando há mais de uma informação sobre o mesmo senador, vale a do nível mais alto.");
+  for (const level of ["Declarou voto em.", "Apoio mapeado a.", "Apoio pelo partido a.", "Não declarou."]) expect(m).toContain(`<strong>${level}</strong>`);
+  expect(m).toContain("Anúncio de bloco parlamentar não conta.");
+  expect(m).toContain("Lançar uma candidatura conta como apoio mapeado a si mesmo, não como declaração.");
+  expect(m).toContain("Os candidatos aparecem do que tem mais apoios, somados os três níveis, para o que tem menos; no empate, em ordem alfabética.");
+  expect(cf).not.toContain("quantos declararam o voto e quantos não declararam");
   const p = text("privacidade/index.html");
   for (const s of ["Web Analytics", "localStorage", "GitHub", "Change.org"]) expect(p).toContain(s);
   for (const h of [cf, m, p]) expect(h.match(/<h1[ >]/g)).toHaveLength(1);

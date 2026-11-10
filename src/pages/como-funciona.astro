@@ -27,7 +27,9 @@ const link = "text-accent underline";
       </p>
       <p>
         Como o voto é secreto, ninguém fica sabendo oficialmente em quem cada senador votou. Este site mostra o que cada um
-        disse em público antes da votação. O placar mostra só totais: quantos declararam o voto e quantos não declararam.
+        disse em público antes da votação. O placar mostra só totais: quantos têm posição conhecida, divididos entre os que
+        declararam o voto, os que têm apoio mapeado em fonte pública e os que têm o apoio anunciado pelo partido, e quantos
+        ainda não têm posição conhecida.
       </p>
       <p>Candidatos até agora: {candidates}.</p>
     </div>
@@ -37,8 +39,8 @@ const link = "text-accent underline";
     <SectionHead id="o-que-faz" title="O que o site faz" />
     <div class="mt-6 space-y-4">
       <p>
-        Registra quais senadores disseram em público em quem vão votar, sempre com a fonte, e conta essas declarações. Mais
-        nada. O que vale como fonte está na <a href="/metodologia/" class={link}>Metodologia</a>.
+        Registra o que se sabe em público sobre o voto de cada senador, sempre com a fonte e com o nível dela (declaração do
+        próprio senador, apoio mapeado ou apoio do partido), e conta esses registros. Mais nada. O que vale como fonte está na <a href="/metodologia/" class={link}>Metodologia</a>.
       </p>
     </div>
   </section>
