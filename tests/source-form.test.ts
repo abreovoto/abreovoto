@@ -24,7 +24,7 @@ test("a site-wide correction has no senator line and the correction subject", ()
 test("the section invites help, says what to send and that nothing changes unchecked", () => {
   expect(FORM_TEXT.title).toBe("Ajude a manter o placar em dia");
   expect(introText(null)).toBe(
-    "O placar é atualizado com a ajuda de quem acompanha. Se um senador declarou em público o voto para presidente do Senado, mudou de posição, ou se algo no site está errado, mande o link de onde viu. Conferimos pela regra da Metodologia antes de mudar o placar.",
+    "O placar é atualizado com a ajuda de quem acompanha. Se um senador declarou em público o voto para presidente do Senado, mudou de posição, ou se algo no site está errado, mande o link de onde viu. Também vale uma matéria ou lista que cite um senador pelo nome como apoio a um candidato, ou o anúncio de apoio de um partido, de uma bancada ou de uma federação. Conferimos pela regra da Metodologia antes de mudar o placar.",
   );
   expect(FORM_TEXT.shortcutLink).toBe("Avise");
 });
