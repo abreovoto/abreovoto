@@ -3,8 +3,11 @@
  * and no source ever requested above its own width.
  */
 
-/** Rendered width in CSS px per context; `share` is the width inside the 1200×630 card. */
-export const PORTRAIT_SIZES = { list: 56, state: 80, page: 96, share: 160 } as const;
+/**
+ * Rendered width in CSS px per context; `share` is the width inside the 1200×630 card of a
+ * senator or candidate, `homeShare` each candidate's face on the home card.
+ */
+export const PORTRAIT_SIZES = { list: 56, state: 80, page: 96, homeShare: 136, share: 160 } as const;
 
 /** Width / height. The TSE's 161×225 rounded; every source is cropped to it. */
 export const PORTRAIT_RATIO = 4 / 5;

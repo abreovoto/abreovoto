@@ -4,9 +4,17 @@
  */
 import { createHash } from "node:crypto";
 import type { Dataset } from "../data/load";
-import type { PlacarCandidato } from "../data/placar";
+import { placar, type PlacarCandidato } from "../data/placar";
 import type { Senador } from "../data/schema";
 import { departureNote, formatDate, partyState, statusLabel } from "./text";
+
+/** The scoreboard as the home card shows it: each running candidate's total, and who has no known position. */
+export type CardScoreboard = {
+  /** In the site's order: most support first, ties by name. */
+  candidates: { id: string; name: string; partyState: string; total: number }[];
+  noPosition: number;
+  senators: number;
+};
 
 export type ShareCardModel = {
   kind: "senator" | "candidate" | "home";
@@ -17,12 +25,13 @@ export type ShareCardModel = {
   numberLabel: string | null;
   hashtag: string;
   domain: string;
-  /** null on the home card, whose address is never versioned: nothing on it may age. */
-  date: string | null;
+  date: string;
+  /** Only on the home card. */
+  scoreboard: CardScoreboard | null;
 };
 
 function common(d: Dataset, today: string) {
-  return { hashtag: d.site.hashtag, domain: d.site.dominio, date: formatDate(today) };
+  return { hashtag: d.site.hashtag, domain: d.site.dominio, date: formatDate(today), scoreboard: null };
 }
 
 export function senatorCard(s: Senador, d: Dataset, today: string): ShareCardModel {
@@ -51,20 +60,26 @@ export function candidateCard(c: PlacarCandidato, d: Dataset, today: string): Sh
 }
 
 /**
- * The home card says what the campaign asks and nothing that ages: the home address is typed
- * and pasted as is, and the networks keep its preview for days, so a count or a date on it
- * would be shown stale. The numbers live on the page.
+ * The home card: the campaign line and the scoreboard of the day, dated. A preview kept by a
+ * network, or a repost of an old post, then shows a dated snapshot that stays true, never a count
+ * passed off as today's. The address shared from the site carries the card's version
+ * (`homeShareUrl`), so a new post shows the current card.
  */
 export function homeCard(d: Dataset, today: string): ShareCardModel {
+  const p = placar(d);
   return {
     kind: "home",
     title: "O seu voto é secreto. O deles não precisa ser.",
-    subtitle: "Em quem cada senador vota para presidente do Senado, sempre com a fonte.",
+    subtitle: "",
     status: null,
     number: null,
     numberLabel: null,
     ...common(d, today),
-    date: null,
+    scoreboard: {
+      candidates: p.porCandidato.map((c) => ({ id: c.id, name: c.nome, partyState: partyState(c), total: c.total })),
+      noPosition: p.semPosicao,
+      senators: p.total,
+    },
   };
 }
 
@@ -76,8 +91,11 @@ export function cardAlt(m: ShareCardModel): string {
       return `${lead} (${m.subtitle}), ${m.status}, ${m.date}`;
     case "candidate":
       return `${lead} (${m.subtitle}), ${m.number} ${m.numberLabel}, ${m.date}`;
-    case "home":
-      return `${lead} ${m.subtitle}`;
+    case "home": {
+      const b = m.scoreboard!;
+      const counts = b.candidates.map((c) => `${c.name} (${c.partyState}), ${c.total}`).join("; ");
+      return `${lead} Placar em ${m.date}: ${counts}; ${b.noPosition} sem posição de ${b.senators} senadores.`;
+    }
   }
 }
 

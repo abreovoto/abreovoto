@@ -3,28 +3,54 @@ import { asUndeclared } from "./fixtures/undeclared";
 import { loadData } from "../src/data/load";
 import { placar } from "../src/data/placar";
 import { cardTree, type CardNode } from "../src/lib/card-tree";
-import { renderCard } from "../src/lib/card-render";
-import { candidateCard, homeCard, senatorCard } from "../src/lib/share-card";
+import { homeFaces, renderCard } from "../src/lib/card-render";
+import { candidateCard, homeCard, senatorCard, type ShareCardModel } from "../src/lib/share-card";
 import { palette } from "../src/styles/tokens";
 
 const d = loadData();
 const today = "2026-11-07";
 const texts = (n: CardNode | string): string[] =>
   typeof n === "string" ? [n] : ([] as (CardNode | string)[]).concat(n.props.children ?? []).flatMap(texts);
+const faces = (m: ShareCardModel) => Object.fromEntries((m.scoreboard?.candidates ?? []).map((c) => [c.id, `data:${c.id}`]));
+const nodes = (n: CardNode | string): CardNode[] =>
+  typeof n === "string" ? [] : [n, ...([] as (CardNode | string)[]).concat(n.props.children ?? []).flatMap(nodes)];
 const flexDivs = (n: CardNode | string): boolean =>
   typeof n === "string" ||
   ((n.type !== "div" || !Array.isArray(n.props.children) || n.props.style?.display === "flex") &&
     ([] as (CardNode | string)[]).concat(n.props.children ?? []).every(flexDivs));
 
-test("every card ends with the domain, dated except the home card, and every multi-child div is flex", () => {
+test("every card ends with its date and the domain, and every multi-child div is flex", () => {
   const s = asUndeclared(d.senadores.find((x) => x.id === "marcio-bittar")!);
   for (const m of [senatorCard(s, d, today), candidateCard(placar(d).porCandidato[0]!, d, today), homeCard(d, today)]) {
-    const t = cardTree(m, null);
-    expect(texts(t)).toContain(m.kind === "home" ? "abreovoto.com" : "7/11/2026 · abreovoto.com");
-    if (m.kind === "home") expect(texts(t)).not.toContain("7/11/2026");
+    const t = cardTree(m, null, faces(m));
+    expect(texts(t)).toContain(m.kind === "home" ? "Placar em 7/11/2026 · abreovoto.com" : "7/11/2026 · abreovoto.com");
     expect(texts(t)).toContain("#AbreOVotoSenador");
+    expect(texts(t)).toContain("Abre o Voto");
     expect(flexDivs(t)).toBe(true);
   }
+});
+
+test("the home card draws every candidate the same: one face size, one column width, one type size", () => {
+  const base = homeCard(d, today);
+  const fourth = { id: "quarto", name: "Nome Bem Comprido Teste", partyState: "PT-SP", total: 0 };
+  // The candidates of the data, and one more: past three the row scales, still the same for all.
+  for (const m of [base, { ...base, scoreboard: { ...base.scoreboard!, candidates: [...base.scoreboard!.candidates, fourth] } }]) {
+    const t = cardTree(m, null, faces(m));
+    const imgs = nodes(t).filter((n) => n.type === "img");
+    expect(imgs.map((n) => n.props.src)).toEqual(m.scoreboard!.candidates.map((c) => `data:${c.id}`)); // in the site's order
+    expect(new Set(imgs.map((n) => `${n.props.style!.width}×${n.props.style!.height}`)).size).toBe(1);
+    const columns = nodes(t).filter((n) => Array.isArray(n.props.children) && n.props.children.some((k) => typeof k !== "string" && k.type === "img"));
+    expect(columns).toHaveLength(m.scoreboard!.candidates.length);
+    expect(new Set(columns.map((n) => n.props.style!.width)).size).toBe(1);
+    const totals = m.scoreboard!.candidates.map((c) => nodes(t).find((n) => n.props.children === String(c.total) && n.props.style?.fontFamily === "Display")!);
+    expect(new Set(totals.map((n) => n.props.style!.fontSize)).size).toBe(1);
+    expect(texts(t)).toContain(String(m.scoreboard!.noPosition));
+    expect(texts(t)).toContain(`de ${m.scoreboard!.senators} senadores`);
+  }
+});
+
+test("the home card refuses to render a candidate without a face", () => {
+  expect(() => cardTree(homeCard(d, today), null, {})).toThrow(/no face/);
 });
 
 test("the status colour follows the status, the same for every candidate", () => {
@@ -51,7 +77,8 @@ test("the status colour follows the status, the same for every candidate", () =>
 });
 
 test("a card renders to a 1200×630 PNG", async () => {
-  const png = await renderCard(homeCard(d, today), null);
+  const m = homeCard(d, today);
+  const png = await renderCard(m, null, await homeFaces(m));
   expect(png.subarray(0, 8).toString("hex")).toBe("89504e470d0a1a0a");
   expect(png.readUInt32BE(16)).toBe(1200);
   expect(png.readUInt32BE(20)).toBe(630);
@@ -66,5 +93,5 @@ test("every fixed-size box inside a flex row keeps its size when the text beside
     const kids = ([] as (CardNode | string)[]).concat(n.props.children ?? []);
     return own.concat(kids.flatMap((k) => unshrinkable(k, st.display === "flex")));
   };
-  for (const m of [senatorCard(s, d, today), homeCard(d, today)]) expect(unshrinkable(cardTree(m, "data:"), false)).toEqual([]);
+  for (const m of [senatorCard(s, d, today), homeCard(d, today)]) expect(unshrinkable(cardTree(m, "data:", faces(m)), false)).toEqual([]);
 });
