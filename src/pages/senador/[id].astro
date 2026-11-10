@@ -14,7 +14,18 @@ import { type Senador, todayUtc } from "../../data/schema";
 import Base from "../../layouts/Base.astro";
 import { candidatePath, senatorCardPath, senatorPath, statePath } from "../../lib/routes";
 import { senatorCard } from "../../lib/share-card";
-import { departureNote, formatDate, partyNoLongerCounts, partyState, positionSourceLabel, quoted, sourceHost, statusSentence } from "../../lib/text";
+import {
+  departureNote,
+  formatDate,
+  levelNote as levelNoteOf,
+  partyNoLongerCounts,
+  partyState,
+  partySubject,
+  positionSourceLabel,
+  quoted,
+  sourceHost,
+  statusSentence,
+} from "../../lib/text";
 import { ufWithDe } from "../../lib/uf";
 
 export function getStaticPaths() {
@@ -43,17 +54,7 @@ const sectionTitle =
   : p.origem === "candidatura" ? "Candidatura"
   : p.nivel === "partido" ? (p.origem === "federacao" ? "Apoio pela federação" : "Apoio pelo partido")
   : "Apoio mapeado";
-const PARTY_SUBJECT = {
-  partido: (sigla: string) => `O partido ${sigla}`,
-  bancada: (sigla: string) => `A bancada do partido ${sigla} no Senado`,
-  federacao: (sigla: string) => `A federação que inclui o partido ${sigla}`,
-} as const;
-const selfWord = asCandidate?.genero === "f" ? "si mesma" : "si mesmo";
-const levelNote =
-  own || p.nivel === "nao_declarou" ? null
-  : p.origem === "candidatura" ? `${senador.nome} lançou a própria candidatura em ${formatDate(p.data)}. A candidatura conta como apoio mapeado a ${selfWord}, não como declaração de voto.`
-  : p.nivel === "partido" ? `${PARTY_SUBJECT[p.partido!.escopo](p.partido!.partido)} anunciou o apoio. ${senador.nome} ainda não declarou o voto em público.`
-  : `Uma fonte pública cita ${senador.nome} pelo nome como apoio. Não é uma declaração de voto: ${senador.nome} ainda não disse em público em quem vota.`;
+const levelNote = departed ? null : levelNoteOf(senador, d);
 // The party's announcement in effect, when it is not the level shown above: an observation with its source.
 const partyAside = p.partido && p.nivel !== "partido" ? p.partido : null;
 
@@ -123,7 +124,7 @@ const partyAside = p.partido && p.nivel !== "partido" ? p.partido : null;
         <div class="mt-6 space-y-2 text-base">
           {partyAside && (
             <p>
-              {PARTY_SUBJECT[partyAside.escopo](partyAside.partido)}{" "}
+              {partySubject(partyAside)}{" "}
               {partyAside.candidato === null
                 ? `liberou seus senadores em ${formatDate(partyAside.data)}`
                 : `anunciou apoio a ${candidateName(partyAside.candidato)} em ${formatDate(partyAside.data)}`}{" "}

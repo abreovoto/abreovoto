@@ -1,5 +1,6 @@
 ---
 import { fillOrder, seats } from "../lib/hemicycle";
+import { hemicycleLabel } from "../lib/text";
 
 interface Props {
   declararam: number;
@@ -17,8 +18,7 @@ const level = new Map<number, "declared" | "mapped" | "party">();
 order.slice(0, declararam).forEach((i) => level.set(i, "declared"));
 order.slice(declararam, declararam + mapeados).forEach((i) => level.set(i, "mapped"));
 order.slice(declararam + mapeados, declararam + mapeados + partido).forEach((i) => level.set(i, "party"));
-const semPosicao = total - declararam - mapeados - partido;
-const label = `${total} cadeiras do Senado: ${semPosicao} sem posição conhecida, ${declararam} declararam, ${mapeados} apoio mapeado, ${partido} pelo partido`;
+const label = hemicycleLabel({ declararam, mapeados, partido, total });
 ---
 
 <svg viewBox="0 0 300 158" role="img" aria-label={label} class="block h-auto w-full">

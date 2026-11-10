@@ -29,7 +29,11 @@ function candidateName(id: string, d: Dataset): string {
  */
 export function shareUrl(s: Senador, d: Dataset): string {
   const p = posicao(s, d);
-  const key = JSON.stringify(p.nivel === "nao_declarou" ? [p.nivel] : [p.nivel, p.candidato, p.fonte.url]);
+  // The party level's scope (party, caucus, federation) changes the card's words; the other levels'
+  // keys stay as they were, so addresses already shared keep their version.
+  const key = JSON.stringify(
+    p.nivel === "nao_declarou" ? [p.nivel] : p.nivel === "partido" ? [p.nivel, p.candidato, p.fonte.url, p.origem] : [p.nivel, p.candidato, p.fonte.url],
+  );
   return `${absolute(senatorPath(s.id))}?v=${createHash("sha256").update(key).digest("hex").slice(0, 8)}`;
 }
 

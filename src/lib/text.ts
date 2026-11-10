@@ -52,6 +52,30 @@ export function statusSentence(s: Senador, d: Dataset): string {
   return `aparece com ${statusLabel(s, d)}`;
 }
 
+const PARTY_SUBJECT = {
+  partido: (sigla: string) => `O partido ${sigla}`,
+  bancada: (sigla: string) => `A bancada do partido ${sigla} no Senado`,
+  federacao: (sigla: string) => `A federação que inclui o partido ${sigla}`,
+} as const;
+
+/** Who announced a party-level support, without an article that depends on the party's name. */
+export const partySubject = (p: { escopo: keyof typeof PARTY_SUBJECT; partido: string }): string => PARTY_SUBJECT[p.escopo](p.partido);
+
+/**
+ * Under the senator page's section, for every level below the senator's own word: whose word it is,
+ * and that it is not a declaration. Null for the senator's own word and for no position.
+ */
+export function levelNote(s: Senador, d: Dataset): string | null {
+  const p = posicao(s, d);
+  if (p.nivel === "nao_declarou" || p.nivel === "declarou" || p.nivel === "mostrou_na_sessao") return null;
+  if (p.origem === "candidatura") {
+    const self = candidateBadge(s, d.candidatos) === "candidata" ? "si mesma" : "si mesmo";
+    return `${s.nome} lançou a própria candidatura em ${formatDate(p.data)}. A candidatura conta como apoio mapeado a ${self}, não como declaração de voto.`;
+  }
+  if (p.nivel === "partido") return `${partySubject(p.partido!)} anunciou o apoio. ${s.nome} ainda não declarou o voto em público.`;
+  return `Uma fonte pública cita ${s.nome} pelo nome como apoio a ${candidateName(p.candidato, d.candidatos)}. Não é uma declaração de voto: ${s.nome} ainda não disse em público em quem vota.`;
+}
+
 /** True when the senator's opt-out is what keeps a party announcement in effect from counting for them. */
 export function partyNoLongerCounts(p: Posicao): boolean {
   return p.recusa !== null && p.nivel === "nao_declarou" && p.partido?.candidato != null;
@@ -64,10 +88,19 @@ export function statusLabel(s: Senador, d: Dataset): string {
   return p.candidato === null ? prefix : `${prefix} ${candidateName(p.candidato, d.candidatos)}`;
 }
 
+/** `1 declarou`, `13 declararam`. */
+export const declaredCount = (n: number): string => `${n} ${n === 1 ? "declarou" : "declararam"}`;
+
+/** The hemicycle's text alternative, each count agreeing in number. */
+export function hemicycleLabel(n: { declararam: number; mapeados: number; partido: number; total: number }): string {
+  const sem = n.total - n.declararam - n.mapeados - n.partido;
+  return `${n.total} cadeiras do Senado: ${sem} sem posição conhecida, ${declaredCount(n.declararam)}, ${n.mapeados} apoio mapeado, ${n.partido} pelo partido`;
+}
+
 /** `13 declararam · 3 mapeados · 0 pelo partido`, each word agreeing with its number. */
 export function breakdownLine(n: { declararam: number; mapeados: number; partido: number }): string {
   return [
-    `${n.declararam} ${n.declararam === 1 ? "declarou" : "declararam"}`,
+    declaredCount(n.declararam),
     `${n.mapeados} ${n.mapeados === 1 ? "mapeado" : "mapeados"}`,
     `${n.partido} pelo partido`,
   ].join(" · ");

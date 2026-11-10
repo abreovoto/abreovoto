@@ -14,6 +14,8 @@ import {
   sourceHost,
   positionSourceLabel,
   sourceTypeLabel,
+  hemicycleLabel,
+  levelNote,
   partyNoLongerCounts,
   statusLabel,
   statusPrefix,
@@ -174,4 +176,29 @@ test("the party no longer counts only where the opt-out is what leaves the senat
   expect(partyNoLongerCounts(withRecusa("ac-2", { declaracao: declarou("marinho") }))).toBe(false); // a declaration is in effect
   expect(partyNoLongerCounts(withRecusa("ba-3"))).toBe(false); // no party announcement
   expect(partyNoLongerCounts(pos("ac-2"))).toBe(false); // no opt-out
+});
+
+test("the hemicycle's label agrees in number with each count", () => {
+  expect(hemicycleLabel({ declararam: 1, mapeados: 1, partido: 1, total: 81 })).toBe(
+    "81 cadeiras do Senado: 78 sem posição conhecida, 1 declarou, 1 apoio mapeado, 1 pelo partido",
+  );
+  expect(hemicycleLabel({ declararam: 13, mapeados: 3, partido: 0, total: 81 })).toBe(
+    "81 cadeiras do Senado: 65 sem posição conhecida, 13 declararam, 3 apoio mapeado, 0 pelo partido",
+  );
+});
+
+test("levelNote says, below the senator's own word, whose word it is — naming the candidate it supports", () => {
+  expect(levelNote(at("ap-3"), levels)).toBeNull();
+  expect(levelNote(at("ba-3"), levels)).toBeNull();
+  expect(levelNote(at("ac-1"), levels)).toBe(
+    "Uma fonte pública cita Senador AC-1 pelo nome como apoio a Rogério Marinho. Não é uma declaração de voto: Senador AC-1 ainda não disse em público em quem vota.",
+  );
+  expect(levelNote(at("rn-3"), levels)).toBe(
+    "Rogério Marinho lançou a própria candidatura em 1/10/2026. A candidatura conta como apoio mapeado a si mesmo, não como declaração de voto.",
+  );
+  expect(levelNote(at("ac-2"), levels)).toBe("O partido PSD anunciou o apoio. Senador AC-2 ainda não declarou o voto em público.");
+  expect(levelNote(at("ba-1"), levels)).toBe("A bancada do partido PDT no Senado anunciou o apoio. Senador BA-1 ainda não declarou o voto em público.");
+  expect(levelNote(at("ac-3"), levels)).toBe("A federação que inclui o partido PSB anunciou o apoio. Senador AC-3 ainda não declarou o voto em público.");
+  const tereza = { ...at("ms-3"), declaracao: nao } as ReturnType<typeof at>;
+  expect(levelNote(tereza, levels)).toContain("apoio mapeado a si mesma");
 });

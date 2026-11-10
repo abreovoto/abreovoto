@@ -155,3 +155,9 @@ test("the shared address tells a mapped senator from a declared one with the sam
   expect(shareUrl(mapped(s, "marinho"), d)).not.toBe(shareUrl(own, d));
   expect(shareUrl(s, withParty(s, "marinho", "partido"))).not.toBe(shareUrl(s, d));
 });
+
+test("the shared address tells a caucus announcement from a party one with the same candidate and source", () => {
+  const s = asUndeclared(by("arthur-lira"));
+  expect(shareUrl(s, withParty(s, "marinho", "bancada"))).not.toBe(shareUrl(s, withParty(s, "marinho", "partido")));
+  expect(shareUrl(s, withParty(s, "marinho", "federacao"))).not.toBe(shareUrl(s, withParty(s, "marinho", "partido")));
+});
