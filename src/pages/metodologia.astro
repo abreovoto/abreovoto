@@ -12,33 +12,39 @@ const link = "text-accent underline";
     <SectionHead id="fonte" title="O que conta como fonte" />
     <div class="mt-6 space-y-4">
       <p>
-        Um senador passa de “não declarou” para “declarou voto em” só com uma fonte pública que diga, com o nome do
-        candidato, em quem ele vota. Contam como fonte:
+        Cada senador aparece em um de quatro estados. Os três primeiros entram no placar, sempre com uma fonte pública que
+        qualquer pessoa pode abrir. Quando há mais de uma informação sobre o mesmo senador, vale a do nível mais alto.
       </p>
       <ul class="list-disc space-y-2 pl-5">
-        <li>vídeo ou áudio público em que o senador diz em quem vota;</li>
-        <li>publicação no perfil oficial e verificado do senador;</li>
-        <li>matéria jornalística com citação direta, entre aspas, atribuída ao senador;</li>
-        <li>nota oficial do gabinete, do partido ou da liderança que nomeie o senador;</li>
         <li>
-          e-mail enviado do endereço institucional do senador (@senado.leg.br) para o Abre o Voto, publicado na íntegra na
-          página do senador.
+          <strong>Declarou voto em.</strong> O próprio senador deixa claro que apoia um candidato na eleição para a
+          Presidência do Senado: em vídeo ou áudio público, em publicação no seu perfil oficial, em citação direta numa
+          matéria jornalística, em nota oficial do gabinete ou em e-mail do endereço institucional (@senado.leg.br),
+          publicado na íntegra. Não é preciso a frase “voto em”: basta que o apoio seja dele e que a fonte deixe claro que se
+          trata dessa eleição.
         </li>
-      </ul>
-      <p>Não contam:</p>
-      <ul class="list-disc space-y-2 pl-5">
-        <li>capturas de tela de WhatsApp;</li>
-        <li>relatos de terceiros e “fontes do partido”;</li>
-        <li>declarações genéricas, sem o nome de um candidato (“voto com a oposição”);</li>
-        <li>apoio de partido sem declaração individual do senador.</li>
+        <li>
+          <strong>Apoio mapeado a.</strong> Uma fonte pública cita o senador, pelo nome, como apoio a um candidato: uma
+          matéria que o inclui entre os apoiadores, uma lista divulgada pela campanha ou pelo partido do candidato, a presença
+          dele no lançamento da candidatura noticiada com o seu nome. Quem lança a própria candidatura aparece com apoio
+          mapeado a si mesmo; a fonte é o anúncio da candidatura.
+        </li>
+        <li>
+          <strong>Apoio pelo partido a.</strong> O partido, a sua bancada no Senado ou a federação de que o partido faz parte
+          anuncia apoio a um candidato. Vale para cada senador do partido que não tenha nível mais alto. Anúncio de bloco
+          parlamentar não conta. Se o senador disser em público que ainda não decidiu, ou que não segue o partido, o apoio do
+          partido deixa de valer para ele, e a fala fica registrada com fonte na página dele. Se o partido liberar a bancada,
+          o anúncio anterior deixa de valer.
+        </li>
+        <li><strong>Não declarou.</strong> Nenhuma das fontes acima.</li>
       </ul>
       <p>
-        Conta como dizer em quem vota o apoio declarado pelo próprio senador a uma candidatura, quando a citação traz o nome
-        do candidato e a eleição para a Presidência do Senado.
+        Não contam, em nenhum nível: capturas de tela de WhatsApp; relatos que não citam o senador pelo nome (“segundo
+        aliados”); declarações sem o nome de um candidato.
       </p>
       <p>
-        Cada declaração registra o candidato, a data, o tipo de fonte, o link e o trecho literal. Se um senador muda de voto,
-        a nova declaração entra e a anterior fica no histórico.
+        Cada registro traz o candidato, a data, o tipo de fonte, o link e, quando há, o trecho literal. Se um senador muda de
+        posição, o novo registro entra e o anterior fica no histórico.
       </p>
       <p>
         Quem ainda não tomou posse, como o suplente que assume a vaga antes da eleição, pode declarar por e-mail do endereço
@@ -46,10 +52,10 @@ const link = "text-accent underline";
         verificado. A mensagem é publicada na íntegra.
       </p>
       <p>
-        Lançar uma candidatura não é declarar voto: a vaga de um candidato segue a mesma regra das outras. A promessa de
-        abrir o voto, ou o voto declarado em quem não é candidato, entra como observação, com fonte, sem mudar a situação do
-        senador. Se um candidato desiste, quem tinha declarado voto nele volta a “não declarou”, e a declaração anterior fica
-        no histórico.
+        Lançar uma candidatura conta como apoio mapeado a si mesmo, não como declaração. A promessa de abrir o voto, ou o
+        voto declarado em quem não é candidato, entra como observação, com fonte, sem mudar a situação do senador. Se um
+        candidato desiste, quem tinha qualquer nível de apoio a ele volta a “não declarou”, e o registro anterior fica no
+        histórico.
       </p>
     </div>
   </section>
@@ -57,7 +63,7 @@ const link = "text-accent underline";
   <section aria-labelledby="ordem">
     <SectionHead id="ordem" title="Como o placar é ordenado" />
     <ul class="mt-6 list-disc space-y-2 pl-5">
-      <li>Os candidatos aparecem do que tem mais declarações para o que tem menos; no empate, em ordem alfabética.</li>
+      <li>Os candidatos aparecem do que tem mais apoios, somados os três níveis, para o que tem menos; no empate, em ordem alfabética.</li>
       <li>A lista dos 81 senadores é alfabética pelo nome.</li>
       <li>Em cada estado, os três senadores aparecem na ordem das vagas.</li>
       <li>

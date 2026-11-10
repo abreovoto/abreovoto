@@ -3,11 +3,14 @@
 *[English version](README.en.md)*
 
 Placar público da eleição para a Presidência do Senado Federal em 1º de fevereiro
-de 2027. Para cada um dos 81 senadores, o site mostra se ele já declarou
-publicamente em quem vota, com link para a fonte, ou se ainda não declarou. Acima
-da lista: quantos não declararam, quantos declararam, e um card por candidato com
-o número de declarações. O visitante escolhe seu estado, vê seus três senadores e
-compartilha um card cobrando os que ainda não declararam.
+de 2027. Para cada um dos 81 senadores, o site mostra o que se sabe em público
+sobre o seu voto, com link para a fonte e o nível dela: declarou voto (a palavra
+do próprio senador), apoio mapeado (uma fonte pública o cita pelo nome) ou apoio
+pelo partido (anúncio do partido, da bancada ou da federação); ou que ainda não há
+posição conhecida. Acima da lista: quantos têm e quantos não têm posição conhecida,
+com a divisão por nível, e um card por candidato com o total de apoios e a mesma
+divisão. O visitante escolhe seu estado, vê seus três senadores e compartilha um
+card cobrando os que ainda não declararam.
 
 O site não toma lado. Nunca diz em quem votar, trata todos os candidatos da mesma
 forma e não publica nada sobre um senador sem fonte pública. Os dados vivem neste
@@ -28,12 +31,19 @@ para isso, sem data marcada.
 ## Dados
 
 Os dados ficam em `data/`, em YAML: `senadores.yaml`, `candidatos.yaml`,
-`peticao.yaml` e `site.yaml`. As fotos oficiais ficam em `src/assets/fotos/`,
+`partidos.yaml`, `peticao.yaml` e `site.yaml`. As fotos oficiais ficam em `src/assets/fotos/`,
 com o crédito registrado no YAML.
 
-Cada senador tem um status: `nao_declarou` ou `declarou` (e, no dia da eleição,
-`mostrou_na_sessao`). Todo `declarou` leva o candidato, a data e a fonte: tipo,
-link `https` e o trecho literal da declaração. Sem fonte, a validação recusa.
+Cada senador tem um status: `nao_declarou`, `declarou`, `apoio_mapeado` (e, no
+dia da eleição, `mostrou_na_sessao`). Todo status além de `nao_declarou` leva o
+candidato, a data e a fonte: tipo, link `https` e o trecho literal. Sem fonte, a
+validação recusa. `partidos.yaml` guarda os anúncios de apoio de partido, bancada
+ou federação (o mais recente de cada partido vale; `candidato: null` libera a
+bancada), e `recusa_partido`, no senador, registra com fonte quem disse que não
+segue o partido. A posição que o site mostra é calculada desses dados, valendo o
+nível mais alto: o voto mostrado na sessão, a declaração, o apoio mapeado (cada
+candidato em campanha tem apoio mapeado a si mesmo, com o anúncio da candidatura
+como fonte) e, por fim, o apoio do partido.
 
 Cada estado tem três vagas: as vagas 1 e 2 têm mandato 2027–2035 e a vaga 3,
 2023–2031. Quem deixa o mandato continua no arquivo como `deixou_mandato`,
