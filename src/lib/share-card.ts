@@ -45,7 +45,7 @@ export function candidateCard(c: PlacarCandidato, d: Dataset, today: string): Sh
     subtitle: partyState(c),
     status: null,
     number: c.total,
-    numberLabel: c.total === 1 ? "declaração" : "declarações",
+    numberLabel: c.total === 1 ? "apoio" : "apoios",
     ...common(d, today),
   };
 }
