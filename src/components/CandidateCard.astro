@@ -1,6 +1,6 @@
 ---
 import type { PlacarCandidato } from "../data/placar";
-import { partyState } from "../lib/text";
+import { breakdownLine, partyState } from "../lib/text";
 import Portrait from "./Portrait.astro";
 
 interface Props {
@@ -10,9 +10,16 @@ interface Props {
   heading?: "h1" | "h3";
 }
 
-// Identical for every candidate: the number is the only variable.
+// Identical for every candidate: the numbers are the only variables.
 const { candidato, foto, heading: Heading = "h3" } = Astro.props;
-const label = candidato.total === 1 ? "declaração" : "declarações";
+const { total, porNivel } = candidato;
+const label = total === 1 ? "apoio" : "apoios";
+// The bar repeats the breakdown line for the eye; the line is what a screen reader reads.
+const bar = [
+  ["declared", porNivel.declararam, "bg-declared"],
+  ["mapped", porNivel.mapeados, "bg-mapped"],
+  ["party", porNivel.partido, "border border-mapped bg-party"],
+] as const;
 ---
 
 <article class="flex h-full flex-col rounded-lg bg-surface p-5 sm:p-6">
@@ -25,7 +32,15 @@ const label = candidato.total === 1 ? "declaração" : "declarações";
   </div>
   <!-- Pushed to the bottom so the three counts share a line whatever the names' length. -->
   <p class="mt-auto pt-6">
-    <span class="block font-display text-5xl leading-none tabular-nums text-fg">{candidato.total}</span>
+    <span class="block font-display text-5xl leading-none tabular-nums text-fg">{total}</span>
     <span class="mt-1.5 block text-sm font-semibold text-fg">{label}</span>
   </p>
+  {
+    total > 0 && (
+      <div class="mt-3 flex h-2 w-full overflow-hidden rounded-full bg-line" aria-hidden="true">
+        {bar.filter(([, n]) => n > 0).map(([key, n, cls]) => <span data-bar={key} class={`h-full ${cls}`} style={`width:${(100 * n) / total}%`} />)}
+      </div>
+    )
+  }
+  <p class="mt-2 text-xs text-fg-muted">{breakdownLine(porNivel)}</p>
 </article>

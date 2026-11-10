@@ -23,14 +23,23 @@ interface Props {
 const { candidato } = Astro.props;
 const d = loadData();
 const senador = d.candidatos.find((c) => c.id === candidato.id)!.senador;
-const declared = emExercicio(d)
-  .filter((s) => posicao(s, d).candidato === candidato.id)
-  .sort((a, b) => a.nome.localeCompare(b.nome, "pt-BR"));
+const supporters = emExercicio(d)
+  .map((s) => ({ s, p: posicao(s, d) }))
+  .filter(({ p }) => p.candidato === candidato.id)
+  .sort((a, b) => a.s.nome.localeCompare(b.s.nome, "pt-BR"));
+// One section per level, strongest first; a level with no senator has no section.
+const groups = [
+  { id: "declararam", title: `Declararam voto em ${candidato.nome}`, of: (n: string) => n === "declarou" || n === "mostrou_na_sessao" },
+  { id: "mapeados", title: `Apoio mapeado a ${candidato.nome}`, of: (n: string) => n === "apoio_mapeado" },
+  { id: "pelo-partido", title: `Apoio pelo partido ou federação a ${candidato.nome}`, of: (n: string) => n === "partido" },
+]
+  .map((g) => ({ ...g, senadores: supporters.filter(({ p }) => g.of(p.nivel)).map(({ s }) => s) }))
+  .filter((g) => g.senadores.length > 0);
 ---
 
 <Base
-  title={`Declarações de voto em ${candidato.nome} — Abre o Voto`}
-  description={`Os senadores que declararam voto em ${candidato.nome} na eleição para a Presidência do Senado, com fonte.`}
+  title={`Apoios a ${candidato.nome} — Abre o Voto`}
+  description={`Os senadores que apoiam ${candidato.nome} na eleição para a Presidência do Senado, por nível, cada um com fonte.`}
   card={{ path: candidateCardPath(candidato.id), model: candidateCard(candidato, d, todayUtc()) }}
 >
   <div class="max-w-2xl">
@@ -38,20 +47,22 @@ const declared = emExercicio(d)
       <CandidateCard candidato={candidato} foto={candidatePhoto(candidato.id)} heading="h1" />
     </div>
 
-    <section aria-labelledby="declararam">
-      <SectionHead id="declararam" title={`Senadores que declararam voto em ${candidato.nome}`} />
-      {
-        declared.length > 0 ? (
-          <ul class="mt-6">
-            {declared.map((s) => (
-              <ListItem senador={s} d={d} href={senatorPath(s.id)} />
-            ))}
-          </ul>
-        ) : (
-          <p class="mt-6 text-base text-fg-muted">Nenhum senador declarou voto em {candidato.nome} até agora.</p>
-        )
-      }
-    </section>
+    {
+      groups.length > 0 ? (
+        groups.map((g) => (
+          <section aria-labelledby={g.id}>
+            <SectionHead id={g.id} title={g.title} />
+            <ul class="mt-6">
+              {g.senadores.map((s) => (
+                <ListItem senador={s} d={d} href={senatorPath(s.id)} />
+              ))}
+            </ul>
+          </section>
+        ))
+      ) : (
+        <p class="mt-6 text-base text-fg-muted">Nenhum senador apoia {candidato.nome} até agora.</p>
+      )
+    }
 
     <p class="mt-16 flex flex-wrap gap-x-6 gap-y-2 text-sm">
       <a href={senatorPath(senador)} class="text-accent underline">Página de {candidato.nome} como senador(a)</a>

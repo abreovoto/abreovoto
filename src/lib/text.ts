@@ -47,6 +47,15 @@ export function statusLabel(s: Senador, d: Dataset): string {
   return p.candidato === null ? prefix : `${prefix} ${candidateName(p.candidato, d.candidatos)}`;
 }
 
+/** `13 declararam · 3 mapeados · 0 pelo partido`, each word agreeing with its number. */
+export function breakdownLine(n: { declararam: number; mapeados: number; partido: number }): string {
+  return [
+    `${n.declararam} ${n.declararam === 1 ? "declarou" : "declararam"}`,
+    `${n.mapeados} ${n.mapeados === 1 ? "mapeado" : "mapeados"}`,
+    `${n.partido} pelo partido`,
+  ].join(" · ");
+}
+
 /**
  * For a substitute listed before taking the seat: "assume a vaga em 6/1/2027"
  * while the date is ahead, "assumiu a vaga em 6/1/2027" from that day on.

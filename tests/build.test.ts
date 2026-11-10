@@ -245,7 +245,7 @@ test("every entry of the data has a page", () => {
 test("the three candidate pages are the same page with different data", () => {
   const pages = ["alcolumbre", "marinho", "tereza-cristina"].map((id) => html(`candidato/${id}/index.html`));
   const totals = Object.fromEntries(placar(loadData()).porCandidato.map((c) => [c.id, c.total]));
-  ["alcolumbre", "marinho", "tereza-cristina"].forEach((id, i) => expect(pages[i]!.includes("até agora."), id).toBe(totals[id] === 0));
+  ["alcolumbre", "marinho", "tereza-cristina"].forEach((id, i) => expect(pages[i]!.includes("Nenhum senador apoia"), id).toBe(totals[id] === 0));
   for (const h of pages) expect(h.match(/<h1[ >]/g)).toHaveLength(1);
   expect(pages[0]).toContain('href="/senador/davi-alcolumbre/"');
   expect(pages[0]).toContain('href="/#lista"');
@@ -254,12 +254,43 @@ test("the three candidate pages are the same page with different data", () => {
       .replace(/Davi Alcolumbre|Rogério Marinho|Tereza Cristina|UNIÃO-AP|PL-RN|PP-MS|davi-alcolumbre|rogerio-marinho|tereza-cristina|alcolumbre|marinho/g, "X")
       .replace(/\/_astro\/[^"]+/g, "ASSET")
       .replace(/\?v=[0-9a-f]{8}/g, "?v=HASH") // each card has its own version
-      // The list of who declared, and the counts, are the data; the page around them is the shape.
-      .replace(/<section aria-labelledby="declararam">[\s\S]*?<\/section>/, "LIST")
+      // The lists of supporters, and the counts, are the data; the page around them is the shape.
+      .replace(/<section aria-labelledby="(declararam|mapeados|pelo-partido)">[\s\S]*?<\/section>/g, "LIST")
+      .replace(/<p[^>]*>Nenhum senador apoia X até agora\.<\/p>/, "LIST")
+      .replace(/(LIST\s*)+/g, "LIST")
+      .replace(/<span[^>]*data-bar="[a-z]+"[^>]*><\/span>/g, "") // a zero-width segment is not drawn
       .replace(/\d+/g, "N")
-      .replace(/declaração\b/g, "declarações");
+      .replace(/\bapoio\b/g, "apoios")
+      .replace(/\bdeclarou\b/g, "declararam")
+      .replace(/\bmapeado\b/g, "mapeados");
   expect(shape(pages[1]!)).toBe(shape(pages[0]!));
   expect(shape(pages[2]!)).toBe(shape(pages[0]!));
+});
+
+test("each candidate page names its supporters by level, with the breakdown, the same for every candidate", () => {
+  const d = loadData();
+  for (const c of placar(d).porCandidato) {
+    const h = html(`candidato/${c.id}/index.html`);
+    const flat = h.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ");
+    expect(h).toContain(`<title>Apoios a ${c.nome} — Abre o Voto</title>`);
+    expect(h).toContain(`<meta name="description" content="Os senadores que apoiam ${c.nome} na eleição para a Presidência do Senado, por nível, cada um com fonte.">`);
+    const { declararam: D, mapeados: M, partido: P } = c.porNivel;
+    expect(flat).toContain(`${D} ${D === 1 ? "declarou" : "declararam"} · ${M} ${M === 1 ? "mapeado" : "mapeados"} · ${P} pelo partido`);
+    expect(flat).toContain(`${c.total} ${c.total === 1 ? "apoio" : "apoios"}`);
+    const supporters = emExercicio(d).filter((s) => posicao(s, d).candidato === c.id);
+    const group = (pred: (n: string) => boolean) => supporters.filter((s) => pred(posicao(s, d).nivel));
+    const sections: [string, string, number][] = [
+      ["declararam", `Declararam voto em ${c.nome}`, group((n) => n === "declarou" || n === "mostrou_na_sessao").length],
+      ["mapeados", `Apoio mapeado a ${c.nome}`, group((n) => n === "apoio_mapeado").length],
+      ["pelo-partido", `Apoio pelo partido ou federação a ${c.nome}`, group((n) => n === "partido").length],
+    ];
+    for (const [id, title, n] of sections) {
+      expect(h.includes(`aria-labelledby="${id}"`), `${c.id} ${id}`).toBe(n > 0);
+      if (n > 0) expect(h).toContain(title);
+    }
+    expect(h.includes(`Nenhum senador apoia ${c.nome} até agora.`)).toBe(c.total === 0);
+    for (const s of supporters) expect(h, s.id).toContain(`href="/senador/${s.id}/"`);
+  }
 });
 
 test("the three text pages carry their sections and the contact anchor", () => {
@@ -360,7 +391,7 @@ test("the 404's h1 looks like every other h1", () => {
 });
 
 test("a candidate card puts its label under the number, as the scoreboard does", () => {
-  for (const [, label] of html("index.html").matchAll(/<p class="mt-auto[^"]*">\s*<span[^>]*>\d+<\/span>\s*(<span[^>]*>)declara/g)) {
+  for (const [, label] of html("index.html").matchAll(/<p class="mt-auto[^"]*">\s*<span[^>]*>\d+<\/span>\s*(<span[^>]*>)apoio/g)) {
     expect(label).toMatch(/\bblock\b/);
   }
   expect(html("index.html")).toMatch(/<p class="mt-auto[^"]*">\s*<span[^>]*>\d+<\/span>\s*<span class="[^"]*\bblock\b/);
@@ -420,9 +451,9 @@ test("the methodology says why a scheduled departure already leaves the count", 
 
 test("a candidate's senator page links to the candidate page, the same way for the three", () => {
   for (const [s, c, nome] of [["davi-alcolumbre", "alcolumbre", "Davi Alcolumbre"], ["rogerio-marinho", "marinho", "Rogério Marinho"], ["tereza-cristina", "tereza-cristina", "Tereza Cristina"]]) {
-    expect(html(`senador/${s}/index.html`)).toMatch(new RegExp(`<a href="/candidato/${c}/"[^>]*>Declarações de voto em ${nome}</a>`));
+    expect(html(`senador/${s}/index.html`)).toMatch(new RegExp(`<a href="/candidato/${c}/"[^>]*>Apoios a ${nome}</a>`));
   }
-  expect(html("senador/marcio-bittar/index.html")).not.toContain("Declarações de voto em");
+  expect(html("senador/marcio-bittar/index.html")).not.toContain("Apoios a ");
 });
 
 test("on a phone the senator's links keep icon and value on one line", () => {

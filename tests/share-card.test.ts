@@ -33,7 +33,7 @@ test("the home card carries the campaign line and nothing that ages: no number, 
 
 test("candidate cards are identical in shape and differ only in name and number", () => {
   const cards = placar(d).porCandidato.map((c) => candidateCard(c, d, today));
-  for (const [c, card] of placar(d).porCandidato.map((c, i) => [c, cards[i]!] as const)) expect(card.numberLabel).toBe(c.total === 1 ? "declaração" : "declarações");
+  for (const [c, card] of placar(d).porCandidato.map((c, i) => [c, cards[i]!] as const)) expect(card.numberLabel).toBe(c.total === 1 ? "apoio" : "apoios");
   expect(new Set(cards.map((c) => c.subtitle.length > 0)).size).toBe(1);
 });
 
