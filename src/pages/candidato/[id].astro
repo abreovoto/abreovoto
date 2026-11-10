@@ -4,6 +4,7 @@ import ListItem from "../../components/ListItem.astro";
 import SectionHead from "../../components/SectionHead.astro";
 import { emExercicio, loadData } from "../../data/load";
 import { type PlacarCandidato, placar } from "../../data/placar";
+import { posicao } from "../../data/posicao";
 import Base from "../../layouts/Base.astro";
 import { candidatePhoto } from "../../lib/photos";
 import { candidateCardPath, senatorPath } from "../../lib/routes";
@@ -23,7 +24,7 @@ const { candidato } = Astro.props;
 const d = loadData();
 const senador = d.candidatos.find((c) => c.id === candidato.id)!.senador;
 const declared = emExercicio(d)
-  .filter((s) => s.declaracao.status !== "nao_declarou" && s.declaracao.candidato === candidato.id)
+  .filter((s) => posicao(s, d).candidato === candidato.id)
   .sort((a, b) => a.nome.localeCompare(b.nome, "pt-BR"));
 ---
 

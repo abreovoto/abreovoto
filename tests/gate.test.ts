@@ -6,9 +6,10 @@ test("the real dataset loads and the scoreboard is consistent", () => {
   const d = loadData();
   const p = placar(d);
   expect(p.total).toBe(81);
-  expect(p.naoDeclararam + p.declararam).toBe(81);
+  expect(p.semPosicao + p.comPosicao).toBe(81);
+  expect(p.comPosicao).toBe(p.declararam + p.mapeados + p.partido);
   expect(p.porCandidato).toHaveLength(3);
-  expect(p.porCandidato.reduce((n, c) => n + c.total, 0)).toBe(p.declararam);
+  expect(p.porCandidato.reduce((n, c) => n + c.total, 0)).toBe(p.comPosicao);
 });
 
 test("the real dataset has no duplicate names among those in office", () => {

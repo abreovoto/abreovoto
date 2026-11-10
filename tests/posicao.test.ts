@@ -124,3 +124,9 @@ test("proprioVoto is true only for declarou and mostrou_na_sessao", () => {
   expect(proprioVoto(of(d, "ac-1"))).toBe(false); // party
   expect(proprioVoto(of(d, "ba-2"))).toBe(false); // nao_declarou
 });
+
+test("a senator no longer in office gets no party support", () => {
+  const d = load({ senador: psd, replace: ["ac-1", "ac-1-suplente"], partidos: [partidoEntry("PSD", "marinho")] });
+  expect(of(d, "ac-1")).toMatchObject({ nivel: "nao_declarou" });
+  expect(of(d, "ac-2")).toMatchObject({ nivel: "partido" });
+});

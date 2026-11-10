@@ -486,7 +486,7 @@ test("every senator page invites the visitor to the scoreboard with the totals a
   for (const id of ["marcio-bittar", "flavio-dino"]) {
     const h = html(`senador/${id}/index.html`);
     // The number and its sentence are one paragraph, laid out in two places.
-    expect(h, id).toMatch(new RegExp(`<p[^>]*>\\s*<span[^>]*>${p.naoDeclararam}</span>\\s*<span[^>]*>de ${p.total} senadores ainda não declararam o voto para presidente do Senado\\.</span>\\s*</p>`));
+    expect(h, id).toMatch(new RegExp(`<p[^>]*>\\s*<span[^>]*>${p.semPosicao}</span>\\s*<span[^>]*>de ${p.total} senadores ainda não declararam o voto para presidente do Senado\\.</span>\\s*</p>`));
     expect(h, id).toContain("Você tem o direito de saber em quem cada um vota. Cobre que declarem antes.");
     expect(h, id).toMatch(/<a href="\/"[^>]*>(?:(?!<\/a>)[\s\S])*Ver o placar/); // the home's top: an anchor would cut the headline off
     expect(h, id).toContain('aria-label="81 cadeiras do Senado');
