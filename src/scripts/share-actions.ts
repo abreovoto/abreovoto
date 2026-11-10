@@ -1,6 +1,7 @@
 // The two share actions that need a script: share the card (the system share sheet, with the
 // card and the text) and copy link. The texts come from the button's data attributes.
 
+import { onOrigin } from "../lib/routes";
 import { shareStatus, type Delivery } from "../lib/share-mode";
 
 const announce = (el: Element, text: string): void => {
@@ -66,7 +67,7 @@ async function deliver(button: HTMLElement): Promise<Delivery> {
 for (const button of document.querySelectorAll<HTMLElement>("[data-copy-link]")) {
   button.addEventListener("click", async () => {
     try {
-      await navigator.clipboard.writeText(button.dataset.url!);
+      await navigator.clipboard.writeText(onOrigin(button.dataset.url!, location.origin));
       announce(button, "Link copiado.");
       // For a button whose label shows the outcome instead of a status line.
       button.dataset.copied = "";
