@@ -8,7 +8,7 @@ import { emExercicio, loadData } from "../src/data/load";
 import { placar } from "../src/data/placar";
 import { posicao, proprioVoto } from "../src/data/posicao";
 import { UF } from "../src/data/schema";
-import { partyState, statusPrefix } from "../src/lib/text";
+import { partyState, statusPrefix, statusSentence } from "../src/lib/text";
 import { ufWithDe } from "../src/lib/uf";
 import { undeclaredSeat } from "./fixtures/undeclared";
 
@@ -129,9 +129,12 @@ test("the home opens with the headline, the scoreboard and the three candidates 
   const p = placar(loadData());
   expect(h).toContain("sem posição conhecida");
   expect(h).toContain("com posição conhecida");
-  expect(h.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ")).toContain(
-    `${p.declararam} declararam · ${p.mapeados} apoio mapeado · ${p.partido} pelo partido`,
+  // The legend's items are separated by their swatches: a "·" would dangle at the start of a wrapped line.
+  const legend = h.match(/<p[^>]*data-legenda[^>]*>[\s\S]*?<\/p>/)![0];
+  expect(legend.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim()).toBe(
+    `${p.declararam} declararam ${p.mapeados} apoio mapeado ${p.partido} pelo partido`,
   );
+  expect(legend).not.toContain("·");
   const order = placar(loadData()).porCandidato.map((c) => h.indexOf(c.nome)); // the published order rule
   expect(order.every((i) => i > 0)).toBe(true);
   expect(order).toEqual([...order].sort((a, b) => a - b));
@@ -417,9 +420,13 @@ test("each row of the list ends in an action that follows the level alone, hidde
   }
 });
 
-test("every senator page in office carries the label of the level in effect", () => {
+test("every senator page in office carries the label of the level in effect, and a description that reads as a sentence", () => {
   const d = loadData();
-  for (const s of emExercicio(d)) expect(html(`senador/${s.id}/index.html`), s.id).toContain(statusPrefix(posicao(s, d)));
+  for (const s of emExercicio(d)) {
+    const h = html(`senador/${s.id}/index.html`);
+    expect(h, s.id).toContain(statusPrefix(posicao(s, d)));
+    expect(h, s.id).toContain(`<meta name="description" content="${s.nome.replace(/'/g, "&#39;")} (${partyState(s)}) ${statusSentence(s, d)}.">`);
+  }
 });
 
 test("a running candidate's page shows the candidacy as the source, with no quote", () => {
