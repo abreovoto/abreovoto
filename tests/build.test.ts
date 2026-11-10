@@ -8,7 +8,7 @@ import { emExercicio, loadData } from "../src/data/load";
 import { placar } from "../src/data/placar";
 import { posicao, proprioVoto } from "../src/data/posicao";
 import { UF } from "../src/data/schema";
-import { partyState, statusPrefix, statusSentence } from "../src/lib/text";
+import { hemicycleLabel, partyState, statusPrefix, statusSentence } from "../src/lib/text";
 import { ufWithDe } from "../src/lib/uf";
 import { undeclaredSeat } from "./fixtures/undeclared";
 
@@ -132,7 +132,7 @@ test("the home opens with the headline, the scoreboard and the three candidates 
   // The legend's items are separated by their swatches: a "·" would dangle at the start of a wrapped line.
   const legend = h.match(/<p[^>]*data-legenda[^>]*>[\s\S]*?<\/p>/)![0];
   expect(legend.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim()).toBe(
-    `${p.declararam} declararam ${p.mapeados} apoio mapeado ${p.partido} pelo partido`,
+    `${p.declararam} ${p.declararam === 1 ? "declarou" : "declararam"} ${p.mapeados} apoio mapeado ${p.partido} pelo partido`,
   );
   expect(legend).not.toContain("·");
   const order = placar(loadData()).porCandidato.map((c) => h.indexOf(c.nome)); // the published order rule
@@ -178,9 +178,7 @@ test("the home's scoreboard carries the hemicycle and the e-Cidadania line close
   const h = html("index.html");
   expect(h.match(/<circle /g)?.length).toBe(81);
   const p = placar(loadData());
-  expect(h).toContain(
-    `aria-label="81 cadeiras do Senado: ${p.semPosicao} sem posição conhecida, ${p.declararam} declararam, ${p.mapeados} apoio mapeado, ${p.partido} pelo partido"`,
-  );
+  expect(h).toContain(`aria-label="${hemicycleLabel({ ...p, total: 81 })}"`);
   const idx = (t: string) => h.indexOf(t);
   expect(idx("Para 2029")).toBeGreaterThan(idx("Escolha um senador para cobrar"));
   expect(h).toContain("de&nbsp;voto&nbsp;aberto");
