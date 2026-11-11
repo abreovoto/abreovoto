@@ -206,14 +206,21 @@
     instagram: https://www.instagram.com/eduardobraga_am
   email_institucional: sen.eduardobraga@senado.leg.br
   declaracao:
-    status: nao_declarou
-    candidato: null
-    data: null
-    fonte: null
+    status: apoio_mapeado
+    candidato: alcolumbre
+    data: 2026-11-03
+    fonte:
+      tipo: materia
+      url: https://g1.globo.com/politica/noticia/2026/11/03/alcolumbre-escolhe-aliado-para-relatoria-do-orcamento-em-meio-a-articulacao-pela-reeleicao-no-senado.ghtml
+      titulo: "Alcolumbre define Eduardo Braga como relator do Orçamento 2027"
+      trecho: "Davi Alcolumbre (União-AP) escolheu o senador Eduardo Braga (MDB-AM) como relator do Orçamento de 2027. Braga apoia sua reeleição ao comando do Senado."
   observacoes: []
   historico:
     - data: 2026-11-06
       evento: entrou na lista como não declarou
+      issue: null
+    - data: 2026-11-10
+      evento: apoio mapeado a Davi Alcolumbre (matéria jornalística, 3 de novembro de 2026)
       issue: null
 - id: plinio-valerio
   nome: Plínio Valério
