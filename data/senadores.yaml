@@ -342,14 +342,21 @@
     instagram: https://www.instagram.com/rayssacfurlan
   email_institucional: null
   declaracao:
-    status: nao_declarou
-    candidato: null
-    data: null
-    fonte: null
+    status: apoio_mapeado
+    candidato: marinho
+    data: 2026-11-11
+    fonte:
+      tipo: post
+      url: https://x.com/CentraIDireita/status/2120631718747291729
+      titulo: null
+      trecho: "Rayssa Furlan (Podemos) declara apoio a Rogério Marinho na disputa pela presidência do Senado"
   observacoes: []
   historico:
     - data: 2026-11-06
       evento: entrou na lista como não declarou
+      issue: null
+    - data: 2026-11-11
+      evento: apoio mapeado a Rogério Marinho (publicação, 11 de novembro de 2026)
       issue: null
 - id: lucas-barreto
   nome: Lucas Barreto
