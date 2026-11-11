@@ -2490,14 +2490,21 @@
     instagram: https://www.instagram.com/carolinedetoni
   email_institucional: dep.carolinedetoni@camara.leg.br
   declaracao:
-    status: nao_declarou
-    candidato: null
-    data: null
-    fonte: null
+    status: declarou
+    candidato: marinho
+    data: 2026-11-03
+    fonte:
+      tipo: materia
+      url: https://www.4oito.com.br/noticia/senadora-eleita-em-sc-preve-impeachment-de-lula-em-pouco-tempo-89815
+      titulo: "Senadora eleita em SC prevê impeachment de Lula “em pouco tempo” - Política - 4oito"
+      trecho: "“Ele está falando isso no intuito de pressionar, de influenciar os senadores que entraram, os senadores que estão, mas nós entendemos que o melhor nome para o momento do Brasil é o senador Rogério Marinho. Nós apoiamos a candidatura dele”, enfatizou."
   observacoes: []
   historico:
     - data: 2026-11-06
       evento: entrou na lista como não declarou
+      issue: null
+    - data: 2026-11-10
+      evento: declarou voto em Rogério Marinho (matéria jornalística, 3 de novembro de 2026)
       issue: null
 - id: carlos-bolsonaro
   nome: Carlos Bolsonaro
