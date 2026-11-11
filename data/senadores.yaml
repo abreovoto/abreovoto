@@ -432,14 +432,21 @@
     instagram: https://www.instagram.com/ruicostaoficial
   email_institucional: null
   declaracao:
-    status: nao_declarou
-    candidato: null
-    data: null
-    fonte: null
+    status: apoio_mapeado
+    candidato: alcolumbre
+    data: 2026-11-09
+    fonte:
+      tipo: materia
+      url: https://muitainformacao.com.br/politica/divisao-da-direita-e-apoio-de-lula-podem-favorecer-reeleicao-de-alcolumbre-no-senado/
+      titulo: "Divisão da direita e apoio de Lula podem favorecer reeleição de Alcolumbre no Senado"
+      trecho: "Os senadores baianos Otto Alencar (PSD) e Jaques Wagner (PT), além do recém eleito Rui Costa (PT) também apoiam a reeleição."
   observacoes: []
   historico:
     - data: 2026-11-06
       evento: entrou na lista como não declarou
+      issue: null
+    - data: 2026-11-10
+      evento: apoio mapeado a Davi Alcolumbre (matéria jornalística, 9 de novembro de 2026)
       issue: null
 - id: jaques-wagner
   nome: Jaques Wagner
