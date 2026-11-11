@@ -2071,14 +2071,21 @@
     instagram: https://www.instagram.com/senadorstyvensonvalentim
   email_institucional: sen.styvensonvalentim@senado.leg.br
   declaracao:
-    status: nao_declarou
-    candidato: null
-    data: null
-    fonte: null
+    status: declarou
+    candidato: marinho
+    data: 2026-11-04
+    fonte:
+      tipo: materia
+      url: https://blogdodina.com/styvenson-valentim-eleicao-senado-bastidores/
+      titulo: "“Davi vai abrir as torneiras”: Styvenson vê Rogério na frente hoje, mas não amanhã, na briga pelo Senado"
+      trecho: "Em conversa com o Blog do Dina nesta quarta-feira (4), ele contou que anunciou o voto em Rogério Marinho (PL) contra a reeleição de Davi Alcolumbre (União Brasil) e que a resposta veio em forma de silêncio. […] “Eu já anunciei isso e estou sofrendo as consequências”, disse. […] O voto, explica, não é contra Davi. É pelo conterrâneo. “O cara é do meu estado”, resume"
   observacoes: []
   historico:
     - data: 2026-11-06
       evento: entrou na lista como não declarou
+      issue: null
+    - data: 2026-11-10
+      evento: declarou voto em Rogério Marinho (matéria jornalística, 4 de novembro de 2026)
       issue: null
 - id: samanda-de-lula
   nome: Samanda de Lula
