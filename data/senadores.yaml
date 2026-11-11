@@ -633,14 +633,21 @@
     instagram: https://www.instagram.com/michellebolsonaro
   email_institucional: null
   declaracao:
-    status: nao_declarou
-    candidato: null
-    data: null
-    fonte: null
+    status: apoio_mapeado
+    candidato: tereza-cristina
+    data: 2026-11-09
+    fonte:
+      tipo: materia
+      url: https://g1.globo.com/politica/noticia/2026/11/09/divisao-da-direita-pode-fortalecer-alcolumbre-na-disputa-pelo-comando-do-senado-avaliam-aliados.ghtml
+      titulo: "Divisão da direita pode fortalecer Alcolumbre na disputa pelo comando do Senado, avaliam aliados | G1"
+      trecho: "Com críticas do bolsonarismo desde que anunciou sua candidatura, Tereza já atraiu o apoio de Damares Alves (Republicanos-DF) e Michelle Bolsonaro (PL-DF), que também já foram alvo de ataques do grupo."
   observacoes: []
   historico:
     - data: 2026-11-06
       evento: entrou na lista como não declarou
+      issue: null
+    - data: 2026-11-10
+      evento: apoio mapeado a Tereza Cristina (matéria jornalística, 9 de novembro de 2026)
       issue: null
 - id: bia-kicis
   nome: Bia Kicis
