@@ -1560,14 +1560,21 @@
     instagram: https://www.instagram.com/venezianovitalpb
   email_institucional: sen.venezianovitaldorego@senado.leg.br
   declaracao:
-    status: nao_declarou
-    candidato: null
-    data: null
-    fonte: null
+    status: apoio_mapeado
+    candidato: alcolumbre
+    data: 2026-11-05
+    fonte:
+      tipo: materia
+      url: https://jornaldaparaiba.com.br/politica/mesa-do-senado-veneziano-e-joao-azevedo-ficam-com-alcolumbre-efraim-declara-apoio-a-marinho
+      titulo: "Presidência do Senado: Veneziano e João devem votar em Alcolumbre; Efraim declara apoio a Marinho"
+      trecho: "Os representantes da Paraíba na próxima legislatura do Senado já definiram seus posicionamentos na disputa pela presidência da Casa. […] Veneziano Vital do Rêgo (MDB) e João Azevêdo (PSB), devem apoiar a reeleição de Alcolumbre. Ao Jornal da Paraíba , Veneziano confirmou que o MDB deve formalizar o apoio ao nome do senador amapaense. Ele destacou a boa relação que mantém com o atual presidente do Senado e citou a condução de pautas importantes na Casa como justificativa para a decisão"
   observacoes: []
   historico:
     - data: 2026-11-06
       evento: entrou na lista como não declarou
+      issue: null
+    - data: 2026-11-10
+      evento: apoio mapeado a Davi Alcolumbre (matéria jornalística, 5 de novembro de 2026)
       issue: null
 - id: efraim-filho
   nome: Efraim Filho
