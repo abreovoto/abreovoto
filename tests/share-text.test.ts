@@ -98,15 +98,23 @@ const withParty = (s: Senador, candidato: string, escopo: PartidoApoio["escopo"]
   partidos: [{ id: "teste", partido: s.partido, escopo, candidato, data: "2026-11-07", fonte: { ...fonte, tipo: "nota" } }],
 });
 
-test("mapped support: the texts ask the senator to confirm in public", () => {
+test("mapped support: the texts ask, naming the senator's state, whether the vote will go to the candidate", () => {
   const lira = mapped(by("arthur-lira"), "marinho");
   expect(thirdPersonText(mapped(asUndeclared(by("mara-rocha")), "marinho"), d, d.site)).toBe(
-    `Mara Rocha (REPUBLICANOS-AC) aparece em fonte pública como apoio a Rogério Marinho para presidente do Senado, mas ainda não declarou o voto. Vai confirmar em público? ${shareUrl(mapped(by("mara-rocha"), "marinho"), d)} #AbreOVotoSenador`,
+    `O placar registra com fonte pública o apoio de Mara Rocha (REPUBLICANOS-AC) a Rogério Marinho para presidente do Senado. O voto será nele? Falta uma declaração direta, que ajuda os eleitores do Acre a acompanhar. ${shareUrl(mapped(by("mara-rocha"), "marinho"), d)} #AbreOVotoSenador`,
   );
   expect(xText(lira, d, d.site)).toBe(
-    `@arthurlira_, uma fonte pública aponta seu apoio a Rogério Marinho para presidente do Senado. Vai confirmar em público? ${shareUrl(lira, d)} #AbreOVotoSenador`,
+    `@arthurlira_, o placar registra com fonte pública o seu apoio a Rogério Marinho para presidente do Senado, mas falta você dizer com todas as letras: o seu voto será nele? A resposta ajuda os eleitores de Alagoas a acompanhar. ${shareUrl(lira, d)} #AbreOVotoSenador`,
   );
   expect(xLabel(lira, d)).toBe("Cobrar no X");
+});
+
+test("the question agrees in gender with the candidate it names", () => {
+  const f = d.candidatos.find((c) => c.genero === "f")!;
+  const lira = mapped(by("arthur-lira"), f.id);
+  expect(xText(lira, d, d.site)).toContain("o seu voto será nela?");
+  expect(thirdPersonText(lira, d, d.site)).toContain("O voto será nela?");
+  expect(xText(asUndeclared(by("arthur-lira")), withParty(by("arthur-lira"), f.id, "partido"), d.site)).toContain("o seu voto também será nela?");
 });
 
 test("party, caucus and federation support: the texts name whose announcement it is", () => {
@@ -120,11 +128,11 @@ test("party, caucus and federation support: the texts name whose announcement it
   for (const [escopo, third, own] of cases) {
     const dm = withParty(mara, "alcolumbre", escopo);
     expect(thirdPersonText(mara, dm, d.site)).toBe(
-      `${third} de Mara Rocha (REPUBLICANOS-AC) anunciou apoio a Davi Alcolumbre para presidente do Senado, mas Mara Rocha ainda não declarou o voto. Vai confirmar em público? ${shareUrl(mara, dm)} #AbreOVotoSenador`,
+      `${third} de Mara Rocha (REPUBLICANOS-AC) anunciou apoio a Davi Alcolumbre para presidente do Senado. O voto será nele? Uma declaração direta ajuda os eleitores do Acre a acompanhar. ${shareUrl(mara, dm)} #AbreOVotoSenador`,
     );
     const dl = withParty(lira, "alcolumbre", escopo);
     expect(xText(lira, dl, d.site)).toBe(
-      `@arthurlira_, ${own} anunciou apoio a Davi Alcolumbre para presidente do Senado. Você confirma em público? ${shareUrl(lira, dl)} #AbreOVotoSenador`,
+      `@arthurlira_, ${own} anunciou apoio a Davi Alcolumbre para presidente do Senado. Com todo o respeito: o seu voto também será nele? A resposta ajuda os eleitores de Alagoas a acompanhar. ${shareUrl(lira, dl)} #AbreOVotoSenador`,
     );
     expect(xLabel(lira, dl)).toBe("Cobrar no X");
   }
@@ -143,7 +151,8 @@ test("a running candidate's texts say they are a candidate, agreeing in gender, 
 });
 
 test("every level's text fits X for the longest name and the longest candidate", () => {
-  const s = by("professora-dorinha-seabra"); // the longest name in office, with an X profile
+  // The longest name in office, with an X profile, moved to the state with the longest name.
+  const s: Senador = { ...by("professora-dorinha-seabra"), uf: "RN" };
   const noX = { ...s, redes: { ...s.redes, x: null } };
   const longest = [...d.candidatos].sort((a, b) => b.nome.length - a.nome.length)[0]!;
   for (const who of [s, noX]) {
