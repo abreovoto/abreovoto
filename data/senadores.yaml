@@ -2350,10 +2350,18 @@
     candidato: null
     data: null
     fonte: null
+  recusa_partido:
+    partido: PP
+    data: 2026-10-28
+    trecho: "Até o momento, a federação União Progressista, com 11 senadores declarou abertamente o apoio à reeleição do presidente Davi Alcolumbre (União Brasil) – algo que Hiran, presidente estadual da aliança, disse não representar sua própria posição."
+    fonte_url: https://www.folhabv.com.br/politica/presidencia-do-senado-hiran-e-teresa-ainda-nao-definiram-quem-vao-apoiar-e-nicoletti-defende-rogerio-marinho/
   observacoes: []
   historico:
     - data: 2026-11-06
       evento: entrou na lista como não declarou
+      issue: null
+    - data: 2026-11-10
+      evento: disse em público que não segue o apoio do PP ou que ainda não decidiu; esse apoio deixa de contar
       issue: null
 - id: sanderson
   nome: Sanderson
