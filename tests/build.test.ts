@@ -10,7 +10,7 @@ import { posicao, proprioVoto } from "../src/data/posicao";
 import { UF } from "../src/data/schema";
 import { hemicycleLabel, partyState, statusPrefix, statusSentence } from "../src/lib/text";
 import { ufWithDe } from "../src/lib/uf";
-import { undeclaredSeat } from "./fixtures/undeclared";
+import { undeclaredSeat, undeclaredSeatWithX } from "./fixtures/undeclared";
 
 let out: string;
 beforeAll(() => {
@@ -505,18 +505,19 @@ test("the home's copy-link button copies the home address with the version of th
 });
 
 test("a senator page carries the actions in one order: X, share the card, WhatsApp, copy, download", () => {
-  const h = html("senador/arthur-lira/index.html");
-  expect(h).toContain('href="https://x.com/intent/post?text=%40arthurlira_%2C%20quem%20te%20elegeu');
+  const u = undeclaredSeatWithX(loadData());
+  const h = html(`senador/${u.id}/index.html`);
+  expect(h).toContain(`href="https://x.com/intent/post?text=%40${u.handle}%2C%20quem%20te%20elegeu`);
   expect(h).toContain("%23AbreOVotoSenador");
   expect(h).toContain("Cobrar no X");
   expect(h).toContain("Compartilhar cartão");
   // The share sheet carries the card and the third-person text, the WhatsApp one: no mention,
   // since the sheet does not know where the text goes.
-  expect(h).toContain('data-text="Arthur Lira (PP-AL) representa você no Senado');
-  expect(h).toContain('href="https://wa.me/?text=Arthur%20Lira%20(PP-AL)%20representa%20voc%C3%AA');
-  expect(h).toContain('data-card="/cartao/senador/arthur-lira.png"');
-  expect(h).toMatch(/data-url="https:\/\/abreovoto\.com\/senador\/arthur-lira\/\?v=[0-9a-f]{8}"/); // the same versioned address as the share texts
-  expect(h).toContain('href="/cartao/senador/arthur-lira.png" download="abreovoto-arthur-lira.png"');
+  expect(h).toContain(`data-text="${u.nome} (${partyState(u)}) representa você no Senado`);
+  expect(h).toContain(`href="https://wa.me/?text=${encodeURIComponent(`${u.nome} (${partyState(u)})`)}%20representa%20voc%C3%AA`);
+  expect(h).toContain(`data-card="/cartao/senador/${u.id}.png"`);
+  expect(h).toMatch(new RegExp(`data-url="https://abreovoto\\.com/senador/${u.id}/\\?v=[0-9a-f]{8}"`)); // the same versioned address as the share texts
+  expect(h).toContain(`href="/cartao/senador/${u.id}.png" download="abreovoto-${u.id}.png"`);
   expect(h).toContain('role="status"');
   expect(h).not.toContain("data-share-instagram");
   const order = [/href="https:\/\/x\.com\/intent/, /<button[^>]*data-share-card/, /href="https:\/\/wa\.me/, /<button[^>]*data-copy-link/, /download="abreovoto-/].map((r) => h.search(r));
@@ -533,7 +534,7 @@ test("the share-card button shows only where the system share sheet takes files 
 });
 
 test("a senator without an X profile gets the same actions; the X post names them in the third person", () => {
-  const u = undeclaredSeat(loadData().senadores, loadData().candidatos);
+  const u = undeclaredSeat(loadData());
   const h = html(`senador/${u.id}/index.html`);
   expect(h).toContain(`href="https://x.com/intent/post?text=${encodeURIComponent(`${u.nome} (${partyState(u)})`)}%20representa%20voc%C3%AA`);
   expect(h).toMatch(/<a[^>]*href="https:\/\/x\.com\/intent[^"]*"[^>]*class="[^"]*border-accent bg-accent/);
@@ -549,12 +550,14 @@ test("a former occupant's page has no actions", () => {
 });
 
 test("the state cards carry the X action beside Ver histórico, on the home and on the state page", () => {
-  for (const p of ["index.html", "estado/al/index.html"]) {
+  const u = undeclaredSeatWithX(loadData());
+  const uf = u.uf.toLowerCase();
+  for (const p of ["index.html", `estado/${uf}/index.html`]) {
     const h = html(p);
-    expect(h, p).toContain("%40arthurlira_%2C%20quem%20te%20elegeu");
+    expect(h, p).toContain(`%40${u.handle}%2C%20quem%20te%20elegeu`);
     expect(h, p).toContain("Ver histórico");
   }
-  const al = html("estado/al/index.html");
+  const al = html(`estado/${uf}/index.html`);
   expect(al.match(/href="https:\/\/x\.com\/intent/g)).toHaveLength(3);
   expect(al).not.toContain("wa.me/?text="); // primary only
   expect(al).not.toMatch(/<button[^>]*data-share-card/);
@@ -575,7 +578,7 @@ test("every senator page invites the visitor to the scoreboard with the totals a
 });
 
 test("the senator page carries the source form and the footer points at it", () => {
-  const u = undeclaredSeat(loadData().senadores, loadData().candidatos);
+  const u = undeclaredSeat(loadData());
   const h = html(`senador/${u.id}/index.html`);
   expect(h).toMatch(/<section id="fonte"[^>]*data-source-form/);
   // A native submit, if the script ever fails, must not put the visitor's text in the address bar.

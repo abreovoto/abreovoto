@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { asUndeclared } from "./fixtures/undeclared";
+import { asUndeclared, withoutPartySupport } from "./fixtures/undeclared";
 import { loadData } from "../src/data/load";
 import { placar } from "../src/data/placar";
 import { cardTree, type CardNode } from "../src/lib/card-tree";
@@ -7,7 +7,7 @@ import { homeFaces, renderCard } from "../src/lib/card-render";
 import { candidateCard, homeCard, senatorCard, type ShareCardModel } from "../src/lib/share-card";
 import { palette } from "../src/styles/tokens";
 
-const d = loadData();
+const d = withoutPartySupport(loadData());
 const today = "2026-11-07";
 const texts = (n: CardNode | string): string[] =>
   typeof n === "string" ? [n] : ([] as (CardNode | string)[]).concat(n.props.children ?? []).flatMap(texts);

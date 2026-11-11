@@ -20,7 +20,7 @@ test("the open data mirrors the scoreboard and lists every seat holder, past and
   expect(o.senadores).toHaveLength(d.senadores.length);
   expect(o.senadores.filter((s) => s.situacao === "em_exercicio")).toHaveLength(81);
   expect(o.senadores.find((s) => s.id === "marcio-bittar")?.pagina).toBe("https://abreovoto.com/senador/marcio-bittar/");
-  const u = undeclaredSeat(d.senadores, d.candidatos);
+  const u = undeclaredSeat(d);
   expect(o.senadores.find((s) => s.id === u.id)?.declaracao).toEqual({ status: "nao_declarou", candidato: null, data: null, fonte: null });
   expect(o.senadores.find((s) => s.id === u.id)?.posicao).toEqual({ nivel: "nao_declarou", candidato: null, data: null, origem: null, fonte: null });
   const names = o.senadores.map((s) => s.nome);
@@ -38,7 +38,7 @@ test("a declaration carries its candidate, date and source", () => {
   const d = loadData();
   const before = placar(d);
   const marinho = (p: ReturnType<typeof placar>) => p.porCandidato.find((c) => c.id === "marinho")!.total;
-  const s = undeclaredSeat(d.senadores, d.candidatos);
+  const s = undeclaredSeat(d);
   s.declaracao = {
     status: "declarou",
     candidato: "marinho",
@@ -75,9 +75,10 @@ test("the open data carries the petition's address and its manual figure", () =>
 
 test("party support is in the senator's position and the scoreboard's per-level counts", () => {
   const d = loadData();
-  const s = undeclaredSeat(d.senadores, d.candidatos);
+  const s = undeclaredSeat(d);
   const before = openData(d, "2026-11-06").placar;
   d.partidos = [
+    ...d.partidos,
     {
       id: "partido-teste",
       partido: s.partido,

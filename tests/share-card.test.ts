@@ -1,12 +1,12 @@
 import { createHash } from "node:crypto";
 import { expect, test } from "vitest";
-import { asUndeclared } from "./fixtures/undeclared";
+import { asUndeclared, withoutPartySupport } from "./fixtures/undeclared";
 import { loadData } from "../src/data/load";
 import { placar } from "../src/data/placar";
 import { CARD_LAYOUT } from "../src/lib/card-tree";
 import { candidateCard, cardAlt, cardVersion, homeCard, senatorCard } from "../src/lib/share-card";
 
-const d = loadData();
+const d = withoutPartySupport(loadData());
 const today = "2026-11-07";
 
 test("a senator card names the senator, state and status", () => {
