@@ -1,10 +1,10 @@
 import { expect, test } from "vitest";
-import { asUndeclared } from "./fixtures/undeclared";
+import { asUndeclared, withoutPartySupport } from "./fixtures/undeclared";
 import { loadData } from "../src/data/load";
 import { ogTags } from "../src/lib/og";
 import { cardVersion, homeCard, senatorCard } from "../src/lib/share-card";
 
-const d = loadData();
+const d = withoutPartySupport(loadData());
 const today = "2026-11-07";
 
 test("the tags carry the card, its version, its alt and the site's X account", () => {

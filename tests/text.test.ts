@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { asUndeclared } from "./fixtures/undeclared";
+import { asUndeclared, withoutPartySupport } from "./fixtures/undeclared";
 import { type Dataset, loadData } from "../src/data/load";
 import { posicao } from "../src/data/posicao";
 import { declarou, makeDataset, partidoEntry } from "./fixtures/make-dataset";
@@ -24,7 +24,7 @@ import {
   profileHandle,
 } from "../src/lib/text";
 
-const d = loadData();
+const d = withoutPartySupport(loadData());
 const by = (id: string) => d.senadores.find((s) => s.id === id)!;
 
 test("formatDate is day/month/year without zero padding", () => {

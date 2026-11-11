@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { asUndeclared } from "./fixtures/undeclared";
+import { asUndeclared, withoutPartySupport } from "./fixtures/undeclared";
 import { type Dataset, emExercicio, loadData } from "../src/data/load";
 import type { PartidoApoio, Senador } from "../src/data/schema";
 import {
@@ -15,7 +15,7 @@ import {
 } from "../src/lib/share-text";
 import { cardVersion, homeCard } from "../src/lib/share-card";
 
-const d = loadData();
+const d = withoutPartySupport(loadData());
 const by = (id: string) => d.senadores.find((s) => s.id === id)!;
 const declared = (s: ReturnType<typeof by>, candidato: string) => ({
   ...s,
