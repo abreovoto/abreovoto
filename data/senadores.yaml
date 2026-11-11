@@ -1967,14 +1967,21 @@
     instagram: https://www.instagram.com/carlosportinho
   email_institucional: sen.carlosportinho@senado.leg.br
   declaracao:
-    status: nao_declarou
-    candidato: null
-    data: null
-    fonte: null
+    status: declarou
+    candidato: marinho
+    data: 2026-11-04
+    fonte:
+      tipo: materia
+      url: https://claudiodantas.com.br/pl-lanca-hoje-rogerio-marinho-a-presidencia-do-senado/
+      titulo: "PL lança hoje Rogério Marinho à Presidência do Senado"
+      trecho: "“Foi uma conversa entre líderes para alinharmos o anúncio que será feito amanhã de lançamento e apoio total, irrestrito, todos irmanados com a candidatura de Rogério Marinho. Vamos, inclusive, construir isso junto com outros partidos”, afirmou Portinho."
   observacoes: []
   historico:
     - data: 2026-11-06
       evento: entrou na lista como não declarou
+      issue: null
+    - data: 2026-11-10
+      evento: declarou voto em Rogério Marinho (matéria jornalística, 4 de novembro de 2026)
       issue: null
 - id: carlos-jordy
   nome: Carlos Jordy
