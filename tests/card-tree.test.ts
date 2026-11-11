@@ -19,11 +19,11 @@ const flexDivs = (n: CardNode | string): boolean =>
   ((n.type !== "div" || !Array.isArray(n.props.children) || n.props.style?.display === "flex") &&
     ([] as (CardNode | string)[]).concat(n.props.children ?? []).every(flexDivs));
 
-test("every card ends with its date and the domain, and every multi-child div is flex", () => {
+test("every card carries its date and the domain, and every multi-child div is flex", () => {
   const s = asUndeclared(d.senadores.find((x) => x.id === "marcio-bittar")!);
   for (const m of [senatorCard(s, d, today), candidateCard(placar(d).porCandidato[0]!, d, today), homeCard(d, today)]) {
     const t = cardTree(m, null, faces(m));
-    expect(texts(t)).toContain(m.kind === "home" ? "Placar em 7/11/2026 · abreovoto.com" : "7/11/2026 · abreovoto.com");
+    expect(texts(t)).toContain(m.kind === "home" ? "abreovoto.com · placar em 7/11/2026" : "7/11/2026 · abreovoto.com");
     expect(texts(t)).toContain("#AbreOVotoSenador");
     expect(texts(t)).toContain("Abre o Voto");
     expect(flexDivs(t)).toBe(true);
@@ -94,4 +94,11 @@ test("every fixed-size box inside a flex row keeps its size when the text beside
     return own.concat(kids.flatMap((k) => unshrinkable(k, st.display === "flex")));
   };
   for (const m of [senatorCard(s, d, today), homeCard(d, today)]) expect(unshrinkable(cardTree(m, "data:", faces(m)), false)).toEqual([]);
+});
+
+test("the home card says to click, to share, and what clicking is for", () => {
+  const t = texts(cardTree(homeCard(d, today), null, faces(homeCard(d, today))));
+  expect(t).toContain("CLIQUE E COBRE O SEU SENADOR");
+  expect(t).toContain("COMPARTILHE!");
+  expect(t).toContain("O seu senador já abriu o voto?");
 });

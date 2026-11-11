@@ -11,7 +11,7 @@ import { palette } from "../styles/tokens";
  * alters what a card looks like for the same data, so its image gets a new address and no
  * network keeps showing the old drawing under it.
  */
-export const CARD_LAYOUT = 2;
+export const CARD_LAYOUT = 3;
 
 export type CardNode = {
   type: string;
@@ -145,6 +145,73 @@ function campaignLine(title: string): CardNode {
   );
 }
 
+/** The highlighter colour of the call to action: the one hue that means nothing on the scoreboard. */
+const CTA_FILL = "#ffd23f";
+
+/** A pointing-hand cursor, the universal sign that something is a link. */
+function pointer(size: number): CardNode {
+  const stroke = { fill: "none", stroke: p.fg, strokeWidth: 1.8, strokeLinecap: "round", strokeLinejoin: "round" };
+  return el(
+    "svg",
+    { width: size, height: size, flexShrink: 0 },
+    [
+      el("path", {}, undefined, {
+        d: "M18 11a2 2 0 1 1 4 0v3a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15V4a2 2 0 0 1 4 0v5a2 2 0 0 1 4 0v1a2 2 0 0 1 3 1z",
+        ...stroke,
+        fill: p.bg,
+      }),
+      el("path", {}, undefined, { d: "M11 9v3M15 10v2M18 11v1", ...stroke }),
+    ],
+    { xmlns: "http://www.w3.org/2000/svg", width: size, height: size, viewBox: "0 0 24 24" },
+  );
+}
+
+/** The "share" glyph: three linked nodes. */
+function shareIcon(size: number): CardNode {
+  const stroke = { fill: "none", stroke: p.fg, strokeWidth: 2.2, strokeLinecap: "round", strokeLinejoin: "round" };
+  return el(
+    "svg",
+    { width: size, height: size, flexShrink: 0 },
+    [
+      el("circle", {}, undefined, { cx: 18, cy: 5, r: 3, ...stroke, fill: CTA_FILL }),
+      el("circle", {}, undefined, { cx: 6, cy: 12, r: 3, ...stroke, fill: CTA_FILL }),
+      el("circle", {}, undefined, { cx: 18, cy: 19, r: 3, ...stroke, fill: CTA_FILL }),
+      el("path", {}, undefined, { d: "M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98", ...stroke }),
+    ],
+    { xmlns: "http://www.w3.org/2000/svg", width: size, height: size, viewBox: "0 0 24 24" },
+  );
+}
+
+/** The height of the call-to-action button, so the share prompt beside it centres on the button and not on the caption below. */
+const CTA_HEIGHT = 62;
+
+/**
+ * The home card's bottom row: the invitation to share, then the button that sends the reader to the
+ * site. A shared preview reads as a still picture, so the button says to click and a pointer presses it.
+ * The share prompt sits high in its row: X lays a label over the image's bottom-left corner.
+ */
+function callToAction(m: ShareCardModel): CardNode {
+  const button = el(
+    "div",
+    { display: "flex", alignItems: "center", gap: 14, flexShrink: 0, background: CTA_FILL, borderRadius: 14, padding: "16px 26px", ...display, fontSize: 27, letterSpacing: "-0.01em", color: p.fg },
+    [el("div", {}, "CLIQUE E COBRE O SEU SENADOR"), el("div", {}, "→")],
+  );
+  return el("div", { display: "flex", alignItems: "center", gap: 20 }, [
+    el("div", { display: "flex", alignItems: "center", alignSelf: "flex-start", height: CTA_HEIGHT, gap: 12, marginRight: "auto", flexShrink: 0 }, [
+      shareIcon(36),
+      el("div", { display: "flex", flexDirection: "column" }, [
+        el("div", { ...display, fontSize: 26, lineHeight: 1.1, color: p.fg }, "COMPARTILHE!"),
+        el("div", { ...text, fontWeight: 600, fontSize: 20, lineHeight: 1.2, color: p.fgMuted }, "O placar muda todo dia."),
+      ]),
+    ]),
+    el("div", { display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 8, position: "relative" }, [
+      button,
+      el("div", { ...text, fontWeight: 600, fontSize: 20, color: p.fgMuted }, `${m.domain} · placar em ${m.date}`),
+      el("div", { display: "flex", position: "absolute", right: -14, top: 34 }, pointer(56)),
+    ]),
+  ]);
+}
+
 /**
  * `portrait` is a data URI (or any URL satori can read), or null for a card without one.
  * `faces` holds the home card's candidate portraits, by candidate id, sized `HOME_FACE`.
@@ -152,10 +219,17 @@ function campaignLine(title: string): CardNode {
 export function cardTree(m: ShareCardModel, portrait: string | null, faces: Record<string, string> = {}): CardNode {
   if (m.kind === "home") {
     return frame([
-      wordmark(40, 34),
+      // The question the button below answers, and the campaign's hashtag.
+      el("div", { display: "flex", justifyContent: "space-between", alignItems: "flex-start" }, [
+        wordmark(40, 34),
+        el("div", { display: "flex", flexDirection: "column", alignItems: "flex-end" }, [
+          el("div", { ...display, fontSize: 26, lineHeight: 1.1, color: p.fg }, "O seu senador já abriu o voto?"),
+          el("div", { ...text, fontWeight: 600, fontSize: 22, lineHeight: 1.3, color: p.fgMuted }, m.hashtag),
+        ]),
+      ]),
       campaignLine(m.title),
       scoreboardRow(m.scoreboard!, faces),
-      footer(m.hashtag, `Placar em ${m.date} · ${m.domain}`, 28),
+      callToAction(m),
     ]);
   }
 
