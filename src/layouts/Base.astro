@@ -16,11 +16,9 @@ interface Props {
   card?: Card;
   /** The footer's correction link; a page that carries the source form points it there. */
   fonteHref?: string;
-  /** The title X lays over the shared card; the page's title when absent. */
-  xTitle?: string;
 }
 
-const { title, description, noindex = false, card, fonteHref = "/fonte/", xTitle } = Astro.props;
+const { title, description, noindex = false, card, fonteHref = "/fonte/" } = Astro.props;
 const d = loadData();
 const { site } = d;
 // The 404 page answers for addresses that do not exist, so it names no canonical address of its own.
@@ -32,7 +30,6 @@ const tags = ogTags({
   canonical,
   card: card ?? { path: HOME_CARD_PATH, model: homeCard(d, todayUtc()) },
   siteX: site.redes.x,
-  xTitle,
 });
 ---
 
