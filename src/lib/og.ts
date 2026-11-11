@@ -16,8 +16,10 @@ export function ogTags(args: {
   canonical: string | null;
   card: Card;
   siteX: string | null;
+  /** The title X shows, laid over the bottom-left corner of the card; the page's title when absent. */
+  xTitle?: string;
 }): MetaTag[] {
-  const { title, description, canonical, card, siteX } = args;
+  const { title, description, canonical, card, siteX, xTitle = title } = args;
   // The version changes with what the card shows, so networks fetch the new image.
   const image = `${absolute(card.path)}?v=${cardVersion(card.model)}`;
   const og = (property: string, content: string): MetaTag => ({ property, content });
@@ -36,7 +38,7 @@ export function ogTags(args: {
     og("og:image:alt", cardAlt(card.model)),
     tw("twitter:card", "summary_large_image"),
     ...(siteX ? [tw("twitter:site", profileHandle(siteX))] : []),
-    tw("twitter:title", title),
+    tw("twitter:title", xTitle),
     tw("twitter:description", description),
     tw("twitter:image", image),
   ];
