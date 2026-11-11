@@ -197,7 +197,7 @@ function callToAction(m: ShareCardModel): CardNode {
     [el("div", {}, "CLIQUE E COBRE O SEU SENADOR"), el("div", {}, "→")],
   );
   return el("div", { display: "flex", alignItems: "center", gap: 20 }, [
-    el("div", { display: "flex", alignItems: "center", alignSelf: "flex-start", height: CTA_HEIGHT, gap: 12, marginRight: "auto", flexShrink: 0 }, [
+    el("div", { display: "flex", alignItems: "center", alignSelf: "flex-start", height: CTA_HEIGHT, marginTop: -14, gap: 12, marginRight: "auto", flexShrink: 0 }, [
       shareIcon(36),
       el("div", { display: "flex", flexDirection: "column" }, [
         el("div", { ...display, fontSize: 26, lineHeight: 1.1, color: p.fg }, "COMPARTILHE!"),
