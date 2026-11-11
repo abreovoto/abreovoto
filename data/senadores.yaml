@@ -2004,14 +2004,21 @@
     instagram: https://www.instagram.com/carlosjordy
   email_institucional: dep.carlosjordy@camara.leg.br
   declaracao:
-    status: nao_declarou
-    candidato: null
-    data: null
-    fonte: null
+    status: declarou
+    candidato: marinho
+    data: 2026-10-10
+    fonte:
+      tipo: materia
+      url: https://www.otempo.com.br/eleicoes/2026/senadores/2026/10/10/carlos-jordy-diz-que-eventual-impeachment-de-ministros-do-stf-sera-pedagogico
+      titulo: "Carlos Jordy diz que eventual impeachment de ministros do STF será"
+      trecho: "O político defende que o PL indique Rogério Marinho, líder do partido no Senado, para a presidência da Casa. O Senado elegerá uma nova Mesa Diretora em 1º de fevereiro de 2027. \"Eu defendo que um nome que é muito técnico, um nome que tem currículo, seja o Rogério Marinho, o nosso líder Rogério Marinho, muito capacitado.”"
   observacoes: []
   historico:
     - data: 2026-11-06
       evento: entrou na lista como não declarou
+      issue: null
+    - data: 2026-11-10
+      evento: declarou voto em Rogério Marinho (matéria jornalística, 10 de outubro de 2026)
       issue: null
 - id: romario
   nome: Romário
