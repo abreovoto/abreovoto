@@ -1523,14 +1523,21 @@
     instagram: https://www.instagram.com/prafrentecomjoao
   email_institucional: null
   declaracao:
-    status: nao_declarou
-    candidato: null
-    data: null
-    fonte: null
+    status: apoio_mapeado
+    candidato: alcolumbre
+    data: 2026-11-07
+    fonte:
+      tipo: materia
+      url: https://www.polemicaparaiba.com.br/opiniao/alianca-entre-veneziano-e-joao-sera-so-em-questoes-pontuais-por-nonato-guedes/
+      titulo: "“Aliança” entre Veneziano e João será só em questões pontuais - Por Nonato Guedes"
+      trecho: "A coincidência de apoio do senador reeleito Veneziano Vital do Rêgo (MDB) e do senador eleito João Azevêdo (PSB) à candidatura de Davi Alcolumbre (União-AP) a mais um mandato como presidente do Senado gerou versões sobre uma suposta reaproximação"
   observacoes: []
   historico:
     - data: 2026-11-06
       evento: entrou na lista como não declarou
+      issue: null
+    - data: 2026-11-10
+      evento: apoio mapeado a Davi Alcolumbre (matéria jornalística, 7 de novembro de 2026)
       issue: null
 - id: veneziano-vital-do-rego
   nome: Veneziano Vital do Rêgo
