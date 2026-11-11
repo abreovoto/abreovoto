@@ -1262,14 +1262,21 @@
     instagram: https://www.instagram.com/capitaocontar
   email_institucional: null
   declaracao:
-    status: nao_declarou
-    candidato: null
-    data: null
-    fonte: null
+    status: apoio_mapeado
+    candidato: marinho
+    data: 2026-11-05
+    fonte:
+      tipo: materia
+      url: https://www.capitalnews.com.br/politica-e-poder/politica/capitao-contar-e-reinaldo-azambuja-devem-apoiar-rogerio-marinho-na-disputa-pelo-senado/449511
+      titulo: "Capitão Contar e Reinaldo Azambuja devem apoiar Rogério Marinho na disputa pelo Senado"
+      trecho: "Contar e Reinaldo participaram do encontro e devem votar no senador do PL, mesmo com a senadora Tereza Cristina (PP-MS) também na disputa pela presidência da Casa."
   observacoes: []
   historico:
     - data: 2026-11-06
       evento: entrou na lista como não declarou
+      issue: null
+    - data: 2026-11-10
+      evento: apoio mapeado a Rogério Marinho (matéria jornalística, 5 de novembro de 2026)
       issue: null
 - id: tereza-cristina
   nome: Tereza Cristina
