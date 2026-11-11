@@ -670,14 +670,21 @@
     instagram: https://www.instagram.com/biakicis
   email_institucional: dep.biakicis@camara.leg.br
   declaracao:
-    status: nao_declarou
-    candidato: null
-    data: null
-    fonte: null
+    status: declarou
+    candidato: marinho
+    data: 2026-10-25
+    fonte:
+      tipo: materia
+      url: https://revistaoeste.com/politica/entrevista-bia-kicis-anistia-ampla-reforma-supremo/
+      titulo: "Bia Kicis: “A anistia ampla ao 8/1 estará entre as minhas prioridades”"
+      trecho: "A direita deve lançar uma candidatura própria à presidência do Senado? A senhora já tem um nome? […] Defendo a ideia segundo a qual o PL, que saiu fortalecido das urnas e terá a maior bancada do Senado, apresente uma candidatura própria. Considero Rogério Marinho preparado, experiente e com legitimidade para disputar a presidência."
   observacoes: []
   historico:
     - data: 2026-11-06
       evento: entrou na lista como não declarou
+      issue: null
+    - data: 2026-11-10
+      evento: declarou voto em Rogério Marinho (matéria jornalística, 25 de outubro de 2026)
       issue: null
 - id: damares-alves
   nome: Damares Alves
