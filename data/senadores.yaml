@@ -2242,14 +2242,21 @@
     instagram: https://www.instagram.com/jaimebagattolioficial
   email_institucional: sen.jaimebagattoli@senado.leg.br
   declaracao:
-    status: nao_declarou
-    candidato: null
-    data: null
-    fonte: null
+    status: apoio_mapeado
+    candidato: marinho
+    data: 2026-11-06
+    fonte:
+      tipo: materia
+      url: https://www.rondoniadinamica.com/noticias/2026/11/revolucao-ambiental-em-rondonia-camara-paga-demitidos-senadores-fecharam-com-marinho,258145.shtml
+      titulo: "Revolução ambiental em Rondônia; Câmara paga demitidos; e senadores fecharam com Marinho"
+      trecho: "Os três senadores de Rondônia (Jaime Bagattoli, Fernando Máximo e Bruno Scheid) já fecharam com a candidatura de Marinho."
   observacoes: []
   historico:
     - data: 2026-11-06
       evento: entrou na lista como não declarou
+      issue: null
+    - data: 2026-11-10
+      evento: apoio mapeado a Rogério Marinho (matéria jornalística, 6 de novembro de 2026)
       issue: null
 - id: nicoletti
   nome: Nicoletti
