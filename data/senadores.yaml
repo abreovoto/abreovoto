@@ -2205,14 +2205,21 @@
     instagram: https://www.instagram.com/brunoscheidreserva222
   email_institucional: null
   declaracao:
-    status: nao_declarou
-    candidato: null
-    data: null
-    fonte: null
+    status: apoio_mapeado
+    candidato: marinho
+    data: 2026-11-04
+    fonte:
+      tipo: materia
+      url: https://tribunadonorte.com.br/politica/rogerio-marinho-defende-voto-aberto-para-presidencia-do-senado-e-prega-independencia-entre-poderes/
+      titulo: "Rogério Marinho defende voto aberto para Presidência do Senado e prega independência entre poderes"
+      trecho: "Lista das autoridades presentes na reunião: […] Senador Bruno Scheid (PL-RO)"
   observacoes: []
   historico:
     - data: 2026-11-06
       evento: entrou na lista como não declarou
+      issue: null
+    - data: 2026-11-10
+      evento: apoio mapeado a Rogério Marinho (matéria jornalística, 4 de novembro de 2026)
       issue: null
 - id: jaime-bagattoli
   nome: Jaime Bagattoli
