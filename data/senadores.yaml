@@ -1359,14 +1359,21 @@
     instagram: https://www.instagram.com/senadorzemedeiros222
   email_institucional: dep.josemedeiros@camara.leg.br
   declaracao:
-    status: nao_declarou
-    candidato: null
-    data: null
-    fonte: null
+    status: declarou
+    candidato: marinho
+    data: 2026-11-05
+    fonte:
+      tipo: materia
+      url: https://www.gazetadopovo.com.br/republica/direita-aposta-na-exposicao-de-votos-no-senado-para-derrotar-alianca-entre-alcolumbre-lula-e-moraes/
+      titulo: "Direita quer expor votos para vencer Alcolumbre no Senado"
+      trecho: "O senador eleito José Medeiros (PL-MT) foi um dos primeiros a anunciar publicamente sua escolha: “Vamos de Rogério Marinho, para iniciar processos de impeachment, a começar de Alexandre de Moraes”, diz."
   observacoes: []
   historico:
     - data: 2026-11-06
       evento: entrou na lista como não declarou
+      issue: null
+    - data: 2026-11-10
+      evento: declarou voto em Rogério Marinho (matéria jornalística, 5 de novembro de 2026)
       issue: null
 - id: wellington-fagundes
   nome: Wellington Fagundes
