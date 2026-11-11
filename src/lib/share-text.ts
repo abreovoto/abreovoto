@@ -10,6 +10,7 @@ import type { Senador, Site } from "../data/schema";
 import { absolute, bareUrl, senatorPath } from "./routes";
 import { cardVersion, homeCard } from "./share-card";
 import { partyState, profileHandle } from "./text";
+import { ufWithDe } from "./uf";
 
 /** `@arthurlira_`, or null when the senator has no X profile in the data. */
 export function xHandle(s: Senador): string | null {
@@ -68,10 +69,16 @@ function candidateWord(s: Senador, d: Dataset): string {
   return d.candidatos.find((c) => c.senador === s.id)?.genero === "f" ? "candidata" : "candidato";
 }
 
+/** "nele" or "nela", agreeing with the candidate the senator is asked about. */
+function candidatePronoun(id: string, d: Dataset): string {
+  return d.candidatos.find((c) => c.id === id)?.genero === "f" ? "nela" : "nele";
+}
+
 /**
  * The texts for one subject: `who` is the senator in the third person ("Nome (PL-RN)"), or
- * their handle when the post mentions them. The levels below the senator's own word ask
- * them to confirm in public; a candidacy is shared, not asked about.
+ * their handle when the post mentions them. The levels below the senator's own word ask,
+ * politely, whether the vote will go to that candidate, for the sake of the senator's own
+ * state's voters; a candidacy is shared, not asked about.
  */
 function text(p: Posicao, s: Senador, d: Dataset, site: Site, handle: string | null): string {
   const who = handle ?? `${s.nome} (${partyState(s)})`;
@@ -82,6 +89,8 @@ function text(p: Posicao, s: Senador, d: Dataset, site: Site, handle: string | n
       : `${who} representa você no Senado, e você tem o direito de saber em quem vota para presidente do Senado. Vai abrir o voto, ou vai votar em segredo? ${end}`;
   }
   const x = candidateName(p.candidato, d);
+  const nele = candidatePronoun(p.candidato, d);
+  const voters = `os eleitores ${ufWithDe(s.uf)} a acompanhar`;
   if (proprioVoto(p)) {
     return `${who} abriu o voto para presidente do Senado: ${x}, com fonte pública. Seus eleitores agradecem a transparência. Quem mais? ${end}`;
   }
@@ -92,12 +101,12 @@ function text(p: Posicao, s: Senador, d: Dataset, site: Site, handle: string | n
     case "bancada":
     case "federacao":
       return handle
-        ? `${handle}, ${PARTY_OWN[p.origem]} anunciou apoio a ${x} para presidente do Senado. Você confirma em público? ${end}`
-        : `${PARTY_THIRD[p.origem]} de ${who} anunciou apoio a ${x} para presidente do Senado, mas ${s.nome} ainda não declarou o voto. Vai confirmar em público? ${end}`;
+        ? `${handle}, ${PARTY_OWN[p.origem]} anunciou apoio a ${x} para presidente do Senado. Com todo o respeito: o seu voto também será ${nele}? A resposta ajuda ${voters}. ${end}`
+        : `${PARTY_THIRD[p.origem]} de ${who} anunciou apoio a ${x} para presidente do Senado. O voto será ${nele}? Uma declaração direta ajuda ${voters}. ${end}`;
     default:
       return handle
-        ? `${handle}, uma fonte pública aponta seu apoio a ${x} para presidente do Senado. Vai confirmar em público? ${end}`
-        : `${who} aparece em fonte pública como apoio a ${x} para presidente do Senado, mas ainda não declarou o voto. Vai confirmar em público? ${end}`;
+        ? `${handle}, o placar registra com fonte pública o seu apoio a ${x} para presidente do Senado, mas falta você dizer com todas as letras: o seu voto será ${nele}? A resposta ajuda ${voters}. ${end}`
+        : `O placar registra com fonte pública o apoio de ${who} a ${x} para presidente do Senado. O voto será ${nele}? Falta uma declaração direta, que ajuda ${voters}. ${end}`;
   }
 }
 
