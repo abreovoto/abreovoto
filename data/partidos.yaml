@@ -28,3 +28,13 @@
     url: https://g1.globo.com/politica/noticia/2026/10/27/federacao-uniao-pp-anuncia-apoio-a-reeleicao-de-alcolumbre-para-a-presidencia-do-senado.ghtml
     titulo: "Federação União-PP anuncia apoio a reeleição de Alcolumbre para a presidência do Senado"
     trecho: "O União Brasil e o Progressistas têm uma trajetória de parceria, confiança e compromisso político ao lado de Davi Alcolumbre, construída ao longo dos anos. Reafirmamos nosso apoio à sua liderança e nosso compromisso com um Congresso Nacional forte, independente e capaz de transformar o diálogo em resultados concretos para os brasileiros\", diz a nota."
+- id: pp-2026-10-27
+  partido: "PP"
+  escopo: federacao
+  candidato: alcolumbre
+  data: 2026-10-27
+  fonte:
+    tipo: materia
+    url: https://g1.globo.com/politica/noticia/2026/10/27/federacao-uniao-pp-anuncia-apoio-a-reeleicao-de-alcolumbre-para-a-presidencia-do-senado.ghtml
+    titulo: "Federação União-PP anuncia apoio a reeleição de Alcolumbre para a presidência do Senado"
+    trecho: "O União Brasil e o Progressistas têm uma trajetória de parceria, confiança e compromisso político ao lado de Davi Alcolumbre, construída ao longo dos anos. Reafirmamos nosso apoio à sua liderança e nosso compromisso com um Congresso Nacional forte, independente e capaz de transformar o diálogo em resultados concretos para os brasileiros\", diz a nota."
