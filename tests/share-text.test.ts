@@ -11,6 +11,7 @@ import {
   xLength,
   xText,
   shareUrl,
+  homeShareText,
   homeShareUrl,
 } from "../src/lib/share-text";
 import { cardVersion, homeCard } from "../src/lib/share-card";
@@ -171,4 +172,11 @@ test("the shared address tells a caucus announcement from a party one with the s
   const s = asUndeclared(by("arthur-lira"));
   expect(shareUrl(s, withParty(s, "marinho", "bancada"))).not.toBe(shareUrl(s, withParty(s, "marinho", "partido")));
   expect(shareUrl(s, withParty(s, "marinho", "federacao"))).not.toBe(shareUrl(s, withParty(s, "marinho", "partido")));
+});
+
+test("the home's copy text is the ready-made post, with the shared address written without its scheme", () => {
+  const v = cardVersion(homeCard(d, "2026-11-07"));
+  expect(homeShareText(d, "2026-11-07")).toBe(
+    `O seu voto é secreto. O deles não precisa ser. Veja se os senadores do seu estado já disseram em quem votam para presidente do Senado, e pergunte a eles: abreovoto.com/?v=${v} Compartilhe! #AbreOVotoSenador`,
+  );
 });

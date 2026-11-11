@@ -31,6 +31,12 @@ export const onOrigin = (url: string, origin: string): string => {
   return new URL(u.pathname + u.search + u.hash, origin).toString();
 };
 
+/** An address as a post writes it: without the scheme, which every network links anyway. */
+export const bareUrl = (url: string): string => url.replace(/^https?:\/\//, "");
+
+/** A text that carries a site address, with that address moved to the visitor's origin (see `onOrigin`). */
+export const textOnOrigin = (text: string, url: string, origin: string): string => text.split(bareUrl(url)).join(bareUrl(onOrigin(url, origin)));
+
 /** Share card images: no trailing slash, they are files. */
 export const senatorCardPath = (id: string): string => `/cartao/senador/${id}.png`;
 
