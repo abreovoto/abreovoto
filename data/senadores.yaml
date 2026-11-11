@@ -2279,14 +2279,21 @@
     instagram: https://www.instagram.com/deputadonicoletti
   email_institucional: dep.nicoletti@camara.leg.br
   declaracao:
-    status: nao_declarou
-    candidato: null
-    data: null
-    fonte: null
+    status: apoio_mapeado
+    candidato: marinho
+    data: 2026-10-28
+    fonte:
+      tipo: materia
+      url: https://www.folhabv.com.br/politica/presidencia-do-senado-hiran-e-teresa-ainda-nao-definiram-quem-vao-apoiar-e-nicoletti-defende-rogerio-marinho/
+      titulo: "Presidência do Senado: Hiran e Teresa ainda não definiram quem vão apoiar, e Nicoletti defende Rogério Marinho"
+      trecho: "enquanto o Nicoletti (PL) (eleito) disse apoiar a indicação de Rogério Marinho (PL-RN). […] Já Nicoletti endossou a posição de seu partido em indicar Rogério Marinho para a disputa."
   observacoes: []
   historico:
     - data: 2026-11-06
       evento: entrou na lista como não declarou
+      issue: null
+    - data: 2026-11-10
+      evento: apoio mapeado a Rogério Marinho (matéria jornalística, 28 de outubro de 2026)
       issue: null
 - id: teresa-surita
   nome: Teresa Surita
