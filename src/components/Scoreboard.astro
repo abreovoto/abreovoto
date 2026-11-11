@@ -9,9 +9,11 @@ interface Props {
   placar: Placar;
   /** The address the "Copiar link" button copies; no button without it. */
   shareUrl?: string;
+  /** What the button copies instead of the bare address: a ready-made post carrying `shareUrl`. */
+  shareText?: string;
 }
 
-const { placar, shareUrl } = Astro.props;
+const { placar, shareUrl, shareText } = Astro.props;
 // The date of the build: the scoreboard is as fresh as the last deploy.
 const updated = formatDate(todayUtc());
 const legend = [
@@ -61,7 +63,8 @@ const numeral = "font-display block text-4xl tabular-nums min-[400px]:text-5xl m
     <p>{placar.total} senadores em exercício · 41 votos elegem</p>
     {
       shareUrl && (
-        // The link carries the card's version, so a post made with it shows today's scoreboard.
+        // The link carries the card's version, so a post made with it shows today's scoreboard; with a
+        // text, the button copies the whole post around it.
         // Text-sized, so the row keeps its height; shown only when scripts run.
         <span class="flex shrink-0 items-center">
           <span role="status" aria-live="polite" data-share-status class="sr-only" />
@@ -69,7 +72,8 @@ const numeral = "font-display block text-4xl tabular-nums min-[400px]:text-5xl m
             type="button"
             data-copy-link=""
             data-url={shareUrl}
-            aria-label="Copiar link"
+            data-text={shareText}
+            aria-label={shareText ? "Copiar texto para compartilhar" : "Copiar link"}
             class="group -m-2 hidden items-center gap-1 rounded-sm p-2 font-semibold text-fg-muted hover:text-fg [.js_&]:inline-flex"
           >
             <Icon name="link" class="size-3.5 shrink-0" />

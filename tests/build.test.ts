@@ -502,6 +502,7 @@ test("the home's copy-link button copies the home address with the version of th
   const h = html("index.html");
   const image = h.match(/<meta property="og:image" content="https:\/\/abreovoto\.com\/cartao\/placar\.png\?v=([0-9a-f]{8})">/)![1];
   expect(h).toMatch(new RegExp(`<button[^>]*data-copy-link[^>]*data-url="https://abreovoto\\.com/\\?v=${image}"`));
+  expect(h).toMatch(new RegExp(`<button[^>]*data-copy-link[^>]*data-text="[^"]*pergunte a eles: abreovoto\\.com/\\?v=${image} Compartilhe! #AbreOVotoSenador"`));
 });
 
 test("a senator page carries the actions in one order: X, share the card, WhatsApp, copy, download", () => {

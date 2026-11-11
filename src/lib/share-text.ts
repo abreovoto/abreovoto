@@ -7,7 +7,7 @@ import { createHash } from "node:crypto";
 import type { Dataset } from "../data/load";
 import { type Posicao, posicao, proprioVoto } from "../data/posicao";
 import type { Senador, Site } from "../data/schema";
-import { absolute, senatorPath } from "./routes";
+import { absolute, bareUrl, senatorPath } from "./routes";
 import { cardVersion, homeCard } from "./share-card";
 import { partyState, profileHandle } from "./text";
 
@@ -45,6 +45,17 @@ export function shareUrl(s: Senador, d: Dataset): string {
  */
 export function homeShareUrl(d: Dataset, today: string): string {
   return `${absolute("/")}?v=${cardVersion(homeCard(d, today))}`;
+}
+
+/**
+ * What the home's copy button copies: the campaign line, what the site is for, the home's shared
+ * address written without its scheme, and the hashtag.
+ */
+export function homeShareText(d: Dataset, today: string): string {
+  return (
+    "O seu voto é secreto. O deles não precisa ser. Veja se os senadores do seu estado já disseram em quem votam " +
+    `para presidente do Senado, e pergunte a eles: ${bareUrl(homeShareUrl(d, today))} Compartilhe! ${d.site.hashtag}`
+  );
 }
 
 const tail = (s: Senador, d: Dataset, site: Site): string => `${shareUrl(s, d)} ${site.hashtag}`;
