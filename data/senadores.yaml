@@ -2805,14 +2805,21 @@
     instagram: https://www.instagram.com/eduardogomestocantins
   email_institucional: sen.eduardogomes@senado.leg.br
   declaracao:
-    status: nao_declarou
-    candidato: null
-    data: null
-    fonte: null
+    status: apoio_mapeado
+    candidato: marinho
+    data: 2026-11-10
+    fonte:
+      tipo: materia
+      url: https://oglobo.globo.com/blogs/malu-gaspar/post/2026/11/os-potenciais-traidores-da-campanha-de-rogerio-marinho-segundo-integrantes-do-pl.ghtml
+      titulo: "Os potenciais traidores da campanha de Rogério Marinho, segundo integrantes do PL"
+      trecho: "Por essas contas, quatro senadores do PL estão “sob suspeita”, ainda que já tenham feito manifestações públicas a favor de Marinho, e por conta disso vêm sendo cobrados em reuniões e observados atentamente pelos correligionários: Eduardo Gomes (PL-TO), Efraim Filho (PL-PB), o ex-governador de Mato Grosso do Sul Reinaldo Azambuja (PL-MS) e o empresário Alex Coelho Diniz (PL-MG)."
   observacoes: []
   historico:
     - data: 2026-11-06
       evento: entrou na lista como não declarou
+      issue: null
+    - data: 2026-11-10
+      evento: apoio mapeado a Rogério Marinho (matéria jornalística, 10 de novembro de 2026)
       issue: null
 - id: alexandre-guimaraes
   nome: Alexandre Guimarães
