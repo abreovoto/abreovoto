@@ -707,14 +707,21 @@
     instagram: https://www.instagram.com/damaresalvesoficial1
   email_institucional: sen.damaresalves@senado.leg.br
   declaracao:
-    status: nao_declarou
-    candidato: null
-    data: null
-    fonte: null
+    status: apoio_mapeado
+    candidato: tereza-cristina
+    data: 2026-11-10
+    fonte:
+      tipo: materia
+      url: https://www.estadao.com.br/politica/coluna-do-estadao/o-encontro-entre-tereza-cristina-e-michelle-bolsonaro-sobre-eleicao-para-a-presidencia-do-senado/
+      titulo: "O encontro entre Tereza Cristina e Michelle Bolsonaro sobre eleição para a presidência do Senado"
+      trecho: "A Coluna do Estadão apurou que o encontro também contou com a presença da senadora Damares Alves (Republicanos-DF), amiga próxima de Michelle e que declarou publicamente apoiar Tereza para a disputa pela presidência do Senado, que acontece em fevereiro do ano que vem."
   observacoes: []
   historico:
     - data: 2026-11-06
       evento: entrou na lista como não declarou
+      issue: null
+    - data: 2026-11-10
+      evento: apoio mapeado a Tereza Cristina (matéria jornalística, 10 de novembro de 2026)
       issue: null
 - id: renato-casagrande
   nome: Renato Casagrande
