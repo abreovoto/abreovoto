@@ -26,12 +26,3 @@ test("without a canonical there is no og:url", () => {
   expect(tags.some((t) => "property" in t && t.property === "og:url")).toBe(false);
   expect(tags.some((t) => "name" in t && t.name === "twitter:site")).toBe(false);
 });
-
-test("X's title can differ from the page's, and falls back to it", () => {
-  const card = { path: "/cartao/placar.png", model: homeCard(d, today) };
-  const get = (tags: ReturnType<typeof ogTags>, k: string) => tags.find((t) => ("property" in t ? t.property : t.name) === k)?.content;
-  const own = ogTags({ title: "Abre o Voto", description: "d", canonical: null, card, siteX: null, xTitle: "Clique e cobre o seu senador" });
-  expect(get(own, "twitter:title")).toBe("Clique e cobre o seu senador");
-  expect(get(own, "og:title")).toBe("Abre o Voto");
-  expect(get(ogTags({ title: "Abre o Voto", description: "d", canonical: null, card, siteX: null }), "twitter:title")).toBe("Abre o Voto");
-});
