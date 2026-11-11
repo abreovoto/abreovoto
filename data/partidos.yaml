@@ -8,3 +8,13 @@
     url: https://x.com/CostaNetoPL/status/2120234674534649941
     titulo: null
     trecho: "O Senado Federal precisa de uma liderança comprometida com o Brasil, com a independência do Parlamento e com o respeito às instituições. E essa liderança tem um nome: Rogério Marinho (@rogeriosmarinho). Pelo Brasil, vamos eleger nosso senador!"
+- id: novo-2026-11-04
+  partido: "NOVO"
+  escopo: partido
+  candidato: marinho
+  data: 2026-11-04
+  fonte:
+    tipo: materia
+    url: https://www.brasildefato.com.br/2026/11/04/pl-oficializa-candidatura-de-rogerio-marinho-a-presidencia-do-senado-para-destravar-anistia-a-golpistas/
+    titulo: "PL oficializa candidatura de Rogério Marinho à presidência do Senado para destravar anistia a golpistas"
+    trecho: "O Novo, que terá três senadores, anunciou apoio formal à candidatura."
