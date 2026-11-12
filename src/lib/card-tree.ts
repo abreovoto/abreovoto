@@ -186,16 +186,31 @@ function shareIcon(size: number): CardNode {
 const CTA_HEIGHT = 62;
 
 /**
- * The home card's bottom row: the invitation to share, then the button that sends the reader to the
- * site. A shared preview reads as a still picture, so the button says to click and a pointer presses it.
- * The share prompt sits high in its row: X lays a label over the image's bottom-left corner.
+ * Where the home card is seen: `link`, the preview a network draws under a shared link, which a tap
+ * opens; `image`, the picture posted on its own, which a tap only enlarges.
  */
-function callToAction(m: ShareCardModel): CardNode {
+export type HomeCardUse = "link" | "image";
+
+/**
+ * The home card's bottom row: the invitation to share, then the button that sends the reader to the
+ * site. A shared preview reads as a still picture, so the link card's button says to click and a
+ * pointer presses it; the picture posted on its own cannot be clicked, so its button says to go to
+ * the site, and the address below it is written larger. The share prompt sits high in its row: X
+ * lays a label over the image's bottom-left corner.
+ */
+function callToAction(m: ShareCardModel, use: HomeCardUse): CardNode {
   const button = el(
     "div",
     { display: "flex", alignItems: "center", gap: 14, flexShrink: 0, background: CTA_FILL, borderRadius: 14, padding: "16px 26px", ...display, fontSize: 27, letterSpacing: "-0.01em", color: p.fg },
-    [el("div", {}, "CLIQUE E COBRE O SEU SENADOR"), el("div", {}, "→")],
+    [el("div", {}, use === "link" ? "CLIQUE E COBRE O SEU SENADOR" : "ACESSE E COBRE O SEU SENADOR"), el("div", {}, "→")],
   );
+  const caption =
+    use === "link"
+      ? el("div", { ...text, fontWeight: 600, fontSize: 20, color: p.fgMuted }, `${m.domain} · placar em ${m.date}`)
+      : el("div", { display: "flex", alignItems: "center", gap: 10 }, [
+          el("div", { ...display, fontSize: 26, color: p.fg }, m.domain),
+          el("div", { ...text, fontWeight: 600, fontSize: 20, color: p.fgMuted }, `· placar em ${m.date}`),
+        ]);
   return el("div", { display: "flex", alignItems: "center", gap: 20 }, [
     el("div", { display: "flex", alignItems: "center", alignSelf: "flex-start", height: CTA_HEIGHT, marginTop: -14, gap: 12, marginRight: "auto", flexShrink: 0 }, [
       shareIcon(36),
@@ -206,17 +221,18 @@ function callToAction(m: ShareCardModel): CardNode {
     ]),
     el("div", { display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 8, position: "relative" }, [
       button,
-      el("div", { ...text, fontWeight: 600, fontSize: 20, color: p.fgMuted }, `${m.domain} · placar em ${m.date}`),
-      el("div", { display: "flex", position: "absolute", right: -14, top: 34 }, pointer(56)),
+      caption,
+      ...(use === "link" ? [el("div", { display: "flex", position: "absolute", right: -14, top: 34 }, pointer(56))] : []),
     ]),
   ]);
 }
 
 /**
  * `portrait` is a data URI (or any URL satori can read), or null for a card without one.
- * `faces` holds the home card's candidate portraits, by candidate id, sized `HOME_FACE`.
+ * `faces` holds the home card's candidate portraits, by candidate id, sized `HOME_FACE`; `use`, where
+ * the home card is seen.
  */
-export function cardTree(m: ShareCardModel, portrait: string | null, faces: Record<string, string> = {}): CardNode {
+export function cardTree(m: ShareCardModel, portrait: string | null, faces: Record<string, string> = {}, use: HomeCardUse = "link"): CardNode {
   if (m.kind === "home") {
     return frame([
       // The question the button below answers, and the campaign's hashtag.
@@ -229,7 +245,7 @@ export function cardTree(m: ShareCardModel, portrait: string | null, faces: Reco
       ]),
       campaignLine(m.title),
       scoreboardRow(m.scoreboard!, faces),
-      callToAction(m),
+      callToAction(m, use),
     ]);
   }
 

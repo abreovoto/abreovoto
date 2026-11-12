@@ -102,3 +102,13 @@ test("the home card says to click, to share, and what clicking is for", () => {
   expect(t).toContain("COMPARTILHE!");
   expect(t).toContain("O seu senador já abriu o voto?");
 });
+
+test("the home card posted as a picture says to go to the site, not to click, and draws no pointer", () => {
+  const m = homeCard(d, today);
+  const t = cardTree(m, null, faces(m), "image");
+  expect(texts(t)).toContain("ACESSE E COBRE O SEU SENADOR");
+  expect(texts(t)).not.toContain("CLIQUE E COBRE O SEU SENADOR");
+  expect(texts(t)).toContain("abreovoto.com");
+  expect(JSON.stringify(t)).not.toContain("M18 11a2"); // the pointer
+  expect(JSON.stringify(cardTree(m, null, faces(m)))).toContain("M18 11a2");
+});

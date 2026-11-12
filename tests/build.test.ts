@@ -79,6 +79,7 @@ test("a card PNG exists for every senator, every candidate and the scoreboard, a
   for (const s of d.senadores) expect(size(`cartao/senador/${s.id}.png`), s.id).toEqual([1200, 630]);
   for (const c of placar(d).porCandidato) expect(size(`cartao/candidato/${c.id}.png`), c.id).toEqual([1200, 630]);
   expect(size("cartao/placar.png")).toEqual([1200, 630]);
+  expect(size("cartao/placar-imagem.png")).toEqual([1200, 630]);
 });
 
 test("the favicons exist and are referenced", () => {

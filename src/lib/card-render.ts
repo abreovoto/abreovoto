@@ -7,7 +7,7 @@ import { Resvg } from "@resvg/resvg-js";
 import satori from "satori";
 import sharp from "sharp";
 import { cardFonts } from "./card-fonts";
-import { cardTree } from "./card-tree";
+import { cardTree, type HomeCardUse } from "./card-tree";
 import { PORTRAIT_SIZES, type PortraitSize, portraitHeight } from "./portrait";
 import type { ShareCardModel } from "./share-card";
 
@@ -27,9 +27,9 @@ export async function portraitDataUri(file: string, size: Extract<PortraitSize, 
 
 let fonts: ReturnType<typeof cardFonts> | undefined;
 
-export async function renderCard(model: ShareCardModel, portrait: string | null, faces: Record<string, string> = {}): Promise<Buffer> {
+export async function renderCard(model: ShareCardModel, portrait: string | null, faces: Record<string, string> = {}, use: HomeCardUse = "link"): Promise<Buffer> {
   fonts ??= cardFonts();
-  const svg = await satori(cardTree(model, portrait, faces) as never, { width: 1200, height: 630, fonts });
+  const svg = await satori(cardTree(model, portrait, faces, use) as never, { width: 1200, height: 630, fonts });
   return Buffer.from(new Resvg(svg, { fitTo: { mode: "width", value: 1200 } }).render().asPng());
 }
 
