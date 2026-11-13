@@ -855,14 +855,14 @@
     instagram: https://www.instagram.com/gusgayer
   email_institucional: dep.gustavogayer@camara.leg.br
   declaracao:
-    status: apoio_mapeado
+    status: declarou
     candidato: marinho
-    data: 2026-11-04
+    data: 2026-11-12
     fonte:
-      tipo: materia
-      url: https://claudiodantas.com.br/marinho-lanca-candidatura-senado-30-aliados/
-      titulo: "Marinho lança candidatura ao Senado com 30 aliados presentes"
-      trecho: "Entre os integrantes do PL que estarão aptos a votar em fevereiro de 2027, participaram do lançamento: […] Gustavo Gayer (PL-GO)"
+      tipo: post
+      url: https://www.instagram.com/gusgayer/reel/Dfpm35csz5w/
+      titulo: "Gustavo Gayer on Instagram: \"O VERDADEIRO PLACAR É ESSE - A verdade sobre a disputa entre Marinho e Alcolumbre\nNós vamos vencer!!!\nRogério Marinho será o próximo presidente do senado\""
+      trecho: "O VERDADEIRO PLACAR É ESSE - A verdade sobre a disputa entre Marinho e Alcolumbre Nós vamos vencer!!! Rogério Marinho será o próximo presidente do senado"
   observacoes: []
   historico:
     - data: 2026-11-06
@@ -870,6 +870,9 @@
       issue: null
     - data: 2026-11-10
       evento: apoio mapeado a Rogério Marinho (matéria jornalística, 4 de novembro de 2026)
+      issue: null
+    - data: 2026-11-13
+      evento: declarou voto em Rogério Marinho (publicação no perfil oficial, 12 de novembro de 2026)
       issue: null
 - id: gracinha-caiado
   nome: Gracinha Caiado
