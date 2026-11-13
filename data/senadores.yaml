@@ -56,14 +56,21 @@
     instagram: https://www.instagram.com/mararochaacre
   email_institucional: null
   declaracao:
-    status: nao_declarou
-    candidato: null
-    data: null
-    fonte: null
+    status: declarou
+    candidato: marinho
+    data: 2026-11-12
+    fonte:
+      tipo: post
+      url: https://www.instagram.com/mararochaacre/p/Dfo6Y92Rh24/
+      titulo: "Mara Rocha on Instagram: \"Em Brasília, estive reunida com o senador Rogério Marinho (PL), ocasião em que manifestei pessoalmente meu apoio à sua candidatura à Presidência do Senado Federal, por comungar das mesmas  pautas defendidas pelo senador.\""
+      trecho: "Em Brasília, estive reunida com o senador Rogério Marinho (PL), ocasião em que manifestei pessoalmente meu apoio à sua candidatura à Presidência do Senado Federal, por comungar das mesmas  pautas defendidas pelo senador."
   observacoes: []
   historico:
     - data: 2026-11-06
       evento: entrou na lista como não declarou
+      issue: null
+    - data: 2026-11-13
+      evento: declarou voto em Rogério Marinho (publicação no perfil oficial, 12 de novembro de 2026)
       issue: null
 - id: alan-rick
   nome: Alan Rick
