@@ -1089,14 +1089,14 @@
     instagram: https://www.instagram.com/domingossaviomg
   email_institucional: dep.domingossavio@camara.leg.br
   declaracao:
-    status: apoio_mapeado
+    status: declarou
     candidato: marinho
-    data: 2026-11-04
+    data: 2026-11-10
     fonte:
-      tipo: materia
-      url: https://www.gazetadopovo.com.br/republica/pl-confirma-candidatura-de-rogerio-marinho-a-presidencia-do-senado/
-      titulo: "PL confirma candidatura de Marinho à presidência do Senado"
-      trecho: "Já o senador eleito Domingos Sávio (PL-MG) vê seu empenho para eleger Marinho ao comando do Senado como um compromisso com os quase 5 milhões de votos que recebeu das urnas."
+      tipo: post
+      url: https://x.com/DomingosSavioMG/status/2120106364072829218
+      titulo: null
+      trecho: "Nosso nome pra presidência do Senado é @rogeriosmarinho . Vamos resgatar a democracia!"
   observacoes: []
   historico:
     - data: 2026-11-06
@@ -1104,6 +1104,9 @@
       issue: null
     - data: 2026-11-10
       evento: apoio mapeado a Rogério Marinho (matéria jornalística, 4 de novembro de 2026)
+      issue: null
+    - data: 2026-11-13
+      evento: declarou voto em Rogério Marinho (publicação no perfil oficial, 10 de novembro de 2026)
       issue: null
 - id: marilia-campos
   nome: Marília Campos
